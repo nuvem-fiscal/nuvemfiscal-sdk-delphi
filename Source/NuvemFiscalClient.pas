@@ -1,4 +1,4 @@
-﻿unit NuvemFiscalClient;
+unit NuvemFiscalClient;
 
 interface
 
@@ -65,6 +65,9 @@ type
     function ConsultarCnpj(Cnpj: string): TCnpjEmpresa;
   end;
   
+  /// <summary>
+  /// Conhecimento de Transporte Eletrônico.
+  /// </summary>
   ICteService = interface(IInvokable)
     ['{B7F0519C-F96C-4AA1-B44C-2231911D7F1D}']
     /// <summary>
@@ -252,6 +255,9 @@ type
     function BaixarXmlCte(Id: string): TBytes;
   end;
   
+  /// <summary>
+  /// Cadastre e administre todas as empresas vinculadas à sua conta.
+  /// </summary>
   IEmpresaService = interface(IInvokable)
     ['{F9F29CFD-FEC1-4997-804F-2BD718558EEE}']
     /// <param name="CpfCnpj">
@@ -333,6 +339,9 @@ type
     function EnviarCertificadoEmpresa(Input: TBytes; CpfCnpj: string): TEmpresaCertificado;
   end;
   
+  /// <summary>
+  /// Manifesto Eletrônico de Documentos Fiscais.
+  /// </summary>
   IMdfeService = interface(IInvokable)
     ['{5E1D08DB-F0BC-4503-AAD9-D4B153FEBAF9}']
     /// <summary>
@@ -512,6 +521,9 @@ type
     function BaixarXmlMdfe(Id: string): TBytes;
   end;
   
+  /// <summary>
+  /// Nota Fiscal de Consumidor Eletrônica.
+  /// </summary>
   INfceService = interface(IInvokable)
     ['{FA91917B-DF86-4161-B005-93D0BD5C4A89}']
     /// <summary>
@@ -652,6 +664,9 @@ type
     function BaixarXmlNfce(Id: string): TBytes;
   end;
   
+  /// <summary>
+  /// Nota Fiscal Eletrônica.
+  /// </summary>
   INfeService = interface(IInvokable)
     ['{D906B9B9-704D-44DF-856B-3E84AF1B3CD0}']
     /// <summary>
@@ -900,10 +915,25 @@ type
   INuvemFiscalClient = interface(IRestClient)
     function Cep: ICepService;
     function Cnpj: ICnpjService;
+    /// <summary>
+    /// Conhecimento de Transporte Eletrônico.
+    /// </summary>
     function Cte: ICteService;
+    /// <summary>
+    /// Cadastre e administre todas as empresas vinculadas à sua conta.
+    /// </summary>
     function Empresa: IEmpresaService;
+    /// <summary>
+    /// Manifesto Eletrônico de Documentos Fiscais.
+    /// </summary>
     function Mdfe: IMdfeService;
+    /// <summary>
+    /// Nota Fiscal de Consumidor Eletrônica.
+    /// </summary>
     function Nfce: INfceService;
+    /// <summary>
+    /// Nota Fiscal Eletrônica.
+    /// </summary>
     function Nfe: INfeService;
     function Nfse: INfseService;
   end;
@@ -2071,7 +2101,7 @@ end;
 constructor TNuvemFiscalConfig.Create;
 begin
   inherited Create;
-  BaseUrl := 'https://api.sandbox.nuvemfiscal.com.br';
+  BaseUrl := 'https://api.nuvemfiscal.com.br/';
 end;
 
 { TNuvemFiscalClient }
