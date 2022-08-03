@@ -1710,26 +1710,20 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.logradouroHasValue then
-      Json.ObjAddProp(Result, 'logradouro', Self.stringToJsonValue(Source.logradouro));
-    if Source.numeroHasValue then
-      Json.ObjAddProp(Result, 'numero', Self.stringToJsonValue(Source.numero));
+    Json.ObjAddProp(Result, 'logradouro', Self.stringToJsonValue(Source.logradouro));
+    Json.ObjAddProp(Result, 'numero', Self.stringToJsonValue(Source.numero));
     if Source.complementoHasValue then
       Json.ObjAddProp(Result, 'complemento', Self.stringToJsonValue(Source.complemento));
-    if Source.bairroHasValue then
-      Json.ObjAddProp(Result, 'bairro', Self.stringToJsonValue(Source.bairro));
-    if Source.codigo_municipioHasValue then
-      Json.ObjAddProp(Result, 'codigo_municipio', Self.stringToJsonValue(Source.codigo_municipio));
+    Json.ObjAddProp(Result, 'bairro', Self.stringToJsonValue(Source.bairro));
+    Json.ObjAddProp(Result, 'codigo_municipio', Self.stringToJsonValue(Source.codigo_municipio));
     if Source.cidadeHasValue then
       Json.ObjAddProp(Result, 'cidade', Self.stringToJsonValue(Source.cidade));
-    if Source.ufHasValue then
-      Json.ObjAddProp(Result, 'uf', Self.stringToJsonValue(Source.uf));
+    Json.ObjAddProp(Result, 'uf', Self.stringToJsonValue(Source.uf));
     if Source.codigo_paisHasValue then
       Json.ObjAddProp(Result, 'codigo_pais', Self.stringToJsonValue(Source.codigo_pais));
     if Source.paisHasValue then
       Json.ObjAddProp(Result, 'pais', Self.stringToJsonValue(Source.pais));
-    if Source.cepHasValue then
-      Json.ObjAddProp(Result, 'cep', Self.stringToJsonValue(Source.cep));
+    Json.ObjAddProp(Result, 'cep', Self.stringToJsonValue(Source.cep));
   except
     Result.Free;
     raise;
@@ -1866,10 +1860,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.id_cscHasValue then
-      Json.ObjAddProp(Result, 'id_csc', Self.IntegerToJsonValue(Source.id_csc));
-    if Source.cscHasValue then
-      Json.ObjAddProp(Result, 'csc', Self.stringToJsonValue(Source.csc));
+    Json.ObjAddProp(Result, 'id_csc', Self.IntegerToJsonValue(Source.id_csc));
+    Json.ObjAddProp(Result, 'csc', Self.stringToJsonValue(Source.csc));
   except
     Result.Free;
     raise;
@@ -1930,8 +1922,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.sefaz) then
-      Json.ObjAddProp(Result, 'sefaz', Self.TEmpresaConfigNfceSefazToJsonValue(Source.sefaz));
+    Json.ObjAddProp(Result, 'sefaz', Self.TEmpresaConfigNfceSefazToJsonValue(Source.sefaz));
     if Source.ambienteHasValue then
       Json.ObjAddProp(Result, 'ambiente', Self.stringToJsonValue(Source.ambiente));
   except
@@ -2174,12 +2165,9 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.loteHasValue then
-      Json.ObjAddProp(Result, 'lote', Self.IntegerToJsonValue(Source.lote));
-    if Source.serieHasValue then
-      Json.ObjAddProp(Result, 'serie', Self.stringToJsonValue(Source.serie));
-    if Source.numeroHasValue then
-      Json.ObjAddProp(Result, 'numero', Self.IntegerToJsonValue(Source.numero));
+    Json.ObjAddProp(Result, 'lote', Self.IntegerToJsonValue(Source.lote));
+    Json.ObjAddProp(Result, 'serie', Self.stringToJsonValue(Source.serie));
+    Json.ObjAddProp(Result, 'numero', Self.IntegerToJsonValue(Source.numero));
   except
     Result.Free;
     raise;
@@ -2310,8 +2298,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.rps) then
-      Json.ObjAddProp(Result, 'rps', Self.TEmpresaConfigRpsToJsonValue(Source.rps));
+    Json.ObjAddProp(Result, 'rps', Self.TEmpresaConfigRpsToJsonValue(Source.rps));
     if Assigned(Source.prefeitura) then
       Json.ObjAddProp(Result, 'prefeitura', Self.TEmpresaConfigPrefeituraToJsonValue(Source.prefeitura));
     if Source.ambienteHasValue then
@@ -2378,8 +2365,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cpf_cnpjHasValue then
-      Json.ObjAddProp(Result, 'cpf_cnpj', Self.stringToJsonValue(Source.cpf_cnpj));
+    Json.ObjAddProp(Result, 'cpf_cnpj', Self.stringToJsonValue(Source.cpf_cnpj));
     if Source.created_atHasValue then
       Json.ObjAddProp(Result, 'created_at', Self.TDateTimeToJsonValue(Source.created_at));
     if Source.updated_atHasValue then
@@ -2388,22 +2374,17 @@ begin
       Json.ObjAddProp(Result, 'inscricao_estadual', Self.stringToJsonValue(Source.inscricao_estadual));
     if Source.inscricao_municipalHasValue then
       Json.ObjAddProp(Result, 'inscricao_municipal', Self.stringToJsonValue(Source.inscricao_municipal));
-    if Source.nome_razao_socialHasValue then
-      Json.ObjAddProp(Result, 'nome_razao_social', Self.stringToJsonValue(Source.nome_razao_social));
+    Json.ObjAddProp(Result, 'nome_razao_social', Self.stringToJsonValue(Source.nome_razao_social));
     if Source.nome_fantasiaHasValue then
       Json.ObjAddProp(Result, 'nome_fantasia', Self.stringToJsonValue(Source.nome_fantasia));
     if Source.foneHasValue then
       Json.ObjAddProp(Result, 'fone', Self.stringToJsonValue(Source.fone));
-    if Source.emailHasValue then
-      Json.ObjAddProp(Result, 'email', Self.stringToJsonValue(Source.email));
-    if Assigned(Source.endereco) then
-      Json.ObjAddProp(Result, 'endereco', Self.TEmpresaEnderecoToJsonValue(Source.endereco));
+    Json.ObjAddProp(Result, 'email', Self.stringToJsonValue(Source.email));
+    Json.ObjAddProp(Result, 'endereco', Self.TEmpresaEnderecoToJsonValue(Source.endereco));
     if Source.optante_simples_nacionalHasValue then
       Json.ObjAddProp(Result, 'optante_simples_nacional', Self.BooleanToJsonValue(Source.optante_simples_nacional));
-    if Source.regime_tributacaoHasValue then
-      Json.ObjAddProp(Result, 'regime_tributacao', Self.IntegerToJsonValue(Source.regime_tributacao));
-    if Source.regime_especial_tributacaoHasValue then
-      Json.ObjAddProp(Result, 'regime_especial_tributacao', Self.IntegerToJsonValue(Source.regime_especial_tributacao));
+    Json.ObjAddProp(Result, 'regime_tributacao', Self.IntegerToJsonValue(Source.regime_tributacao));
+    Json.ObjAddProp(Result, 'regime_especial_tributacao', Self.IntegerToJsonValue(Source.regime_especial_tributacao));
     if Source.incentivo_fiscalHasValue then
       Json.ObjAddProp(Result, 'incentivo_fiscal', Self.BooleanToJsonValue(Source.incentivo_fiscal));
     if Source.incentivador_culturalHasValue then
@@ -4882,8 +4863,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tomaHasValue then
-      Json.ObjAddProp(Result, 'toma', Self.IntegerToJsonValue(Source.toma));
+    Json.ObjAddProp(Result, 'toma', Self.IntegerToJsonValue(Source.toma));
   except
     Result.Free;
     raise;
@@ -4942,22 +4922,16 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.xLgrHasValue then
-      Json.ObjAddProp(Result, 'xLgr', Self.stringToJsonValue(Source.xLgr));
-    if Source.nroHasValue then
-      Json.ObjAddProp(Result, 'nro', Self.stringToJsonValue(Source.nro));
+    Json.ObjAddProp(Result, 'xLgr', Self.stringToJsonValue(Source.xLgr));
+    Json.ObjAddProp(Result, 'nro', Self.stringToJsonValue(Source.nro));
     if Source.xCplHasValue then
       Json.ObjAddProp(Result, 'xCpl', Self.stringToJsonValue(Source.xCpl));
-    if Source.xBairroHasValue then
-      Json.ObjAddProp(Result, 'xBairro', Self.stringToJsonValue(Source.xBairro));
-    if Source.cMunHasValue then
-      Json.ObjAddProp(Result, 'cMun', Self.IntegerToJsonValue(Source.cMun));
-    if Source.xMunHasValue then
-      Json.ObjAddProp(Result, 'xMun', Self.stringToJsonValue(Source.xMun));
+    Json.ObjAddProp(Result, 'xBairro', Self.stringToJsonValue(Source.xBairro));
+    Json.ObjAddProp(Result, 'cMun', Self.IntegerToJsonValue(Source.cMun));
+    Json.ObjAddProp(Result, 'xMun', Self.stringToJsonValue(Source.xMun));
     if Source.CEPHasValue then
       Json.ObjAddProp(Result, 'CEP', Self.IntegerToJsonValue(Source.CEP));
-    if Source.UFHasValue then
-      Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
+    Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
     if Source.cPaisHasValue then
       Json.ObjAddProp(Result, 'cPais', Self.IntegerToJsonValue(Source.cPais));
     if Source.xPaisHasValue then
@@ -5038,22 +5012,19 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tomaHasValue then
-      Json.ObjAddProp(Result, 'toma', Self.IntegerToJsonValue(Source.toma));
+    Json.ObjAddProp(Result, 'toma', Self.IntegerToJsonValue(Source.toma));
     if Source.CNPJHasValue then
       Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
     if Source.CPFHasValue then
       Json.ObjAddProp(Result, 'CPF', Self.stringToJsonValue(Source.CPF));
     if Source.IEHasValue then
       Json.ObjAddProp(Result, 'IE', Self.stringToJsonValue(Source.IE));
-    if Source.xNomeHasValue then
-      Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
+    Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
     if Source.xFantHasValue then
       Json.ObjAddProp(Result, 'xFant', Self.stringToJsonValue(Source.xFant));
     if Source.foneHasValue then
       Json.ObjAddProp(Result, 'fone', Self.stringToJsonValue(Source.fone));
-    if Assigned(Source.enderToma) then
-      Json.ObjAddProp(Result, 'enderToma', Self.TCteSefazEnderecoToJsonValue(Source.enderToma));
+    Json.ObjAddProp(Result, 'enderToma', Self.TCteSefazEnderecoToJsonValue(Source.enderToma));
     if Source.emailHasValue then
       Json.ObjAddProp(Result, 'email', Self.stringToJsonValue(Source.email));
   except
@@ -5130,66 +5101,40 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cUFHasValue then
-      Json.ObjAddProp(Result, 'cUF', Self.IntegerToJsonValue(Source.cUF));
-    if Source.cCTHasValue then
-      Json.ObjAddProp(Result, 'cCT', Self.IntegerToJsonValue(Source.cCT));
-    if Source.CFOPHasValue then
-      Json.ObjAddProp(Result, 'CFOP', Self.IntegerToJsonValue(Source.CFOP));
-    if Source.natOpHasValue then
-      Json.ObjAddProp(Result, 'natOp', Self.stringToJsonValue(Source.natOp));
+    Json.ObjAddProp(Result, 'cUF', Self.IntegerToJsonValue(Source.cUF));
+    Json.ObjAddProp(Result, 'cCT', Self.IntegerToJsonValue(Source.cCT));
+    Json.ObjAddProp(Result, 'CFOP', Self.IntegerToJsonValue(Source.CFOP));
+    Json.ObjAddProp(Result, 'natOp', Self.stringToJsonValue(Source.natOp));
     if Source.&modHasValue then
       Json.ObjAddProp(Result, 'mod', Self.IntegerToJsonValue(Source.&mod));
-    if Source.serieHasValue then
-      Json.ObjAddProp(Result, 'serie', Self.IntegerToJsonValue(Source.serie));
-    if Source.nCTHasValue then
-      Json.ObjAddProp(Result, 'nCT', Self.IntegerToJsonValue(Source.nCT));
-    if Source.dhEmiHasValue then
-      Json.ObjAddProp(Result, 'dhEmi', Self.TDateTimeToJsonValue(Source.dhEmi));
-    if Source.tpImpHasValue then
-      Json.ObjAddProp(Result, 'tpImp', Self.IntegerToJsonValue(Source.tpImp));
-    if Source.tpEmisHasValue then
-      Json.ObjAddProp(Result, 'tpEmis', Self.IntegerToJsonValue(Source.tpEmis));
-    if Source.cDVHasValue then
-      Json.ObjAddProp(Result, 'cDV', Self.IntegerToJsonValue(Source.cDV));
+    Json.ObjAddProp(Result, 'serie', Self.IntegerToJsonValue(Source.serie));
+    Json.ObjAddProp(Result, 'nCT', Self.IntegerToJsonValue(Source.nCT));
+    Json.ObjAddProp(Result, 'dhEmi', Self.TDateTimeToJsonValue(Source.dhEmi));
+    Json.ObjAddProp(Result, 'tpImp', Self.IntegerToJsonValue(Source.tpImp));
+    Json.ObjAddProp(Result, 'tpEmis', Self.IntegerToJsonValue(Source.tpEmis));
+    Json.ObjAddProp(Result, 'cDV', Self.IntegerToJsonValue(Source.cDV));
     if Source.tpAmbHasValue then
       Json.ObjAddProp(Result, 'tpAmb', Self.IntegerToJsonValue(Source.tpAmb));
-    if Source.tpCTeHasValue then
-      Json.ObjAddProp(Result, 'tpCTe', Self.IntegerToJsonValue(Source.tpCTe));
-    if Source.procEmiHasValue then
-      Json.ObjAddProp(Result, 'procEmi', Self.IntegerToJsonValue(Source.procEmi));
-    if Source.verProcHasValue then
-      Json.ObjAddProp(Result, 'verProc', Self.stringToJsonValue(Source.verProc));
+    Json.ObjAddProp(Result, 'tpCTe', Self.IntegerToJsonValue(Source.tpCTe));
+    Json.ObjAddProp(Result, 'procEmi', Self.IntegerToJsonValue(Source.procEmi));
+    Json.ObjAddProp(Result, 'verProc', Self.stringToJsonValue(Source.verProc));
     if Source.indGlobalizadoHasValue then
       Json.ObjAddProp(Result, 'indGlobalizado', Self.IntegerToJsonValue(Source.indGlobalizado));
-    if Source.cMunEnvHasValue then
-      Json.ObjAddProp(Result, 'cMunEnv', Self.IntegerToJsonValue(Source.cMunEnv));
-    if Source.xMunEnvHasValue then
-      Json.ObjAddProp(Result, 'xMunEnv', Self.stringToJsonValue(Source.xMunEnv));
-    if Source.UFEnvHasValue then
-      Json.ObjAddProp(Result, 'UFEnv', Self.stringToJsonValue(Source.UFEnv));
-    if Source.modalHasValue then
-      Json.ObjAddProp(Result, 'modal', Self.stringToJsonValue(Source.modal));
-    if Source.tpServHasValue then
-      Json.ObjAddProp(Result, 'tpServ', Self.IntegerToJsonValue(Source.tpServ));
-    if Source.cMunIniHasValue then
-      Json.ObjAddProp(Result, 'cMunIni', Self.IntegerToJsonValue(Source.cMunIni));
-    if Source.xMunIniHasValue then
-      Json.ObjAddProp(Result, 'xMunIni', Self.stringToJsonValue(Source.xMunIni));
-    if Source.UFIniHasValue then
-      Json.ObjAddProp(Result, 'UFIni', Self.stringToJsonValue(Source.UFIni));
-    if Source.cMunFimHasValue then
-      Json.ObjAddProp(Result, 'cMunFim', Self.IntegerToJsonValue(Source.cMunFim));
-    if Source.xMunFimHasValue then
-      Json.ObjAddProp(Result, 'xMunFim', Self.stringToJsonValue(Source.xMunFim));
-    if Source.UFFimHasValue then
-      Json.ObjAddProp(Result, 'UFFim', Self.stringToJsonValue(Source.UFFim));
-    if Source.retiraHasValue then
-      Json.ObjAddProp(Result, 'retira', Self.IntegerToJsonValue(Source.retira));
+    Json.ObjAddProp(Result, 'cMunEnv', Self.IntegerToJsonValue(Source.cMunEnv));
+    Json.ObjAddProp(Result, 'xMunEnv', Self.stringToJsonValue(Source.xMunEnv));
+    Json.ObjAddProp(Result, 'UFEnv', Self.stringToJsonValue(Source.UFEnv));
+    Json.ObjAddProp(Result, 'modal', Self.stringToJsonValue(Source.modal));
+    Json.ObjAddProp(Result, 'tpServ', Self.IntegerToJsonValue(Source.tpServ));
+    Json.ObjAddProp(Result, 'cMunIni', Self.IntegerToJsonValue(Source.cMunIni));
+    Json.ObjAddProp(Result, 'xMunIni', Self.stringToJsonValue(Source.xMunIni));
+    Json.ObjAddProp(Result, 'UFIni', Self.stringToJsonValue(Source.UFIni));
+    Json.ObjAddProp(Result, 'cMunFim', Self.IntegerToJsonValue(Source.cMunFim));
+    Json.ObjAddProp(Result, 'xMunFim', Self.stringToJsonValue(Source.xMunFim));
+    Json.ObjAddProp(Result, 'UFFim', Self.stringToJsonValue(Source.UFFim));
+    Json.ObjAddProp(Result, 'retira', Self.IntegerToJsonValue(Source.retira));
     if Source.xDetRetiraHasValue then
       Json.ObjAddProp(Result, 'xDetRetira', Self.stringToJsonValue(Source.xDetRetira));
-    if Source.indIETomaHasValue then
-      Json.ObjAddProp(Result, 'indIEToma', Self.IntegerToJsonValue(Source.indIEToma));
+    Json.ObjAddProp(Result, 'indIEToma', Self.IntegerToJsonValue(Source.indIEToma));
     if Assigned(Source.toma3) then
       Json.ObjAddProp(Result, 'toma3', Self.TCteSefazToma3ToJsonValue(Source.toma3));
     if Assigned(Source.toma4) then
@@ -5516,8 +5461,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpPerHasValue then
-      Json.ObjAddProp(Result, 'tpPer', Self.IntegerToJsonValue(Source.tpPer));
+    Json.ObjAddProp(Result, 'tpPer', Self.IntegerToJsonValue(Source.tpPer));
   except
     Result.Free;
     raise;
@@ -5576,10 +5520,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpPerHasValue then
-      Json.ObjAddProp(Result, 'tpPer', Self.IntegerToJsonValue(Source.tpPer));
-    if Source.dProgHasValue then
-      Json.ObjAddProp(Result, 'dProg', Self.TDateToJsonValue(Source.dProg));
+    Json.ObjAddProp(Result, 'tpPer', Self.IntegerToJsonValue(Source.tpPer));
+    Json.ObjAddProp(Result, 'dProg', Self.TDateToJsonValue(Source.dProg));
   except
     Result.Free;
     raise;
@@ -5640,12 +5582,9 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpPerHasValue then
-      Json.ObjAddProp(Result, 'tpPer', Self.IntegerToJsonValue(Source.tpPer));
-    if Source.dIniHasValue then
-      Json.ObjAddProp(Result, 'dIni', Self.TDateToJsonValue(Source.dIni));
-    if Source.dFimHasValue then
-      Json.ObjAddProp(Result, 'dFim', Self.TDateToJsonValue(Source.dFim));
+    Json.ObjAddProp(Result, 'tpPer', Self.IntegerToJsonValue(Source.tpPer));
+    Json.ObjAddProp(Result, 'dIni', Self.TDateToJsonValue(Source.dIni));
+    Json.ObjAddProp(Result, 'dFim', Self.TDateToJsonValue(Source.dFim));
   except
     Result.Free;
     raise;
@@ -5708,8 +5647,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpHorHasValue then
-      Json.ObjAddProp(Result, 'tpHor', Self.IntegerToJsonValue(Source.tpHor));
+    Json.ObjAddProp(Result, 'tpHor', Self.IntegerToJsonValue(Source.tpHor));
   except
     Result.Free;
     raise;
@@ -5768,10 +5706,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpHorHasValue then
-      Json.ObjAddProp(Result, 'tpHor', Self.IntegerToJsonValue(Source.tpHor));
-    if Source.hProgHasValue then
-      Json.ObjAddProp(Result, 'hProg', Self.stringToJsonValue(Source.hProg));
+    Json.ObjAddProp(Result, 'tpHor', Self.IntegerToJsonValue(Source.tpHor));
+    Json.ObjAddProp(Result, 'hProg', Self.stringToJsonValue(Source.hProg));
   except
     Result.Free;
     raise;
@@ -5832,12 +5768,9 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpHorHasValue then
-      Json.ObjAddProp(Result, 'tpHor', Self.IntegerToJsonValue(Source.tpHor));
-    if Source.hIniHasValue then
-      Json.ObjAddProp(Result, 'hIni', Self.stringToJsonValue(Source.hIni));
-    if Source.hFimHasValue then
-      Json.ObjAddProp(Result, 'hFim', Self.stringToJsonValue(Source.hFim));
+    Json.ObjAddProp(Result, 'tpHor', Self.IntegerToJsonValue(Source.tpHor));
+    Json.ObjAddProp(Result, 'hIni', Self.stringToJsonValue(Source.hIni));
+    Json.ObjAddProp(Result, 'hFim', Self.stringToJsonValue(Source.hFim));
   except
     Result.Free;
     raise;
@@ -5982,8 +5915,7 @@ begin
   try
     if Source.xCampoHasValue then
       Json.ObjAddProp(Result, 'xCampo', Self.stringToJsonValue(Source.xCampo));
-    if Source.xTextoHasValue then
-      Json.ObjAddProp(Result, 'xTexto', Self.stringToJsonValue(Source.xTexto));
+    Json.ObjAddProp(Result, 'xTexto', Self.stringToJsonValue(Source.xTexto));
   except
     Result.Free;
     raise;
@@ -6108,8 +6040,7 @@ begin
   try
     if Source.xCampoHasValue then
       Json.ObjAddProp(Result, 'xCampo', Self.stringToJsonValue(Source.xCampo));
-    if Source.xTextoHasValue then
-      Json.ObjAddProp(Result, 'xTexto', Self.stringToJsonValue(Source.xTexto));
+    Json.ObjAddProp(Result, 'xTexto', Self.stringToJsonValue(Source.xTexto));
   except
     Result.Free;
     raise;
@@ -6510,14 +6441,12 @@ begin
       Json.ObjAddProp(Result, 'CPF', Self.stringToJsonValue(Source.CPF));
     if Source.IEHasValue then
       Json.ObjAddProp(Result, 'IE', Self.stringToJsonValue(Source.IE));
-    if Source.xNomeHasValue then
-      Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
+    Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
     if Source.xFantHasValue then
       Json.ObjAddProp(Result, 'xFant', Self.stringToJsonValue(Source.xFant));
     if Source.foneHasValue then
       Json.ObjAddProp(Result, 'fone', Self.stringToJsonValue(Source.fone));
-    if Assigned(Source.enderReme) then
-      Json.ObjAddProp(Result, 'enderReme', Self.TCteSefazEnderecoToJsonValue(Source.enderReme));
+    Json.ObjAddProp(Result, 'enderReme', Self.TCteSefazEnderecoToJsonValue(Source.enderReme));
     if Source.emailHasValue then
       Json.ObjAddProp(Result, 'email', Self.stringToJsonValue(Source.email));
   except
@@ -6598,12 +6527,10 @@ begin
       Json.ObjAddProp(Result, 'CPF', Self.stringToJsonValue(Source.CPF));
     if Source.IEHasValue then
       Json.ObjAddProp(Result, 'IE', Self.stringToJsonValue(Source.IE));
-    if Source.xNomeHasValue then
-      Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
+    Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
     if Source.foneHasValue then
       Json.ObjAddProp(Result, 'fone', Self.stringToJsonValue(Source.fone));
-    if Assigned(Source.enderExped) then
-      Json.ObjAddProp(Result, 'enderExped', Self.TCteSefazEnderecoToJsonValue(Source.enderExped));
+    Json.ObjAddProp(Result, 'enderExped', Self.TCteSefazEnderecoToJsonValue(Source.enderExped));
     if Source.emailHasValue then
       Json.ObjAddProp(Result, 'email', Self.stringToJsonValue(Source.email));
   except
@@ -6682,12 +6609,10 @@ begin
       Json.ObjAddProp(Result, 'CPF', Self.stringToJsonValue(Source.CPF));
     if Source.IEHasValue then
       Json.ObjAddProp(Result, 'IE', Self.stringToJsonValue(Source.IE));
-    if Source.xNomeHasValue then
-      Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
+    Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
     if Source.foneHasValue then
       Json.ObjAddProp(Result, 'fone', Self.stringToJsonValue(Source.fone));
-    if Assigned(Source.enderReceb) then
-      Json.ObjAddProp(Result, 'enderReceb', Self.TCteSefazEnderecoToJsonValue(Source.enderReceb));
+    Json.ObjAddProp(Result, 'enderReceb', Self.TCteSefazEnderecoToJsonValue(Source.enderReceb));
     if Source.emailHasValue then
       Json.ObjAddProp(Result, 'email', Self.stringToJsonValue(Source.email));
   except
@@ -6766,14 +6691,12 @@ begin
       Json.ObjAddProp(Result, 'CPF', Self.stringToJsonValue(Source.CPF));
     if Source.IEHasValue then
       Json.ObjAddProp(Result, 'IE', Self.stringToJsonValue(Source.IE));
-    if Source.xNomeHasValue then
-      Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
+    Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
     if Source.foneHasValue then
       Json.ObjAddProp(Result, 'fone', Self.stringToJsonValue(Source.fone));
     if Source.ISUFHasValue then
       Json.ObjAddProp(Result, 'ISUF', Self.stringToJsonValue(Source.ISUF));
-    if Assigned(Source.enderDest) then
-      Json.ObjAddProp(Result, 'enderDest', Self.TCteSefazEnderecoToJsonValue(Source.enderDest));
+    Json.ObjAddProp(Result, 'enderDest', Self.TCteSefazEnderecoToJsonValue(Source.enderDest));
     if Source.emailHasValue then
       Json.ObjAddProp(Result, 'email', Self.stringToJsonValue(Source.email));
   except
@@ -6848,10 +6771,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.xNomeHasValue then
-      Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
-    if Source.vCompHasValue then
-      Json.ObjAddProp(Result, 'vComp', Self.DoubleToJsonValue(Source.vComp));
+    Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
+    Json.ObjAddProp(Result, 'vComp', Self.DoubleToJsonValue(Source.vComp));
   except
     Result.Free;
     raise;
@@ -6974,10 +6895,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.vTPrestHasValue then
-      Json.ObjAddProp(Result, 'vTPrest', Self.DoubleToJsonValue(Source.vTPrest));
-    if Source.vRecHasValue then
-      Json.ObjAddProp(Result, 'vRec', Self.DoubleToJsonValue(Source.vRec));
+    Json.ObjAddProp(Result, 'vTPrest', Self.DoubleToJsonValue(Source.vTPrest));
+    Json.ObjAddProp(Result, 'vRec', Self.DoubleToJsonValue(Source.vRec));
     if Assigned(Source.Comp) then
       Json.ObjAddProp(Result, 'Comp', Self.TCteSefazCompListToJsonValue(Source.Comp));
   except
@@ -7042,14 +6961,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    if Source.vBCHasValue then
-      Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
-    if Source.pICMSHasValue then
-      Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
-    if Source.vICMSHasValue then
-      Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
+    Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
+    Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
   except
     Result.Free;
     raise;
@@ -7114,16 +7029,11 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    if Source.pRedBCHasValue then
-      Json.ObjAddProp(Result, 'pRedBC', Self.DoubleToJsonValue(Source.pRedBC));
-    if Source.vBCHasValue then
-      Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
-    if Source.pICMSHasValue then
-      Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
-    if Source.vICMSHasValue then
-      Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'pRedBC', Self.DoubleToJsonValue(Source.pRedBC));
+    Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
+    Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
+    Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
   except
     Result.Free;
     raise;
@@ -7190,8 +7100,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
   except
     Result.Free;
     raise;
@@ -7250,14 +7159,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    if Source.vBCSTRetHasValue then
-      Json.ObjAddProp(Result, 'vBCSTRet', Self.DoubleToJsonValue(Source.vBCSTRet));
-    if Source.vICMSSTRetHasValue then
-      Json.ObjAddProp(Result, 'vICMSSTRet', Self.DoubleToJsonValue(Source.vICMSSTRet));
-    if Source.pICMSSTRetHasValue then
-      Json.ObjAddProp(Result, 'pICMSSTRet', Self.DoubleToJsonValue(Source.pICMSSTRet));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'vBCSTRet', Self.DoubleToJsonValue(Source.vBCSTRet));
+    Json.ObjAddProp(Result, 'vICMSSTRet', Self.DoubleToJsonValue(Source.vICMSSTRet));
+    Json.ObjAddProp(Result, 'pICMSSTRet', Self.DoubleToJsonValue(Source.pICMSSTRet));
     if Source.vCredHasValue then
       Json.ObjAddProp(Result, 'vCred', Self.DoubleToJsonValue(Source.vCred));
   except
@@ -7326,16 +7231,12 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
     if Source.pRedBCHasValue then
       Json.ObjAddProp(Result, 'pRedBC', Self.DoubleToJsonValue(Source.pRedBC));
-    if Source.vBCHasValue then
-      Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
-    if Source.pICMSHasValue then
-      Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
-    if Source.vICMSHasValue then
-      Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
+    Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
+    Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
+    Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
     if Source.vCredHasValue then
       Json.ObjAddProp(Result, 'vCred', Self.DoubleToJsonValue(Source.vCred));
   except
@@ -7406,16 +7307,12 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
     if Source.pRedBCOutraUFHasValue then
       Json.ObjAddProp(Result, 'pRedBCOutraUF', Self.DoubleToJsonValue(Source.pRedBCOutraUF));
-    if Source.vBCOutraUFHasValue then
-      Json.ObjAddProp(Result, 'vBCOutraUF', Self.DoubleToJsonValue(Source.vBCOutraUF));
-    if Source.pICMSOutraUFHasValue then
-      Json.ObjAddProp(Result, 'pICMSOutraUF', Self.DoubleToJsonValue(Source.pICMSOutraUF));
-    if Source.vICMSOutraUFHasValue then
-      Json.ObjAddProp(Result, 'vICMSOutraUF', Self.DoubleToJsonValue(Source.vICMSOutraUF));
+    Json.ObjAddProp(Result, 'vBCOutraUF', Self.DoubleToJsonValue(Source.vBCOutraUF));
+    Json.ObjAddProp(Result, 'pICMSOutraUF', Self.DoubleToJsonValue(Source.pICMSOutraUF));
+    Json.ObjAddProp(Result, 'vICMSOutraUF', Self.DoubleToJsonValue(Source.vICMSOutraUF));
   except
     Result.Free;
     raise;
@@ -7482,10 +7379,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    if Source.indSNHasValue then
-      Json.ObjAddProp(Result, 'indSN', Self.IntegerToJsonValue(Source.indSN));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'indSN', Self.IntegerToJsonValue(Source.indSN));
   except
     Result.Free;
     raise;
@@ -7630,20 +7525,13 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.vBCUFFimHasValue then
-      Json.ObjAddProp(Result, 'vBCUFFim', Self.DoubleToJsonValue(Source.vBCUFFim));
-    if Source.pFCPUFFimHasValue then
-      Json.ObjAddProp(Result, 'pFCPUFFim', Self.DoubleToJsonValue(Source.pFCPUFFim));
-    if Source.pICMSUFFimHasValue then
-      Json.ObjAddProp(Result, 'pICMSUFFim', Self.DoubleToJsonValue(Source.pICMSUFFim));
-    if Source.pICMSInterHasValue then
-      Json.ObjAddProp(Result, 'pICMSInter', Self.DoubleToJsonValue(Source.pICMSInter));
-    if Source.vFCPUFFimHasValue then
-      Json.ObjAddProp(Result, 'vFCPUFFim', Self.DoubleToJsonValue(Source.vFCPUFFim));
-    if Source.vICMSUFFimHasValue then
-      Json.ObjAddProp(Result, 'vICMSUFFim', Self.DoubleToJsonValue(Source.vICMSUFFim));
-    if Source.vICMSUFIniHasValue then
-      Json.ObjAddProp(Result, 'vICMSUFIni', Self.DoubleToJsonValue(Source.vICMSUFIni));
+    Json.ObjAddProp(Result, 'vBCUFFim', Self.DoubleToJsonValue(Source.vBCUFFim));
+    Json.ObjAddProp(Result, 'pFCPUFFim', Self.DoubleToJsonValue(Source.pFCPUFFim));
+    Json.ObjAddProp(Result, 'pICMSUFFim', Self.DoubleToJsonValue(Source.pICMSUFFim));
+    Json.ObjAddProp(Result, 'pICMSInter', Self.DoubleToJsonValue(Source.pICMSInter));
+    Json.ObjAddProp(Result, 'vFCPUFFim', Self.DoubleToJsonValue(Source.vFCPUFFim));
+    Json.ObjAddProp(Result, 'vICMSUFFim', Self.DoubleToJsonValue(Source.vICMSUFFim));
+    Json.ObjAddProp(Result, 'vICMSUFIni', Self.DoubleToJsonValue(Source.vICMSUFIni));
   except
     Result.Free;
     raise;
@@ -7714,8 +7602,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.ICMS) then
-      Json.ObjAddProp(Result, 'ICMS', Self.TCteSefazImpToJsonValue(Source.ICMS));
+    Json.ObjAddProp(Result, 'ICMS', Self.TCteSefazImpToJsonValue(Source.ICMS));
     if Source.vTotTribHasValue then
       Json.ObjAddProp(Result, 'vTotTrib', Self.DoubleToJsonValue(Source.vTotTrib));
     if Source.infAdFiscoHasValue then
@@ -7786,12 +7673,9 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cUnidHasValue then
-      Json.ObjAddProp(Result, 'cUnid', Self.stringToJsonValue(Source.cUnid));
-    if Source.tpMedHasValue then
-      Json.ObjAddProp(Result, 'tpMed', Self.stringToJsonValue(Source.tpMed));
-    if Source.qCargaHasValue then
-      Json.ObjAddProp(Result, 'qCarga', Self.DoubleToJsonValue(Source.qCarga));
+    Json.ObjAddProp(Result, 'cUnid', Self.stringToJsonValue(Source.cUnid));
+    Json.ObjAddProp(Result, 'tpMed', Self.stringToJsonValue(Source.tpMed));
+    Json.ObjAddProp(Result, 'qCarga', Self.DoubleToJsonValue(Source.qCarga));
   except
     Result.Free;
     raise;
@@ -7918,12 +7802,10 @@ begin
   try
     if Source.vCargaHasValue then
       Json.ObjAddProp(Result, 'vCarga', Self.DoubleToJsonValue(Source.vCarga));
-    if Source.proPredHasValue then
-      Json.ObjAddProp(Result, 'proPred', Self.stringToJsonValue(Source.proPred));
+    Json.ObjAddProp(Result, 'proPred', Self.stringToJsonValue(Source.proPred));
     if Source.xOutCatHasValue then
       Json.ObjAddProp(Result, 'xOutCat', Self.stringToJsonValue(Source.xOutCat));
-    if Assigned(Source.infQ) then
-      Json.ObjAddProp(Result, 'infQ', Self.TCteSefazInfQListToJsonValue(Source.infQ));
+    Json.ObjAddProp(Result, 'infQ', Self.TCteSefazInfQListToJsonValue(Source.infQ));
     if Source.vCargaAverbHasValue then
       Json.ObjAddProp(Result, 'vCargaAverb', Self.DoubleToJsonValue(Source.vCargaAverb));
   except
@@ -7992,8 +7874,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nLacreHasValue then
-      Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
+    Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
   except
     Result.Free;
     raise;
@@ -8114,10 +7995,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpUnidCargaHasValue then
-      Json.ObjAddProp(Result, 'tpUnidCarga', Self.IntegerToJsonValue(Source.tpUnidCarga));
-    if Source.idUnidCargaHasValue then
-      Json.ObjAddProp(Result, 'idUnidCarga', Self.stringToJsonValue(Source.idUnidCarga));
+    Json.ObjAddProp(Result, 'tpUnidCarga', Self.IntegerToJsonValue(Source.tpUnidCarga));
+    Json.ObjAddProp(Result, 'idUnidCarga', Self.stringToJsonValue(Source.idUnidCarga));
     if Assigned(Source.lacUnidCarga) then
       Json.ObjAddProp(Result, 'lacUnidCarga', Self.TCteSefazLacUnidCargaListToJsonValue(Source.lacUnidCarga));
     if Source.qtdRatHasValue then
@@ -8248,8 +8127,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nLacreHasValue then
-      Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
+    Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
   except
     Result.Free;
     raise;
@@ -8370,10 +8248,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpUnidTranspHasValue then
-      Json.ObjAddProp(Result, 'tpUnidTransp', Self.IntegerToJsonValue(Source.tpUnidTransp));
-    if Source.idUnidTranspHasValue then
-      Json.ObjAddProp(Result, 'idUnidTransp', Self.stringToJsonValue(Source.idUnidTransp));
+    Json.ObjAddProp(Result, 'tpUnidTransp', Self.IntegerToJsonValue(Source.tpUnidTransp));
+    Json.ObjAddProp(Result, 'idUnidTransp', Self.stringToJsonValue(Source.idUnidTransp));
     if Assigned(Source.lacUnidTransp) then
       Json.ObjAddProp(Result, 'lacUnidTransp', Self.TCteSefazLacUnidTranspListToJsonValue(Source.lacUnidTransp));
     if Assigned(Source.infUnidCarga) then
@@ -8512,28 +8388,17 @@ begin
       Json.ObjAddProp(Result, 'nRoma', Self.stringToJsonValue(Source.nRoma));
     if Source.nPedHasValue then
       Json.ObjAddProp(Result, 'nPed', Self.stringToJsonValue(Source.nPed));
-    if Source.&modHasValue then
-      Json.ObjAddProp(Result, 'mod', Self.stringToJsonValue(Source.&mod));
-    if Source.serieHasValue then
-      Json.ObjAddProp(Result, 'serie', Self.stringToJsonValue(Source.serie));
-    if Source.nDocHasValue then
-      Json.ObjAddProp(Result, 'nDoc', Self.stringToJsonValue(Source.nDoc));
-    if Source.dEmiHasValue then
-      Json.ObjAddProp(Result, 'dEmi', Self.TDateToJsonValue(Source.dEmi));
-    if Source.vBCHasValue then
-      Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
-    if Source.vICMSHasValue then
-      Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
-    if Source.vBCSTHasValue then
-      Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
-    if Source.vSTHasValue then
-      Json.ObjAddProp(Result, 'vST', Self.DoubleToJsonValue(Source.vST));
-    if Source.vProdHasValue then
-      Json.ObjAddProp(Result, 'vProd', Self.DoubleToJsonValue(Source.vProd));
-    if Source.vNFHasValue then
-      Json.ObjAddProp(Result, 'vNF', Self.DoubleToJsonValue(Source.vNF));
-    if Source.nCFOPHasValue then
-      Json.ObjAddProp(Result, 'nCFOP', Self.IntegerToJsonValue(Source.nCFOP));
+    Json.ObjAddProp(Result, 'mod', Self.stringToJsonValue(Source.&mod));
+    Json.ObjAddProp(Result, 'serie', Self.stringToJsonValue(Source.serie));
+    Json.ObjAddProp(Result, 'nDoc', Self.stringToJsonValue(Source.nDoc));
+    Json.ObjAddProp(Result, 'dEmi', Self.TDateToJsonValue(Source.dEmi));
+    Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
+    Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
+    Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
+    Json.ObjAddProp(Result, 'vST', Self.DoubleToJsonValue(Source.vST));
+    Json.ObjAddProp(Result, 'vProd', Self.DoubleToJsonValue(Source.vProd));
+    Json.ObjAddProp(Result, 'vNF', Self.DoubleToJsonValue(Source.vNF));
+    Json.ObjAddProp(Result, 'nCFOP', Self.IntegerToJsonValue(Source.nCFOP));
     if Source.nPesoHasValue then
       Json.ObjAddProp(Result, 'nPeso', Self.DoubleToJsonValue(Source.nPeso));
     if Source.PINHasValue then
@@ -8698,8 +8563,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.chaveHasValue then
-      Json.ObjAddProp(Result, 'chave', Self.stringToJsonValue(Source.chave));
+    Json.ObjAddProp(Result, 'chave', Self.stringToJsonValue(Source.chave));
     if Source.PINHasValue then
       Json.ObjAddProp(Result, 'PIN', Self.stringToJsonValue(Source.PIN));
     if Source.dPrevHasValue then
@@ -8836,8 +8700,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpDocHasValue then
-      Json.ObjAddProp(Result, 'tpDoc', Self.stringToJsonValue(Source.tpDoc));
+    Json.ObjAddProp(Result, 'tpDoc', Self.stringToJsonValue(Source.tpDoc));
     if Source.descOutrosHasValue then
       Json.ObjAddProp(Result, 'descOutros', Self.stringToJsonValue(Source.descOutros));
     if Source.nDocHasValue then
@@ -9054,16 +8917,12 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpDocHasValue then
-      Json.ObjAddProp(Result, 'tpDoc', Self.stringToJsonValue(Source.tpDoc));
-    if Source.serieHasValue then
-      Json.ObjAddProp(Result, 'serie', Self.stringToJsonValue(Source.serie));
+    Json.ObjAddProp(Result, 'tpDoc', Self.stringToJsonValue(Source.tpDoc));
+    Json.ObjAddProp(Result, 'serie', Self.stringToJsonValue(Source.serie));
     if Source.subserHasValue then
       Json.ObjAddProp(Result, 'subser', Self.stringToJsonValue(Source.subser));
-    if Source.nDocHasValue then
-      Json.ObjAddProp(Result, 'nDoc', Self.stringToJsonValue(Source.nDoc));
-    if Source.dEmiHasValue then
-      Json.ObjAddProp(Result, 'dEmi', Self.TDateToJsonValue(Source.dEmi));
+    Json.ObjAddProp(Result, 'nDoc', Self.stringToJsonValue(Source.nDoc));
+    Json.ObjAddProp(Result, 'dEmi', Self.TDateToJsonValue(Source.dEmi));
   except
     Result.Free;
     raise;
@@ -9192,8 +9051,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.chCTeHasValue then
-      Json.ObjAddProp(Result, 'chCTe', Self.stringToJsonValue(Source.chCTe));
+    Json.ObjAddProp(Result, 'chCTe', Self.stringToJsonValue(Source.chCTe));
   except
     Result.Free;
     raise;
@@ -9448,10 +9306,8 @@ begin
       Json.ObjAddProp(Result, 'IE', Self.stringToJsonValue(Source.IE));
     if Source.UFHasValue then
       Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
-    if Source.xNomeHasValue then
-      Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
-    if Assigned(Source.idDocAnt) then
-      Json.ObjAddProp(Result, 'idDocAnt', Self.TCteSefazIdDocAntListToJsonValue(Source.idDocAnt));
+    Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
+    Json.ObjAddProp(Result, 'idDocAnt', Self.TCteSefazIdDocAntListToJsonValue(Source.idDocAnt));
   except
     Result.Free;
     raise;
@@ -9582,8 +9438,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.emiDocAnt) then
-      Json.ObjAddProp(Result, 'emiDocAnt', Self.TCteSefazEmiDocAntListToJsonValue(Source.emiDocAnt));
+    Json.ObjAddProp(Result, 'emiDocAnt', Self.TCteSefazEmiDocAntListToJsonValue(Source.emiDocAnt));
   except
     Result.Free;
     raise;
@@ -9642,14 +9497,11 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CNPJHasValue then
-      Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
+    Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
     if Source.cIntHasValue then
       Json.ObjAddProp(Result, 'cInt', Self.stringToJsonValue(Source.cInt));
-    if Source.IEHasValue then
-      Json.ObjAddProp(Result, 'IE', Self.stringToJsonValue(Source.IE));
-    if Source.UFHasValue then
-      Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
+    Json.ObjAddProp(Result, 'IE', Self.stringToJsonValue(Source.IE));
+    Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
     if Source.foneHasValue then
       Json.ObjAddProp(Result, 'fone', Self.stringToJsonValue(Source.fone));
   except
@@ -9720,10 +9572,8 @@ begin
   try
     if Source.serieHasValue then
       Json.ObjAddProp(Result, 'serie', Self.stringToJsonValue(Source.serie));
-    if Source.nOccHasValue then
-      Json.ObjAddProp(Result, 'nOcc', Self.IntegerToJsonValue(Source.nOcc));
-    if Source.dEmiHasValue then
-      Json.ObjAddProp(Result, 'dEmi', Self.TDateToJsonValue(Source.dEmi));
+    Json.ObjAddProp(Result, 'nOcc', Self.IntegerToJsonValue(Source.nOcc));
+    Json.ObjAddProp(Result, 'dEmi', Self.TDateToJsonValue(Source.dEmi));
     if Assigned(Source.emiOcc) then
       Json.ObjAddProp(Result, 'emiOcc', Self.TCteSefazEmiOccToJsonValue(Source.emiOcc));
   except
@@ -9852,8 +9702,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.RNTRCHasValue then
-      Json.ObjAddProp(Result, 'RNTRC', Self.stringToJsonValue(Source.RNTRC));
+    Json.ObjAddProp(Result, 'RNTRC', Self.stringToJsonValue(Source.RNTRC));
     if Assigned(Source.occ) then
       Json.ObjAddProp(Result, 'occ', Self.TCteSefazOccListToJsonValue(Source.occ));
   except
@@ -10042,12 +9891,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CLHasValue then
-      Json.ObjAddProp(Result, 'CL', Self.stringToJsonValue(Source.CL));
+    Json.ObjAddProp(Result, 'CL', Self.stringToJsonValue(Source.CL));
     if Source.cTarHasValue then
       Json.ObjAddProp(Result, 'cTar', Self.stringToJsonValue(Source.cTar));
-    if Source.vTarHasValue then
-      Json.ObjAddProp(Result, 'vTar', Self.DoubleToJsonValue(Source.vTar));
+    Json.ObjAddProp(Result, 'vTar', Self.DoubleToJsonValue(Source.vTar));
   except
     Result.Free;
     raise;
@@ -10110,10 +9957,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.qTotProdHasValue then
-      Json.ObjAddProp(Result, 'qTotProd', Self.DoubleToJsonValue(Source.qTotProd));
-    if Source.uniAPHasValue then
-      Json.ObjAddProp(Result, 'uniAP', Self.IntegerToJsonValue(Source.uniAP));
+    Json.ObjAddProp(Result, 'qTotProd', Self.DoubleToJsonValue(Source.qTotProd));
+    Json.ObjAddProp(Result, 'uniAP', Self.IntegerToJsonValue(Source.uniAP));
   except
     Result.Free;
     raise;
@@ -10174,12 +10019,9 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nONUHasValue then
-      Json.ObjAddProp(Result, 'nONU', Self.stringToJsonValue(Source.nONU));
-    if Source.qTotEmbHasValue then
-      Json.ObjAddProp(Result, 'qTotEmb', Self.stringToJsonValue(Source.qTotEmb));
-    if Assigned(Source.infTotAP) then
-      Json.ObjAddProp(Result, 'infTotAP', Self.TCteSefazInfTotAPToJsonValue(Source.infTotAP));
+    Json.ObjAddProp(Result, 'nONU', Self.stringToJsonValue(Source.nONU));
+    Json.ObjAddProp(Result, 'qTotEmb', Self.stringToJsonValue(Source.qTotEmb));
+    Json.ObjAddProp(Result, 'infTotAP', Self.TCteSefazInfTotAPToJsonValue(Source.infTotAP));
   except
     Result.Free;
     raise;
@@ -10308,12 +10150,9 @@ begin
       Json.ObjAddProp(Result, 'nMinu', Self.IntegerToJsonValue(Source.nMinu));
     if Source.nOCAHasValue then
       Json.ObjAddProp(Result, 'nOCA', Self.stringToJsonValue(Source.nOCA));
-    if Source.dPrevAereoHasValue then
-      Json.ObjAddProp(Result, 'dPrevAereo', Self.TDateToJsonValue(Source.dPrevAereo));
-    if Assigned(Source.natCarga) then
-      Json.ObjAddProp(Result, 'natCarga', Self.TCteSefazNatCargaToJsonValue(Source.natCarga));
-    if Assigned(Source.tarifa) then
-      Json.ObjAddProp(Result, 'tarifa', Self.TCteSefazTarifaToJsonValue(Source.tarifa));
+    Json.ObjAddProp(Result, 'dPrevAereo', Self.TDateToJsonValue(Source.dPrevAereo));
+    Json.ObjAddProp(Result, 'natCarga', Self.TCteSefazNatCargaToJsonValue(Source.natCarga));
+    Json.ObjAddProp(Result, 'tarifa', Self.TCteSefazTarifaToJsonValue(Source.tarifa));
     if Assigned(Source.peri) then
       Json.ObjAddProp(Result, 'peri', Self.TCteSefazPeriListToJsonValue(Source.peri));
   except
@@ -10384,22 +10223,17 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.xLgrHasValue then
-      Json.ObjAddProp(Result, 'xLgr', Self.stringToJsonValue(Source.xLgr));
+    Json.ObjAddProp(Result, 'xLgr', Self.stringToJsonValue(Source.xLgr));
     if Source.nroHasValue then
       Json.ObjAddProp(Result, 'nro', Self.stringToJsonValue(Source.nro));
     if Source.xCplHasValue then
       Json.ObjAddProp(Result, 'xCpl', Self.stringToJsonValue(Source.xCpl));
     if Source.xBairroHasValue then
       Json.ObjAddProp(Result, 'xBairro', Self.stringToJsonValue(Source.xBairro));
-    if Source.cMunHasValue then
-      Json.ObjAddProp(Result, 'cMun', Self.IntegerToJsonValue(Source.cMun));
-    if Source.xMunHasValue then
-      Json.ObjAddProp(Result, 'xMun', Self.stringToJsonValue(Source.xMun));
-    if Source.CEPHasValue then
-      Json.ObjAddProp(Result, 'CEP', Self.IntegerToJsonValue(Source.CEP));
-    if Source.UFHasValue then
-      Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
+    Json.ObjAddProp(Result, 'cMun', Self.IntegerToJsonValue(Source.cMun));
+    Json.ObjAddProp(Result, 'xMun', Self.stringToJsonValue(Source.xMun));
+    Json.ObjAddProp(Result, 'CEP', Self.IntegerToJsonValue(Source.CEP));
+    Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
   except
     Result.Free;
     raise;
@@ -10472,16 +10306,13 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CNPJHasValue then
-      Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
+    Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
     if Source.cIntHasValue then
       Json.ObjAddProp(Result, 'cInt', Self.stringToJsonValue(Source.cInt));
     if Source.IEHasValue then
       Json.ObjAddProp(Result, 'IE', Self.stringToJsonValue(Source.IE));
-    if Source.xNomeHasValue then
-      Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
-    if Assigned(Source.enderFerro) then
-      Json.ObjAddProp(Result, 'enderFerro', Self.TCteSefazEnderFerToJsonValue(Source.enderFerro));
+    Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
+    Json.ObjAddProp(Result, 'enderFerro', Self.TCteSefazEnderFerToJsonValue(Source.enderFerro));
   except
     Result.Free;
     raise;
@@ -10610,12 +10441,9 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.respFatHasValue then
-      Json.ObjAddProp(Result, 'respFat', Self.IntegerToJsonValue(Source.respFat));
-    if Source.ferrEmiHasValue then
-      Json.ObjAddProp(Result, 'ferrEmi', Self.IntegerToJsonValue(Source.ferrEmi));
-    if Source.vFreteHasValue then
-      Json.ObjAddProp(Result, 'vFrete', Self.DoubleToJsonValue(Source.vFrete));
+    Json.ObjAddProp(Result, 'respFat', Self.IntegerToJsonValue(Source.respFat));
+    Json.ObjAddProp(Result, 'ferrEmi', Self.IntegerToJsonValue(Source.ferrEmi));
+    Json.ObjAddProp(Result, 'vFrete', Self.DoubleToJsonValue(Source.vFrete));
     if Source.chCTeFerroOrigemHasValue then
       Json.ObjAddProp(Result, 'chCTeFerroOrigem', Self.stringToJsonValue(Source.chCTeFerroOrigem));
     if Assigned(Source.ferroEnv) then
@@ -10686,12 +10514,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpTrafHasValue then
-      Json.ObjAddProp(Result, 'tpTraf', Self.IntegerToJsonValue(Source.tpTraf));
+    Json.ObjAddProp(Result, 'tpTraf', Self.IntegerToJsonValue(Source.tpTraf));
     if Assigned(Source.trafMut) then
       Json.ObjAddProp(Result, 'trafMut', Self.TCteSefazTrafMutToJsonValue(Source.trafMut));
-    if Source.fluxoHasValue then
-      Json.ObjAddProp(Result, 'fluxo', Self.stringToJsonValue(Source.fluxo));
+    Json.ObjAddProp(Result, 'fluxo', Self.stringToJsonValue(Source.fluxo));
   except
     Result.Free;
     raise;
@@ -10754,8 +10580,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.xBalsaHasValue then
-      Json.ObjAddProp(Result, 'xBalsa', Self.stringToJsonValue(Source.xBalsa));
+    Json.ObjAddProp(Result, 'xBalsa', Self.stringToJsonValue(Source.xBalsa));
   except
     Result.Free;
     raise;
@@ -10876,8 +10701,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nLacreHasValue then
-      Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
+    Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
   except
     Result.Free;
     raise;
@@ -10998,10 +10822,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.serieHasValue then
-      Json.ObjAddProp(Result, 'serie', Self.stringToJsonValue(Source.serie));
-    if Source.nDocHasValue then
-      Json.ObjAddProp(Result, 'nDoc', Self.stringToJsonValue(Source.nDoc));
+    Json.ObjAddProp(Result, 'serie', Self.stringToJsonValue(Source.serie));
+    Json.ObjAddProp(Result, 'nDoc', Self.stringToJsonValue(Source.nDoc));
     if Source.unidRatHasValue then
       Json.ObjAddProp(Result, 'unidRat', Self.DoubleToJsonValue(Source.unidRat));
   except
@@ -11128,8 +10950,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.chaveHasValue then
-      Json.ObjAddProp(Result, 'chave', Self.stringToJsonValue(Source.chave));
+    Json.ObjAddProp(Result, 'chave', Self.stringToJsonValue(Source.chave));
     if Source.unidRatHasValue then
       Json.ObjAddProp(Result, 'unidRat', Self.DoubleToJsonValue(Source.unidRat));
   except
@@ -11318,8 +11139,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nContHasValue then
-      Json.ObjAddProp(Result, 'nCont', Self.stringToJsonValue(Source.nCont));
+    Json.ObjAddProp(Result, 'nCont', Self.stringToJsonValue(Source.nCont));
     if Assigned(Source.lacre) then
       Json.ObjAddProp(Result, 'lacre', Self.TCteSefazLacreListToJsonValue(Source.lacre));
     if Assigned(Source.infDoc) then
@@ -11448,20 +11268,15 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.vPrestHasValue then
-      Json.ObjAddProp(Result, 'vPrest', Self.DoubleToJsonValue(Source.vPrest));
-    if Source.vAFRMMHasValue then
-      Json.ObjAddProp(Result, 'vAFRMM', Self.DoubleToJsonValue(Source.vAFRMM));
-    if Source.xNavioHasValue then
-      Json.ObjAddProp(Result, 'xNavio', Self.stringToJsonValue(Source.xNavio));
+    Json.ObjAddProp(Result, 'vPrest', Self.DoubleToJsonValue(Source.vPrest));
+    Json.ObjAddProp(Result, 'vAFRMM', Self.DoubleToJsonValue(Source.vAFRMM));
+    Json.ObjAddProp(Result, 'xNavio', Self.stringToJsonValue(Source.xNavio));
     if Assigned(Source.balsa) then
       Json.ObjAddProp(Result, 'balsa', Self.TCteSefazBalsaListToJsonValue(Source.balsa));
     if Source.nViagHasValue then
       Json.ObjAddProp(Result, 'nViag', Self.stringToJsonValue(Source.nViag));
-    if Source.direcHasValue then
-      Json.ObjAddProp(Result, 'direc', Self.stringToJsonValue(Source.direc));
-    if Source.irinHasValue then
-      Json.ObjAddProp(Result, 'irin', Self.stringToJsonValue(Source.irin));
+    Json.ObjAddProp(Result, 'direc', Self.stringToJsonValue(Source.direc));
+    Json.ObjAddProp(Result, 'irin', Self.stringToJsonValue(Source.irin));
     if Assigned(Source.detCont) then
       Json.ObjAddProp(Result, 'detCont', Self.TCteSefazDetContListToJsonValue(Source.detCont));
     if Source.tpNavHasValue then
@@ -11542,10 +11357,8 @@ begin
   try
     if Source.vTarHasValue then
       Json.ObjAddProp(Result, 'vTar', Self.DoubleToJsonValue(Source.vTar));
-    if Source.dIniHasValue then
-      Json.ObjAddProp(Result, 'dIni', Self.TDateToJsonValue(Source.dIni));
-    if Source.dFimHasValue then
-      Json.ObjAddProp(Result, 'dFim', Self.TDateToJsonValue(Source.dFim));
+    Json.ObjAddProp(Result, 'dIni', Self.TDateToJsonValue(Source.dIni));
+    Json.ObjAddProp(Result, 'dFim', Self.TDateToJsonValue(Source.dFim));
   except
     Result.Free;
     raise;
@@ -11608,10 +11421,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.xSegHasValue then
-      Json.ObjAddProp(Result, 'xSeg', Self.stringToJsonValue(Source.xSeg));
-    if Source.CNPJHasValue then
-      Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
+    Json.ObjAddProp(Result, 'xSeg', Self.stringToJsonValue(Source.xSeg));
+    Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
   except
     Result.Free;
     raise;
@@ -11672,12 +11483,9 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.infSeg) then
-      Json.ObjAddProp(Result, 'infSeg', Self.TCteSefazInfSegToJsonValue(Source.infSeg));
-    if Source.nApolHasValue then
-      Json.ObjAddProp(Result, 'nApol', Self.stringToJsonValue(Source.nApol));
-    if Source.nAverHasValue then
-      Json.ObjAddProp(Result, 'nAver', Self.stringToJsonValue(Source.nAver));
+    Json.ObjAddProp(Result, 'infSeg', Self.TCteSefazInfSegToJsonValue(Source.infSeg));
+    Json.ObjAddProp(Result, 'nApol', Self.stringToJsonValue(Source.nApol));
+    Json.ObjAddProp(Result, 'nAver', Self.stringToJsonValue(Source.nAver));
   except
     Result.Free;
     raise;
@@ -11740,10 +11548,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.COTMHasValue then
-      Json.ObjAddProp(Result, 'COTM', Self.stringToJsonValue(Source.COTM));
-    if Source.indNegociavelHasValue then
-      Json.ObjAddProp(Result, 'indNegociavel', Self.IntegerToJsonValue(Source.indNegociavel));
+    Json.ObjAddProp(Result, 'COTM', Self.stringToJsonValue(Source.COTM));
+    Json.ObjAddProp(Result, 'indNegociavel', Self.IntegerToJsonValue(Source.indNegociavel));
     if Assigned(Source.seg) then
       Json.ObjAddProp(Result, 'seg', Self.TCteSefazSegToJsonValue(Source.seg));
   except
@@ -11892,18 +11698,12 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.chassiHasValue then
-      Json.ObjAddProp(Result, 'chassi', Self.stringToJsonValue(Source.chassi));
-    if Source.cCorHasValue then
-      Json.ObjAddProp(Result, 'cCor', Self.stringToJsonValue(Source.cCor));
-    if Source.xCorHasValue then
-      Json.ObjAddProp(Result, 'xCor', Self.stringToJsonValue(Source.xCor));
-    if Source.cModHasValue then
-      Json.ObjAddProp(Result, 'cMod', Self.stringToJsonValue(Source.cMod));
-    if Source.vUnitHasValue then
-      Json.ObjAddProp(Result, 'vUnit', Self.DoubleToJsonValue(Source.vUnit));
-    if Source.vFreteHasValue then
-      Json.ObjAddProp(Result, 'vFrete', Self.DoubleToJsonValue(Source.vFrete));
+    Json.ObjAddProp(Result, 'chassi', Self.stringToJsonValue(Source.chassi));
+    Json.ObjAddProp(Result, 'cCor', Self.stringToJsonValue(Source.cCor));
+    Json.ObjAddProp(Result, 'xCor', Self.stringToJsonValue(Source.xCor));
+    Json.ObjAddProp(Result, 'cMod', Self.stringToJsonValue(Source.cMod));
+    Json.ObjAddProp(Result, 'vUnit', Self.DoubleToJsonValue(Source.vUnit));
+    Json.ObjAddProp(Result, 'vFrete', Self.DoubleToJsonValue(Source.vFrete));
   except
     Result.Free;
     raise;
@@ -12304,18 +12104,13 @@ begin
       Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
     if Source.CPFHasValue then
       Json.ObjAddProp(Result, 'CPF', Self.stringToJsonValue(Source.CPF));
-    if Source.&modHasValue then
-      Json.ObjAddProp(Result, 'mod', Self.stringToJsonValue(Source.&mod));
-    if Source.serieHasValue then
-      Json.ObjAddProp(Result, 'serie', Self.IntegerToJsonValue(Source.serie));
+    Json.ObjAddProp(Result, 'mod', Self.stringToJsonValue(Source.&mod));
+    Json.ObjAddProp(Result, 'serie', Self.IntegerToJsonValue(Source.serie));
     if Source.subserieHasValue then
       Json.ObjAddProp(Result, 'subserie', Self.IntegerToJsonValue(Source.subserie));
-    if Source.nroHasValue then
-      Json.ObjAddProp(Result, 'nro', Self.IntegerToJsonValue(Source.nro));
-    if Source.valorHasValue then
-      Json.ObjAddProp(Result, 'valor', Self.DoubleToJsonValue(Source.valor));
-    if Source.dEmiHasValue then
-      Json.ObjAddProp(Result, 'dEmi', Self.TDateToJsonValue(Source.dEmi));
+    Json.ObjAddProp(Result, 'nro', Self.IntegerToJsonValue(Source.nro));
+    Json.ObjAddProp(Result, 'valor', Self.DoubleToJsonValue(Source.valor));
+    Json.ObjAddProp(Result, 'dEmi', Self.TDateToJsonValue(Source.dEmi));
   except
     Result.Free;
     raise;
@@ -12456,8 +12251,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.chCteHasValue then
-      Json.ObjAddProp(Result, 'chCte', Self.stringToJsonValue(Source.chCte));
+    Json.ObjAddProp(Result, 'chCte', Self.stringToJsonValue(Source.chCte));
     if Source.refCteAnuHasValue then
       Json.ObjAddProp(Result, 'refCteAnu', Self.stringToJsonValue(Source.refCteAnu));
     if Assigned(Source.tomaICMS) then
@@ -12528,8 +12322,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.xObsHasValue then
-      Json.ObjAddProp(Result, 'xObs', Self.stringToJsonValue(Source.xObs));
+    Json.ObjAddProp(Result, 'xObs', Self.stringToJsonValue(Source.xObs));
   except
     Result.Free;
     raise;
@@ -12588,8 +12381,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.chCTeMultimodalHasValue then
-      Json.ObjAddProp(Result, 'chCTeMultimodal', Self.stringToJsonValue(Source.chCTeMultimodal));
+    Json.ObjAddProp(Result, 'chCTeMultimodal', Self.stringToJsonValue(Source.chCTeMultimodal));
   except
     Result.Free;
     raise;
@@ -12710,8 +12502,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.infCTeMultimodal) then
-      Json.ObjAddProp(Result, 'infCTeMultimodal', Self.TCteSefazInfCTeMultimodalListToJsonValue(Source.infCTeMultimodal));
+    Json.ObjAddProp(Result, 'infCTeMultimodal', Self.TCteSefazInfCTeMultimodalListToJsonValue(Source.infCTeMultimodal));
   except
     Result.Free;
     raise;
@@ -12770,14 +12561,12 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.infCarga) then
-      Json.ObjAddProp(Result, 'infCarga', Self.TCteSefazInfCargaToJsonValue(Source.infCarga));
+    Json.ObjAddProp(Result, 'infCarga', Self.TCteSefazInfCargaToJsonValue(Source.infCarga));
     if Assigned(Source.infDoc) then
       Json.ObjAddProp(Result, 'infDoc', Self.TCteSefazInfDocToJsonValue(Source.infDoc));
     if Assigned(Source.docAnt) then
       Json.ObjAddProp(Result, 'docAnt', Self.TCteSefazDocAntToJsonValue(Source.docAnt));
-    if Assigned(Source.infModal) then
-      Json.ObjAddProp(Result, 'infModal', Self.TCteSefazInfModalToJsonValue(Source.infModal));
+    Json.ObjAddProp(Result, 'infModal', Self.TCteSefazInfModalToJsonValue(Source.infModal));
     if Assigned(Source.veicNovos) then
       Json.ObjAddProp(Result, 'veicNovos', Self.TCteSefazVeicNovosListToJsonValue(Source.veicNovos));
     if Assigned(Source.cobr) then
@@ -12862,8 +12651,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.chCTeHasValue then
-      Json.ObjAddProp(Result, 'chCTe', Self.stringToJsonValue(Source.chCTe));
+    Json.ObjAddProp(Result, 'chCTe', Self.stringToJsonValue(Source.chCTe));
   except
     Result.Free;
     raise;
@@ -12922,10 +12710,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.chCteHasValue then
-      Json.ObjAddProp(Result, 'chCte', Self.stringToJsonValue(Source.chCte));
-    if Source.dEmiHasValue then
-      Json.ObjAddProp(Result, 'dEmi', Self.TDateToJsonValue(Source.dEmi));
+    Json.ObjAddProp(Result, 'chCte', Self.stringToJsonValue(Source.chCte));
+    Json.ObjAddProp(Result, 'dEmi', Self.TDateToJsonValue(Source.dEmi));
   except
     Result.Free;
     raise;
@@ -13112,14 +12898,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CNPJHasValue then
-      Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
-    if Source.xContatoHasValue then
-      Json.ObjAddProp(Result, 'xContato', Self.stringToJsonValue(Source.xContato));
-    if Source.emailHasValue then
-      Json.ObjAddProp(Result, 'email', Self.stringToJsonValue(Source.email));
-    if Source.foneHasValue then
-      Json.ObjAddProp(Result, 'fone', Self.stringToJsonValue(Source.fone));
+    Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
+    Json.ObjAddProp(Result, 'xContato', Self.stringToJsonValue(Source.xContato));
+    Json.ObjAddProp(Result, 'email', Self.stringToJsonValue(Source.email));
+    Json.ObjAddProp(Result, 'fone', Self.stringToJsonValue(Source.fone));
     if Source.idCSRTHasValue then
       Json.ObjAddProp(Result, 'idCSRT', Self.IntegerToJsonValue(Source.idCSRT));
     if Source.hashCSRTHasValue then
@@ -13192,8 +12974,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.xSolicHasValue then
-      Json.ObjAddProp(Result, 'xSolic', Self.stringToJsonValue(Source.xSolic));
+    Json.ObjAddProp(Result, 'xSolic', Self.stringToJsonValue(Source.xSolic));
   except
     Result.Free;
     raise;
@@ -13256,12 +13037,10 @@ begin
       Json.ObjAddProp(Result, 'versao', Self.stringToJsonValue(Source.versao));
     if Source.IdHasValue then
       Json.ObjAddProp(Result, 'Id', Self.stringToJsonValue(Source.Id));
-    if Assigned(Source.ide) then
-      Json.ObjAddProp(Result, 'ide', Self.TCteSefazIdeToJsonValue(Source.ide));
+    Json.ObjAddProp(Result, 'ide', Self.TCteSefazIdeToJsonValue(Source.ide));
     if Assigned(Source.compl) then
       Json.ObjAddProp(Result, 'compl', Self.TCteSefazComplToJsonValue(Source.compl));
-    if Assigned(Source.emit) then
-      Json.ObjAddProp(Result, 'emit', Self.TCteSefazEmitToJsonValue(Source.emit));
+    Json.ObjAddProp(Result, 'emit', Self.TCteSefazEmitToJsonValue(Source.emit));
     if Assigned(Source.rem) then
       Json.ObjAddProp(Result, 'rem', Self.TCteSefazRemToJsonValue(Source.rem));
     if Assigned(Source.exped) then
@@ -13270,10 +13049,8 @@ begin
       Json.ObjAddProp(Result, 'receb', Self.TCteSefazRecebToJsonValue(Source.receb));
     if Assigned(Source.dest) then
       Json.ObjAddProp(Result, 'dest', Self.TCteSefazDestToJsonValue(Source.dest));
-    if Assigned(Source.vPrest) then
-      Json.ObjAddProp(Result, 'vPrest', Self.TCteSefazVPrestToJsonValue(Source.vPrest));
-    if Assigned(Source.imp) then
-      Json.ObjAddProp(Result, 'imp', Self.TCteSefazInfCteImpToJsonValue(Source.imp));
+    Json.ObjAddProp(Result, 'vPrest', Self.TCteSefazVPrestToJsonValue(Source.vPrest));
+    Json.ObjAddProp(Result, 'imp', Self.TCteSefazInfCteImpToJsonValue(Source.imp));
     if Assigned(Source.infCTeNorm) then
       Json.ObjAddProp(Result, 'infCTeNorm', Self.TCteSefazInfCTeNormToJsonValue(Source.infCTeNorm));
     if Assigned(Source.infCteComp) then
@@ -14328,12 +14105,9 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.grupo_alteradoHasValue then
-      Json.ObjAddProp(Result, 'grupo_alterado', Self.stringToJsonValue(Source.grupo_alterado));
-    if Source.campo_alteradoHasValue then
-      Json.ObjAddProp(Result, 'campo_alterado', Self.stringToJsonValue(Source.campo_alterado));
-    if Source.valor_alteradoHasValue then
-      Json.ObjAddProp(Result, 'valor_alterado', Self.stringToJsonValue(Source.valor_alterado));
+    Json.ObjAddProp(Result, 'grupo_alterado', Self.stringToJsonValue(Source.grupo_alterado));
+    Json.ObjAddProp(Result, 'campo_alterado', Self.stringToJsonValue(Source.campo_alterado));
+    Json.ObjAddProp(Result, 'valor_alterado', Self.stringToJsonValue(Source.valor_alterado));
     if Source.numero_item_alteradoHasValue then
       Json.ObjAddProp(Result, 'numero_item_alterado', Self.IntegerToJsonValue(Source.numero_item_alterado));
   except
@@ -14462,8 +14236,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.correcoes) then
-      Json.ObjAddProp(Result, 'correcoes', Self.TCteInfCorrecaoListToJsonValue(Source.correcoes));
+    Json.ObjAddProp(Result, 'correcoes', Self.TCteInfCorrecaoListToJsonValue(Source.correcoes));
   except
     Result.Free;
     raise;
@@ -14522,8 +14295,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.correcoes) then
-      Json.ObjAddProp(Result, 'correcoes', Self.TCteInfCorrecaoListToJsonValue(Source.correcoes));
+    Json.ObjAddProp(Result, 'correcoes', Self.TCteInfCorrecaoListToJsonValue(Source.correcoes));
     if Source.idHasValue then
       Json.ObjAddProp(Result, 'id', Self.stringToJsonValue(Source.id));
     if Source.ambienteHasValue then
@@ -14638,20 +14410,13 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.ambienteHasValue then
-      Json.ObjAddProp(Result, 'ambiente', Self.stringToJsonValue(Source.ambiente));
-    if Source.cnpjHasValue then
-      Json.ObjAddProp(Result, 'cnpj', Self.stringToJsonValue(Source.cnpj));
-    if Source.anoHasValue then
-      Json.ObjAddProp(Result, 'ano', Self.IntegerToJsonValue(Source.ano));
-    if Source.serieHasValue then
-      Json.ObjAddProp(Result, 'serie', Self.IntegerToJsonValue(Source.serie));
-    if Source.numero_inicialHasValue then
-      Json.ObjAddProp(Result, 'numero_inicial', Self.IntegerToJsonValue(Source.numero_inicial));
-    if Source.numero_finalHasValue then
-      Json.ObjAddProp(Result, 'numero_final', Self.IntegerToJsonValue(Source.numero_final));
-    if Source.justificativaHasValue then
-      Json.ObjAddProp(Result, 'justificativa', Self.stringToJsonValue(Source.justificativa));
+    Json.ObjAddProp(Result, 'ambiente', Self.stringToJsonValue(Source.ambiente));
+    Json.ObjAddProp(Result, 'cnpj', Self.stringToJsonValue(Source.cnpj));
+    Json.ObjAddProp(Result, 'ano', Self.IntegerToJsonValue(Source.ano));
+    Json.ObjAddProp(Result, 'serie', Self.IntegerToJsonValue(Source.serie));
+    Json.ObjAddProp(Result, 'numero_inicial', Self.IntegerToJsonValue(Source.numero_inicial));
+    Json.ObjAddProp(Result, 'numero_final', Self.IntegerToJsonValue(Source.numero_final));
+    Json.ObjAddProp(Result, 'justificativa', Self.stringToJsonValue(Source.justificativa));
   except
     Result.Free;
     raise;
@@ -14974,10 +14739,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cMunCarregaHasValue then
-      Json.ObjAddProp(Result, 'cMunCarrega', Self.IntegerToJsonValue(Source.cMunCarrega));
-    if Source.xMunCarregaHasValue then
-      Json.ObjAddProp(Result, 'xMunCarrega', Self.stringToJsonValue(Source.xMunCarrega));
+    Json.ObjAddProp(Result, 'cMunCarrega', Self.IntegerToJsonValue(Source.cMunCarrega));
+    Json.ObjAddProp(Result, 'xMunCarrega', Self.stringToJsonValue(Source.xMunCarrega));
   except
     Result.Free;
     raise;
@@ -15100,8 +14863,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.UFPerHasValue then
-      Json.ObjAddProp(Result, 'UFPer', Self.stringToJsonValue(Source.UFPer));
+    Json.ObjAddProp(Result, 'UFPer', Self.stringToJsonValue(Source.UFPer));
   except
     Result.Free;
     raise;
@@ -15222,40 +14984,26 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cUFHasValue then
-      Json.ObjAddProp(Result, 'cUF', Self.IntegerToJsonValue(Source.cUF));
+    Json.ObjAddProp(Result, 'cUF', Self.IntegerToJsonValue(Source.cUF));
     if Source.tpAmbHasValue then
       Json.ObjAddProp(Result, 'tpAmb', Self.IntegerToJsonValue(Source.tpAmb));
-    if Source.tpEmitHasValue then
-      Json.ObjAddProp(Result, 'tpEmit', Self.IntegerToJsonValue(Source.tpEmit));
+    Json.ObjAddProp(Result, 'tpEmit', Self.IntegerToJsonValue(Source.tpEmit));
     if Source.tpTranspHasValue then
       Json.ObjAddProp(Result, 'tpTransp', Self.IntegerToJsonValue(Source.tpTransp));
     if Source.&modHasValue then
       Json.ObjAddProp(Result, 'mod', Self.IntegerToJsonValue(Source.&mod));
-    if Source.serieHasValue then
-      Json.ObjAddProp(Result, 'serie', Self.IntegerToJsonValue(Source.serie));
-    if Source.nMDFHasValue then
-      Json.ObjAddProp(Result, 'nMDF', Self.IntegerToJsonValue(Source.nMDF));
-    if Source.cMDFHasValue then
-      Json.ObjAddProp(Result, 'cMDF', Self.IntegerToJsonValue(Source.cMDF));
-    if Source.cDVHasValue then
-      Json.ObjAddProp(Result, 'cDV', Self.IntegerToJsonValue(Source.cDV));
-    if Source.modalHasValue then
-      Json.ObjAddProp(Result, 'modal', Self.IntegerToJsonValue(Source.modal));
-    if Source.dhEmiHasValue then
-      Json.ObjAddProp(Result, 'dhEmi', Self.TDateTimeToJsonValue(Source.dhEmi));
-    if Source.tpEmisHasValue then
-      Json.ObjAddProp(Result, 'tpEmis', Self.IntegerToJsonValue(Source.tpEmis));
-    if Source.procEmiHasValue then
-      Json.ObjAddProp(Result, 'procEmi', Self.stringToJsonValue(Source.procEmi));
-    if Source.verProcHasValue then
-      Json.ObjAddProp(Result, 'verProc', Self.stringToJsonValue(Source.verProc));
-    if Source.UFIniHasValue then
-      Json.ObjAddProp(Result, 'UFIni', Self.stringToJsonValue(Source.UFIni));
-    if Source.UFFimHasValue then
-      Json.ObjAddProp(Result, 'UFFim', Self.stringToJsonValue(Source.UFFim));
-    if Assigned(Source.infMunCarrega) then
-      Json.ObjAddProp(Result, 'infMunCarrega', Self.TMdfeSefazInfMunCarregaListToJsonValue(Source.infMunCarrega));
+    Json.ObjAddProp(Result, 'serie', Self.IntegerToJsonValue(Source.serie));
+    Json.ObjAddProp(Result, 'nMDF', Self.IntegerToJsonValue(Source.nMDF));
+    Json.ObjAddProp(Result, 'cMDF', Self.IntegerToJsonValue(Source.cMDF));
+    Json.ObjAddProp(Result, 'cDV', Self.IntegerToJsonValue(Source.cDV));
+    Json.ObjAddProp(Result, 'modal', Self.IntegerToJsonValue(Source.modal));
+    Json.ObjAddProp(Result, 'dhEmi', Self.TDateTimeToJsonValue(Source.dhEmi));
+    Json.ObjAddProp(Result, 'tpEmis', Self.IntegerToJsonValue(Source.tpEmis));
+    Json.ObjAddProp(Result, 'procEmi', Self.stringToJsonValue(Source.procEmi));
+    Json.ObjAddProp(Result, 'verProc', Self.stringToJsonValue(Source.verProc));
+    Json.ObjAddProp(Result, 'UFIni', Self.stringToJsonValue(Source.UFIni));
+    Json.ObjAddProp(Result, 'UFFim', Self.stringToJsonValue(Source.UFFim));
+    Json.ObjAddProp(Result, 'infMunCarrega', Self.TMdfeSefazInfMunCarregaListToJsonValue(Source.infMunCarrega));
     if Assigned(Source.infPercurso) then
       Json.ObjAddProp(Result, 'infPercurso', Self.TMdfeSefazInfPercursoListToJsonValue(Source.infPercurso));
     if Source.dhIniViagemHasValue then
@@ -15538,18 +15286,12 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nacHasValue then
-      Json.ObjAddProp(Result, 'nac', Self.stringToJsonValue(Source.nac));
-    if Source.matrHasValue then
-      Json.ObjAddProp(Result, 'matr', Self.stringToJsonValue(Source.matr));
-    if Source.nVooHasValue then
-      Json.ObjAddProp(Result, 'nVoo', Self.stringToJsonValue(Source.nVoo));
-    if Source.cAerEmbHasValue then
-      Json.ObjAddProp(Result, 'cAerEmb', Self.stringToJsonValue(Source.cAerEmb));
-    if Source.cAerDesHasValue then
-      Json.ObjAddProp(Result, 'cAerDes', Self.stringToJsonValue(Source.cAerDes));
-    if Source.dVooHasValue then
-      Json.ObjAddProp(Result, 'dVoo', Self.TDateToJsonValue(Source.dVoo));
+    Json.ObjAddProp(Result, 'nac', Self.stringToJsonValue(Source.nac));
+    Json.ObjAddProp(Result, 'matr', Self.stringToJsonValue(Source.matr));
+    Json.ObjAddProp(Result, 'nVoo', Self.stringToJsonValue(Source.nVoo));
+    Json.ObjAddProp(Result, 'cAerEmb', Self.stringToJsonValue(Source.cAerEmb));
+    Json.ObjAddProp(Result, 'cAerDes', Self.stringToJsonValue(Source.cAerDes));
+    Json.ObjAddProp(Result, 'dVoo', Self.TDateToJsonValue(Source.dVoo));
   except
     Result.Free;
     raise;
@@ -15618,8 +15360,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CIOTHasValue then
-      Json.ObjAddProp(Result, 'CIOT', Self.stringToJsonValue(Source.CIOT));
+    Json.ObjAddProp(Result, 'CIOT', Self.stringToJsonValue(Source.CIOT));
     if Source.CPFHasValue then
       Json.ObjAddProp(Result, 'CPF', Self.stringToJsonValue(Source.CPF));
     if Source.CNPJHasValue then
@@ -15748,16 +15489,14 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CNPJFornHasValue then
-      Json.ObjAddProp(Result, 'CNPJForn', Self.stringToJsonValue(Source.CNPJForn));
+    Json.ObjAddProp(Result, 'CNPJForn', Self.stringToJsonValue(Source.CNPJForn));
     if Source.CNPJPgHasValue then
       Json.ObjAddProp(Result, 'CNPJPg', Self.stringToJsonValue(Source.CNPJPg));
     if Source.CPFPgHasValue then
       Json.ObjAddProp(Result, 'CPFPg', Self.stringToJsonValue(Source.CPFPg));
     if Source.nCompraHasValue then
       Json.ObjAddProp(Result, 'nCompra', Self.stringToJsonValue(Source.nCompra));
-    if Source.vValePedHasValue then
-      Json.ObjAddProp(Result, 'vValePed', Self.DoubleToJsonValue(Source.vValePed));
+    Json.ObjAddProp(Result, 'vValePed', Self.DoubleToJsonValue(Source.vValePed));
     if Source.tpValePedHasValue then
       Json.ObjAddProp(Result, 'tpValePed', Self.stringToJsonValue(Source.tpValePed));
   except
@@ -15890,8 +15629,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.disp) then
-      Json.ObjAddProp(Result, 'disp', Self.TMdfeSefazDispListToJsonValue(Source.disp));
+    Json.ObjAddProp(Result, 'disp', Self.TMdfeSefazDispListToJsonValue(Source.disp));
     if Source.categCombVeicHasValue then
       Json.ObjAddProp(Result, 'categCombVeic', Self.stringToJsonValue(Source.categCombVeic));
   except
@@ -16088,10 +15826,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpCompHasValue then
-      Json.ObjAddProp(Result, 'tpComp', Self.stringToJsonValue(Source.tpComp));
-    if Source.vCompHasValue then
-      Json.ObjAddProp(Result, 'vComp', Self.DoubleToJsonValue(Source.vComp));
+    Json.ObjAddProp(Result, 'tpComp', Self.stringToJsonValue(Source.tpComp));
+    Json.ObjAddProp(Result, 'vComp', Self.DoubleToJsonValue(Source.vComp));
     if Source.xCompHasValue then
       Json.ObjAddProp(Result, 'xComp', Self.stringToJsonValue(Source.xComp));
   except
@@ -16218,12 +15954,9 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nParcelaHasValue then
-      Json.ObjAddProp(Result, 'nParcela', Self.IntegerToJsonValue(Source.nParcela));
-    if Source.dVencHasValue then
-      Json.ObjAddProp(Result, 'dVenc', Self.TDateToJsonValue(Source.dVenc));
-    if Source.vParcelaHasValue then
-      Json.ObjAddProp(Result, 'vParcela', Self.DoubleToJsonValue(Source.vParcela));
+    Json.ObjAddProp(Result, 'nParcela', Self.IntegerToJsonValue(Source.nParcela));
+    Json.ObjAddProp(Result, 'dVenc', Self.TDateToJsonValue(Source.dVenc));
+    Json.ObjAddProp(Result, 'vParcela', Self.DoubleToJsonValue(Source.vParcela));
   except
     Result.Free;
     raise;
@@ -16428,20 +16161,16 @@ begin
       Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
     if Source.idEstrangeiroHasValue then
       Json.ObjAddProp(Result, 'idEstrangeiro', Self.stringToJsonValue(Source.idEstrangeiro));
-    if Assigned(Source.Comp) then
-      Json.ObjAddProp(Result, 'Comp', Self.TMdfeSefazCompListToJsonValue(Source.Comp));
-    if Source.vContratoHasValue then
-      Json.ObjAddProp(Result, 'vContrato', Self.DoubleToJsonValue(Source.vContrato));
+    Json.ObjAddProp(Result, 'Comp', Self.TMdfeSefazCompListToJsonValue(Source.Comp));
+    Json.ObjAddProp(Result, 'vContrato', Self.DoubleToJsonValue(Source.vContrato));
     if Source.indAltoDesempHasValue then
       Json.ObjAddProp(Result, 'indAltoDesemp', Self.IntegerToJsonValue(Source.indAltoDesemp));
-    if Source.indPagHasValue then
-      Json.ObjAddProp(Result, 'indPag', Self.IntegerToJsonValue(Source.indPag));
+    Json.ObjAddProp(Result, 'indPag', Self.IntegerToJsonValue(Source.indPag));
     if Source.vAdiantHasValue then
       Json.ObjAddProp(Result, 'vAdiant', Self.DoubleToJsonValue(Source.vAdiant));
     if Assigned(Source.infPrazo) then
       Json.ObjAddProp(Result, 'infPrazo', Self.TMdfeSefazInfPrazoListToJsonValue(Source.infPrazo));
-    if Assigned(Source.infBanc) then
-      Json.ObjAddProp(Result, 'infBanc', Self.TMdfeSefazInfBancToJsonValue(Source.infBanc));
+    Json.ObjAddProp(Result, 'infBanc', Self.TMdfeSefazInfBancToJsonValue(Source.infBanc));
   except
     Result.Free;
     raise;
@@ -16662,16 +16391,13 @@ begin
       Json.ObjAddProp(Result, 'CPF', Self.stringToJsonValue(Source.CPF));
     if Source.CNPJHasValue then
       Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
-    if Source.RNTRCHasValue then
-      Json.ObjAddProp(Result, 'RNTRC', Self.stringToJsonValue(Source.RNTRC));
-    if Source.xNomeHasValue then
-      Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
+    Json.ObjAddProp(Result, 'RNTRC', Self.stringToJsonValue(Source.RNTRC));
+    Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
     if Source.IEHasValue then
       Json.ObjAddProp(Result, 'IE', Self.stringToJsonValue(Source.IE));
     if Source.UFHasValue then
       Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
-    if Source.tpPropHasValue then
-      Json.ObjAddProp(Result, 'tpProp', Self.IntegerToJsonValue(Source.tpProp));
+    Json.ObjAddProp(Result, 'tpProp', Self.IntegerToJsonValue(Source.tpProp));
   except
     Result.Free;
     raise;
@@ -16742,10 +16468,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.xNomeHasValue then
-      Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
-    if Source.CPFHasValue then
-      Json.ObjAddProp(Result, 'CPF', Self.stringToJsonValue(Source.CPF));
+    Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
+    Json.ObjAddProp(Result, 'CPF', Self.stringToJsonValue(Source.CPF));
   except
     Result.Free;
     raise;
@@ -16870,24 +16594,19 @@ begin
   try
     if Source.cIntHasValue then
       Json.ObjAddProp(Result, 'cInt', Self.stringToJsonValue(Source.cInt));
-    if Source.placaHasValue then
-      Json.ObjAddProp(Result, 'placa', Self.stringToJsonValue(Source.placa));
+    Json.ObjAddProp(Result, 'placa', Self.stringToJsonValue(Source.placa));
     if Source.RENAVAMHasValue then
       Json.ObjAddProp(Result, 'RENAVAM', Self.stringToJsonValue(Source.RENAVAM));
-    if Source.taraHasValue then
-      Json.ObjAddProp(Result, 'tara', Self.IntegerToJsonValue(Source.tara));
+    Json.ObjAddProp(Result, 'tara', Self.IntegerToJsonValue(Source.tara));
     if Source.capKGHasValue then
       Json.ObjAddProp(Result, 'capKG', Self.IntegerToJsonValue(Source.capKG));
     if Source.capM3HasValue then
       Json.ObjAddProp(Result, 'capM3', Self.IntegerToJsonValue(Source.capM3));
     if Assigned(Source.prop) then
       Json.ObjAddProp(Result, 'prop', Self.TMdfeSefazPropToJsonValue(Source.prop));
-    if Assigned(Source.condutor) then
-      Json.ObjAddProp(Result, 'condutor', Self.TMdfeSefazCondutorListToJsonValue(Source.condutor));
-    if Source.tpRodHasValue then
-      Json.ObjAddProp(Result, 'tpRod', Self.stringToJsonValue(Source.tpRod));
-    if Source.tpCarHasValue then
-      Json.ObjAddProp(Result, 'tpCar', Self.stringToJsonValue(Source.tpCar));
+    Json.ObjAddProp(Result, 'condutor', Self.TMdfeSefazCondutorListToJsonValue(Source.condutor));
+    Json.ObjAddProp(Result, 'tpRod', Self.stringToJsonValue(Source.tpRod));
+    Json.ObjAddProp(Result, 'tpCar', Self.stringToJsonValue(Source.tpCar));
     if Source.UFHasValue then
       Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
   except
@@ -16972,16 +16691,13 @@ begin
       Json.ObjAddProp(Result, 'CPF', Self.stringToJsonValue(Source.CPF));
     if Source.CNPJHasValue then
       Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
-    if Source.RNTRCHasValue then
-      Json.ObjAddProp(Result, 'RNTRC', Self.stringToJsonValue(Source.RNTRC));
-    if Source.xNomeHasValue then
-      Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
+    Json.ObjAddProp(Result, 'RNTRC', Self.stringToJsonValue(Source.RNTRC));
+    Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
     if Source.IEHasValue then
       Json.ObjAddProp(Result, 'IE', Self.stringToJsonValue(Source.IE));
     if Source.UFHasValue then
       Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
-    if Source.tpPropHasValue then
-      Json.ObjAddProp(Result, 'tpProp', Self.IntegerToJsonValue(Source.tpProp));
+    Json.ObjAddProp(Result, 'tpProp', Self.IntegerToJsonValue(Source.tpProp));
   except
     Result.Free;
     raise;
@@ -17054,20 +16770,16 @@ begin
   try
     if Source.cIntHasValue then
       Json.ObjAddProp(Result, 'cInt', Self.stringToJsonValue(Source.cInt));
-    if Source.placaHasValue then
-      Json.ObjAddProp(Result, 'placa', Self.stringToJsonValue(Source.placa));
+    Json.ObjAddProp(Result, 'placa', Self.stringToJsonValue(Source.placa));
     if Source.RENAVAMHasValue then
       Json.ObjAddProp(Result, 'RENAVAM', Self.stringToJsonValue(Source.RENAVAM));
-    if Source.taraHasValue then
-      Json.ObjAddProp(Result, 'tara', Self.IntegerToJsonValue(Source.tara));
-    if Source.capKGHasValue then
-      Json.ObjAddProp(Result, 'capKG', Self.IntegerToJsonValue(Source.capKG));
+    Json.ObjAddProp(Result, 'tara', Self.IntegerToJsonValue(Source.tara));
+    Json.ObjAddProp(Result, 'capKG', Self.IntegerToJsonValue(Source.capKG));
     if Source.capM3HasValue then
       Json.ObjAddProp(Result, 'capM3', Self.IntegerToJsonValue(Source.capM3));
     if Assigned(Source.prop) then
       Json.ObjAddProp(Result, 'prop', Self.TMdfeSefazVeicReboquePropToJsonValue(Source.prop));
-    if Source.tpCarHasValue then
-      Json.ObjAddProp(Result, 'tpCar', Self.stringToJsonValue(Source.tpCar));
+    Json.ObjAddProp(Result, 'tpCar', Self.stringToJsonValue(Source.tpCar));
     if Source.UFHasValue then
       Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
   except
@@ -17206,8 +16918,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nLacreHasValue then
-      Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
+    Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
   except
     Result.Free;
     raise;
@@ -17330,8 +17041,7 @@ begin
   try
     if Assigned(Source.infANTT) then
       Json.ObjAddProp(Result, 'infANTT', Self.TMdfeSefazInfANTTToJsonValue(Source.infANTT));
-    if Assigned(Source.veicTracao) then
-      Json.ObjAddProp(Result, 'veicTracao', Self.TMdfeSefazVeicTracaoToJsonValue(Source.veicTracao));
+    Json.ObjAddProp(Result, 'veicTracao', Self.TMdfeSefazVeicTracaoToJsonValue(Source.veicTracao));
     if Assigned(Source.veicReboque) then
       Json.ObjAddProp(Result, 'veicReboque', Self.TMdfeSefazVeicReboqueListToJsonValue(Source.veicReboque));
     if Source.codAgPortoHasValue then
@@ -17404,10 +17114,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cTermCarregHasValue then
-      Json.ObjAddProp(Result, 'cTermCarreg', Self.stringToJsonValue(Source.cTermCarreg));
-    if Source.xTermCarregHasValue then
-      Json.ObjAddProp(Result, 'xTermCarreg', Self.stringToJsonValue(Source.xTermCarreg));
+    Json.ObjAddProp(Result, 'cTermCarreg', Self.stringToJsonValue(Source.cTermCarreg));
+    Json.ObjAddProp(Result, 'xTermCarreg', Self.stringToJsonValue(Source.xTermCarreg));
   except
     Result.Free;
     raise;
@@ -17530,10 +17238,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cTermDescarregHasValue then
-      Json.ObjAddProp(Result, 'cTermDescarreg', Self.stringToJsonValue(Source.cTermDescarreg));
-    if Source.xTermDescarregHasValue then
-      Json.ObjAddProp(Result, 'xTermDescarreg', Self.stringToJsonValue(Source.xTermDescarreg));
+    Json.ObjAddProp(Result, 'cTermDescarreg', Self.stringToJsonValue(Source.cTermDescarreg));
+    Json.ObjAddProp(Result, 'xTermDescarreg', Self.stringToJsonValue(Source.xTermDescarreg));
   except
     Result.Free;
     raise;
@@ -17656,10 +17362,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cEmbCombHasValue then
-      Json.ObjAddProp(Result, 'cEmbComb', Self.stringToJsonValue(Source.cEmbComb));
-    if Source.xBalsaHasValue then
-      Json.ObjAddProp(Result, 'xBalsa', Self.stringToJsonValue(Source.xBalsa));
+    Json.ObjAddProp(Result, 'cEmbComb', Self.stringToJsonValue(Source.cEmbComb));
+    Json.ObjAddProp(Result, 'xBalsa', Self.stringToJsonValue(Source.xBalsa));
   except
     Result.Free;
     raise;
@@ -17782,10 +17486,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.idUnidCargaVaziaHasValue then
-      Json.ObjAddProp(Result, 'idUnidCargaVazia', Self.stringToJsonValue(Source.idUnidCargaVazia));
-    if Source.tpUnidCargaVaziaHasValue then
-      Json.ObjAddProp(Result, 'tpUnidCargaVazia', Self.IntegerToJsonValue(Source.tpUnidCargaVazia));
+    Json.ObjAddProp(Result, 'idUnidCargaVazia', Self.stringToJsonValue(Source.idUnidCargaVazia));
+    Json.ObjAddProp(Result, 'tpUnidCargaVazia', Self.IntegerToJsonValue(Source.tpUnidCargaVazia));
   except
     Result.Free;
     raise;
@@ -17908,10 +17610,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.idUnidTranspVaziaHasValue then
-      Json.ObjAddProp(Result, 'idUnidTranspVazia', Self.stringToJsonValue(Source.idUnidTranspVazia));
-    if Source.tpUnidTranspVaziaHasValue then
-      Json.ObjAddProp(Result, 'tpUnidTranspVazia', Self.IntegerToJsonValue(Source.tpUnidTranspVazia));
+    Json.ObjAddProp(Result, 'idUnidTranspVazia', Self.stringToJsonValue(Source.idUnidTranspVazia));
+    Json.ObjAddProp(Result, 'tpUnidTranspVazia', Self.IntegerToJsonValue(Source.tpUnidTranspVazia));
   except
     Result.Free;
     raise;
@@ -18034,20 +17734,13 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.irinHasValue then
-      Json.ObjAddProp(Result, 'irin', Self.stringToJsonValue(Source.irin));
-    if Source.tpEmbHasValue then
-      Json.ObjAddProp(Result, 'tpEmb', Self.stringToJsonValue(Source.tpEmb));
-    if Source.cEmbarHasValue then
-      Json.ObjAddProp(Result, 'cEmbar', Self.stringToJsonValue(Source.cEmbar));
-    if Source.xEmbarHasValue then
-      Json.ObjAddProp(Result, 'xEmbar', Self.stringToJsonValue(Source.xEmbar));
-    if Source.nViagHasValue then
-      Json.ObjAddProp(Result, 'nViag', Self.stringToJsonValue(Source.nViag));
-    if Source.cPrtEmbHasValue then
-      Json.ObjAddProp(Result, 'cPrtEmb', Self.stringToJsonValue(Source.cPrtEmb));
-    if Source.cPrtDestHasValue then
-      Json.ObjAddProp(Result, 'cPrtDest', Self.stringToJsonValue(Source.cPrtDest));
+    Json.ObjAddProp(Result, 'irin', Self.stringToJsonValue(Source.irin));
+    Json.ObjAddProp(Result, 'tpEmb', Self.stringToJsonValue(Source.tpEmb));
+    Json.ObjAddProp(Result, 'cEmbar', Self.stringToJsonValue(Source.cEmbar));
+    Json.ObjAddProp(Result, 'xEmbar', Self.stringToJsonValue(Source.xEmbar));
+    Json.ObjAddProp(Result, 'nViag', Self.stringToJsonValue(Source.nViag));
+    Json.ObjAddProp(Result, 'cPrtEmb', Self.stringToJsonValue(Source.cPrtEmb));
+    Json.ObjAddProp(Result, 'cPrtDest', Self.stringToJsonValue(Source.cPrtDest));
     if Source.prtTransHasValue then
       Json.ObjAddProp(Result, 'prtTrans', Self.stringToJsonValue(Source.prtTrans));
     if Source.tpNavHasValue then
@@ -18146,16 +17839,12 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.xPrefHasValue then
-      Json.ObjAddProp(Result, 'xPref', Self.stringToJsonValue(Source.xPref));
+    Json.ObjAddProp(Result, 'xPref', Self.stringToJsonValue(Source.xPref));
     if Source.dhTremHasValue then
       Json.ObjAddProp(Result, 'dhTrem', Self.TDateTimeToJsonValue(Source.dhTrem));
-    if Source.xOriHasValue then
-      Json.ObjAddProp(Result, 'xOri', Self.stringToJsonValue(Source.xOri));
-    if Source.xDestHasValue then
-      Json.ObjAddProp(Result, 'xDest', Self.stringToJsonValue(Source.xDest));
-    if Source.qVagHasValue then
-      Json.ObjAddProp(Result, 'qVag', Self.IntegerToJsonValue(Source.qVag));
+    Json.ObjAddProp(Result, 'xOri', Self.stringToJsonValue(Source.xOri));
+    Json.ObjAddProp(Result, 'xDest', Self.stringToJsonValue(Source.xDest));
+    Json.ObjAddProp(Result, 'qVag', Self.IntegerToJsonValue(Source.qVag));
   except
     Result.Free;
     raise;
@@ -18222,20 +17911,15 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.pesoBCHasValue then
-      Json.ObjAddProp(Result, 'pesoBC', Self.DoubleToJsonValue(Source.pesoBC));
-    if Source.pesoRHasValue then
-      Json.ObjAddProp(Result, 'pesoR', Self.DoubleToJsonValue(Source.pesoR));
+    Json.ObjAddProp(Result, 'pesoBC', Self.DoubleToJsonValue(Source.pesoBC));
+    Json.ObjAddProp(Result, 'pesoR', Self.DoubleToJsonValue(Source.pesoR));
     if Source.tpVagHasValue then
       Json.ObjAddProp(Result, 'tpVag', Self.stringToJsonValue(Source.tpVag));
-    if Source.serieHasValue then
-      Json.ObjAddProp(Result, 'serie', Self.stringToJsonValue(Source.serie));
-    if Source.nVagHasValue then
-      Json.ObjAddProp(Result, 'nVag', Self.IntegerToJsonValue(Source.nVag));
+    Json.ObjAddProp(Result, 'serie', Self.stringToJsonValue(Source.serie));
+    Json.ObjAddProp(Result, 'nVag', Self.IntegerToJsonValue(Source.nVag));
     if Source.nSeqHasValue then
       Json.ObjAddProp(Result, 'nSeq', Self.IntegerToJsonValue(Source.nSeq));
-    if Source.TUHasValue then
-      Json.ObjAddProp(Result, 'TU', Self.DoubleToJsonValue(Source.TU));
+    Json.ObjAddProp(Result, 'TU', Self.DoubleToJsonValue(Source.TU));
   except
     Result.Free;
     raise;
@@ -18368,10 +18052,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.trem) then
-      Json.ObjAddProp(Result, 'trem', Self.TMdfeSefazTremToJsonValue(Source.trem));
-    if Assigned(Source.vag) then
-      Json.ObjAddProp(Result, 'vag', Self.TMdfeSefazVagListToJsonValue(Source.vag));
+    Json.ObjAddProp(Result, 'trem', Self.TMdfeSefazTremToJsonValue(Source.trem));
+    Json.ObjAddProp(Result, 'vag', Self.TMdfeSefazVagListToJsonValue(Source.vag));
   except
     Result.Free;
     raise;
@@ -18508,8 +18190,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nLacreHasValue then
-      Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
+    Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
   except
     Result.Free;
     raise;
@@ -18630,8 +18311,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nLacreHasValue then
-      Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
+    Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
   except
     Result.Free;
     raise;
@@ -18752,10 +18432,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpUnidCargaHasValue then
-      Json.ObjAddProp(Result, 'tpUnidCarga', Self.IntegerToJsonValue(Source.tpUnidCarga));
-    if Source.idUnidCargaHasValue then
-      Json.ObjAddProp(Result, 'idUnidCarga', Self.stringToJsonValue(Source.idUnidCarga));
+    Json.ObjAddProp(Result, 'tpUnidCarga', Self.IntegerToJsonValue(Source.tpUnidCarga));
+    Json.ObjAddProp(Result, 'idUnidCarga', Self.stringToJsonValue(Source.idUnidCarga));
     if Assigned(Source.lacUnidCarga) then
       Json.ObjAddProp(Result, 'lacUnidCarga', Self.TMdfeSefazLacUnidCargaListToJsonValue(Source.lacUnidCarga));
     if Source.qtdRatHasValue then
@@ -18886,10 +18564,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpUnidTranspHasValue then
-      Json.ObjAddProp(Result, 'tpUnidTransp', Self.IntegerToJsonValue(Source.tpUnidTransp));
-    if Source.idUnidTranspHasValue then
-      Json.ObjAddProp(Result, 'idUnidTransp', Self.stringToJsonValue(Source.idUnidTransp));
+    Json.ObjAddProp(Result, 'tpUnidTransp', Self.IntegerToJsonValue(Source.tpUnidTransp));
+    Json.ObjAddProp(Result, 'idUnidTransp', Self.stringToJsonValue(Source.idUnidTransp));
     if Assigned(Source.lacUnidTransp) then
       Json.ObjAddProp(Result, 'lacUnidTransp', Self.TMdfeSefazLacUnidTranspListToJsonValue(Source.lacUnidTransp));
     if Assigned(Source.infUnidCarga) then
@@ -19024,16 +18700,14 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nONUHasValue then
-      Json.ObjAddProp(Result, 'nONU', Self.stringToJsonValue(Source.nONU));
+    Json.ObjAddProp(Result, 'nONU', Self.stringToJsonValue(Source.nONU));
     if Source.xNomeAEHasValue then
       Json.ObjAddProp(Result, 'xNomeAE', Self.stringToJsonValue(Source.xNomeAE));
     if Source.xClaRiscoHasValue then
       Json.ObjAddProp(Result, 'xClaRisco', Self.stringToJsonValue(Source.xClaRisco));
     if Source.grEmbHasValue then
       Json.ObjAddProp(Result, 'grEmb', Self.stringToJsonValue(Source.grEmb));
-    if Source.qTotProdHasValue then
-      Json.ObjAddProp(Result, 'qTotProd', Self.stringToJsonValue(Source.qTotProd));
+    Json.ObjAddProp(Result, 'qTotProd', Self.stringToJsonValue(Source.qTotProd));
     if Source.qVolTipoHasValue then
       Json.ObjAddProp(Result, 'qVolTipo', Self.stringToJsonValue(Source.qVolTipo));
   except
@@ -19166,10 +18840,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.qtdTotalHasValue then
-      Json.ObjAddProp(Result, 'qtdTotal', Self.DoubleToJsonValue(Source.qtdTotal));
-    if Source.qtdParcialHasValue then
-      Json.ObjAddProp(Result, 'qtdParcial', Self.DoubleToJsonValue(Source.qtdParcial));
+    Json.ObjAddProp(Result, 'qtdTotal', Self.DoubleToJsonValue(Source.qtdTotal));
+    Json.ObjAddProp(Result, 'qtdParcial', Self.DoubleToJsonValue(Source.qtdParcial));
   except
     Result.Free;
     raise;
@@ -19230,8 +18902,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.chCTeHasValue then
-      Json.ObjAddProp(Result, 'chCTe', Self.stringToJsonValue(Source.chCTe));
+    Json.ObjAddProp(Result, 'chCTe', Self.stringToJsonValue(Source.chCTe));
     if Source.SegCodBarraHasValue then
       Json.ObjAddProp(Result, 'SegCodBarra', Self.stringToJsonValue(Source.SegCodBarra));
     if Source.indReentregaHasValue then
@@ -19372,16 +19043,14 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nONUHasValue then
-      Json.ObjAddProp(Result, 'nONU', Self.stringToJsonValue(Source.nONU));
+    Json.ObjAddProp(Result, 'nONU', Self.stringToJsonValue(Source.nONU));
     if Source.xNomeAEHasValue then
       Json.ObjAddProp(Result, 'xNomeAE', Self.stringToJsonValue(Source.xNomeAE));
     if Source.xClaRiscoHasValue then
       Json.ObjAddProp(Result, 'xClaRisco', Self.stringToJsonValue(Source.xClaRisco));
     if Source.grEmbHasValue then
       Json.ObjAddProp(Result, 'grEmb', Self.stringToJsonValue(Source.grEmb));
-    if Source.qTotProdHasValue then
-      Json.ObjAddProp(Result, 'qTotProd', Self.stringToJsonValue(Source.qTotProd));
+    Json.ObjAddProp(Result, 'qTotProd', Self.stringToJsonValue(Source.qTotProd));
     if Source.qVolTipoHasValue then
       Json.ObjAddProp(Result, 'qVolTipo', Self.stringToJsonValue(Source.qVolTipo));
   except
@@ -19514,8 +19183,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.chNFeHasValue then
-      Json.ObjAddProp(Result, 'chNFe', Self.stringToJsonValue(Source.chNFe));
+    Json.ObjAddProp(Result, 'chNFe', Self.stringToJsonValue(Source.chNFe));
     if Source.SegCodBarraHasValue then
       Json.ObjAddProp(Result, 'SegCodBarra', Self.stringToJsonValue(Source.SegCodBarra));
     if Source.indReentregaHasValue then
@@ -19652,16 +19320,14 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nONUHasValue then
-      Json.ObjAddProp(Result, 'nONU', Self.stringToJsonValue(Source.nONU));
+    Json.ObjAddProp(Result, 'nONU', Self.stringToJsonValue(Source.nONU));
     if Source.xNomeAEHasValue then
       Json.ObjAddProp(Result, 'xNomeAE', Self.stringToJsonValue(Source.xNomeAE));
     if Source.xClaRiscoHasValue then
       Json.ObjAddProp(Result, 'xClaRisco', Self.stringToJsonValue(Source.xClaRisco));
     if Source.grEmbHasValue then
       Json.ObjAddProp(Result, 'grEmb', Self.stringToJsonValue(Source.grEmb));
-    if Source.qTotProdHasValue then
-      Json.ObjAddProp(Result, 'qTotProd', Self.stringToJsonValue(Source.qTotProd));
+    Json.ObjAddProp(Result, 'qTotProd', Self.stringToJsonValue(Source.qTotProd));
     if Source.qVolTipoHasValue then
       Json.ObjAddProp(Result, 'qVolTipo', Self.stringToJsonValue(Source.qVolTipo));
   except
@@ -19794,8 +19460,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.chMDFeHasValue then
-      Json.ObjAddProp(Result, 'chMDFe', Self.stringToJsonValue(Source.chMDFe));
+    Json.ObjAddProp(Result, 'chMDFe', Self.stringToJsonValue(Source.chMDFe));
     if Source.indReentregaHasValue then
       Json.ObjAddProp(Result, 'indReentrega', Self.IntegerToJsonValue(Source.indReentrega));
     if Assigned(Source.infUnidTransp) then
@@ -19928,10 +19593,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cMunDescargaHasValue then
-      Json.ObjAddProp(Result, 'cMunDescarga', Self.IntegerToJsonValue(Source.cMunDescarga));
-    if Source.xMunDescargaHasValue then
-      Json.ObjAddProp(Result, 'xMunDescarga', Self.stringToJsonValue(Source.xMunDescarga));
+    Json.ObjAddProp(Result, 'cMunDescarga', Self.IntegerToJsonValue(Source.cMunDescarga));
+    Json.ObjAddProp(Result, 'xMunDescarga', Self.stringToJsonValue(Source.xMunDescarga));
     if Assigned(Source.infCTe) then
       Json.ObjAddProp(Result, 'infCTe', Self.TMdfeSefazInfCTeListToJsonValue(Source.infCTe));
     if Assigned(Source.infNFe) then
@@ -20066,8 +19729,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.infMunDescarga) then
-      Json.ObjAddProp(Result, 'infMunDescarga', Self.TMdfeSefazInfMunDescargaListToJsonValue(Source.infMunDescarga));
+    Json.ObjAddProp(Result, 'infMunDescarga', Self.TMdfeSefazInfMunDescargaListToJsonValue(Source.infMunDescarga));
   except
     Result.Free;
     raise;
@@ -20126,8 +19788,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.respSegHasValue then
-      Json.ObjAddProp(Result, 'respSeg', Self.IntegerToJsonValue(Source.respSeg));
+    Json.ObjAddProp(Result, 'respSeg', Self.IntegerToJsonValue(Source.respSeg));
     if Source.CNPJHasValue then
       Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
     if Source.CPFHasValue then
@@ -20194,10 +19855,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.xSegHasValue then
-      Json.ObjAddProp(Result, 'xSeg', Self.stringToJsonValue(Source.xSeg));
-    if Source.CNPJHasValue then
-      Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
+    Json.ObjAddProp(Result, 'xSeg', Self.stringToJsonValue(Source.xSeg));
+    Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
   except
     Result.Free;
     raise;
@@ -20258,8 +19917,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.infResp) then
-      Json.ObjAddProp(Result, 'infResp', Self.TMdfeSefazInfRespToJsonValue(Source.infResp));
+    Json.ObjAddProp(Result, 'infResp', Self.TMdfeSefazInfRespToJsonValue(Source.infResp));
     if Assigned(Source.infSeg) then
       Json.ObjAddProp(Result, 'infSeg', Self.TMdfeSefazInfSegToJsonValue(Source.infSeg));
     if Source.nApolHasValue then
@@ -20528,10 +20186,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.infLocalCarrega) then
-      Json.ObjAddProp(Result, 'infLocalCarrega', Self.TMdfeSefazInfLocalCarregaToJsonValue(Source.infLocalCarrega));
-    if Assigned(Source.infLocalDescarrega) then
-      Json.ObjAddProp(Result, 'infLocalDescarrega', Self.TMdfeSefazInfLocalDescarregaToJsonValue(Source.infLocalDescarrega));
+    Json.ObjAddProp(Result, 'infLocalCarrega', Self.TMdfeSefazInfLocalCarregaToJsonValue(Source.infLocalCarrega));
+    Json.ObjAddProp(Result, 'infLocalDescarrega', Self.TMdfeSefazInfLocalDescarregaToJsonValue(Source.infLocalDescarrega));
   except
     Result.Free;
     raise;
@@ -20592,10 +20248,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpCargaHasValue then
-      Json.ObjAddProp(Result, 'tpCarga', Self.stringToJsonValue(Source.tpCarga));
-    if Source.xProdHasValue then
-      Json.ObjAddProp(Result, 'xProd', Self.stringToJsonValue(Source.xProd));
+    Json.ObjAddProp(Result, 'tpCarga', Self.stringToJsonValue(Source.tpCarga));
+    Json.ObjAddProp(Result, 'xProd', Self.stringToJsonValue(Source.xProd));
     if Source.cEANHasValue then
       Json.ObjAddProp(Result, 'cEAN', Self.stringToJsonValue(Source.cEAN));
     if Source.NCMHasValue then
@@ -20674,12 +20328,9 @@ begin
       Json.ObjAddProp(Result, 'qNFe', Self.IntegerToJsonValue(Source.qNFe));
     if Source.qMDFeHasValue then
       Json.ObjAddProp(Result, 'qMDFe', Self.IntegerToJsonValue(Source.qMDFe));
-    if Source.vCargaHasValue then
-      Json.ObjAddProp(Result, 'vCarga', Self.DoubleToJsonValue(Source.vCarga));
-    if Source.cUnidHasValue then
-      Json.ObjAddProp(Result, 'cUnid', Self.stringToJsonValue(Source.cUnid));
-    if Source.qCargaHasValue then
-      Json.ObjAddProp(Result, 'qCarga', Self.DoubleToJsonValue(Source.qCarga));
+    Json.ObjAddProp(Result, 'vCarga', Self.DoubleToJsonValue(Source.vCarga));
+    Json.ObjAddProp(Result, 'cUnid', Self.stringToJsonValue(Source.cUnid));
+    Json.ObjAddProp(Result, 'qCarga', Self.DoubleToJsonValue(Source.qCarga));
   except
     Result.Free;
     raise;
@@ -20748,8 +20399,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nLacreHasValue then
-      Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
+    Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
   except
     Result.Free;
     raise;
@@ -21060,14 +20710,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CNPJHasValue then
-      Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
-    if Source.xContatoHasValue then
-      Json.ObjAddProp(Result, 'xContato', Self.stringToJsonValue(Source.xContato));
-    if Source.emailHasValue then
-      Json.ObjAddProp(Result, 'email', Self.stringToJsonValue(Source.email));
-    if Source.foneHasValue then
-      Json.ObjAddProp(Result, 'fone', Self.stringToJsonValue(Source.fone));
+    Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
+    Json.ObjAddProp(Result, 'xContato', Self.stringToJsonValue(Source.xContato));
+    Json.ObjAddProp(Result, 'email', Self.stringToJsonValue(Source.email));
+    Json.ObjAddProp(Result, 'fone', Self.stringToJsonValue(Source.fone));
     if Source.idCSRTHasValue then
       Json.ObjAddProp(Result, 'idCSRT', Self.IntegerToJsonValue(Source.idCSRT));
     if Source.hashCSRTHasValue then
@@ -21140,8 +20786,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.xSolicHasValue then
-      Json.ObjAddProp(Result, 'xSolic', Self.stringToJsonValue(Source.xSolic));
+    Json.ObjAddProp(Result, 'xSolic', Self.stringToJsonValue(Source.xSolic));
   except
     Result.Free;
     raise;
@@ -21204,20 +20849,15 @@ begin
       Json.ObjAddProp(Result, 'versao', Self.stringToJsonValue(Source.versao));
     if Source.IdHasValue then
       Json.ObjAddProp(Result, 'Id', Self.stringToJsonValue(Source.Id));
-    if Assigned(Source.ide) then
-      Json.ObjAddProp(Result, 'ide', Self.TMdfeSefazIdeToJsonValue(Source.ide));
-    if Assigned(Source.emit) then
-      Json.ObjAddProp(Result, 'emit', Self.TMdfeSefazEmitToJsonValue(Source.emit));
-    if Assigned(Source.infModal) then
-      Json.ObjAddProp(Result, 'infModal', Self.TMdfeSefazInfModalToJsonValue(Source.infModal));
-    if Assigned(Source.infDoc) then
-      Json.ObjAddProp(Result, 'infDoc', Self.TMdfeSefazInfDocToJsonValue(Source.infDoc));
+    Json.ObjAddProp(Result, 'ide', Self.TMdfeSefazIdeToJsonValue(Source.ide));
+    Json.ObjAddProp(Result, 'emit', Self.TMdfeSefazEmitToJsonValue(Source.emit));
+    Json.ObjAddProp(Result, 'infModal', Self.TMdfeSefazInfModalToJsonValue(Source.infModal));
+    Json.ObjAddProp(Result, 'infDoc', Self.TMdfeSefazInfDocToJsonValue(Source.infDoc));
     if Assigned(Source.seg) then
       Json.ObjAddProp(Result, 'seg', Self.TMdfeSefazSegListToJsonValue(Source.seg));
     if Assigned(Source.prodPred) then
       Json.ObjAddProp(Result, 'prodPred', Self.TMdfeSefazProdPredToJsonValue(Source.prodPred));
-    if Assigned(Source.tot) then
-      Json.ObjAddProp(Result, 'tot', Self.TMdfeSefazTotToJsonValue(Source.tot));
+    Json.ObjAddProp(Result, 'tot', Self.TMdfeSefazTotToJsonValue(Source.tot));
     if Assigned(Source.lacres) then
       Json.ObjAddProp(Result, 'lacres', Self.TMdfeSefazLacresListToJsonValue(Source.lacres));
     if Assigned(Source.autXML) then
@@ -22340,18 +21980,12 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cUFHasValue then
-      Json.ObjAddProp(Result, 'cUF', Self.IntegerToJsonValue(Source.cUF));
-    if Source.AAMMHasValue then
-      Json.ObjAddProp(Result, 'AAMM', Self.stringToJsonValue(Source.AAMM));
-    if Source.CNPJHasValue then
-      Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
-    if Source.&modHasValue then
-      Json.ObjAddProp(Result, 'mod', Self.stringToJsonValue(Source.&mod));
-    if Source.serieHasValue then
-      Json.ObjAddProp(Result, 'serie', Self.IntegerToJsonValue(Source.serie));
-    if Source.nNFHasValue then
-      Json.ObjAddProp(Result, 'nNF', Self.IntegerToJsonValue(Source.nNF));
+    Json.ObjAddProp(Result, 'cUF', Self.IntegerToJsonValue(Source.cUF));
+    Json.ObjAddProp(Result, 'AAMM', Self.stringToJsonValue(Source.AAMM));
+    Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
+    Json.ObjAddProp(Result, 'mod', Self.stringToJsonValue(Source.&mod));
+    Json.ObjAddProp(Result, 'serie', Self.IntegerToJsonValue(Source.serie));
+    Json.ObjAddProp(Result, 'nNF', Self.IntegerToJsonValue(Source.nNF));
   except
     Result.Free;
     raise;
@@ -22420,22 +22054,16 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cUFHasValue then
-      Json.ObjAddProp(Result, 'cUF', Self.IntegerToJsonValue(Source.cUF));
-    if Source.AAMMHasValue then
-      Json.ObjAddProp(Result, 'AAMM', Self.stringToJsonValue(Source.AAMM));
+    Json.ObjAddProp(Result, 'cUF', Self.IntegerToJsonValue(Source.cUF));
+    Json.ObjAddProp(Result, 'AAMM', Self.stringToJsonValue(Source.AAMM));
     if Source.CNPJHasValue then
       Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
     if Source.CPFHasValue then
       Json.ObjAddProp(Result, 'CPF', Self.stringToJsonValue(Source.CPF));
-    if Source.IEHasValue then
-      Json.ObjAddProp(Result, 'IE', Self.stringToJsonValue(Source.IE));
-    if Source.&modHasValue then
-      Json.ObjAddProp(Result, 'mod', Self.stringToJsonValue(Source.&mod));
-    if Source.serieHasValue then
-      Json.ObjAddProp(Result, 'serie', Self.IntegerToJsonValue(Source.serie));
-    if Source.nNFHasValue then
-      Json.ObjAddProp(Result, 'nNF', Self.IntegerToJsonValue(Source.nNF));
+    Json.ObjAddProp(Result, 'IE', Self.stringToJsonValue(Source.IE));
+    Json.ObjAddProp(Result, 'mod', Self.stringToJsonValue(Source.&mod));
+    Json.ObjAddProp(Result, 'serie', Self.IntegerToJsonValue(Source.serie));
+    Json.ObjAddProp(Result, 'nNF', Self.IntegerToJsonValue(Source.nNF));
   except
     Result.Free;
     raise;
@@ -22508,12 +22136,9 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.&modHasValue then
-      Json.ObjAddProp(Result, 'mod', Self.stringToJsonValue(Source.&mod));
-    if Source.nECFHasValue then
-      Json.ObjAddProp(Result, 'nECF', Self.IntegerToJsonValue(Source.nECF));
-    if Source.nCOOHasValue then
-      Json.ObjAddProp(Result, 'nCOO', Self.IntegerToJsonValue(Source.nCOO));
+    Json.ObjAddProp(Result, 'mod', Self.stringToJsonValue(Source.&mod));
+    Json.ObjAddProp(Result, 'nECF', Self.IntegerToJsonValue(Source.nECF));
+    Json.ObjAddProp(Result, 'nCOO', Self.IntegerToJsonValue(Source.nCOO));
   except
     Result.Free;
     raise;
@@ -22714,48 +22339,31 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cUFHasValue then
-      Json.ObjAddProp(Result, 'cUF', Self.IntegerToJsonValue(Source.cUF));
-    if Source.cNFHasValue then
-      Json.ObjAddProp(Result, 'cNF', Self.IntegerToJsonValue(Source.cNF));
-    if Source.natOpHasValue then
-      Json.ObjAddProp(Result, 'natOp', Self.stringToJsonValue(Source.natOp));
+    Json.ObjAddProp(Result, 'cUF', Self.IntegerToJsonValue(Source.cUF));
+    Json.ObjAddProp(Result, 'cNF', Self.IntegerToJsonValue(Source.cNF));
+    Json.ObjAddProp(Result, 'natOp', Self.stringToJsonValue(Source.natOp));
     if Source.&modHasValue then
       Json.ObjAddProp(Result, 'mod', Self.IntegerToJsonValue(Source.&mod));
-    if Source.serieHasValue then
-      Json.ObjAddProp(Result, 'serie', Self.IntegerToJsonValue(Source.serie));
-    if Source.nNFHasValue then
-      Json.ObjAddProp(Result, 'nNF', Self.IntegerToJsonValue(Source.nNF));
-    if Source.dhEmiHasValue then
-      Json.ObjAddProp(Result, 'dhEmi', Self.TDateTimeToJsonValue(Source.dhEmi));
+    Json.ObjAddProp(Result, 'serie', Self.IntegerToJsonValue(Source.serie));
+    Json.ObjAddProp(Result, 'nNF', Self.IntegerToJsonValue(Source.nNF));
+    Json.ObjAddProp(Result, 'dhEmi', Self.TDateTimeToJsonValue(Source.dhEmi));
     if Source.dhSaiEntHasValue then
       Json.ObjAddProp(Result, 'dhSaiEnt', Self.TDateTimeToJsonValue(Source.dhSaiEnt));
-    if Source.tpNFHasValue then
-      Json.ObjAddProp(Result, 'tpNF', Self.IntegerToJsonValue(Source.tpNF));
-    if Source.idDestHasValue then
-      Json.ObjAddProp(Result, 'idDest', Self.IntegerToJsonValue(Source.idDest));
-    if Source.cMunFGHasValue then
-      Json.ObjAddProp(Result, 'cMunFG', Self.IntegerToJsonValue(Source.cMunFG));
-    if Source.tpImpHasValue then
-      Json.ObjAddProp(Result, 'tpImp', Self.IntegerToJsonValue(Source.tpImp));
-    if Source.tpEmisHasValue then
-      Json.ObjAddProp(Result, 'tpEmis', Self.IntegerToJsonValue(Source.tpEmis));
-    if Source.cDVHasValue then
-      Json.ObjAddProp(Result, 'cDV', Self.IntegerToJsonValue(Source.cDV));
+    Json.ObjAddProp(Result, 'tpNF', Self.IntegerToJsonValue(Source.tpNF));
+    Json.ObjAddProp(Result, 'idDest', Self.IntegerToJsonValue(Source.idDest));
+    Json.ObjAddProp(Result, 'cMunFG', Self.IntegerToJsonValue(Source.cMunFG));
+    Json.ObjAddProp(Result, 'tpImp', Self.IntegerToJsonValue(Source.tpImp));
+    Json.ObjAddProp(Result, 'tpEmis', Self.IntegerToJsonValue(Source.tpEmis));
+    Json.ObjAddProp(Result, 'cDV', Self.IntegerToJsonValue(Source.cDV));
     if Source.tpAmbHasValue then
       Json.ObjAddProp(Result, 'tpAmb', Self.IntegerToJsonValue(Source.tpAmb));
-    if Source.finNFeHasValue then
-      Json.ObjAddProp(Result, 'finNFe', Self.IntegerToJsonValue(Source.finNFe));
-    if Source.indFinalHasValue then
-      Json.ObjAddProp(Result, 'indFinal', Self.IntegerToJsonValue(Source.indFinal));
-    if Source.indPresHasValue then
-      Json.ObjAddProp(Result, 'indPres', Self.IntegerToJsonValue(Source.indPres));
+    Json.ObjAddProp(Result, 'finNFe', Self.IntegerToJsonValue(Source.finNFe));
+    Json.ObjAddProp(Result, 'indFinal', Self.IntegerToJsonValue(Source.indFinal));
+    Json.ObjAddProp(Result, 'indPres', Self.IntegerToJsonValue(Source.indPres));
     if Source.indIntermedHasValue then
       Json.ObjAddProp(Result, 'indIntermed', Self.IntegerToJsonValue(Source.indIntermed));
-    if Source.procEmiHasValue then
-      Json.ObjAddProp(Result, 'procEmi', Self.IntegerToJsonValue(Source.procEmi));
-    if Source.verProcHasValue then
-      Json.ObjAddProp(Result, 'verProc', Self.stringToJsonValue(Source.verProc));
+    Json.ObjAddProp(Result, 'procEmi', Self.IntegerToJsonValue(Source.procEmi));
+    Json.ObjAddProp(Result, 'verProc', Self.stringToJsonValue(Source.verProc));
     if Source.dhContHasValue then
       Json.ObjAddProp(Result, 'dhCont', Self.TDateTimeToJsonValue(Source.dhCont));
     if Source.xJustHasValue then
@@ -23062,26 +22670,20 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CNPJHasValue then
-      Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
-    if Source.xOrgaoHasValue then
-      Json.ObjAddProp(Result, 'xOrgao', Self.stringToJsonValue(Source.xOrgao));
-    if Source.matrHasValue then
-      Json.ObjAddProp(Result, 'matr', Self.stringToJsonValue(Source.matr));
-    if Source.xAgenteHasValue then
-      Json.ObjAddProp(Result, 'xAgente', Self.stringToJsonValue(Source.xAgente));
+    Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
+    Json.ObjAddProp(Result, 'xOrgao', Self.stringToJsonValue(Source.xOrgao));
+    Json.ObjAddProp(Result, 'matr', Self.stringToJsonValue(Source.matr));
+    Json.ObjAddProp(Result, 'xAgente', Self.stringToJsonValue(Source.xAgente));
     if Source.foneHasValue then
       Json.ObjAddProp(Result, 'fone', Self.stringToJsonValue(Source.fone));
-    if Source.UFHasValue then
-      Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
+    Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
     if Source.nDARHasValue then
       Json.ObjAddProp(Result, 'nDAR', Self.stringToJsonValue(Source.nDAR));
     if Source.dEmiHasValue then
       Json.ObjAddProp(Result, 'dEmi', Self.TDateToJsonValue(Source.dEmi));
     if Source.vDARHasValue then
       Json.ObjAddProp(Result, 'vDAR', Self.DoubleToJsonValue(Source.vDAR));
-    if Source.repEmiHasValue then
-      Json.ObjAddProp(Result, 'repEmi', Self.stringToJsonValue(Source.repEmi));
+    Json.ObjAddProp(Result, 'repEmi', Self.stringToJsonValue(Source.repEmi));
     if Source.dPagHasValue then
       Json.ObjAddProp(Result, 'dPag', Self.TDateToJsonValue(Source.dPag));
   except
@@ -23162,20 +22764,14 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.xLgrHasValue then
-      Json.ObjAddProp(Result, 'xLgr', Self.stringToJsonValue(Source.xLgr));
-    if Source.nroHasValue then
-      Json.ObjAddProp(Result, 'nro', Self.stringToJsonValue(Source.nro));
+    Json.ObjAddProp(Result, 'xLgr', Self.stringToJsonValue(Source.xLgr));
+    Json.ObjAddProp(Result, 'nro', Self.stringToJsonValue(Source.nro));
     if Source.xCplHasValue then
       Json.ObjAddProp(Result, 'xCpl', Self.stringToJsonValue(Source.xCpl));
-    if Source.xBairroHasValue then
-      Json.ObjAddProp(Result, 'xBairro', Self.stringToJsonValue(Source.xBairro));
-    if Source.cMunHasValue then
-      Json.ObjAddProp(Result, 'cMun', Self.IntegerToJsonValue(Source.cMun));
-    if Source.xMunHasValue then
-      Json.ObjAddProp(Result, 'xMun', Self.stringToJsonValue(Source.xMun));
-    if Source.UFHasValue then
-      Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
+    Json.ObjAddProp(Result, 'xBairro', Self.stringToJsonValue(Source.xBairro));
+    Json.ObjAddProp(Result, 'cMun', Self.IntegerToJsonValue(Source.cMun));
+    Json.ObjAddProp(Result, 'xMun', Self.stringToJsonValue(Source.xMun));
+    Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
     if Source.CEPHasValue then
       Json.ObjAddProp(Result, 'CEP', Self.IntegerToJsonValue(Source.CEP));
     if Source.cPaisHasValue then
@@ -23272,8 +22868,7 @@ begin
       Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
     if Assigned(Source.enderDest) then
       Json.ObjAddProp(Result, 'enderDest', Self.TNfeSefazEnderecoToJsonValue(Source.enderDest));
-    if Source.indIEDestHasValue then
-      Json.ObjAddProp(Result, 'indIEDest', Self.IntegerToJsonValue(Source.indIEDest));
+    Json.ObjAddProp(Result, 'indIEDest', Self.IntegerToJsonValue(Source.indIEDest));
     if Source.IEHasValue then
       Json.ObjAddProp(Result, 'IE', Self.stringToJsonValue(Source.IE));
     if Source.ISUFHasValue then
@@ -23364,20 +22959,14 @@ begin
       Json.ObjAddProp(Result, 'CPF', Self.stringToJsonValue(Source.CPF));
     if Source.xNomeHasValue then
       Json.ObjAddProp(Result, 'xNome', Self.stringToJsonValue(Source.xNome));
-    if Source.xLgrHasValue then
-      Json.ObjAddProp(Result, 'xLgr', Self.stringToJsonValue(Source.xLgr));
-    if Source.nroHasValue then
-      Json.ObjAddProp(Result, 'nro', Self.stringToJsonValue(Source.nro));
+    Json.ObjAddProp(Result, 'xLgr', Self.stringToJsonValue(Source.xLgr));
+    Json.ObjAddProp(Result, 'nro', Self.stringToJsonValue(Source.nro));
     if Source.xCplHasValue then
       Json.ObjAddProp(Result, 'xCpl', Self.stringToJsonValue(Source.xCpl));
-    if Source.xBairroHasValue then
-      Json.ObjAddProp(Result, 'xBairro', Self.stringToJsonValue(Source.xBairro));
-    if Source.cMunHasValue then
-      Json.ObjAddProp(Result, 'cMun', Self.IntegerToJsonValue(Source.cMun));
-    if Source.xMunHasValue then
-      Json.ObjAddProp(Result, 'xMun', Self.stringToJsonValue(Source.xMun));
-    if Source.UFHasValue then
-      Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
+    Json.ObjAddProp(Result, 'xBairro', Self.stringToJsonValue(Source.xBairro));
+    Json.ObjAddProp(Result, 'cMun', Self.IntegerToJsonValue(Source.cMun));
+    Json.ObjAddProp(Result, 'xMun', Self.stringToJsonValue(Source.xMun));
+    Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
     if Source.CEPHasValue then
       Json.ObjAddProp(Result, 'CEP', Self.IntegerToJsonValue(Source.CEP));
     if Source.cPaisHasValue then
@@ -23606,10 +23195,8 @@ begin
   try
     if Source.nAdicaoHasValue then
       Json.ObjAddProp(Result, 'nAdicao', Self.IntegerToJsonValue(Source.nAdicao));
-    if Source.nSeqAdicHasValue then
-      Json.ObjAddProp(Result, 'nSeqAdic', Self.IntegerToJsonValue(Source.nSeqAdic));
-    if Source.cFabricanteHasValue then
-      Json.ObjAddProp(Result, 'cFabricante', Self.stringToJsonValue(Source.cFabricante));
+    Json.ObjAddProp(Result, 'nSeqAdic', Self.IntegerToJsonValue(Source.nSeqAdic));
+    Json.ObjAddProp(Result, 'cFabricante', Self.stringToJsonValue(Source.cFabricante));
     if Source.vDescDIHasValue then
       Json.ObjAddProp(Result, 'vDescDI', Self.DoubleToJsonValue(Source.vDescDI));
     if Source.nDrawHasValue then
@@ -23742,30 +23329,21 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nDIHasValue then
-      Json.ObjAddProp(Result, 'nDI', Self.stringToJsonValue(Source.nDI));
-    if Source.dDIHasValue then
-      Json.ObjAddProp(Result, 'dDI', Self.TDateToJsonValue(Source.dDI));
-    if Source.xLocDesembHasValue then
-      Json.ObjAddProp(Result, 'xLocDesemb', Self.stringToJsonValue(Source.xLocDesemb));
-    if Source.UFDesembHasValue then
-      Json.ObjAddProp(Result, 'UFDesemb', Self.stringToJsonValue(Source.UFDesemb));
-    if Source.dDesembHasValue then
-      Json.ObjAddProp(Result, 'dDesemb', Self.TDateToJsonValue(Source.dDesemb));
-    if Source.tpViaTranspHasValue then
-      Json.ObjAddProp(Result, 'tpViaTransp', Self.IntegerToJsonValue(Source.tpViaTransp));
+    Json.ObjAddProp(Result, 'nDI', Self.stringToJsonValue(Source.nDI));
+    Json.ObjAddProp(Result, 'dDI', Self.TDateToJsonValue(Source.dDI));
+    Json.ObjAddProp(Result, 'xLocDesemb', Self.stringToJsonValue(Source.xLocDesemb));
+    Json.ObjAddProp(Result, 'UFDesemb', Self.stringToJsonValue(Source.UFDesemb));
+    Json.ObjAddProp(Result, 'dDesemb', Self.TDateToJsonValue(Source.dDesemb));
+    Json.ObjAddProp(Result, 'tpViaTransp', Self.IntegerToJsonValue(Source.tpViaTransp));
     if Source.vAFRMMHasValue then
       Json.ObjAddProp(Result, 'vAFRMM', Self.DoubleToJsonValue(Source.vAFRMM));
-    if Source.tpIntermedioHasValue then
-      Json.ObjAddProp(Result, 'tpIntermedio', Self.IntegerToJsonValue(Source.tpIntermedio));
+    Json.ObjAddProp(Result, 'tpIntermedio', Self.IntegerToJsonValue(Source.tpIntermedio));
     if Source.CNPJHasValue then
       Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
     if Source.UFTerceiroHasValue then
       Json.ObjAddProp(Result, 'UFTerceiro', Self.stringToJsonValue(Source.UFTerceiro));
-    if Source.cExportadorHasValue then
-      Json.ObjAddProp(Result, 'cExportador', Self.stringToJsonValue(Source.cExportador));
-    if Assigned(Source.adi) then
-      Json.ObjAddProp(Result, 'adi', Self.TNfeSefazAdiListToJsonValue(Source.adi));
+    Json.ObjAddProp(Result, 'cExportador', Self.stringToJsonValue(Source.cExportador));
+    Json.ObjAddProp(Result, 'adi', Self.TNfeSefazAdiListToJsonValue(Source.adi));
   except
     Result.Free;
     raise;
@@ -23908,12 +23486,9 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nREHasValue then
-      Json.ObjAddProp(Result, 'nRE', Self.stringToJsonValue(Source.nRE));
-    if Source.chNFeHasValue then
-      Json.ObjAddProp(Result, 'chNFe', Self.stringToJsonValue(Source.chNFe));
-    if Source.qExportHasValue then
-      Json.ObjAddProp(Result, 'qExport', Self.DoubleToJsonValue(Source.qExport));
+    Json.ObjAddProp(Result, 'nRE', Self.stringToJsonValue(Source.nRE));
+    Json.ObjAddProp(Result, 'chNFe', Self.stringToJsonValue(Source.chNFe));
+    Json.ObjAddProp(Result, 'qExport', Self.DoubleToJsonValue(Source.qExport));
   except
     Result.Free;
     raise;
@@ -24102,14 +23677,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nLoteHasValue then
-      Json.ObjAddProp(Result, 'nLote', Self.stringToJsonValue(Source.nLote));
-    if Source.qLoteHasValue then
-      Json.ObjAddProp(Result, 'qLote', Self.DoubleToJsonValue(Source.qLote));
-    if Source.dFabHasValue then
-      Json.ObjAddProp(Result, 'dFab', Self.TDateToJsonValue(Source.dFab));
-    if Source.dValHasValue then
-      Json.ObjAddProp(Result, 'dVal', Self.TDateToJsonValue(Source.dVal));
+    Json.ObjAddProp(Result, 'nLote', Self.stringToJsonValue(Source.nLote));
+    Json.ObjAddProp(Result, 'qLote', Self.DoubleToJsonValue(Source.qLote));
+    Json.ObjAddProp(Result, 'dFab', Self.TDateToJsonValue(Source.dFab));
+    Json.ObjAddProp(Result, 'dVal', Self.TDateToJsonValue(Source.dVal));
     if Source.cAgregHasValue then
       Json.ObjAddProp(Result, 'cAgreg', Self.stringToJsonValue(Source.cAgreg));
   except
@@ -24240,10 +23811,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cProdFiscoHasValue then
-      Json.ObjAddProp(Result, 'cProdFisco', Self.stringToJsonValue(Source.cProdFisco));
-    if Source.cOperNFFHasValue then
-      Json.ObjAddProp(Result, 'cOperNFF', Self.stringToJsonValue(Source.cOperNFF));
+    Json.ObjAddProp(Result, 'cProdFisco', Self.stringToJsonValue(Source.cProdFisco));
+    Json.ObjAddProp(Result, 'cOperNFF', Self.stringToJsonValue(Source.cOperNFF));
   except
     Result.Free;
     raise;
@@ -24304,12 +23873,9 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.xEmbHasValue then
-      Json.ObjAddProp(Result, 'xEmb', Self.stringToJsonValue(Source.xEmb));
-    if Source.qVolEmbHasValue then
-      Json.ObjAddProp(Result, 'qVolEmb', Self.DoubleToJsonValue(Source.qVolEmb));
-    if Source.uEmbHasValue then
-      Json.ObjAddProp(Result, 'uEmb', Self.stringToJsonValue(Source.uEmb));
+    Json.ObjAddProp(Result, 'xEmb', Self.stringToJsonValue(Source.xEmb));
+    Json.ObjAddProp(Result, 'qVolEmb', Self.DoubleToJsonValue(Source.qVolEmb));
+    Json.ObjAddProp(Result, 'uEmb', Self.stringToJsonValue(Source.uEmb));
   except
     Result.Free;
     raise;
@@ -24372,54 +23938,30 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpOpHasValue then
-      Json.ObjAddProp(Result, 'tpOp', Self.IntegerToJsonValue(Source.tpOp));
-    if Source.chassiHasValue then
-      Json.ObjAddProp(Result, 'chassi', Self.stringToJsonValue(Source.chassi));
-    if Source.cCorHasValue then
-      Json.ObjAddProp(Result, 'cCor', Self.stringToJsonValue(Source.cCor));
-    if Source.xCorHasValue then
-      Json.ObjAddProp(Result, 'xCor', Self.stringToJsonValue(Source.xCor));
-    if Source.potHasValue then
-      Json.ObjAddProp(Result, 'pot', Self.stringToJsonValue(Source.pot));
-    if Source.cilinHasValue then
-      Json.ObjAddProp(Result, 'cilin', Self.stringToJsonValue(Source.cilin));
-    if Source.pesoLHasValue then
-      Json.ObjAddProp(Result, 'pesoL', Self.stringToJsonValue(Source.pesoL));
-    if Source.pesoBHasValue then
-      Json.ObjAddProp(Result, 'pesoB', Self.stringToJsonValue(Source.pesoB));
-    if Source.nSerieHasValue then
-      Json.ObjAddProp(Result, 'nSerie', Self.stringToJsonValue(Source.nSerie));
-    if Source.tpCombHasValue then
-      Json.ObjAddProp(Result, 'tpComb', Self.stringToJsonValue(Source.tpComb));
-    if Source.nMotorHasValue then
-      Json.ObjAddProp(Result, 'nMotor', Self.stringToJsonValue(Source.nMotor));
-    if Source.CMTHasValue then
-      Json.ObjAddProp(Result, 'CMT', Self.stringToJsonValue(Source.CMT));
-    if Source.distHasValue then
-      Json.ObjAddProp(Result, 'dist', Self.stringToJsonValue(Source.dist));
-    if Source.anoModHasValue then
-      Json.ObjAddProp(Result, 'anoMod', Self.IntegerToJsonValue(Source.anoMod));
-    if Source.anoFabHasValue then
-      Json.ObjAddProp(Result, 'anoFab', Self.IntegerToJsonValue(Source.anoFab));
-    if Source.tpPintHasValue then
-      Json.ObjAddProp(Result, 'tpPint', Self.stringToJsonValue(Source.tpPint));
-    if Source.tpVeicHasValue then
-      Json.ObjAddProp(Result, 'tpVeic', Self.IntegerToJsonValue(Source.tpVeic));
-    if Source.espVeicHasValue then
-      Json.ObjAddProp(Result, 'espVeic', Self.IntegerToJsonValue(Source.espVeic));
-    if Source.VINHasValue then
-      Json.ObjAddProp(Result, 'VIN', Self.stringToJsonValue(Source.VIN));
-    if Source.condVeicHasValue then
-      Json.ObjAddProp(Result, 'condVeic', Self.IntegerToJsonValue(Source.condVeic));
-    if Source.cModHasValue then
-      Json.ObjAddProp(Result, 'cMod', Self.stringToJsonValue(Source.cMod));
-    if Source.cCorDENATRANHasValue then
-      Json.ObjAddProp(Result, 'cCorDENATRAN', Self.stringToJsonValue(Source.cCorDENATRAN));
-    if Source.lotaHasValue then
-      Json.ObjAddProp(Result, 'lota', Self.IntegerToJsonValue(Source.lota));
-    if Source.tpRestHasValue then
-      Json.ObjAddProp(Result, 'tpRest', Self.IntegerToJsonValue(Source.tpRest));
+    Json.ObjAddProp(Result, 'tpOp', Self.IntegerToJsonValue(Source.tpOp));
+    Json.ObjAddProp(Result, 'chassi', Self.stringToJsonValue(Source.chassi));
+    Json.ObjAddProp(Result, 'cCor', Self.stringToJsonValue(Source.cCor));
+    Json.ObjAddProp(Result, 'xCor', Self.stringToJsonValue(Source.xCor));
+    Json.ObjAddProp(Result, 'pot', Self.stringToJsonValue(Source.pot));
+    Json.ObjAddProp(Result, 'cilin', Self.stringToJsonValue(Source.cilin));
+    Json.ObjAddProp(Result, 'pesoL', Self.stringToJsonValue(Source.pesoL));
+    Json.ObjAddProp(Result, 'pesoB', Self.stringToJsonValue(Source.pesoB));
+    Json.ObjAddProp(Result, 'nSerie', Self.stringToJsonValue(Source.nSerie));
+    Json.ObjAddProp(Result, 'tpComb', Self.stringToJsonValue(Source.tpComb));
+    Json.ObjAddProp(Result, 'nMotor', Self.stringToJsonValue(Source.nMotor));
+    Json.ObjAddProp(Result, 'CMT', Self.stringToJsonValue(Source.CMT));
+    Json.ObjAddProp(Result, 'dist', Self.stringToJsonValue(Source.dist));
+    Json.ObjAddProp(Result, 'anoMod', Self.IntegerToJsonValue(Source.anoMod));
+    Json.ObjAddProp(Result, 'anoFab', Self.IntegerToJsonValue(Source.anoFab));
+    Json.ObjAddProp(Result, 'tpPint', Self.stringToJsonValue(Source.tpPint));
+    Json.ObjAddProp(Result, 'tpVeic', Self.IntegerToJsonValue(Source.tpVeic));
+    Json.ObjAddProp(Result, 'espVeic', Self.IntegerToJsonValue(Source.espVeic));
+    Json.ObjAddProp(Result, 'VIN', Self.stringToJsonValue(Source.VIN));
+    Json.ObjAddProp(Result, 'condVeic', Self.IntegerToJsonValue(Source.condVeic));
+    Json.ObjAddProp(Result, 'cMod', Self.stringToJsonValue(Source.cMod));
+    Json.ObjAddProp(Result, 'cCorDENATRAN', Self.stringToJsonValue(Source.cCorDENATRAN));
+    Json.ObjAddProp(Result, 'lota', Self.IntegerToJsonValue(Source.lota));
+    Json.ObjAddProp(Result, 'tpRest', Self.IntegerToJsonValue(Source.tpRest));
   except
     Result.Free;
     raise;
@@ -24524,12 +24066,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cProdANVISAHasValue then
-      Json.ObjAddProp(Result, 'cProdANVISA', Self.stringToJsonValue(Source.cProdANVISA));
+    Json.ObjAddProp(Result, 'cProdANVISA', Self.stringToJsonValue(Source.cProdANVISA));
     if Source.xMotivoIsencaoHasValue then
       Json.ObjAddProp(Result, 'xMotivoIsencao', Self.stringToJsonValue(Source.xMotivoIsencao));
-    if Source.vPMCHasValue then
-      Json.ObjAddProp(Result, 'vPMC', Self.DoubleToJsonValue(Source.vPMC));
+    Json.ObjAddProp(Result, 'vPMC', Self.DoubleToJsonValue(Source.vPMC));
   except
     Result.Free;
     raise;
@@ -24592,14 +24132,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpArmaHasValue then
-      Json.ObjAddProp(Result, 'tpArma', Self.IntegerToJsonValue(Source.tpArma));
-    if Source.nSerieHasValue then
-      Json.ObjAddProp(Result, 'nSerie', Self.stringToJsonValue(Source.nSerie));
-    if Source.nCanoHasValue then
-      Json.ObjAddProp(Result, 'nCano', Self.stringToJsonValue(Source.nCano));
-    if Source.descrHasValue then
-      Json.ObjAddProp(Result, 'descr', Self.stringToJsonValue(Source.descr));
+    Json.ObjAddProp(Result, 'tpArma', Self.IntegerToJsonValue(Source.tpArma));
+    Json.ObjAddProp(Result, 'nSerie', Self.stringToJsonValue(Source.nSerie));
+    Json.ObjAddProp(Result, 'nCano', Self.stringToJsonValue(Source.nCano));
+    Json.ObjAddProp(Result, 'descr', Self.stringToJsonValue(Source.descr));
   except
     Result.Free;
     raise;
@@ -24726,12 +24262,9 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.qBCProdHasValue then
-      Json.ObjAddProp(Result, 'qBCProd', Self.DoubleToJsonValue(Source.qBCProd));
-    if Source.vAliqProdHasValue then
-      Json.ObjAddProp(Result, 'vAliqProd', Self.DoubleToJsonValue(Source.vAliqProd));
-    if Source.vCIDEHasValue then
-      Json.ObjAddProp(Result, 'vCIDE', Self.DoubleToJsonValue(Source.vCIDE));
+    Json.ObjAddProp(Result, 'qBCProd', Self.DoubleToJsonValue(Source.qBCProd));
+    Json.ObjAddProp(Result, 'vAliqProd', Self.DoubleToJsonValue(Source.vAliqProd));
+    Json.ObjAddProp(Result, 'vCIDE', Self.DoubleToJsonValue(Source.vCIDE));
   except
     Result.Free;
     raise;
@@ -24794,16 +24327,12 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nBicoHasValue then
-      Json.ObjAddProp(Result, 'nBico', Self.IntegerToJsonValue(Source.nBico));
+    Json.ObjAddProp(Result, 'nBico', Self.IntegerToJsonValue(Source.nBico));
     if Source.nBombaHasValue then
       Json.ObjAddProp(Result, 'nBomba', Self.IntegerToJsonValue(Source.nBomba));
-    if Source.nTanqueHasValue then
-      Json.ObjAddProp(Result, 'nTanque', Self.IntegerToJsonValue(Source.nTanque));
-    if Source.vEncIniHasValue then
-      Json.ObjAddProp(Result, 'vEncIni', Self.DoubleToJsonValue(Source.vEncIni));
-    if Source.vEncFinHasValue then
-      Json.ObjAddProp(Result, 'vEncFin', Self.DoubleToJsonValue(Source.vEncFin));
+    Json.ObjAddProp(Result, 'nTanque', Self.IntegerToJsonValue(Source.nTanque));
+    Json.ObjAddProp(Result, 'vEncIni', Self.DoubleToJsonValue(Source.vEncIni));
+    Json.ObjAddProp(Result, 'vEncFin', Self.DoubleToJsonValue(Source.vEncFin));
   except
     Result.Free;
     raise;
@@ -24870,10 +24399,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cProdANPHasValue then
-      Json.ObjAddProp(Result, 'cProdANP', Self.IntegerToJsonValue(Source.cProdANP));
-    if Source.descANPHasValue then
-      Json.ObjAddProp(Result, 'descANP', Self.stringToJsonValue(Source.descANP));
+    Json.ObjAddProp(Result, 'cProdANP', Self.IntegerToJsonValue(Source.cProdANP));
+    Json.ObjAddProp(Result, 'descANP', Self.stringToJsonValue(Source.descANP));
     if Source.pGLPHasValue then
       Json.ObjAddProp(Result, 'pGLP', Self.DoubleToJsonValue(Source.pGLP));
     if Source.pGNnHasValue then
@@ -24886,8 +24413,7 @@ begin
       Json.ObjAddProp(Result, 'CODIF', Self.stringToJsonValue(Source.CODIF));
     if Source.qTempHasValue then
       Json.ObjAddProp(Result, 'qTemp', Self.DoubleToJsonValue(Source.qTemp));
-    if Source.UFConsHasValue then
-      Json.ObjAddProp(Result, 'UFCons', Self.stringToJsonValue(Source.UFCons));
+    Json.ObjAddProp(Result, 'UFCons', Self.stringToJsonValue(Source.UFCons));
     if Assigned(Source.CIDE) then
       Json.ObjAddProp(Result, 'CIDE', Self.TNfeSefazCIDEToJsonValue(Source.CIDE));
     if Assigned(Source.encerrante) then
@@ -24970,16 +24496,12 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.cProdHasValue then
-      Json.ObjAddProp(Result, 'cProd', Self.stringToJsonValue(Source.cProd));
-    if Source.cEANHasValue then
-      Json.ObjAddProp(Result, 'cEAN', Self.stringToJsonValue(Source.cEAN));
+    Json.ObjAddProp(Result, 'cProd', Self.stringToJsonValue(Source.cProd));
+    Json.ObjAddProp(Result, 'cEAN', Self.stringToJsonValue(Source.cEAN));
     if Source.cBarraHasValue then
       Json.ObjAddProp(Result, 'cBarra', Self.stringToJsonValue(Source.cBarra));
-    if Source.xProdHasValue then
-      Json.ObjAddProp(Result, 'xProd', Self.stringToJsonValue(Source.xProd));
-    if Source.NCMHasValue then
-      Json.ObjAddProp(Result, 'NCM', Self.stringToJsonValue(Source.NCM));
+    Json.ObjAddProp(Result, 'xProd', Self.stringToJsonValue(Source.xProd));
+    Json.ObjAddProp(Result, 'NCM', Self.stringToJsonValue(Source.NCM));
     if Assigned(Source.NVE) then
       Json.ObjAddProp(Result, 'NVE', Self.stringListToJsonValue(Source.NVE));
     if Source.CESTHasValue then
@@ -24992,26 +24514,17 @@ begin
       Json.ObjAddProp(Result, 'cBenef', Self.stringToJsonValue(Source.cBenef));
     if Source.EXTIPIHasValue then
       Json.ObjAddProp(Result, 'EXTIPI', Self.stringToJsonValue(Source.EXTIPI));
-    if Source.CFOPHasValue then
-      Json.ObjAddProp(Result, 'CFOP', Self.IntegerToJsonValue(Source.CFOP));
-    if Source.uComHasValue then
-      Json.ObjAddProp(Result, 'uCom', Self.stringToJsonValue(Source.uCom));
-    if Source.qComHasValue then
-      Json.ObjAddProp(Result, 'qCom', Self.DoubleToJsonValue(Source.qCom));
-    if Source.vUnComHasValue then
-      Json.ObjAddProp(Result, 'vUnCom', Self.DoubleToJsonValue(Source.vUnCom));
-    if Source.vProdHasValue then
-      Json.ObjAddProp(Result, 'vProd', Self.DoubleToJsonValue(Source.vProd));
-    if Source.cEANTribHasValue then
-      Json.ObjAddProp(Result, 'cEANTrib', Self.stringToJsonValue(Source.cEANTrib));
+    Json.ObjAddProp(Result, 'CFOP', Self.IntegerToJsonValue(Source.CFOP));
+    Json.ObjAddProp(Result, 'uCom', Self.stringToJsonValue(Source.uCom));
+    Json.ObjAddProp(Result, 'qCom', Self.DoubleToJsonValue(Source.qCom));
+    Json.ObjAddProp(Result, 'vUnCom', Self.DoubleToJsonValue(Source.vUnCom));
+    Json.ObjAddProp(Result, 'vProd', Self.DoubleToJsonValue(Source.vProd));
+    Json.ObjAddProp(Result, 'cEANTrib', Self.stringToJsonValue(Source.cEANTrib));
     if Source.cBarraTribHasValue then
       Json.ObjAddProp(Result, 'cBarraTrib', Self.stringToJsonValue(Source.cBarraTrib));
-    if Source.uTribHasValue then
-      Json.ObjAddProp(Result, 'uTrib', Self.stringToJsonValue(Source.uTrib));
-    if Source.qTribHasValue then
-      Json.ObjAddProp(Result, 'qTrib', Self.DoubleToJsonValue(Source.qTrib));
-    if Source.vUnTribHasValue then
-      Json.ObjAddProp(Result, 'vUnTrib', Self.DoubleToJsonValue(Source.vUnTrib));
+    Json.ObjAddProp(Result, 'uTrib', Self.stringToJsonValue(Source.uTrib));
+    Json.ObjAddProp(Result, 'qTrib', Self.DoubleToJsonValue(Source.qTrib));
+    Json.ObjAddProp(Result, 'vUnTrib', Self.DoubleToJsonValue(Source.vUnTrib));
     if Source.vFreteHasValue then
       Json.ObjAddProp(Result, 'vFrete', Self.DoubleToJsonValue(Source.vFrete));
     if Source.vSegHasValue then
@@ -25020,8 +24533,7 @@ begin
       Json.ObjAddProp(Result, 'vDesc', Self.DoubleToJsonValue(Source.vDesc));
     if Source.vOutroHasValue then
       Json.ObjAddProp(Result, 'vOutro', Self.DoubleToJsonValue(Source.vOutro));
-    if Source.indTotHasValue then
-      Json.ObjAddProp(Result, 'indTot', Self.IntegerToJsonValue(Source.indTot));
+    Json.ObjAddProp(Result, 'indTot', Self.IntegerToJsonValue(Source.indTot));
     if Assigned(Source.DI) then
       Json.ObjAddProp(Result, 'DI', Self.TNfeSefazDIListToJsonValue(Source.DI));
     if Assigned(Source.detExport) then
@@ -25182,18 +24694,12 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    if Source.modBCHasValue then
-      Json.ObjAddProp(Result, 'modBC', Self.IntegerToJsonValue(Source.modBC));
-    if Source.vBCHasValue then
-      Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
-    if Source.pICMSHasValue then
-      Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
-    if Source.vICMSHasValue then
-      Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'modBC', Self.IntegerToJsonValue(Source.modBC));
+    Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
+    Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
+    Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
     if Source.pFCPHasValue then
       Json.ObjAddProp(Result, 'pFCP', Self.DoubleToJsonValue(Source.pFCP));
     if Source.vFCPHasValue then
@@ -25270,36 +24776,26 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    if Source.modBCHasValue then
-      Json.ObjAddProp(Result, 'modBC', Self.IntegerToJsonValue(Source.modBC));
-    if Source.vBCHasValue then
-      Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
-    if Source.pICMSHasValue then
-      Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
-    if Source.vICMSHasValue then
-      Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'modBC', Self.IntegerToJsonValue(Source.modBC));
+    Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
+    Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
+    Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
     if Source.vBCFCPHasValue then
       Json.ObjAddProp(Result, 'vBCFCP', Self.DoubleToJsonValue(Source.vBCFCP));
     if Source.pFCPHasValue then
       Json.ObjAddProp(Result, 'pFCP', Self.DoubleToJsonValue(Source.pFCP));
     if Source.vFCPHasValue then
       Json.ObjAddProp(Result, 'vFCP', Self.DoubleToJsonValue(Source.vFCP));
-    if Source.modBCSTHasValue then
-      Json.ObjAddProp(Result, 'modBCST', Self.IntegerToJsonValue(Source.modBCST));
+    Json.ObjAddProp(Result, 'modBCST', Self.IntegerToJsonValue(Source.modBCST));
     if Source.pMVASTHasValue then
       Json.ObjAddProp(Result, 'pMVAST', Self.DoubleToJsonValue(Source.pMVAST));
     if Source.pRedBCSTHasValue then
       Json.ObjAddProp(Result, 'pRedBCST', Self.DoubleToJsonValue(Source.pRedBCST));
-    if Source.vBCSTHasValue then
-      Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
-    if Source.pICMSSTHasValue then
-      Json.ObjAddProp(Result, 'pICMSST', Self.DoubleToJsonValue(Source.pICMSST));
-    if Source.vICMSSTHasValue then
-      Json.ObjAddProp(Result, 'vICMSST', Self.DoubleToJsonValue(Source.vICMSST));
+    Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
+    Json.ObjAddProp(Result, 'pICMSST', Self.DoubleToJsonValue(Source.pICMSST));
+    Json.ObjAddProp(Result, 'vICMSST', Self.DoubleToJsonValue(Source.vICMSST));
     if Source.vBCFCPSTHasValue then
       Json.ObjAddProp(Result, 'vBCFCPST', Self.DoubleToJsonValue(Source.vBCFCPST));
     if Source.pFCPSTHasValue then
@@ -25406,20 +24902,13 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    if Source.modBCHasValue then
-      Json.ObjAddProp(Result, 'modBC', Self.IntegerToJsonValue(Source.modBC));
-    if Source.pRedBCHasValue then
-      Json.ObjAddProp(Result, 'pRedBC', Self.DoubleToJsonValue(Source.pRedBC));
-    if Source.vBCHasValue then
-      Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
-    if Source.pICMSHasValue then
-      Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
-    if Source.vICMSHasValue then
-      Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'modBC', Self.IntegerToJsonValue(Source.modBC));
+    Json.ObjAddProp(Result, 'pRedBC', Self.DoubleToJsonValue(Source.pRedBC));
+    Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
+    Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
+    Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
     if Source.vBCFCPHasValue then
       Json.ObjAddProp(Result, 'vBCFCP', Self.DoubleToJsonValue(Source.vBCFCP));
     if Source.pFCPHasValue then
@@ -25510,22 +24999,16 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    if Source.modBCSTHasValue then
-      Json.ObjAddProp(Result, 'modBCST', Self.IntegerToJsonValue(Source.modBCST));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'modBCST', Self.IntegerToJsonValue(Source.modBCST));
     if Source.pMVASTHasValue then
       Json.ObjAddProp(Result, 'pMVAST', Self.DoubleToJsonValue(Source.pMVAST));
     if Source.pRedBCSTHasValue then
       Json.ObjAddProp(Result, 'pRedBCST', Self.DoubleToJsonValue(Source.pRedBCST));
-    if Source.vBCSTHasValue then
-      Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
-    if Source.pICMSSTHasValue then
-      Json.ObjAddProp(Result, 'pICMSST', Self.DoubleToJsonValue(Source.pICMSST));
-    if Source.vICMSSTHasValue then
-      Json.ObjAddProp(Result, 'vICMSST', Self.DoubleToJsonValue(Source.vICMSST));
+    Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
+    Json.ObjAddProp(Result, 'pICMSST', Self.DoubleToJsonValue(Source.pICMSST));
+    Json.ObjAddProp(Result, 'vICMSST', Self.DoubleToJsonValue(Source.vICMSST));
     if Source.vBCFCPSTHasValue then
       Json.ObjAddProp(Result, 'vBCFCPST', Self.DoubleToJsonValue(Source.vBCFCPST));
     if Source.pFCPSTHasValue then
@@ -25618,10 +25101,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
     if Source.vICMSDesonHasValue then
       Json.ObjAddProp(Result, 'vICMSDeson', Self.DoubleToJsonValue(Source.vICMSDeson));
     if Source.motDesICMSHasValue then
@@ -25690,10 +25171,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
     if Source.modBCHasValue then
       Json.ObjAddProp(Result, 'modBC', Self.IntegerToJsonValue(Source.modBC));
     if Source.pRedBCHasValue then
@@ -25810,10 +25289,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
     if Source.vBCSTRetHasValue then
       Json.ObjAddProp(Result, 'vBCSTRet', Self.DoubleToJsonValue(Source.vBCSTRet));
     if Source.pSTHasValue then
@@ -25918,38 +25395,27 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    if Source.modBCHasValue then
-      Json.ObjAddProp(Result, 'modBC', Self.IntegerToJsonValue(Source.modBC));
-    if Source.pRedBCHasValue then
-      Json.ObjAddProp(Result, 'pRedBC', Self.DoubleToJsonValue(Source.pRedBC));
-    if Source.vBCHasValue then
-      Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
-    if Source.pICMSHasValue then
-      Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
-    if Source.vICMSHasValue then
-      Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'modBC', Self.IntegerToJsonValue(Source.modBC));
+    Json.ObjAddProp(Result, 'pRedBC', Self.DoubleToJsonValue(Source.pRedBC));
+    Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
+    Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
+    Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
     if Source.vBCFCPHasValue then
       Json.ObjAddProp(Result, 'vBCFCP', Self.DoubleToJsonValue(Source.vBCFCP));
     if Source.pFCPHasValue then
       Json.ObjAddProp(Result, 'pFCP', Self.DoubleToJsonValue(Source.pFCP));
     if Source.vFCPHasValue then
       Json.ObjAddProp(Result, 'vFCP', Self.DoubleToJsonValue(Source.vFCP));
-    if Source.modBCSTHasValue then
-      Json.ObjAddProp(Result, 'modBCST', Self.IntegerToJsonValue(Source.modBCST));
+    Json.ObjAddProp(Result, 'modBCST', Self.IntegerToJsonValue(Source.modBCST));
     if Source.pMVASTHasValue then
       Json.ObjAddProp(Result, 'pMVAST', Self.DoubleToJsonValue(Source.pMVAST));
     if Source.pRedBCSTHasValue then
       Json.ObjAddProp(Result, 'pRedBCST', Self.DoubleToJsonValue(Source.pRedBCST));
-    if Source.vBCSTHasValue then
-      Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
-    if Source.pICMSSTHasValue then
-      Json.ObjAddProp(Result, 'pICMSST', Self.DoubleToJsonValue(Source.pICMSST));
-    if Source.vICMSSTHasValue then
-      Json.ObjAddProp(Result, 'vICMSST', Self.DoubleToJsonValue(Source.vICMSST));
+    Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
+    Json.ObjAddProp(Result, 'pICMSST', Self.DoubleToJsonValue(Source.pICMSST));
+    Json.ObjAddProp(Result, 'vICMSST', Self.DoubleToJsonValue(Source.vICMSST));
     if Source.vBCFCPSTHasValue then
       Json.ObjAddProp(Result, 'vBCFCPST', Self.DoubleToJsonValue(Source.vBCFCPST));
     if Source.pFCPSTHasValue then
@@ -26066,10 +25532,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
     if Source.modBCHasValue then
       Json.ObjAddProp(Result, 'modBC', Self.IntegerToJsonValue(Source.modBC));
     if Source.vBCHasValue then
@@ -26214,36 +25678,24 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    if Source.modBCHasValue then
-      Json.ObjAddProp(Result, 'modBC', Self.IntegerToJsonValue(Source.modBC));
-    if Source.vBCHasValue then
-      Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'modBC', Self.IntegerToJsonValue(Source.modBC));
+    Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
     if Source.pRedBCHasValue then
       Json.ObjAddProp(Result, 'pRedBC', Self.DoubleToJsonValue(Source.pRedBC));
-    if Source.pICMSHasValue then
-      Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
-    if Source.vICMSHasValue then
-      Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
-    if Source.modBCSTHasValue then
-      Json.ObjAddProp(Result, 'modBCST', Self.IntegerToJsonValue(Source.modBCST));
+    Json.ObjAddProp(Result, 'pICMS', Self.DoubleToJsonValue(Source.pICMS));
+    Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
+    Json.ObjAddProp(Result, 'modBCST', Self.IntegerToJsonValue(Source.modBCST));
     if Source.pMVASTHasValue then
       Json.ObjAddProp(Result, 'pMVAST', Self.DoubleToJsonValue(Source.pMVAST));
     if Source.pRedBCSTHasValue then
       Json.ObjAddProp(Result, 'pRedBCST', Self.DoubleToJsonValue(Source.pRedBCST));
-    if Source.vBCSTHasValue then
-      Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
-    if Source.pICMSSTHasValue then
-      Json.ObjAddProp(Result, 'pICMSST', Self.DoubleToJsonValue(Source.pICMSST));
-    if Source.vICMSSTHasValue then
-      Json.ObjAddProp(Result, 'vICMSST', Self.DoubleToJsonValue(Source.vICMSST));
-    if Source.pBCOpHasValue then
-      Json.ObjAddProp(Result, 'pBCOp', Self.DoubleToJsonValue(Source.pBCOp));
-    if Source.UFSTHasValue then
-      Json.ObjAddProp(Result, 'UFST', Self.stringToJsonValue(Source.UFST));
+    Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
+    Json.ObjAddProp(Result, 'pICMSST', Self.DoubleToJsonValue(Source.pICMSST));
+    Json.ObjAddProp(Result, 'vICMSST', Self.DoubleToJsonValue(Source.vICMSST));
+    Json.ObjAddProp(Result, 'pBCOp', Self.DoubleToJsonValue(Source.pBCOp));
+    Json.ObjAddProp(Result, 'UFST', Self.stringToJsonValue(Source.UFST));
   except
     Result.Free;
     raise;
@@ -26330,28 +25782,22 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    if Source.vBCSTRetHasValue then
-      Json.ObjAddProp(Result, 'vBCSTRet', Self.DoubleToJsonValue(Source.vBCSTRet));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'vBCSTRet', Self.DoubleToJsonValue(Source.vBCSTRet));
     if Source.pSTHasValue then
       Json.ObjAddProp(Result, 'pST', Self.DoubleToJsonValue(Source.pST));
     if Source.vICMSSubstitutoHasValue then
       Json.ObjAddProp(Result, 'vICMSSubstituto', Self.DoubleToJsonValue(Source.vICMSSubstituto));
-    if Source.vICMSSTRetHasValue then
-      Json.ObjAddProp(Result, 'vICMSSTRet', Self.DoubleToJsonValue(Source.vICMSSTRet));
+    Json.ObjAddProp(Result, 'vICMSSTRet', Self.DoubleToJsonValue(Source.vICMSSTRet));
     if Source.vBCFCPSTRetHasValue then
       Json.ObjAddProp(Result, 'vBCFCPSTRet', Self.DoubleToJsonValue(Source.vBCFCPSTRet));
     if Source.pFCPSTRetHasValue then
       Json.ObjAddProp(Result, 'pFCPSTRet', Self.DoubleToJsonValue(Source.pFCPSTRet));
     if Source.vFCPSTRetHasValue then
       Json.ObjAddProp(Result, 'vFCPSTRet', Self.DoubleToJsonValue(Source.vFCPSTRet));
-    if Source.vBCSTDestHasValue then
-      Json.ObjAddProp(Result, 'vBCSTDest', Self.DoubleToJsonValue(Source.vBCSTDest));
-    if Source.vICMSSTDestHasValue then
-      Json.ObjAddProp(Result, 'vICMSSTDest', Self.DoubleToJsonValue(Source.vICMSSTDest));
+    Json.ObjAddProp(Result, 'vBCSTDest', Self.DoubleToJsonValue(Source.vBCSTDest));
+    Json.ObjAddProp(Result, 'vICMSSTDest', Self.DoubleToJsonValue(Source.vICMSSTDest));
     if Source.pRedBCEfetHasValue then
       Json.ObjAddProp(Result, 'pRedBCEfet', Self.DoubleToJsonValue(Source.pRedBCEfet));
     if Source.vBCEfetHasValue then
@@ -26446,14 +25892,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSOSNHasValue then
-      Json.ObjAddProp(Result, 'CSOSN', Self.IntegerToJsonValue(Source.CSOSN));
-    if Source.pCredSNHasValue then
-      Json.ObjAddProp(Result, 'pCredSN', Self.DoubleToJsonValue(Source.pCredSN));
-    if Source.vCredICMSSNHasValue then
-      Json.ObjAddProp(Result, 'vCredICMSSN', Self.DoubleToJsonValue(Source.vCredICMSSN));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CSOSN', Self.IntegerToJsonValue(Source.CSOSN));
+    Json.ObjAddProp(Result, 'pCredSN', Self.DoubleToJsonValue(Source.pCredSN));
+    Json.ObjAddProp(Result, 'vCredICMSSN', Self.DoubleToJsonValue(Source.vCredICMSSN));
   except
     Result.Free;
     raise;
@@ -26518,10 +25960,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSOSNHasValue then
-      Json.ObjAddProp(Result, 'CSOSN', Self.IntegerToJsonValue(Source.CSOSN));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CSOSN', Self.IntegerToJsonValue(Source.CSOSN));
   except
     Result.Free;
     raise;
@@ -26582,32 +26022,24 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSOSNHasValue then
-      Json.ObjAddProp(Result, 'CSOSN', Self.IntegerToJsonValue(Source.CSOSN));
-    if Source.modBCSTHasValue then
-      Json.ObjAddProp(Result, 'modBCST', Self.IntegerToJsonValue(Source.modBCST));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CSOSN', Self.IntegerToJsonValue(Source.CSOSN));
+    Json.ObjAddProp(Result, 'modBCST', Self.IntegerToJsonValue(Source.modBCST));
     if Source.pMVASTHasValue then
       Json.ObjAddProp(Result, 'pMVAST', Self.DoubleToJsonValue(Source.pMVAST));
     if Source.pRedBCSTHasValue then
       Json.ObjAddProp(Result, 'pRedBCST', Self.DoubleToJsonValue(Source.pRedBCST));
-    if Source.vBCSTHasValue then
-      Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
-    if Source.pICMSSTHasValue then
-      Json.ObjAddProp(Result, 'pICMSST', Self.DoubleToJsonValue(Source.pICMSST));
-    if Source.vICMSSTHasValue then
-      Json.ObjAddProp(Result, 'vICMSST', Self.DoubleToJsonValue(Source.vICMSST));
+    Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
+    Json.ObjAddProp(Result, 'pICMSST', Self.DoubleToJsonValue(Source.pICMSST));
+    Json.ObjAddProp(Result, 'vICMSST', Self.DoubleToJsonValue(Source.vICMSST));
     if Source.vBCFCPSTHasValue then
       Json.ObjAddProp(Result, 'vBCFCPST', Self.DoubleToJsonValue(Source.vBCFCPST));
     if Source.pFCPSTHasValue then
       Json.ObjAddProp(Result, 'pFCPST', Self.DoubleToJsonValue(Source.pFCPST));
     if Source.vFCPSTHasValue then
       Json.ObjAddProp(Result, 'vFCPST', Self.DoubleToJsonValue(Source.vFCPST));
-    if Source.pCredSNHasValue then
-      Json.ObjAddProp(Result, 'pCredSN', Self.DoubleToJsonValue(Source.pCredSN));
-    if Source.vCredICMSSNHasValue then
-      Json.ObjAddProp(Result, 'vCredICMSSN', Self.DoubleToJsonValue(Source.vCredICMSSN));
+    Json.ObjAddProp(Result, 'pCredSN', Self.DoubleToJsonValue(Source.pCredSN));
+    Json.ObjAddProp(Result, 'vCredICMSSN', Self.DoubleToJsonValue(Source.vCredICMSSN));
   except
     Result.Free;
     raise;
@@ -26690,22 +26122,16 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSOSNHasValue then
-      Json.ObjAddProp(Result, 'CSOSN', Self.IntegerToJsonValue(Source.CSOSN));
-    if Source.modBCSTHasValue then
-      Json.ObjAddProp(Result, 'modBCST', Self.IntegerToJsonValue(Source.modBCST));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CSOSN', Self.IntegerToJsonValue(Source.CSOSN));
+    Json.ObjAddProp(Result, 'modBCST', Self.IntegerToJsonValue(Source.modBCST));
     if Source.pMVASTHasValue then
       Json.ObjAddProp(Result, 'pMVAST', Self.DoubleToJsonValue(Source.pMVAST));
     if Source.pRedBCSTHasValue then
       Json.ObjAddProp(Result, 'pRedBCST', Self.DoubleToJsonValue(Source.pRedBCST));
-    if Source.vBCSTHasValue then
-      Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
-    if Source.pICMSSTHasValue then
-      Json.ObjAddProp(Result, 'pICMSST', Self.DoubleToJsonValue(Source.pICMSST));
-    if Source.vICMSSTHasValue then
-      Json.ObjAddProp(Result, 'vICMSST', Self.DoubleToJsonValue(Source.vICMSST));
+    Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
+    Json.ObjAddProp(Result, 'pICMSST', Self.DoubleToJsonValue(Source.pICMSST));
+    Json.ObjAddProp(Result, 'vICMSST', Self.DoubleToJsonValue(Source.vICMSST));
     if Source.vBCFCPSTHasValue then
       Json.ObjAddProp(Result, 'vBCFCPST', Self.DoubleToJsonValue(Source.vBCFCPST));
     if Source.pFCPSTHasValue then
@@ -26790,10 +26216,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSOSNHasValue then
-      Json.ObjAddProp(Result, 'CSOSN', Self.IntegerToJsonValue(Source.CSOSN));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CSOSN', Self.IntegerToJsonValue(Source.CSOSN));
     if Source.vBCSTRetHasValue then
       Json.ObjAddProp(Result, 'vBCSTRet', Self.DoubleToJsonValue(Source.vBCSTRet));
     if Source.pSTHasValue then
@@ -26898,10 +26322,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.origHasValue then
-      Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
-    if Source.CSOSNHasValue then
-      Json.ObjAddProp(Result, 'CSOSN', Self.IntegerToJsonValue(Source.CSOSN));
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CSOSN', Self.IntegerToJsonValue(Source.CSOSN));
     if Source.modBCHasValue then
       Json.ObjAddProp(Result, 'modBC', Self.IntegerToJsonValue(Source.modBC));
     if Source.vBCHasValue then
@@ -27150,8 +26572,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
     if Source.vBCHasValue then
       Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
     if Source.pIPIHasValue then
@@ -27160,8 +26581,7 @@ begin
       Json.ObjAddProp(Result, 'qUnid', Self.DoubleToJsonValue(Source.qUnid));
     if Source.vUnidHasValue then
       Json.ObjAddProp(Result, 'vUnid', Self.DoubleToJsonValue(Source.vUnid));
-    if Source.vIPIHasValue then
-      Json.ObjAddProp(Result, 'vIPI', Self.DoubleToJsonValue(Source.vIPI));
+    Json.ObjAddProp(Result, 'vIPI', Self.DoubleToJsonValue(Source.vIPI));
   except
     Result.Free;
     raise;
@@ -27230,8 +26650,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
   except
     Result.Free;
     raise;
@@ -27296,8 +26715,7 @@ begin
       Json.ObjAddProp(Result, 'cSelo', Self.stringToJsonValue(Source.cSelo));
     if Source.qSeloHasValue then
       Json.ObjAddProp(Result, 'qSelo', Self.IntegerToJsonValue(Source.qSelo));
-    if Source.cEnqHasValue then
-      Json.ObjAddProp(Result, 'cEnq', Self.stringToJsonValue(Source.cEnq));
+    Json.ObjAddProp(Result, 'cEnq', Self.stringToJsonValue(Source.cEnq));
     if Assigned(Source.IPITrib) then
       Json.ObjAddProp(Result, 'IPITrib', Self.TNfeSefazIPITribToJsonValue(Source.IPITrib));
     if Assigned(Source.IPINT) then
@@ -27370,14 +26788,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.vBCHasValue then
-      Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
-    if Source.vDespAduHasValue then
-      Json.ObjAddProp(Result, 'vDespAdu', Self.DoubleToJsonValue(Source.vDespAdu));
-    if Source.vIIHasValue then
-      Json.ObjAddProp(Result, 'vII', Self.DoubleToJsonValue(Source.vII));
-    if Source.vIOFHasValue then
-      Json.ObjAddProp(Result, 'vIOF', Self.DoubleToJsonValue(Source.vIOF));
+    Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
+    Json.ObjAddProp(Result, 'vDespAdu', Self.DoubleToJsonValue(Source.vDespAdu));
+    Json.ObjAddProp(Result, 'vII', Self.DoubleToJsonValue(Source.vII));
+    Json.ObjAddProp(Result, 'vIOF', Self.DoubleToJsonValue(Source.vIOF));
   except
     Result.Free;
     raise;
@@ -27442,16 +26856,11 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.vBCHasValue then
-      Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
-    if Source.vAliqHasValue then
-      Json.ObjAddProp(Result, 'vAliq', Self.DoubleToJsonValue(Source.vAliq));
-    if Source.vISSQNHasValue then
-      Json.ObjAddProp(Result, 'vISSQN', Self.DoubleToJsonValue(Source.vISSQN));
-    if Source.cMunFGHasValue then
-      Json.ObjAddProp(Result, 'cMunFG', Self.IntegerToJsonValue(Source.cMunFG));
-    if Source.cListServHasValue then
-      Json.ObjAddProp(Result, 'cListServ', Self.stringToJsonValue(Source.cListServ));
+    Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
+    Json.ObjAddProp(Result, 'vAliq', Self.DoubleToJsonValue(Source.vAliq));
+    Json.ObjAddProp(Result, 'vISSQN', Self.DoubleToJsonValue(Source.vISSQN));
+    Json.ObjAddProp(Result, 'cMunFG', Self.IntegerToJsonValue(Source.cMunFG));
+    Json.ObjAddProp(Result, 'cListServ', Self.stringToJsonValue(Source.cListServ));
     if Source.vDeducaoHasValue then
       Json.ObjAddProp(Result, 'vDeducao', Self.DoubleToJsonValue(Source.vDeducao));
     if Source.vOutroHasValue then
@@ -27462,8 +26871,7 @@ begin
       Json.ObjAddProp(Result, 'vDescCond', Self.DoubleToJsonValue(Source.vDescCond));
     if Source.vISSRetHasValue then
       Json.ObjAddProp(Result, 'vISSRet', Self.DoubleToJsonValue(Source.vISSRet));
-    if Source.indISSHasValue then
-      Json.ObjAddProp(Result, 'indISS', Self.IntegerToJsonValue(Source.indISS));
+    Json.ObjAddProp(Result, 'indISS', Self.IntegerToJsonValue(Source.indISS));
     if Source.cServicoHasValue then
       Json.ObjAddProp(Result, 'cServico', Self.stringToJsonValue(Source.cServico));
     if Source.cMunHasValue then
@@ -27472,8 +26880,7 @@ begin
       Json.ObjAddProp(Result, 'cPais', Self.IntegerToJsonValue(Source.cPais));
     if Source.nProcessoHasValue then
       Json.ObjAddProp(Result, 'nProcesso', Self.stringToJsonValue(Source.nProcesso));
-    if Source.indIncentivoHasValue then
-      Json.ObjAddProp(Result, 'indIncentivo', Self.IntegerToJsonValue(Source.indIncentivo));
+    Json.ObjAddProp(Result, 'indIncentivo', Self.IntegerToJsonValue(Source.indIncentivo));
   except
     Result.Free;
     raise;
@@ -27562,14 +26969,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    if Source.vBCHasValue then
-      Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
-    if Source.pPISHasValue then
-      Json.ObjAddProp(Result, 'pPIS', Self.DoubleToJsonValue(Source.pPIS));
-    if Source.vPISHasValue then
-      Json.ObjAddProp(Result, 'vPIS', Self.DoubleToJsonValue(Source.vPIS));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
+    Json.ObjAddProp(Result, 'pPIS', Self.DoubleToJsonValue(Source.pPIS));
+    Json.ObjAddProp(Result, 'vPIS', Self.DoubleToJsonValue(Source.vPIS));
   except
     Result.Free;
     raise;
@@ -27634,14 +27037,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    if Source.qBCProdHasValue then
-      Json.ObjAddProp(Result, 'qBCProd', Self.DoubleToJsonValue(Source.qBCProd));
-    if Source.vAliqProdHasValue then
-      Json.ObjAddProp(Result, 'vAliqProd', Self.DoubleToJsonValue(Source.vAliqProd));
-    if Source.vPISHasValue then
-      Json.ObjAddProp(Result, 'vPIS', Self.DoubleToJsonValue(Source.vPIS));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'qBCProd', Self.DoubleToJsonValue(Source.qBCProd));
+    Json.ObjAddProp(Result, 'vAliqProd', Self.DoubleToJsonValue(Source.vAliqProd));
+    Json.ObjAddProp(Result, 'vPIS', Self.DoubleToJsonValue(Source.vPIS));
   except
     Result.Free;
     raise;
@@ -27706,8 +27105,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
   except
     Result.Free;
     raise;
@@ -27766,8 +27164,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
     if Source.vBCHasValue then
       Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
     if Source.pPISHasValue then
@@ -27776,8 +27173,7 @@ begin
       Json.ObjAddProp(Result, 'qBCProd', Self.DoubleToJsonValue(Source.qBCProd));
     if Source.vAliqProdHasValue then
       Json.ObjAddProp(Result, 'vAliqProd', Self.DoubleToJsonValue(Source.vAliqProd));
-    if Source.vPISHasValue then
-      Json.ObjAddProp(Result, 'vPIS', Self.DoubleToJsonValue(Source.vPIS));
+    Json.ObjAddProp(Result, 'vPIS', Self.DoubleToJsonValue(Source.vPIS));
   except
     Result.Free;
     raise;
@@ -27926,8 +27322,7 @@ begin
       Json.ObjAddProp(Result, 'qBCProd', Self.DoubleToJsonValue(Source.qBCProd));
     if Source.vAliqProdHasValue then
       Json.ObjAddProp(Result, 'vAliqProd', Self.DoubleToJsonValue(Source.vAliqProd));
-    if Source.vPISHasValue then
-      Json.ObjAddProp(Result, 'vPIS', Self.DoubleToJsonValue(Source.vPIS));
+    Json.ObjAddProp(Result, 'vPIS', Self.DoubleToJsonValue(Source.vPIS));
     if Source.indSomaPISSTHasValue then
       Json.ObjAddProp(Result, 'indSomaPISST', Self.IntegerToJsonValue(Source.indSomaPISST));
   except
@@ -27998,14 +27393,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    if Source.vBCHasValue then
-      Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
-    if Source.pCOFINSHasValue then
-      Json.ObjAddProp(Result, 'pCOFINS', Self.DoubleToJsonValue(Source.pCOFINS));
-    if Source.vCOFINSHasValue then
-      Json.ObjAddProp(Result, 'vCOFINS', Self.DoubleToJsonValue(Source.vCOFINS));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
+    Json.ObjAddProp(Result, 'pCOFINS', Self.DoubleToJsonValue(Source.pCOFINS));
+    Json.ObjAddProp(Result, 'vCOFINS', Self.DoubleToJsonValue(Source.vCOFINS));
   except
     Result.Free;
     raise;
@@ -28070,14 +27461,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    if Source.qBCProdHasValue then
-      Json.ObjAddProp(Result, 'qBCProd', Self.DoubleToJsonValue(Source.qBCProd));
-    if Source.vAliqProdHasValue then
-      Json.ObjAddProp(Result, 'vAliqProd', Self.DoubleToJsonValue(Source.vAliqProd));
-    if Source.vCOFINSHasValue then
-      Json.ObjAddProp(Result, 'vCOFINS', Self.DoubleToJsonValue(Source.vCOFINS));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'qBCProd', Self.DoubleToJsonValue(Source.qBCProd));
+    Json.ObjAddProp(Result, 'vAliqProd', Self.DoubleToJsonValue(Source.vAliqProd));
+    Json.ObjAddProp(Result, 'vCOFINS', Self.DoubleToJsonValue(Source.vCOFINS));
   except
     Result.Free;
     raise;
@@ -28142,8 +27529,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
   except
     Result.Free;
     raise;
@@ -28202,8 +27588,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CSTHasValue then
-      Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
     if Source.vBCHasValue then
       Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
     if Source.pCOFINSHasValue then
@@ -28212,8 +27597,7 @@ begin
       Json.ObjAddProp(Result, 'qBCProd', Self.DoubleToJsonValue(Source.qBCProd));
     if Source.vAliqProdHasValue then
       Json.ObjAddProp(Result, 'vAliqProd', Self.DoubleToJsonValue(Source.vAliqProd));
-    if Source.vCOFINSHasValue then
-      Json.ObjAddProp(Result, 'vCOFINS', Self.DoubleToJsonValue(Source.vCOFINS));
+    Json.ObjAddProp(Result, 'vCOFINS', Self.DoubleToJsonValue(Source.vCOFINS));
   except
     Result.Free;
     raise;
@@ -28362,8 +27746,7 @@ begin
       Json.ObjAddProp(Result, 'qBCProd', Self.DoubleToJsonValue(Source.qBCProd));
     if Source.vAliqProdHasValue then
       Json.ObjAddProp(Result, 'vAliqProd', Self.DoubleToJsonValue(Source.vAliqProd));
-    if Source.vCOFINSHasValue then
-      Json.ObjAddProp(Result, 'vCOFINS', Self.DoubleToJsonValue(Source.vCOFINS));
+    Json.ObjAddProp(Result, 'vCOFINS', Self.DoubleToJsonValue(Source.vCOFINS));
     if Source.indSomaCOFINSSTHasValue then
       Json.ObjAddProp(Result, 'indSomaCOFINSST', Self.IntegerToJsonValue(Source.indSomaCOFINSST));
   except
@@ -28434,24 +27817,18 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.vBCUFDestHasValue then
-      Json.ObjAddProp(Result, 'vBCUFDest', Self.DoubleToJsonValue(Source.vBCUFDest));
+    Json.ObjAddProp(Result, 'vBCUFDest', Self.DoubleToJsonValue(Source.vBCUFDest));
     if Source.vBCFCPUFDestHasValue then
       Json.ObjAddProp(Result, 'vBCFCPUFDest', Self.DoubleToJsonValue(Source.vBCFCPUFDest));
     if Source.pFCPUFDestHasValue then
       Json.ObjAddProp(Result, 'pFCPUFDest', Self.DoubleToJsonValue(Source.pFCPUFDest));
-    if Source.pICMSUFDestHasValue then
-      Json.ObjAddProp(Result, 'pICMSUFDest', Self.DoubleToJsonValue(Source.pICMSUFDest));
-    if Source.pICMSInterHasValue then
-      Json.ObjAddProp(Result, 'pICMSInter', Self.DoubleToJsonValue(Source.pICMSInter));
-    if Source.pICMSInterPartHasValue then
-      Json.ObjAddProp(Result, 'pICMSInterPart', Self.DoubleToJsonValue(Source.pICMSInterPart));
+    Json.ObjAddProp(Result, 'pICMSUFDest', Self.DoubleToJsonValue(Source.pICMSUFDest));
+    Json.ObjAddProp(Result, 'pICMSInter', Self.DoubleToJsonValue(Source.pICMSInter));
+    Json.ObjAddProp(Result, 'pICMSInterPart', Self.DoubleToJsonValue(Source.pICMSInterPart));
     if Source.vFCPUFDestHasValue then
       Json.ObjAddProp(Result, 'vFCPUFDest', Self.DoubleToJsonValue(Source.vFCPUFDest));
-    if Source.vICMSUFDestHasValue then
-      Json.ObjAddProp(Result, 'vICMSUFDest', Self.DoubleToJsonValue(Source.vICMSUFDest));
-    if Source.vICMSUFRemetHasValue then
-      Json.ObjAddProp(Result, 'vICMSUFRemet', Self.DoubleToJsonValue(Source.vICMSUFRemet));
+    Json.ObjAddProp(Result, 'vICMSUFDest', Self.DoubleToJsonValue(Source.vICMSUFDest));
+    Json.ObjAddProp(Result, 'vICMSUFRemet', Self.DoubleToJsonValue(Source.vICMSUFRemet));
   except
     Result.Free;
     raise;
@@ -28622,8 +27999,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.vIPIDevolHasValue then
-      Json.ObjAddProp(Result, 'vIPIDevol', Self.DoubleToJsonValue(Source.vIPIDevol));
+    Json.ObjAddProp(Result, 'vIPIDevol', Self.DoubleToJsonValue(Source.vIPIDevol));
   except
     Result.Free;
     raise;
@@ -28682,10 +28058,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.pDevolHasValue then
-      Json.ObjAddProp(Result, 'pDevol', Self.DoubleToJsonValue(Source.pDevol));
-    if Assigned(Source.IPI) then
-      Json.ObjAddProp(Result, 'IPI', Self.TNfeSefazImpostoDevolIPIToJsonValue(Source.IPI));
+    Json.ObjAddProp(Result, 'pDevol', Self.DoubleToJsonValue(Source.pDevol));
+    Json.ObjAddProp(Result, 'IPI', Self.TNfeSefazImpostoDevolIPIToJsonValue(Source.IPI));
   except
     Result.Free;
     raise;
@@ -28748,10 +28122,8 @@ begin
   try
     if Source.nItemHasValue then
       Json.ObjAddProp(Result, 'nItem', Self.IntegerToJsonValue(Source.nItem));
-    if Assigned(Source.prod) then
-      Json.ObjAddProp(Result, 'prod', Self.TNfeSefazProdToJsonValue(Source.prod));
-    if Assigned(Source.imposto) then
-      Json.ObjAddProp(Result, 'imposto', Self.TNfeSefazImpostoToJsonValue(Source.imposto));
+    Json.ObjAddProp(Result, 'prod', Self.TNfeSefazProdToJsonValue(Source.prod));
+    Json.ObjAddProp(Result, 'imposto', Self.TNfeSefazImpostoToJsonValue(Source.imposto));
     if Assigned(Source.impostoDevol) then
       Json.ObjAddProp(Result, 'impostoDevol', Self.TNfeSefazImpostoDevolToJsonValue(Source.impostoDevol));
     if Source.infAdProdHasValue then
@@ -28884,50 +28256,31 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.vBCHasValue then
-      Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
-    if Source.vICMSHasValue then
-      Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
-    if Source.vICMSDesonHasValue then
-      Json.ObjAddProp(Result, 'vICMSDeson', Self.DoubleToJsonValue(Source.vICMSDeson));
+    Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
+    Json.ObjAddProp(Result, 'vICMS', Self.DoubleToJsonValue(Source.vICMS));
+    Json.ObjAddProp(Result, 'vICMSDeson', Self.DoubleToJsonValue(Source.vICMSDeson));
     if Source.vFCPUFDestHasValue then
       Json.ObjAddProp(Result, 'vFCPUFDest', Self.DoubleToJsonValue(Source.vFCPUFDest));
     if Source.vICMSUFDestHasValue then
       Json.ObjAddProp(Result, 'vICMSUFDest', Self.DoubleToJsonValue(Source.vICMSUFDest));
     if Source.vICMSUFRemetHasValue then
       Json.ObjAddProp(Result, 'vICMSUFRemet', Self.DoubleToJsonValue(Source.vICMSUFRemet));
-    if Source.vFCPHasValue then
-      Json.ObjAddProp(Result, 'vFCP', Self.DoubleToJsonValue(Source.vFCP));
-    if Source.vBCSTHasValue then
-      Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
-    if Source.vSTHasValue then
-      Json.ObjAddProp(Result, 'vST', Self.DoubleToJsonValue(Source.vST));
-    if Source.vFCPSTHasValue then
-      Json.ObjAddProp(Result, 'vFCPST', Self.DoubleToJsonValue(Source.vFCPST));
-    if Source.vFCPSTRetHasValue then
-      Json.ObjAddProp(Result, 'vFCPSTRet', Self.DoubleToJsonValue(Source.vFCPSTRet));
-    if Source.vProdHasValue then
-      Json.ObjAddProp(Result, 'vProd', Self.DoubleToJsonValue(Source.vProd));
-    if Source.vFreteHasValue then
-      Json.ObjAddProp(Result, 'vFrete', Self.DoubleToJsonValue(Source.vFrete));
-    if Source.vSegHasValue then
-      Json.ObjAddProp(Result, 'vSeg', Self.DoubleToJsonValue(Source.vSeg));
-    if Source.vDescHasValue then
-      Json.ObjAddProp(Result, 'vDesc', Self.DoubleToJsonValue(Source.vDesc));
-    if Source.vIIHasValue then
-      Json.ObjAddProp(Result, 'vII', Self.DoubleToJsonValue(Source.vII));
-    if Source.vIPIHasValue then
-      Json.ObjAddProp(Result, 'vIPI', Self.DoubleToJsonValue(Source.vIPI));
-    if Source.vIPIDevolHasValue then
-      Json.ObjAddProp(Result, 'vIPIDevol', Self.DoubleToJsonValue(Source.vIPIDevol));
-    if Source.vPISHasValue then
-      Json.ObjAddProp(Result, 'vPIS', Self.DoubleToJsonValue(Source.vPIS));
-    if Source.vCOFINSHasValue then
-      Json.ObjAddProp(Result, 'vCOFINS', Self.DoubleToJsonValue(Source.vCOFINS));
-    if Source.vOutroHasValue then
-      Json.ObjAddProp(Result, 'vOutro', Self.DoubleToJsonValue(Source.vOutro));
-    if Source.vNFHasValue then
-      Json.ObjAddProp(Result, 'vNF', Self.DoubleToJsonValue(Source.vNF));
+    Json.ObjAddProp(Result, 'vFCP', Self.DoubleToJsonValue(Source.vFCP));
+    Json.ObjAddProp(Result, 'vBCST', Self.DoubleToJsonValue(Source.vBCST));
+    Json.ObjAddProp(Result, 'vST', Self.DoubleToJsonValue(Source.vST));
+    Json.ObjAddProp(Result, 'vFCPST', Self.DoubleToJsonValue(Source.vFCPST));
+    Json.ObjAddProp(Result, 'vFCPSTRet', Self.DoubleToJsonValue(Source.vFCPSTRet));
+    Json.ObjAddProp(Result, 'vProd', Self.DoubleToJsonValue(Source.vProd));
+    Json.ObjAddProp(Result, 'vFrete', Self.DoubleToJsonValue(Source.vFrete));
+    Json.ObjAddProp(Result, 'vSeg', Self.DoubleToJsonValue(Source.vSeg));
+    Json.ObjAddProp(Result, 'vDesc', Self.DoubleToJsonValue(Source.vDesc));
+    Json.ObjAddProp(Result, 'vII', Self.DoubleToJsonValue(Source.vII));
+    Json.ObjAddProp(Result, 'vIPI', Self.DoubleToJsonValue(Source.vIPI));
+    Json.ObjAddProp(Result, 'vIPIDevol', Self.DoubleToJsonValue(Source.vIPIDevol));
+    Json.ObjAddProp(Result, 'vPIS', Self.DoubleToJsonValue(Source.vPIS));
+    Json.ObjAddProp(Result, 'vCOFINS', Self.DoubleToJsonValue(Source.vCOFINS));
+    Json.ObjAddProp(Result, 'vOutro', Self.DoubleToJsonValue(Source.vOutro));
+    Json.ObjAddProp(Result, 'vNF', Self.DoubleToJsonValue(Source.vNF));
     if Source.vTotTribHasValue then
       Json.ObjAddProp(Result, 'vTotTrib', Self.DoubleToJsonValue(Source.vTotTrib));
   except
@@ -29042,8 +28395,7 @@ begin
       Json.ObjAddProp(Result, 'vPIS', Self.DoubleToJsonValue(Source.vPIS));
     if Source.vCOFINSHasValue then
       Json.ObjAddProp(Result, 'vCOFINS', Self.DoubleToJsonValue(Source.vCOFINS));
-    if Source.dCompetHasValue then
-      Json.ObjAddProp(Result, 'dCompet', Self.TDateToJsonValue(Source.dCompet));
+    Json.ObjAddProp(Result, 'dCompet', Self.TDateToJsonValue(Source.dCompet));
     if Source.vDeducaoHasValue then
       Json.ObjAddProp(Result, 'vDeducao', Self.DoubleToJsonValue(Source.vDeducao));
     if Source.vOutroHasValue then
@@ -29220,8 +28572,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.ICMSTot) then
-      Json.ObjAddProp(Result, 'ICMSTot', Self.TNfeSefazICMSTotToJsonValue(Source.ICMSTot));
+    Json.ObjAddProp(Result, 'ICMSTot', Self.TNfeSefazICMSTotToJsonValue(Source.ICMSTot));
     if Assigned(Source.ISSQNtot) then
       Json.ObjAddProp(Result, 'ISSQNtot', Self.TNfeSefazISSQNtotToJsonValue(Source.ISSQNtot));
     if Assigned(Source.retTrib) then
@@ -29372,18 +28723,12 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.vServHasValue then
-      Json.ObjAddProp(Result, 'vServ', Self.DoubleToJsonValue(Source.vServ));
-    if Source.vBCRetHasValue then
-      Json.ObjAddProp(Result, 'vBCRet', Self.DoubleToJsonValue(Source.vBCRet));
-    if Source.pICMSRetHasValue then
-      Json.ObjAddProp(Result, 'pICMSRet', Self.DoubleToJsonValue(Source.pICMSRet));
-    if Source.vICMSRetHasValue then
-      Json.ObjAddProp(Result, 'vICMSRet', Self.DoubleToJsonValue(Source.vICMSRet));
-    if Source.CFOPHasValue then
-      Json.ObjAddProp(Result, 'CFOP', Self.IntegerToJsonValue(Source.CFOP));
-    if Source.cMunFGHasValue then
-      Json.ObjAddProp(Result, 'cMunFG', Self.IntegerToJsonValue(Source.cMunFG));
+    Json.ObjAddProp(Result, 'vServ', Self.DoubleToJsonValue(Source.vServ));
+    Json.ObjAddProp(Result, 'vBCRet', Self.DoubleToJsonValue(Source.vBCRet));
+    Json.ObjAddProp(Result, 'pICMSRet', Self.DoubleToJsonValue(Source.pICMSRet));
+    Json.ObjAddProp(Result, 'vICMSRet', Self.DoubleToJsonValue(Source.vICMSRet));
+    Json.ObjAddProp(Result, 'CFOP', Self.IntegerToJsonValue(Source.CFOP));
+    Json.ObjAddProp(Result, 'cMunFG', Self.IntegerToJsonValue(Source.cMunFG));
   except
     Result.Free;
     raise;
@@ -29452,8 +28797,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.placaHasValue then
-      Json.ObjAddProp(Result, 'placa', Self.stringToJsonValue(Source.placa));
+    Json.ObjAddProp(Result, 'placa', Self.stringToJsonValue(Source.placa));
     if Source.UFHasValue then
       Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
     if Source.RNTCHasValue then
@@ -29582,8 +28926,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nLacreHasValue then
-      Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
+    Json.ObjAddProp(Result, 'nLacre', Self.stringToJsonValue(Source.nLacre));
   except
     Result.Free;
     raise;
@@ -29850,8 +29193,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.modFreteHasValue then
-      Json.ObjAddProp(Result, 'modFrete', Self.IntegerToJsonValue(Source.modFrete));
+    Json.ObjAddProp(Result, 'modFrete', Self.IntegerToJsonValue(Source.modFrete));
     if Assigned(Source.transporta) then
       Json.ObjAddProp(Result, 'transporta', Self.TNfeSefazTransportaToJsonValue(Source.transporta));
     if Assigned(Source.retTransp) then
@@ -30014,8 +29356,7 @@ begin
       Json.ObjAddProp(Result, 'nDup', Self.stringToJsonValue(Source.nDup));
     if Source.dVencHasValue then
       Json.ObjAddProp(Result, 'dVenc', Self.TDateToJsonValue(Source.dVenc));
-    if Source.vDupHasValue then
-      Json.ObjAddProp(Result, 'vDup', Self.DoubleToJsonValue(Source.vDup));
+    Json.ObjAddProp(Result, 'vDup', Self.DoubleToJsonValue(Source.vDup));
   except
     Result.Free;
     raise;
@@ -30204,8 +29545,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.tpIntegraHasValue then
-      Json.ObjAddProp(Result, 'tpIntegra', Self.IntegerToJsonValue(Source.tpIntegra));
+    Json.ObjAddProp(Result, 'tpIntegra', Self.IntegerToJsonValue(Source.tpIntegra));
     if Source.CNPJHasValue then
       Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
     if Source.tBandHasValue then
@@ -30278,12 +29618,10 @@ begin
   try
     if Source.indPagHasValue then
       Json.ObjAddProp(Result, 'indPag', Self.IntegerToJsonValue(Source.indPag));
-    if Source.tPagHasValue then
-      Json.ObjAddProp(Result, 'tPag', Self.stringToJsonValue(Source.tPag));
+    Json.ObjAddProp(Result, 'tPag', Self.stringToJsonValue(Source.tPag));
     if Source.xPagHasValue then
       Json.ObjAddProp(Result, 'xPag', Self.stringToJsonValue(Source.xPag));
-    if Source.vPagHasValue then
-      Json.ObjAddProp(Result, 'vPag', Self.DoubleToJsonValue(Source.vPag));
+    Json.ObjAddProp(Result, 'vPag', Self.DoubleToJsonValue(Source.vPag));
     if Assigned(Source.card) then
       Json.ObjAddProp(Result, 'card', Self.TNfeSefazCardToJsonValue(Source.card));
   except
@@ -30414,8 +29752,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Assigned(Source.detPag) then
-      Json.ObjAddProp(Result, 'detPag', Self.TNfeSefazDetPagListToJsonValue(Source.detPag));
+    Json.ObjAddProp(Result, 'detPag', Self.TNfeSefazDetPagListToJsonValue(Source.detPag));
     if Source.vTrocoHasValue then
       Json.ObjAddProp(Result, 'vTroco', Self.DoubleToJsonValue(Source.vTroco));
   except
@@ -30478,10 +29815,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CNPJHasValue then
-      Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
-    if Source.idCadIntTranHasValue then
-      Json.ObjAddProp(Result, 'idCadIntTran', Self.stringToJsonValue(Source.idCadIntTran));
+    Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
+    Json.ObjAddProp(Result, 'idCadIntTran', Self.stringToJsonValue(Source.idCadIntTran));
   except
     Result.Free;
     raise;
@@ -30794,10 +30129,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.nProcHasValue then
-      Json.ObjAddProp(Result, 'nProc', Self.stringToJsonValue(Source.nProc));
-    if Source.indProcHasValue then
-      Json.ObjAddProp(Result, 'indProc', Self.IntegerToJsonValue(Source.indProc));
+    Json.ObjAddProp(Result, 'nProc', Self.stringToJsonValue(Source.nProc));
+    Json.ObjAddProp(Result, 'indProc', Self.IntegerToJsonValue(Source.indProc));
   except
     Result.Free;
     raise;
@@ -30996,10 +30329,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.UFSaidaPaisHasValue then
-      Json.ObjAddProp(Result, 'UFSaidaPais', Self.stringToJsonValue(Source.UFSaidaPais));
-    if Source.xLocExportaHasValue then
-      Json.ObjAddProp(Result, 'xLocExporta', Self.stringToJsonValue(Source.xLocExporta));
+    Json.ObjAddProp(Result, 'UFSaidaPais', Self.stringToJsonValue(Source.UFSaidaPais));
+    Json.ObjAddProp(Result, 'xLocExporta', Self.stringToJsonValue(Source.xLocExporta));
     if Source.xLocDespachoHasValue then
       Json.ObjAddProp(Result, 'xLocDespacho', Self.stringToJsonValue(Source.xLocDespacho));
   except
@@ -31134,8 +30465,7 @@ begin
   try
     if Source.diaHasValue then
       Json.ObjAddProp(Result, 'dia', Self.IntegerToJsonValue(Source.dia));
-    if Source.qtdeHasValue then
-      Json.ObjAddProp(Result, 'qtde', Self.DoubleToJsonValue(Source.qtde));
+    Json.ObjAddProp(Result, 'qtde', Self.DoubleToJsonValue(Source.qtde));
   except
     Result.Free;
     raise;
@@ -31258,10 +30588,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.xDedHasValue then
-      Json.ObjAddProp(Result, 'xDed', Self.stringToJsonValue(Source.xDed));
-    if Source.vDedHasValue then
-      Json.ObjAddProp(Result, 'vDed', Self.DoubleToJsonValue(Source.vDed));
+    Json.ObjAddProp(Result, 'xDed', Self.stringToJsonValue(Source.xDed));
+    Json.ObjAddProp(Result, 'vDed', Self.DoubleToJsonValue(Source.vDed));
   except
     Result.Free;
     raise;
@@ -31384,26 +30712,17 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.safraHasValue then
-      Json.ObjAddProp(Result, 'safra', Self.stringToJsonValue(Source.safra));
-    if Source.refHasValue then
-      Json.ObjAddProp(Result, 'ref', Self.stringToJsonValue(Source.ref));
-    if Assigned(Source.forDia) then
-      Json.ObjAddProp(Result, 'forDia', Self.TNfeSefazForDiaListToJsonValue(Source.forDia));
-    if Source.qTotMesHasValue then
-      Json.ObjAddProp(Result, 'qTotMes', Self.DoubleToJsonValue(Source.qTotMes));
-    if Source.qTotAntHasValue then
-      Json.ObjAddProp(Result, 'qTotAnt', Self.DoubleToJsonValue(Source.qTotAnt));
-    if Source.qTotGerHasValue then
-      Json.ObjAddProp(Result, 'qTotGer', Self.DoubleToJsonValue(Source.qTotGer));
+    Json.ObjAddProp(Result, 'safra', Self.stringToJsonValue(Source.safra));
+    Json.ObjAddProp(Result, 'ref', Self.stringToJsonValue(Source.ref));
+    Json.ObjAddProp(Result, 'forDia', Self.TNfeSefazForDiaListToJsonValue(Source.forDia));
+    Json.ObjAddProp(Result, 'qTotMes', Self.DoubleToJsonValue(Source.qTotMes));
+    Json.ObjAddProp(Result, 'qTotAnt', Self.DoubleToJsonValue(Source.qTotAnt));
+    Json.ObjAddProp(Result, 'qTotGer', Self.DoubleToJsonValue(Source.qTotGer));
     if Assigned(Source.deduc) then
       Json.ObjAddProp(Result, 'deduc', Self.TNfeSefazDeducListToJsonValue(Source.deduc));
-    if Source.vForHasValue then
-      Json.ObjAddProp(Result, 'vFor', Self.DoubleToJsonValue(Source.vFor));
-    if Source.vTotDedHasValue then
-      Json.ObjAddProp(Result, 'vTotDed', Self.DoubleToJsonValue(Source.vTotDed));
-    if Source.vLiqForHasValue then
-      Json.ObjAddProp(Result, 'vLiqFor', Self.DoubleToJsonValue(Source.vLiqFor));
+    Json.ObjAddProp(Result, 'vFor', Self.DoubleToJsonValue(Source.vFor));
+    Json.ObjAddProp(Result, 'vTotDed', Self.DoubleToJsonValue(Source.vTotDed));
+    Json.ObjAddProp(Result, 'vLiqFor', Self.DoubleToJsonValue(Source.vLiqFor));
   except
     Result.Free;
     raise;
@@ -31480,14 +30799,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.CNPJHasValue then
-      Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
-    if Source.xContatoHasValue then
-      Json.ObjAddProp(Result, 'xContato', Self.stringToJsonValue(Source.xContato));
-    if Source.emailHasValue then
-      Json.ObjAddProp(Result, 'email', Self.stringToJsonValue(Source.email));
-    if Source.foneHasValue then
-      Json.ObjAddProp(Result, 'fone', Self.stringToJsonValue(Source.fone));
+    Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
+    Json.ObjAddProp(Result, 'xContato', Self.stringToJsonValue(Source.xContato));
+    Json.ObjAddProp(Result, 'email', Self.stringToJsonValue(Source.email));
+    Json.ObjAddProp(Result, 'fone', Self.stringToJsonValue(Source.fone));
     if Source.idCSRTHasValue then
       Json.ObjAddProp(Result, 'idCSRT', Self.IntegerToJsonValue(Source.idCSRT));
     if Source.hashCSRTHasValue then
@@ -31560,8 +30875,7 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.xSolicHasValue then
-      Json.ObjAddProp(Result, 'xSolic', Self.stringToJsonValue(Source.xSolic));
+    Json.ObjAddProp(Result, 'xSolic', Self.stringToJsonValue(Source.xSolic));
   except
     Result.Free;
     raise;
@@ -31624,10 +30938,8 @@ begin
       Json.ObjAddProp(Result, 'versao', Self.stringToJsonValue(Source.versao));
     if Source.IdHasValue then
       Json.ObjAddProp(Result, 'Id', Self.stringToJsonValue(Source.Id));
-    if Assigned(Source.ide) then
-      Json.ObjAddProp(Result, 'ide', Self.TNfeSefazIdeToJsonValue(Source.ide));
-    if Assigned(Source.emit) then
-      Json.ObjAddProp(Result, 'emit', Self.TNfeSefazEmitToJsonValue(Source.emit));
+    Json.ObjAddProp(Result, 'ide', Self.TNfeSefazIdeToJsonValue(Source.ide));
+    Json.ObjAddProp(Result, 'emit', Self.TNfeSefazEmitToJsonValue(Source.emit));
     if Assigned(Source.avulsa) then
       Json.ObjAddProp(Result, 'avulsa', Self.TNfeSefazAvulsaToJsonValue(Source.avulsa));
     if Assigned(Source.dest) then
@@ -31638,16 +30950,12 @@ begin
       Json.ObjAddProp(Result, 'entrega', Self.TNfeSefazLocalToJsonValue(Source.entrega));
     if Assigned(Source.autXML) then
       Json.ObjAddProp(Result, 'autXML', Self.TNfeSefazAutXMLListToJsonValue(Source.autXML));
-    if Assigned(Source.det) then
-      Json.ObjAddProp(Result, 'det', Self.TNfeSefazDetListToJsonValue(Source.det));
-    if Assigned(Source.total) then
-      Json.ObjAddProp(Result, 'total', Self.TNfeSefazTotalToJsonValue(Source.total));
-    if Assigned(Source.transp) then
-      Json.ObjAddProp(Result, 'transp', Self.TNfeSefazTranspToJsonValue(Source.transp));
+    Json.ObjAddProp(Result, 'det', Self.TNfeSefazDetListToJsonValue(Source.det));
+    Json.ObjAddProp(Result, 'total', Self.TNfeSefazTotalToJsonValue(Source.total));
+    Json.ObjAddProp(Result, 'transp', Self.TNfeSefazTranspToJsonValue(Source.transp));
     if Assigned(Source.cobr) then
       Json.ObjAddProp(Result, 'cobr', Self.TNfeSefazCobrToJsonValue(Source.cobr));
-    if Assigned(Source.pag) then
-      Json.ObjAddProp(Result, 'pag', Self.TNfeSefazPagToJsonValue(Source.pag));
+    Json.ObjAddProp(Result, 'pag', Self.TNfeSefazPagToJsonValue(Source.pag));
     if Assigned(Source.infIntermed) then
       Json.ObjAddProp(Result, 'infIntermed', Self.TNfeSefazInfIntermedToJsonValue(Source.infIntermed));
     if Assigned(Source.infAdic) then
