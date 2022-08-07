@@ -111,6 +111,7 @@
         <DCCReference Include="..\Source\OpenApiRest.pas"/>
         <DCCReference Include="..\Source\NuvemFiscalClient.pas"/>
         <DCCReference Include="..\Source\NuvemFiscalDtos.pas"/>
+        <DCCReference Include="..\Source\OpenApiUtils.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

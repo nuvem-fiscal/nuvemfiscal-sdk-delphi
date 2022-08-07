@@ -8,7 +8,8 @@ uses
   OpenApiJson in '..\Source\OpenApiJson.pas',
   OpenApiRest in '..\Source\OpenApiRest.pas',
   NuvemFiscalClient in '..\Source\NuvemFiscalClient.pas',
-  NuvemFiscalDtos in '..\Source\NuvemFiscalDtos.pas';
+  NuvemFiscalDtos in '..\Source\NuvemFiscalDtos.pas',
+  OpenApiUtils in '..\Source\OpenApiUtils.pas';
 
 {$R *.res}
 
