@@ -310,16 +310,6 @@ type
     /// Deletar certificado
     /// </summary>
     procedure ExcluirCertificadoEmpresa(CpfCnpj: string);
-    /// <summary>
-    /// Upload de certificado
-    /// </summary>
-    /// <remarks>
-    /// Cadastre um certificado digital e vincule a sua empresa, para que possa iniciar a emissão de notas.
-    /// * Utilize o `content-type` igual a `multipart/form-data`.
-    /// * No parâmetro `file`, envie o binário do arquivo (.pfx ou .p12) do certificado digital.
-    /// * No parâmetro `password`, envie a senha do certificado.
-    /// </remarks>
-    function EnviarCertificadoEmpresa(Input: TBytes; CpfCnpj: string): TEmpresaCertificado;
   end;
   
   TEmpresaService = class(TRestService, IEmpresaService)
@@ -336,7 +326,6 @@ type
     function ConsultarCertificadoEmpresa(CpfCnpj: string): TEmpresaCertificado;
     function CadastrarCertificadoEmpresa(Body: TEmpresaPedidoCadastroCertificado; CpfCnpj: string): TEmpresaCertificado;
     procedure ExcluirCertificadoEmpresa(CpfCnpj: string);
-    function EnviarCertificadoEmpresa(Input: TBytes; CpfCnpj: string): TEmpresaCertificado;
   end;
   
   /// <summary>
@@ -1327,20 +1316,6 @@ begin
   Request.AddUrlParam('cpf_cnpj', CpfCnpj);
   Response := Request.Execute;
   CheckError(Response);
-end;
-
-function TEmpresaService.EnviarCertificadoEmpresa(Input: TBytes; CpfCnpj: string): TEmpresaCertificado;
-var
-  Request: IRestRequest;
-  Response: IRestResponse;
-begin
-  Request := CreateRequest('/empresas/{cpf_cnpj}/certificado/upload', 'POST');
-  raise Exception.Create('Form param ''Input'' not supported');
-  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
-  Request.AddHeader('Accept', 'application/json');
-  Response := Request.Execute;
-  CheckError(Response);
-  Result := Converter.TEmpresaCertificadoFromJson(Response.ContentAsString);
 end;
 
 { TMdfeService }
