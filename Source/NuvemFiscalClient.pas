@@ -310,6 +310,46 @@ type
     /// Deletar certificado
     /// </summary>
     procedure ExcluirCertificadoEmpresa(CpfCnpj: string);
+    /// <summary>
+    /// Consultar configuração de CT-e
+    /// </summary>
+    function ConsultarConfigCte(CpfCnpj: string): TEmpresaConfigCte;
+    /// <summary>
+    /// Alterar configuração de CT-e
+    /// </summary>
+    function AlterarConfigCte(Body: TEmpresaConfigCte; CpfCnpj: string): TEmpresaConfigCte;
+    /// <summary>
+    /// Consultar configuração de MDF-e
+    /// </summary>
+    function ConsultarConfigMdfe(CpfCnpj: string): TEmpresaConfigMdfe;
+    /// <summary>
+    /// Alterar configuração de MDF-e
+    /// </summary>
+    function AlterarConfigMdfe(Body: TEmpresaConfigMdfe; CpfCnpj: string): TEmpresaConfigMdfe;
+    /// <summary>
+    /// Consultar configuração de NFC-e
+    /// </summary>
+    function ConsultarConfigNfce(CpfCnpj: string): TEmpresaConfigNfce;
+    /// <summary>
+    /// Alterar configuração de NFC-e
+    /// </summary>
+    function AlterarConfigNfce(Body: TEmpresaConfigNfce; CpfCnpj: string): TEmpresaConfigNfce;
+    /// <summary>
+    /// Consultar configuração de NF-e
+    /// </summary>
+    function ConsultarConfigNfe(CpfCnpj: string): TEmpresaConfigNfe;
+    /// <summary>
+    /// Alterar configuração de NF-e
+    /// </summary>
+    function AlterarConfigNfe(Body: TEmpresaConfigNfe; CpfCnpj: string): TEmpresaConfigNfe;
+    /// <summary>
+    /// Consultar configuração de NFS-e
+    /// </summary>
+    function ConsultarConfigNfse(CpfCnpj: string): TEmpresaConfigNfse;
+    /// <summary>
+    /// Alterar configuração de NFS-e
+    /// </summary>
+    function AlterarConfigNfse(Body: TEmpresaConfigNfse; CpfCnpj: string): TEmpresaConfigNfse;
   end;
   
   TEmpresaService = class(TRestService, IEmpresaService)
@@ -326,6 +366,16 @@ type
     function ConsultarCertificadoEmpresa(CpfCnpj: string): TEmpresaCertificado;
     function CadastrarCertificadoEmpresa(Body: TEmpresaPedidoCadastroCertificado; CpfCnpj: string): TEmpresaCertificado;
     procedure ExcluirCertificadoEmpresa(CpfCnpj: string);
+    function ConsultarConfigCte(CpfCnpj: string): TEmpresaConfigCte;
+    function AlterarConfigCte(Body: TEmpresaConfigCte; CpfCnpj: string): TEmpresaConfigCte;
+    function ConsultarConfigMdfe(CpfCnpj: string): TEmpresaConfigMdfe;
+    function AlterarConfigMdfe(Body: TEmpresaConfigMdfe; CpfCnpj: string): TEmpresaConfigMdfe;
+    function ConsultarConfigNfce(CpfCnpj: string): TEmpresaConfigNfce;
+    function AlterarConfigNfce(Body: TEmpresaConfigNfce; CpfCnpj: string): TEmpresaConfigNfce;
+    function ConsultarConfigNfe(CpfCnpj: string): TEmpresaConfigNfe;
+    function AlterarConfigNfe(Body: TEmpresaConfigNfe; CpfCnpj: string): TEmpresaConfigNfe;
+    function ConsultarConfigNfse(CpfCnpj: string): TEmpresaConfigNfse;
+    function AlterarConfigNfse(Body: TEmpresaConfigNfse; CpfCnpj: string): TEmpresaConfigNfse;
   end;
   
   /// <summary>
@@ -1316,6 +1366,146 @@ begin
   Request.AddUrlParam('cpf_cnpj', CpfCnpj);
   Response := Request.Execute;
   CheckError(Response);
+end;
+
+function TEmpresaService.ConsultarConfigCte(CpfCnpj: string): TEmpresaConfigCte;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/cte', 'GET');
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigCteFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.AlterarConfigCte(Body: TEmpresaConfigCte; CpfCnpj: string): TEmpresaConfigCte;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/cte', 'PUT');
+  Request.AddBody(Converter.TEmpresaConfigCteToJson(Body));
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigCteFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.ConsultarConfigMdfe(CpfCnpj: string): TEmpresaConfigMdfe;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/mdfe', 'GET');
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigMdfeFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.AlterarConfigMdfe(Body: TEmpresaConfigMdfe; CpfCnpj: string): TEmpresaConfigMdfe;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/mdfe', 'PUT');
+  Request.AddBody(Converter.TEmpresaConfigMdfeToJson(Body));
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigMdfeFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.ConsultarConfigNfce(CpfCnpj: string): TEmpresaConfigNfce;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/nfce', 'GET');
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigNfceFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.AlterarConfigNfce(Body: TEmpresaConfigNfce; CpfCnpj: string): TEmpresaConfigNfce;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/nfce', 'PUT');
+  Request.AddBody(Converter.TEmpresaConfigNfceToJson(Body));
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigNfceFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.ConsultarConfigNfe(CpfCnpj: string): TEmpresaConfigNfe;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/nfe', 'GET');
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigNfeFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.AlterarConfigNfe(Body: TEmpresaConfigNfe; CpfCnpj: string): TEmpresaConfigNfe;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/nfe', 'PUT');
+  Request.AddBody(Converter.TEmpresaConfigNfeToJson(Body));
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigNfeFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.ConsultarConfigNfse(CpfCnpj: string): TEmpresaConfigNfse;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/nfse', 'GET');
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigNfseFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.AlterarConfigNfse(Body: TEmpresaConfigNfse; CpfCnpj: string): TEmpresaConfigNfse;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/nfse', 'PUT');
+  Request.AddBody(Converter.TEmpresaConfigNfseToJson(Body));
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigNfseFromJson(Response.ContentAsString);
 end;
 
 { TMdfeService }

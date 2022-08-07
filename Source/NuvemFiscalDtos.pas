@@ -8,20 +8,19 @@ uses
 
 type
   TEmpresaEndereco = class;
-  TEmpresaConfigNfe = class;
-  TEmpresaConfigNfceSefaz = class;
-  TEmpresaConfigNfce = class;
-  TEmpresaConfigMdfe = class;
-  TEmpresaConfigCte = class;
-  TEmpresaConfigCteOs = class;
-  TEmpresaConfigRps = class;
-  TEmpresaConfigPrefeitura = class;
-  TEmpresaConfigNfse = class;
   TEmpresa = class;
   TEmpresaList = class;
   TEmpresaListagem = class;
   TEmpresaPedidoCadastroCertificado = class;
   TEmpresaCertificado = class;
+  TEmpresaConfigNfe = class;
+  TEmpresaConfigNfceSefaz = class;
+  TEmpresaConfigNfce = class;
+  TEmpresaConfigRps = class;
+  TEmpresaConfigPrefeitura = class;
+  TEmpresaConfigNfse = class;
+  TEmpresaConfigMdfe = class;
+  TEmpresaConfigCte = class;
   TRpsIdentificacaoPrestador = class;
   TRpsDadosTomador = class;
   TRpsDadosIntermediario = class;
@@ -499,125 +498,6 @@ type
     property cep: string read Fcep write Fcep;
   end;
   
-  TEmpresaConfigNfe = class
-  private
-    Fambiente: string;
-    FambienteHasValue: Boolean;
-    procedure Setambiente(const Value: string);
-  public
-    property ambiente: string read Fambiente write Setambiente;
-    property ambienteHasValue: Boolean read FambienteHasValue write FambienteHasValue;
-  end;
-  
-  TEmpresaConfigNfceSefaz = class
-  private
-    Fid_csc: Integer;
-    Fcsc: string;
-  public
-    /// <summary>
-    /// Número de identificação do CSC.
-    /// </summary>
-    property id_csc: Integer read Fid_csc write Fid_csc;
-    /// <summary>
-    /// Código do CSC.
-    /// </summary>
-    property csc: string read Fcsc write Fcsc;
-  end;
-  
-  TEmpresaConfigNfce = class
-  private
-    Fsefaz: TEmpresaConfigNfceSefaz;
-    Fambiente: string;
-    FambienteHasValue: Boolean;
-    procedure Setsefaz(const Value: TEmpresaConfigNfceSefaz);
-    procedure Setambiente(const Value: string);
-  public
-    constructor Create;
-    destructor Destroy; override;
-    property sefaz: TEmpresaConfigNfceSefaz read Fsefaz write Setsefaz;
-    property ambiente: string read Fambiente write Setambiente;
-    property ambienteHasValue: Boolean read FambienteHasValue write FambienteHasValue;
-  end;
-  
-  TEmpresaConfigMdfe = class
-  private
-    Fambiente: string;
-    FambienteHasValue: Boolean;
-    procedure Setambiente(const Value: string);
-  public
-    property ambiente: string read Fambiente write Setambiente;
-    property ambienteHasValue: Boolean read FambienteHasValue write FambienteHasValue;
-  end;
-  
-  TEmpresaConfigCte = class
-  private
-    Fambiente: string;
-    FambienteHasValue: Boolean;
-    procedure Setambiente(const Value: string);
-  public
-    property ambiente: string read Fambiente write Setambiente;
-    property ambienteHasValue: Boolean read FambienteHasValue write FambienteHasValue;
-  end;
-  
-  TEmpresaConfigCteOs = class
-  private
-    Fambiente: string;
-    FambienteHasValue: Boolean;
-    procedure Setambiente(const Value: string);
-  public
-    property ambiente: string read Fambiente write Setambiente;
-    property ambienteHasValue: Boolean read FambienteHasValue write FambienteHasValue;
-  end;
-  
-  TEmpresaConfigRps = class
-  private
-    Flote: Integer;
-    Fserie: string;
-    Fnumero: Integer;
-  public
-    property lote: Integer read Flote write Flote;
-    property serie: string read Fserie write Fserie;
-    property numero: Integer read Fnumero write Fnumero;
-  end;
-  
-  TEmpresaConfigPrefeitura = class
-  private
-    Flogin: string;
-    FloginHasValue: Boolean;
-    Fsenha: string;
-    FsenhaHasValue: Boolean;
-    Ftoken: string;
-    FtokenHasValue: Boolean;
-    procedure Setlogin(const Value: string);
-    procedure Setsenha(const Value: string);
-    procedure Settoken(const Value: string);
-  public
-    property login: string read Flogin write Setlogin;
-    property loginHasValue: Boolean read FloginHasValue write FloginHasValue;
-    property senha: string read Fsenha write Setsenha;
-    property senhaHasValue: Boolean read FsenhaHasValue write FsenhaHasValue;
-    property token: string read Ftoken write Settoken;
-    property tokenHasValue: Boolean read FtokenHasValue write FtokenHasValue;
-  end;
-  
-  TEmpresaConfigNfse = class
-  private
-    Frps: TEmpresaConfigRps;
-    Fprefeitura: TEmpresaConfigPrefeitura;
-    Fambiente: string;
-    FambienteHasValue: Boolean;
-    procedure Setrps(const Value: TEmpresaConfigRps);
-    procedure Setprefeitura(const Value: TEmpresaConfigPrefeitura);
-    procedure Setambiente(const Value: string);
-  public
-    constructor Create;
-    destructor Destroy; override;
-    property rps: TEmpresaConfigRps read Frps write Setrps;
-    property prefeitura: TEmpresaConfigPrefeitura read Fprefeitura write Setprefeitura;
-    property ambiente: string read Fambiente write Setambiente;
-    property ambienteHasValue: Boolean read FambienteHasValue write FambienteHasValue;
-  end;
-  
   TEmpresa = class
   private
     Fcpf_cnpj: string;
@@ -644,12 +524,6 @@ type
     Fincentivo_fiscalHasValue: Boolean;
     Fincentivador_cultural: Boolean;
     Fincentivador_culturalHasValue: Boolean;
-    Fnfe: TEmpresaConfigNfe;
-    Fnfce: TEmpresaConfigNfce;
-    Fmdfe: TEmpresaConfigMdfe;
-    Fcte: TEmpresaConfigCte;
-    Fcte_os: TEmpresaConfigCteOs;
-    Fnfse: TEmpresaConfigNfse;
     procedure Setcreated_at(const Value: TDateTime);
     procedure Setupdated_at(const Value: TDateTime);
     procedure Setinscricao_estadual(const Value: string);
@@ -660,12 +534,6 @@ type
     procedure Setoptante_simples_nacional(const Value: Boolean);
     procedure Setincentivo_fiscal(const Value: Boolean);
     procedure Setincentivador_cultural(const Value: Boolean);
-    procedure Setnfe(const Value: TEmpresaConfigNfe);
-    procedure Setnfce(const Value: TEmpresaConfigNfce);
-    procedure Setmdfe(const Value: TEmpresaConfigMdfe);
-    procedure Setcte(const Value: TEmpresaConfigCte);
-    procedure Setcte_os(const Value: TEmpresaConfigCteOs);
-    procedure Setnfse(const Value: TEmpresaConfigNfse);
   public
     constructor Create;
     destructor Destroy; override;
@@ -753,36 +621,6 @@ type
     /// </summary>
     property incentivador_cultural: Boolean read Fincentivador_cultural write Setincentivador_cultural;
     property incentivador_culturalHasValue: Boolean read Fincentivador_culturalHasValue write Fincentivador_culturalHasValue;
-    /// <summary>
-    /// Configurações da nota de produto.
-    /// Obrigatório caso queira emitir NF-e.
-    /// </summary>
-    property nfe: TEmpresaConfigNfe read Fnfe write Setnfe;
-    /// <summary>
-    /// Configurações da nota de consumidor.
-    /// Obrigatório caso queira emitir NFC-e.
-    /// </summary>
-    property nfce: TEmpresaConfigNfce read Fnfce write Setnfce;
-    /// <summary>
-    /// Configurações do manifesto eletrônico de documentos.
-    /// Obrigatório caso queira emitir MDF-e.
-    /// </summary>
-    property mdfe: TEmpresaConfigMdfe read Fmdfe write Setmdfe;
-    /// <summary>
-    /// Configurações do conhecimento de transporte eletrônico.
-    /// Obrigatório caso queira emitir CT-e.
-    /// </summary>
-    property cte: TEmpresaConfigCte read Fcte write Setcte;
-    /// <summary>
-    /// Configurações do conhecimento de transporte eletrônico - Outros serviços.
-    /// Obrigatório caso queira emitir CT-e OS.
-    /// </summary>
-    property cte_os: TEmpresaConfigCteOs read Fcte_os write Setcte_os;
-    /// <summary>
-    /// Configurações da nota de serviço.
-    /// Obrigatório caso queira emitir NFS-e.
-    /// </summary>
-    property nfse: TEmpresaConfigNfse read Fnfse write Setnfse;
   end;
   
   TEmpresaList = class(TObjectList<TEmpresa>)
@@ -860,6 +698,115 @@ type
     property cpf_cnpjHasValue: Boolean read Fcpf_cnpjHasValue write Fcpf_cnpjHasValue;
     property nome_razao_social: string read Fnome_razao_social write Setnome_razao_social;
     property nome_razao_socialHasValue: Boolean read Fnome_razao_socialHasValue write Fnome_razao_socialHasValue;
+  end;
+  
+  TEmpresaConfigNfe = class
+  private
+    Fambiente: string;
+    FambienteHasValue: Boolean;
+    procedure Setambiente(const Value: string);
+  public
+    property ambiente: string read Fambiente write Setambiente;
+    property ambienteHasValue: Boolean read FambienteHasValue write FambienteHasValue;
+  end;
+  
+  TEmpresaConfigNfceSefaz = class
+  private
+    Fid_csc: Integer;
+    Fcsc: string;
+  public
+    /// <summary>
+    /// Número de identificação do CSC.
+    /// </summary>
+    property id_csc: Integer read Fid_csc write Fid_csc;
+    /// <summary>
+    /// Código do CSC.
+    /// </summary>
+    property csc: string read Fcsc write Fcsc;
+  end;
+  
+  TEmpresaConfigNfce = class
+  private
+    Fsefaz: TEmpresaConfigNfceSefaz;
+    Fambiente: string;
+    FambienteHasValue: Boolean;
+    procedure Setsefaz(const Value: TEmpresaConfigNfceSefaz);
+    procedure Setambiente(const Value: string);
+  public
+    constructor Create;
+    destructor Destroy; override;
+    property sefaz: TEmpresaConfigNfceSefaz read Fsefaz write Setsefaz;
+    property ambiente: string read Fambiente write Setambiente;
+    property ambienteHasValue: Boolean read FambienteHasValue write FambienteHasValue;
+  end;
+  
+  TEmpresaConfigRps = class
+  private
+    Flote: Integer;
+    Fserie: string;
+    Fnumero: Integer;
+  public
+    property lote: Integer read Flote write Flote;
+    property serie: string read Fserie write Fserie;
+    property numero: Integer read Fnumero write Fnumero;
+  end;
+  
+  TEmpresaConfigPrefeitura = class
+  private
+    Flogin: string;
+    FloginHasValue: Boolean;
+    Fsenha: string;
+    FsenhaHasValue: Boolean;
+    Ftoken: string;
+    FtokenHasValue: Boolean;
+    procedure Setlogin(const Value: string);
+    procedure Setsenha(const Value: string);
+    procedure Settoken(const Value: string);
+  public
+    property login: string read Flogin write Setlogin;
+    property loginHasValue: Boolean read FloginHasValue write FloginHasValue;
+    property senha: string read Fsenha write Setsenha;
+    property senhaHasValue: Boolean read FsenhaHasValue write FsenhaHasValue;
+    property token: string read Ftoken write Settoken;
+    property tokenHasValue: Boolean read FtokenHasValue write FtokenHasValue;
+  end;
+  
+  TEmpresaConfigNfse = class
+  private
+    Frps: TEmpresaConfigRps;
+    Fprefeitura: TEmpresaConfigPrefeitura;
+    Fambiente: string;
+    FambienteHasValue: Boolean;
+    procedure Setrps(const Value: TEmpresaConfigRps);
+    procedure Setprefeitura(const Value: TEmpresaConfigPrefeitura);
+    procedure Setambiente(const Value: string);
+  public
+    constructor Create;
+    destructor Destroy; override;
+    property rps: TEmpresaConfigRps read Frps write Setrps;
+    property prefeitura: TEmpresaConfigPrefeitura read Fprefeitura write Setprefeitura;
+    property ambiente: string read Fambiente write Setambiente;
+    property ambienteHasValue: Boolean read FambienteHasValue write FambienteHasValue;
+  end;
+  
+  TEmpresaConfigMdfe = class
+  private
+    Fambiente: string;
+    FambienteHasValue: Boolean;
+    procedure Setambiente(const Value: string);
+  public
+    property ambiente: string read Fambiente write Setambiente;
+    property ambienteHasValue: Boolean read FambienteHasValue write FambienteHasValue;
+  end;
+  
+  TEmpresaConfigCte = class
+  private
+    Fambiente: string;
+    FambienteHasValue: Boolean;
+    procedure Setambiente(const Value: string);
+  public
+    property ambiente: string read Fambiente write Setambiente;
+    property ambienteHasValue: Boolean read FambienteHasValue write FambienteHasValue;
   end;
   
   TRpsIdentificacaoPrestador = class
@@ -15270,126 +15217,6 @@ begin
   FpaisHasValue := True;
 end;
 
-{ TEmpresaConfigNfe }
-
-procedure TEmpresaConfigNfe.Setambiente(const Value: string);
-begin
-  Fambiente := Value;
-  FambienteHasValue := True;
-end;
-
-{ TEmpresaConfigNfce }
-
-constructor TEmpresaConfigNfce.Create;
-begin
-  inherited;
-  Fsefaz := TEmpresaConfigNfceSefaz.Create;
-end;
-
-destructor TEmpresaConfigNfce.Destroy;
-begin
-  Fsefaz.Free;
-  inherited;
-end;
-
-procedure TEmpresaConfigNfce.Setsefaz(const Value: TEmpresaConfigNfceSefaz);
-begin
-  if Value <> Fsefaz then
-  begin
-    Fsefaz.Free;
-    Fsefaz := Value;
-  end;
-end;
-
-procedure TEmpresaConfigNfce.Setambiente(const Value: string);
-begin
-  Fambiente := Value;
-  FambienteHasValue := True;
-end;
-
-{ TEmpresaConfigMdfe }
-
-procedure TEmpresaConfigMdfe.Setambiente(const Value: string);
-begin
-  Fambiente := Value;
-  FambienteHasValue := True;
-end;
-
-{ TEmpresaConfigCte }
-
-procedure TEmpresaConfigCte.Setambiente(const Value: string);
-begin
-  Fambiente := Value;
-  FambienteHasValue := True;
-end;
-
-{ TEmpresaConfigCteOs }
-
-procedure TEmpresaConfigCteOs.Setambiente(const Value: string);
-begin
-  Fambiente := Value;
-  FambienteHasValue := True;
-end;
-
-{ TEmpresaConfigPrefeitura }
-
-procedure TEmpresaConfigPrefeitura.Setlogin(const Value: string);
-begin
-  Flogin := Value;
-  FloginHasValue := True;
-end;
-
-procedure TEmpresaConfigPrefeitura.Setsenha(const Value: string);
-begin
-  Fsenha := Value;
-  FsenhaHasValue := True;
-end;
-
-procedure TEmpresaConfigPrefeitura.Settoken(const Value: string);
-begin
-  Ftoken := Value;
-  FtokenHasValue := True;
-end;
-
-{ TEmpresaConfigNfse }
-
-constructor TEmpresaConfigNfse.Create;
-begin
-  inherited;
-  Frps := TEmpresaConfigRps.Create;
-end;
-
-destructor TEmpresaConfigNfse.Destroy;
-begin
-  Fprefeitura.Free;
-  Frps.Free;
-  inherited;
-end;
-
-procedure TEmpresaConfigNfse.Setrps(const Value: TEmpresaConfigRps);
-begin
-  if Value <> Frps then
-  begin
-    Frps.Free;
-    Frps := Value;
-  end;
-end;
-
-procedure TEmpresaConfigNfse.Setprefeitura(const Value: TEmpresaConfigPrefeitura);
-begin
-  if Value <> Fprefeitura then
-  begin
-    Fprefeitura.Free;
-    Fprefeitura := Value;
-  end;
-end;
-
-procedure TEmpresaConfigNfse.Setambiente(const Value: string);
-begin
-  Fambiente := Value;
-  FambienteHasValue := True;
-end;
-
 { TEmpresa }
 
 constructor TEmpresa.Create;
@@ -15400,12 +15227,6 @@ end;
 
 destructor TEmpresa.Destroy;
 begin
-  Fnfse.Free;
-  Fcte_os.Free;
-  Fcte.Free;
-  Fmdfe.Free;
-  Fnfce.Free;
-  Fnfe.Free;
   Fendereco.Free;
   inherited;
 end;
@@ -15471,60 +15292,6 @@ procedure TEmpresa.Setincentivador_cultural(const Value: Boolean);
 begin
   Fincentivador_cultural := Value;
   Fincentivador_culturalHasValue := True;
-end;
-
-procedure TEmpresa.Setnfe(const Value: TEmpresaConfigNfe);
-begin
-  if Value <> Fnfe then
-  begin
-    Fnfe.Free;
-    Fnfe := Value;
-  end;
-end;
-
-procedure TEmpresa.Setnfce(const Value: TEmpresaConfigNfce);
-begin
-  if Value <> Fnfce then
-  begin
-    Fnfce.Free;
-    Fnfce := Value;
-  end;
-end;
-
-procedure TEmpresa.Setmdfe(const Value: TEmpresaConfigMdfe);
-begin
-  if Value <> Fmdfe then
-  begin
-    Fmdfe.Free;
-    Fmdfe := Value;
-  end;
-end;
-
-procedure TEmpresa.Setcte(const Value: TEmpresaConfigCte);
-begin
-  if Value <> Fcte then
-  begin
-    Fcte.Free;
-    Fcte := Value;
-  end;
-end;
-
-procedure TEmpresa.Setcte_os(const Value: TEmpresaConfigCteOs);
-begin
-  if Value <> Fcte_os then
-  begin
-    Fcte_os.Free;
-    Fcte_os := Value;
-  end;
-end;
-
-procedure TEmpresa.Setnfse(const Value: TEmpresaConfigNfse);
-begin
-  if Value <> Fnfse then
-  begin
-    Fnfse.Free;
-    Fnfse := Value;
-  end;
 end;
 
 { TEmpresaListagem }
@@ -15612,6 +15379,118 @@ procedure TEmpresaCertificado.Setnome_razao_social(const Value: string);
 begin
   Fnome_razao_social := Value;
   Fnome_razao_socialHasValue := True;
+end;
+
+{ TEmpresaConfigNfe }
+
+procedure TEmpresaConfigNfe.Setambiente(const Value: string);
+begin
+  Fambiente := Value;
+  FambienteHasValue := True;
+end;
+
+{ TEmpresaConfigNfce }
+
+constructor TEmpresaConfigNfce.Create;
+begin
+  inherited;
+  Fsefaz := TEmpresaConfigNfceSefaz.Create;
+end;
+
+destructor TEmpresaConfigNfce.Destroy;
+begin
+  Fsefaz.Free;
+  inherited;
+end;
+
+procedure TEmpresaConfigNfce.Setsefaz(const Value: TEmpresaConfigNfceSefaz);
+begin
+  if Value <> Fsefaz then
+  begin
+    Fsefaz.Free;
+    Fsefaz := Value;
+  end;
+end;
+
+procedure TEmpresaConfigNfce.Setambiente(const Value: string);
+begin
+  Fambiente := Value;
+  FambienteHasValue := True;
+end;
+
+{ TEmpresaConfigPrefeitura }
+
+procedure TEmpresaConfigPrefeitura.Setlogin(const Value: string);
+begin
+  Flogin := Value;
+  FloginHasValue := True;
+end;
+
+procedure TEmpresaConfigPrefeitura.Setsenha(const Value: string);
+begin
+  Fsenha := Value;
+  FsenhaHasValue := True;
+end;
+
+procedure TEmpresaConfigPrefeitura.Settoken(const Value: string);
+begin
+  Ftoken := Value;
+  FtokenHasValue := True;
+end;
+
+{ TEmpresaConfigNfse }
+
+constructor TEmpresaConfigNfse.Create;
+begin
+  inherited;
+  Frps := TEmpresaConfigRps.Create;
+end;
+
+destructor TEmpresaConfigNfse.Destroy;
+begin
+  Fprefeitura.Free;
+  Frps.Free;
+  inherited;
+end;
+
+procedure TEmpresaConfigNfse.Setrps(const Value: TEmpresaConfigRps);
+begin
+  if Value <> Frps then
+  begin
+    Frps.Free;
+    Frps := Value;
+  end;
+end;
+
+procedure TEmpresaConfigNfse.Setprefeitura(const Value: TEmpresaConfigPrefeitura);
+begin
+  if Value <> Fprefeitura then
+  begin
+    Fprefeitura.Free;
+    Fprefeitura := Value;
+  end;
+end;
+
+procedure TEmpresaConfigNfse.Setambiente(const Value: string);
+begin
+  Fambiente := Value;
+  FambienteHasValue := True;
+end;
+
+{ TEmpresaConfigMdfe }
+
+procedure TEmpresaConfigMdfe.Setambiente(const Value: string);
+begin
+  Fambiente := Value;
+  FambienteHasValue := True;
+end;
+
+{ TEmpresaConfigCte }
+
+procedure TEmpresaConfigCte.Setambiente(const Value: string);
+begin
+  Fambiente := Value;
+  FambienteHasValue := True;
 end;
 
 { TRpsIdentificacaoPrestador }
