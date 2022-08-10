@@ -302,7 +302,7 @@ type
     /// Cadastrar certificado
     /// </summary>
     /// <remarks>
-    /// Cadastre um certificado digital e vincule a sua empresa, para que possa iniciar a emissão de notas.
+    /// Cadastre ou atualize um certificado digital e vincule a sua empresa, para que possa iniciar a emissão de notas.
     /// * No parâmetro `certificado`, envie o binário do certificado digital (.pfx ou .p12) codificado em **base64**.
     /// </remarks>
     function CadastrarCertificadoEmpresa(Body: TEmpresaPedidoCadastroCertificado; CpfCnpj: string): TEmpresaCertificado;
@@ -1347,7 +1347,7 @@ var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
-  Request := CreateRequest('/empresas/{cpf_cnpj}/certificado', 'POST');
+  Request := CreateRequest('/empresas/{cpf_cnpj}/certificado', 'PUT');
   Request.AddBody(Converter.TEmpresaPedidoCadastroCertificadoToJson(Body));
   Request.AddUrlParam('cpf_cnpj', CpfCnpj);
   Request.AddHeader('Content-Type', 'application/json');

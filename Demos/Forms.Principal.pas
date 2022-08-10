@@ -5,19 +5,12 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, NuvemFiscalClient, NuvemFiscalDTOs,
-  OpenApiRest;
+  OpenApiRest, Vcl.ComCtrls;
 
 type
   TForm1 = class(TForm)
     edClientId: TEdit;
     Label1: TLabel;
-    edCnpj: TEdit;
-    Label2: TLabel;
-    btConsultarCnpj: TButton;
-    mmLog: TMemo;
-    Label3: TLabel;
-    edCep: TEdit;
-    btConsultarCep: TButton;
     edClientSecret: TEdit;
     Label4: TLabel;
     Label5: TLabel;
@@ -25,6 +18,16 @@ type
     btToken: TButton;
     Label6: TLabel;
     edExpiracao: TEdit;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    Label2: TLabel;
+    Label3: TLabel;
+    edCnpj: TEdit;
+    btConsultarCnpj: TButton;
+    mmLog: TMemo;
+    edCep: TEdit;
+    btConsultarCep: TButton;
+    TabSheet2: TTabSheet;
     procedure FormCreate(Sender: TObject);
     procedure btConsultarCnpjClick(Sender: TObject);
     procedure btConsultarCepClick(Sender: TObject);

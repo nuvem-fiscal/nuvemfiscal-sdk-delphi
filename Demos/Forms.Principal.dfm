@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Nuvem Fiscal - Demo'
-  ClientHeight = 568
-  ClientWidth = 769
+  ClientHeight = 571
+  ClientWidth = 762
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,8 +12,8 @@ object Form1: TForm1
   Font.Style = []
   OnCreate = FormCreate
   DesignSize = (
-    769
-    568)
+    762
+    571)
   TextHeight = 15
   object Label1: TLabel
     Left = 16
@@ -21,20 +21,6 @@ object Form1: TForm1
     Width = 48
     Height = 15
     Caption = 'Client ID:'
-  end
-  object Label2: TLabel
-    Left = 16
-    Top = 102
-    Width = 30
-    Height = 15
-    Caption = 'CNPJ:'
-  end
-  object Label3: TLabel
-    Left = 353
-    Top = 102
-    Width = 24
-    Height = 15
-    Caption = 'CEP:'
   end
   object Label4: TLabel
     Left = 328
@@ -51,7 +37,7 @@ object Form1: TForm1
     Caption = 'Token de acesso:'
   end
   object Label6: TLabel
-    Left = 516
+    Left = 509
     Top = 43
     Width = 55
     Height = 15
@@ -66,66 +52,28 @@ object Form1: TForm1
     Height = 23
     TabOrder = 0
   end
-  object edCnpj: TEdit
-    Left = 56
-    Top = 99
-    Width = 145
-    Height = 23
-    TabOrder = 5
-  end
-  object btConsultarCnpj: TButton
-    Left = 207
-    Top = 98
-    Width = 122
-    Height = 25
-    Caption = 'Consultar CNPJ'
-    TabOrder = 6
-    OnClick = btConsultarCnpjClick
-  end
-  object mmLog: TMemo
-    Left = 16
-    Top = 136
-    Width = 734
-    Height = 412
-    Anchors = [akLeft, akTop, akRight, akBottom]
-    TabOrder = 9
-  end
-  object edCep: TEdit
-    Left = 384
-    Top = 99
-    Width = 145
-    Height = 23
-    TabOrder = 7
-  end
-  object btConsultarCep: TButton
-    Left = 535
-    Top = 98
-    Width = 122
-    Height = 25
-    Caption = 'Consultar CEP'
-    TabOrder = 8
-    OnClick = btConsultarCepClick
-  end
   object edClientSecret: TEdit
     Left = 408
     Top = 8
-    Width = 214
+    Width = 207
     Height = 23
     Anchors = [akLeft, akTop, akRight]
     PasswordChar = '*'
     TabOrder = 1
+    ExplicitWidth = 214
   end
   object edToken: TEdit
     Left = 114
     Top = 40
-    Width = 386
+    Width = 379
     Height = 23
     Anchors = [akLeft, akTop, akRight]
     ReadOnly = True
     TabOrder = 3
+    ExplicitWidth = 386
   end
   object btToken: TButton
-    Left = 637
+    Left = 630
     Top = 7
     Width = 113
     Height = 25
@@ -133,14 +81,91 @@ object Form1: TForm1
     Caption = 'Get Token'
     TabOrder = 2
     OnClick = btTokenClick
+    ExplicitLeft = 637
   end
   object edExpiracao: TEdit
-    Left = 580
+    Left = 573
     Top = 40
     Width = 170
     Height = 23
     Anchors = [akTop, akRight]
     ReadOnly = True
     TabOrder = 4
+    ExplicitLeft = 580
+  end
+  object PageControl1: TPageControl
+    Left = 16
+    Top = 80
+    Width = 727
+    Height = 468
+    ActivePage = TabSheet2
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    TabOrder = 5
+    object TabSheet1: TTabSheet
+      Caption = 'Consultas'
+      DesignSize = (
+        719
+        438)
+      object Label2: TLabel
+        Left = 6
+        Top = 12
+        Width = 30
+        Height = 15
+        Caption = 'CNPJ:'
+      end
+      object Label3: TLabel
+        Left = 343
+        Top = 12
+        Width = 24
+        Height = 15
+        Caption = 'CEP:'
+      end
+      object edCnpj: TEdit
+        Left = 46
+        Top = 9
+        Width = 145
+        Height = 23
+        TabOrder = 0
+      end
+      object btConsultarCnpj: TButton
+        Left = 197
+        Top = 8
+        Width = 122
+        Height = 25
+        Caption = 'Consultar CNPJ'
+        TabOrder = 1
+        OnClick = btConsultarCnpjClick
+      end
+      object mmLog: TMemo
+        Left = 6
+        Top = 42
+        Width = 702
+        Height = 386
+        Anchors = [akLeft, akTop, akRight, akBottom]
+        TabOrder = 2
+        ExplicitWidth = 707
+        ExplicitHeight = 383
+      end
+      object edCep: TEdit
+        Left = 374
+        Top = 9
+        Width = 145
+        Height = 23
+        TabOrder = 3
+      end
+      object btConsultarCep: TButton
+        Left = 525
+        Top = 8
+        Width = 122
+        Height = 25
+        Caption = 'Consultar CEP'
+        TabOrder = 4
+        OnClick = btConsultarCepClick
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'TabSheet2'
+      ImageIndex = 1
+    end
   end
 end
