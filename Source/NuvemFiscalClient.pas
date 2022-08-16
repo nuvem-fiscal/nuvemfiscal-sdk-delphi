@@ -283,17 +283,17 @@ type
     /// </summary>
     function ConsultarEmpresa(CpfCnpj: string): TEmpresa;
     /// <summary>
-    /// Deletar empresa
-    /// </summary>
-    procedure ExcluirEmpresa(CpfCnpj: string);
-    /// <summary>
     /// Alterar empresa
     /// </summary>
     /// <remarks>
     /// Altera o cadastro de uma empresa (emitente/prestador) que esteja associada a sua conta.
-    /// Neste método, você pode alterar um único campo específico ou todo o cadastro (campos não informados serão deixados inalterados).
+    /// Nesse método, por tratar-se de um PUT, caso algum campo não seja informado, o valor dele será apagado.
     /// </remarks>
     function AtualizarEmpresa(Body: TEmpresa; CpfCnpj: string): TEmpresa;
+    /// <summary>
+    /// Deletar empresa
+    /// </summary>
+    procedure ExcluirEmpresa(CpfCnpj: string);
     /// <summary>
     /// Consultar certificado
     /// </summary>
@@ -361,8 +361,8 @@ type
     function ListarEmpresas(Top: Integer; Skip: Integer; CpfCnpj: string): TEmpresaListagem;
     function CriarEmpresa(Body: TEmpresa): TEmpresa;
     function ConsultarEmpresa(CpfCnpj: string): TEmpresa;
-    procedure ExcluirEmpresa(CpfCnpj: string);
     function AtualizarEmpresa(Body: TEmpresa; CpfCnpj: string): TEmpresa;
+    procedure ExcluirEmpresa(CpfCnpj: string);
     function ConsultarCertificadoEmpresa(CpfCnpj: string): TEmpresaCertificado;
     function CadastrarCertificadoEmpresa(Body: TEmpresaPedidoCadastroCertificado; CpfCnpj: string): TEmpresaCertificado;
     procedure ExcluirCertificadoEmpresa(CpfCnpj: string);
@@ -1303,6 +1303,21 @@ begin
   Result := Converter.TEmpresaFromJson(Response.ContentAsString);
 end;
 
+function TEmpresaService.AtualizarEmpresa(Body: TEmpresa; CpfCnpj: string): TEmpresa;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}', 'PUT');
+  Request.AddBody(Converter.TEmpresaToJson(Body));
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaFromJson(Response.ContentAsString);
+end;
+
 procedure TEmpresaService.ExcluirEmpresa(CpfCnpj: string);
 var
   Request: IRestRequest;
@@ -1312,21 +1327,6 @@ begin
   Request.AddUrlParam('cpf_cnpj', CpfCnpj);
   Response := Request.Execute;
   CheckError(Response);
-end;
-
-function TEmpresaService.AtualizarEmpresa(Body: TEmpresa; CpfCnpj: string): TEmpresa;
-var
-  Request: IRestRequest;
-  Response: IRestResponse;
-begin
-  Request := CreateRequest('/empresas/{cpf_cnpj}', 'PATCH');
-  Request.AddBody(Converter.TEmpresaToJson(Body));
-  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
-  Request.AddHeader('Content-Type', 'application/json');
-  Request.AddHeader('Accept', 'application/json');
-  Response := Request.Execute;
-  CheckError(Response);
-  Result := Converter.TEmpresaFromJson(Response.ContentAsString);
 end;
 
 function TEmpresaService.ConsultarCertificadoEmpresa(CpfCnpj: string): TEmpresaCertificado;

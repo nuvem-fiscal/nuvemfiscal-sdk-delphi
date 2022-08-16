@@ -1261,6 +1261,16 @@ type
     property rps: TRpsDados read Frps write Setrps;
     property competencia: TDate read Fcompetencia write Setcompetencia;
     property competenciaHasValue: Boolean read FcompetenciaHasValue write FcompetenciaHasValue;
+    /// <summary>
+    /// Natureza da tributação
+    /// Preencher com:
+    ///                           1-Simples Nacional
+    ///                           2-Fixo
+    ///                           3-Depósito em juízo
+    ///                           4-Exigibilidade suspensa por decisão judicial
+    ///                           5-Exigibilidade suspensa por procedimento administrativo
+    ///                           6-Isenção parcial
+    /// </summary>
     property natureza_tributacao: Integer read Fnatureza_tributacao write Setnatureza_tributacao;
     property natureza_tributacaoHasValue: Boolean read Fnatureza_tributacaoHasValue write Fnatureza_tributacaoHasValue;
     property prestador: TRpsDadosPrestador read Fprestador write Setprestador;
