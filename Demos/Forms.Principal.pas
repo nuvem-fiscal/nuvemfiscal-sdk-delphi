@@ -65,7 +65,6 @@ procedure TForm1.btConsultarCnpjClick(Sender: TObject);
 var
   Empresa: TCnpjEmpresa;
   Endereco: TCnpjEndereco;
-  Socio: TCnpjSocio;
 begin
   Empresa := Client.Cnpj.ConsultarCnpj(edCnpj.Text);
   try
@@ -74,13 +73,6 @@ begin
     Endereco := Empresa.Endereco;
     Log(Format('%s %s, %s %s - %s', [Endereco.tipo_logradouro, Endereco.logradouro, Endereco.numero, Endereco.complemento, Endereco.bairro]));
     Log(Format('%s - %s - %s', [Endereco.cep, Endereco.municipio.descricao, Endereco.uf]));
-
-    if Empresa.socios.Count > 0 then
-    begin
-      Log('Sócios:');
-      for Socio in Empresa.socios do
-        Log(Format('  %s (%s)', [Socio.nome, Socio.cpf_cnpj]));
-    end;
     Log('');
   finally
     Empresa.Free;

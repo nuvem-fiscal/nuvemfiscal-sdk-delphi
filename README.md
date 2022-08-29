@@ -1,4 +1,4 @@
-# nuvemfiscal-sdk-delphi
+﻿# nuvemfiscal-sdk-delphi
 Biblioteca Delphi para uso da API da [Nuvem Fiscal](https://www.nuvemfiscal.com.br). É importante também consultar a [documentação da Nuvem Fiscal](https://dev.nuvemfiscal.com.br/docs).
 
 ## Instalação
@@ -63,7 +63,6 @@ O exemplo a seguir faz uma consulta de dados de um CNPJ:
 var
   Empresa: TCnpjEmpresa;
   Endereco: TCnpjEndereco;
-  Socio: TCnpjSocio;
 begin
   Empresa := Client.Cnpj.ConsultarCnpj('08421842000190');
   try
@@ -72,8 +71,6 @@ begin
     // Empresa.Endereco.Logradouro
     // Empresa.Endereco.Municipio
     // Empresa.Endereco.Uf
-    // Empresa.Socios
-    // Empresa.Socios[Index].Nome
   finally
     Empresa.Free;
   end;

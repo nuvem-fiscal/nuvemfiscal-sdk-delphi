@@ -60,7 +60,6 @@ object Form1: TForm1
     Anchors = [akLeft, akTop, akRight]
     PasswordChar = '*'
     TabOrder = 1
-    ExplicitWidth = 214
   end
   object edToken: TEdit
     Left = 114
@@ -70,7 +69,6 @@ object Form1: TForm1
     Anchors = [akLeft, akTop, akRight]
     ReadOnly = True
     TabOrder = 3
-    ExplicitWidth = 386
   end
   object btToken: TButton
     Left = 630
@@ -81,7 +79,6 @@ object Form1: TForm1
     Caption = 'Get Token'
     TabOrder = 2
     OnClick = btTokenClick
-    ExplicitLeft = 637
   end
   object edExpiracao: TEdit
     Left = 573
@@ -91,7 +88,6 @@ object Form1: TForm1
     Anchors = [akTop, akRight]
     ReadOnly = True
     TabOrder = 4
-    ExplicitLeft = 580
   end
   object PageControl1: TPageControl
     Left = 16
