@@ -20,7 +20,7 @@ type
     Label6: TLabel;
     edExpiracao: TEdit;
     PageControl1: TPageControl;
-    TabSheet1: TTabSheet;
+    tsConsultas: TTabSheet;
     Label2: TLabel;
     Label3: TLabel;
     edCnpj: TEdit;
@@ -36,6 +36,15 @@ type
     btCriarEmpresa: TButton;
     btAlterarEmpresa: TButton;
     Button1: TButton;
+    tsNfse: TTabSheet;
+    Panel4: TPanel;
+    btEmitirNfse: TButton;
+    Panel3: TPanel;
+    lvNfses: TListView;
+    Panel5: TPanel;
+    btListaNfses: TButton;
+    edNfseCnpj: TEdit;
+    Label7: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btConsultarCnpjClick(Sender: TObject);
     procedure btConsultarCepClick(Sender: TObject);
@@ -43,6 +52,7 @@ type
     procedure btCriarEmpresaClick(Sender: TObject);
     procedure btAtualizarEmpresasClick(Sender: TObject);
     procedure btAlterarEmpresaClick(Sender: TObject);
+    procedure btListaNfsesClick(Sender: TObject);
   private
     Client: INuvemFiscalClient;
     TokenProvider: IClientCredencialsTokenProvider;
@@ -159,6 +169,26 @@ begin
       end);
   finally
     Empresa.Free;
+  end;
+end;
+
+procedure TForm1.btListaNfsesClick(Sender: TObject);
+var
+  Notas: TNfseListagem;
+  Nota: TNfse;
+  Item: TListItem;
+begin
+  Notas := Client.Nfse.ListarNfse(30, 0, edNfseCnpj.Text, '', '');
+  try
+    lvEmpresas.Clear;
+    for Nota in Notas.data do
+    begin
+      Item := lvNfses.Items.Add;
+      Item.Caption := Nota.id;
+      //Item.SubItems.Add(Empresa.nome_razao_social);
+    end;
+  finally
+    Notas.Free;
   end;
 end;
 

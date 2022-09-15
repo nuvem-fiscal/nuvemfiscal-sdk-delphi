@@ -94,10 +94,10 @@ object Form1: TForm1
     Top = 80
     Width = 727
     Height = 468
-    ActivePage = tsEmpresas
+    ActivePage = tsNfse
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 5
-    object TabSheet1: TTabSheet
+    object tsConsultas: TTabSheet
       Caption = 'Consultas'
       DesignSize = (
         719
@@ -238,6 +238,96 @@ object Form1: TForm1
           RowSelect = True
           TabOrder = 0
           ViewStyle = vsReport
+        end
+      end
+    end
+    object tsNfse: TTabSheet
+      Caption = 'NFS-e'
+      ImageIndex = 2
+      object Panel4: TPanel
+        Left = 584
+        Top = 0
+        Width = 135
+        Height = 438
+        Align = alRight
+        BevelOuter = bvNone
+        TabOrder = 0
+        DesignSize = (
+          135
+          438)
+        object btEmitirNfse: TButton
+          Left = 6
+          Top = 41
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Emitir NFSe'
+          TabOrder = 0
+        end
+      end
+      object Panel3: TPanel
+        Left = 0
+        Top = 0
+        Width = 584
+        Height = 438
+        Align = alClient
+        BevelOuter = bvNone
+        TabOrder = 1
+        ExplicitLeft = 76
+        ExplicitTop = 74
+        ExplicitWidth = 373
+        ExplicitHeight = 289
+        object lvNfses: TListView
+          Left = 0
+          Top = 41
+          Width = 584
+          Height = 397
+          Align = alClient
+          Columns = <
+            item
+              Caption = 'ID da nota'
+              Width = 150
+            end
+            item
+              Caption = 'Raz'#227'o social'
+              Width = 350
+            end>
+          RowSelect = True
+          TabOrder = 0
+          ViewStyle = vsReport
+          ExplicitWidth = 578
+        end
+        object Panel5: TPanel
+          Left = 0
+          Top = 0
+          Width = 584
+          Height = 41
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 1
+          object Label7: TLabel
+            Left = 8
+            Top = 13
+            Width = 30
+            Height = 15
+            Caption = 'CNPJ:'
+          end
+          object btListaNfses: TButton
+            Left = 195
+            Top = 9
+            Width = 96
+            Height = 25
+            Caption = 'Listar Notas'
+            TabOrder = 0
+            OnClick = btListaNfsesClick
+          end
+          object edNfseCnpj: TEdit
+            Left = 44
+            Top = 10
+            Width = 145
+            Height = 23
+            TabOrder = 1
+          end
         end
       end
     end
