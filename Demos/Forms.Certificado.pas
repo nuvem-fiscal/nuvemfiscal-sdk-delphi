@@ -13,7 +13,7 @@ type
     PageControl1: TPageControl;
     tsCertificado: TTabSheet;
     btFechar: TButton;
-    btAtualizarCertiicado: TButton;
+    btAtualizarCertificado: TButton;
     pnCertificado: TPanel;
     lbThumbprint: TLabel;
     Label3: TLabel;
@@ -32,7 +32,7 @@ type
     edEmissor: TEdit;
     mmSubject: TMemo;
     OpenDialog1: TOpenDialog;
-    procedure btAtualizarCertiicadoClick(Sender: TObject);
+    procedure btAtualizarCertificadoClick(Sender: TObject);
   private
     Client: INuvemFiscalClient;
     Cnpj: string;
@@ -69,7 +69,7 @@ begin
   end;
 end;
 
-procedure TfmCertificado.btAtualizarCertiicadoClick(Sender: TObject);
+procedure TfmCertificado.btAtualizarCertificadoClick(Sender: TObject);
 var
   Senha: string;
 begin
@@ -102,6 +102,7 @@ var
 begin
   Form := TfmCertificado.Create(nil);
   try
+    Form.Caption := Format('Certificado - %s', [Cnpj]);
     Form.Client := Client;
     Form.Cnpj := Cnpj;
     Form.CarregarCertificado;

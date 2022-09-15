@@ -70,16 +70,15 @@ begin
   Empresa.regime_tributacao := cbRegimeTributacao.ItemIndex;
   Empresa.regime_especial_tributacao := cbRegimeEspecial.ItemIndex;
   Empresa.optante_simples_nacional := chSimplesNacional.Checked;
-  if Empresa.endereco <> nil then
-  begin
-    Empresa.endereco.cep := edCEP.Text;
-    Empresa.endereco.logradouro := edLogradouro.Text;
-    Empresa.endereco.numero := edNumero.Text;
-    Empresa.endereco.bairro := edBairro.Text;
-    Empresa.endereco.cidade := edCidade.Text;
-    Empresa.endereco.uf := edUF.Text;
-    Empresa.endereco.codigo_municipio := edCodigoIBGE.Text;
-  end;
+
+  Empresa.endereco := TEmpresaEndereco.Create;
+  Empresa.endereco.cep := edCEP.Text;
+  Empresa.endereco.logradouro := edLogradouro.Text;
+  Empresa.endereco.numero := edNumero.Text;
+  Empresa.endereco.bairro := edBairro.Text;
+  Empresa.endereco.cidade := edCidade.Text;
+  Empresa.endereco.uf := edUF.Text;
+  Empresa.endereco.codigo_municipio := edCodigoIBGE.Text;
 end;
 
 procedure TfmEmpresa.btOkClick(Sender: TObject);

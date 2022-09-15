@@ -211,6 +211,16 @@ object Form1: TForm1
           TabOrder = 3
           OnClick = btCertificadoClick
         end
+        object btConfigNFSe: TButton
+          Left = 3
+          Top = 112
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Configura'#231#227'o NFS-e'
+          TabOrder = 4
+          OnClick = btConfigNFSeClick
+        end
       end
       object Panel2: TPanel
         Left = 0

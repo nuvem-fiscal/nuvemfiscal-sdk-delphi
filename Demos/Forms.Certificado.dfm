@@ -196,14 +196,14 @@ object fmCertificado: TfmCertificado
     ExplicitLeft = 519
     ExplicitTop = 354
   end
-  object btAtualizarCertiicado: TButton
+  object btAtualizarCertificado: TButton
     Left = 6
     Top = 7
     Width = 167
     Height = 25
     Caption = 'Atualizar certificado'
     TabOrder = 0
-    OnClick = btAtualizarCertiicadoClick
+    OnClick = btAtualizarCertificadoClick
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '.pfx'
