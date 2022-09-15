@@ -6,10 +6,10 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, NuvemFiscalClient, NuvemFiscalDTOs,
   OpenApiRest, Vcl.ComCtrls, Vcl.ExtCtrls,
-  Forms.Empresa;
+  Forms.Empresa, Forms.Certificado, Forms.Nfse;
 
 type
-  TForm1 = class(TForm)
+  TfmMain = class(TForm)
     edClientId: TEdit;
     Label1: TLabel;
     edClientSecret: TEdit;
@@ -35,7 +35,7 @@ type
     btAtualizarEmpresas: TButton;
     btCriarEmpresa: TButton;
     btAlterarEmpresa: TButton;
-    Button1: TButton;
+    btCertificado: TButton;
     tsNfse: TTabSheet;
     Panel4: TPanel;
     btEmitirNfse: TButton;
@@ -45,6 +45,8 @@ type
     btListaNfses: TButton;
     edNfseCnpj: TEdit;
     Label7: TLabel;
+    btCancelarNfse: TButton;
+    btVerDetalhesNfse: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btConsultarCnpjClick(Sender: TObject);
     procedure btConsultarCepClick(Sender: TObject);
@@ -52,24 +54,34 @@ type
     procedure btCriarEmpresaClick(Sender: TObject);
     procedure btAtualizarEmpresasClick(Sender: TObject);
     procedure btAlterarEmpresaClick(Sender: TObject);
+    procedure btCancelarNfseClick(Sender: TObject);
+    procedure btCertificadoClick(Sender: TObject);
     procedure btListaNfsesClick(Sender: TObject);
+    procedure btVerDetalhesNfseClick(Sender: TObject);
   private
     Client: INuvemFiscalClient;
     TokenProvider: IClientCredencialsTokenProvider;
     TokenData: ITokenData;
     procedure Log(const Msg: string);
     function CnpjSelecionado: string;
+    function NfseSelecionada: string;
   public
   end;
 
 var
-  Form1: TForm1;
+  fmMain: TfmMain;
 
 implementation
 
 {$R *.dfm}
 
-procedure TForm1.btConsultarCepClick(Sender: TObject);
+procedure TfmMain.btCertificadoClick(Sender: TObject);
+begin
+  if CnpjSelecionado <> '' then
+    TfmCertificado.Editar(Client, CnpjSelecionado);
+end;
+
+procedure TfmMain.btConsultarCepClick(Sender: TObject);
 var
   Endereco: TCepEndereco;
 begin
@@ -83,7 +95,7 @@ begin
   end;
 end;
 
-procedure TForm1.btConsultarCnpjClick(Sender: TObject);
+procedure TfmMain.btConsultarCnpjClick(Sender: TObject);
 var
   Empresa: TCnpjEmpresa;
   Endereco: TCnpjEndereco;
@@ -101,7 +113,7 @@ begin
   end;
 end;
 
-procedure TForm1.btTokenClick(Sender: TObject);
+procedure TfmMain.btTokenClick(Sender: TObject);
 begin
   TokenProvider.ClientId := edClientId.Text;
   TokenProvider.ClientSecret := edClientSecret.Text;
@@ -112,7 +124,7 @@ begin
   Client.Config.AccessToken := edToken.Text;
 end;
 
-function TForm1.CnpjSelecionado: string;
+function TfmMain.CnpjSelecionado: string;
 begin
   if lvEmpresas.Selected <> nil then
     Result := lvEmpresas.Selected.Caption
@@ -120,7 +132,7 @@ begin
     Result := '';
 end;
 
-procedure TForm1.btAlterarEmpresaClick(Sender: TObject);
+procedure TfmMain.btAlterarEmpresaClick(Sender: TObject);
 var
   Empresa: TEmpresa;
 begin
@@ -136,7 +148,7 @@ begin
   end;
 end;
 
-procedure TForm1.btAtualizarEmpresasClick(Sender: TObject);
+procedure TfmMain.btAtualizarEmpresasClick(Sender: TObject);
 var
   Empresas: TEmpresaListagem;
   Empresa: TEmpresa;
@@ -156,7 +168,20 @@ begin
   end;
 end;
 
-procedure TForm1.btCriarEmpresaClick(Sender: TObject);
+procedure TfmMain.btCancelarNfseClick(Sender: TObject);
+var
+  Cancelamento: TNfseCancelamento;
+begin
+  Cancelamento := Client.Nfse.CancelarNfse(NfseSelecionada);
+  try
+    ShowMessage(Format('Pedido de cancelamento %s em processamento.',
+      [Cancelamento.id]));
+  finally
+    Cancelamento.Free;
+  end;
+end;
+
+procedure TfmMain.btCriarEmpresaClick(Sender: TObject);
 var
   Empresa: TEmpresa;
 begin
@@ -172,7 +197,15 @@ begin
   end;
 end;
 
-procedure TForm1.btListaNfsesClick(Sender: TObject);
+procedure TfmMain.btListaNfsesClick(Sender: TObject);
+
+  function GetValorTotal(Nota: TNfse): double;
+  begin
+    Result := 0;
+    for var Servico in Nota.declaracao_prestacao_servico.servicos do
+      Result := Result + Servico.valores.valor_servicos;
+  end;
+
 var
   Notas: TNfseListagem;
   Nota: TNfse;
@@ -180,19 +213,35 @@ var
 begin
   Notas := Client.Nfse.ListarNfse(30, 0, edNfseCnpj.Text, '', '');
   try
-    lvEmpresas.Clear;
+    lvNfses.Clear;
     for Nota in Notas.data do
     begin
       Item := lvNfses.Items.Add;
       Item.Caption := Nota.id;
-      //Item.SubItems.Add(Empresa.nome_razao_social);
+      Item.SubItems.Add(Nota.numero);
+      Item.SubItems.Add(Nota.declaracao_prestacao_servico.rps.identificacao_rps.numero);
+      Item.SubItems.Add(Nota.status);
+      Item.SubItems.Add(FormatDateTime('dd/mm/yyyy HH:nn:ss', Nota.data_emissao));
+      Item.SubItems.Add(FormatFloat('"R$" #,0.00', GetValorTotal(Nota)));
     end;
   finally
     Notas.Free;
   end;
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TfmMain.btVerDetalhesNfseClick(Sender: TObject);
+var
+  Nfse: TNfse;
+begin
+  Nfse := Client.Nfse.ConsultarNfse(NfseSelecionada);
+  try
+    TfmNfse.VerDetalhes(Nfse);
+  finally
+    Nfse.Free;
+  end;
+end;
+
+procedure TfmMain.FormCreate(Sender: TObject);
 begin
   PageControl1.ActivePageIndex := 0;
   edClientId.Text := GetEnvironmentVariable('NUVEMFISCAL_CLIENTID');
@@ -203,9 +252,17 @@ begin
   TokenProvider.TokenEndpoint := 'https://auth.nuvemfiscal.com.br/oauth/token';
 end;
 
-procedure TForm1.Log(const Msg: string);
+procedure TfmMain.Log(const Msg: string);
 begin
   mmLog.Lines.Add(Msg);
+end;
+
+function TfmMain.NfseSelecionada: string;
+begin
+  if lvNfses.Selected <> nil then
+    Result := lvNfses.Selected.Caption
+  else
+    Result := '';
 end;
 
 end.

@@ -2,7 +2,7 @@ program NuvemFiscalDemo;
 
 uses
   Vcl.Forms,
-  Forms.Principal in 'Forms.Principal.pas' {Form1},
+  Forms.Principal in 'Forms.Principal.pas' {fmMain},
   NuvemFiscalJson in '..\Source\NuvemFiscalJson.pas',
   OpenApiHttp in '..\Source\OpenApiHttp.pas',
   OpenApiJson in '..\Source\OpenApiJson.pas',
@@ -10,7 +10,9 @@ uses
   NuvemFiscalClient in '..\Source\NuvemFiscalClient.pas',
   NuvemFiscalDtos in '..\Source\NuvemFiscalDtos.pas',
   OpenApiUtils in '..\Source\OpenApiUtils.pas',
-  Forms.Empresa in 'Forms.Empresa.pas' {fmEmpresa};
+  Forms.Empresa in 'Forms.Empresa.pas' {fmEmpresa},
+  Forms.Certificado in 'Forms.Certificado.pas' {fmCertificado},
+  Forms.Nfse in 'Forms.Nfse.pas' {fmNfse};
 
 {$R *.res}
 
@@ -18,6 +20,6 @@ begin
   ReportMemoryLeaksOnShutdown := True;
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TfmMain, fmMain);
   Application.Run;
 end.

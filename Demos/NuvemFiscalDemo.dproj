@@ -102,7 +102,7 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="Forms.Principal.pas">
-            <Form>Form1</Form>
+            <Form>fmMain</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\Source\NuvemFiscalJson.pas"/>
@@ -114,6 +114,14 @@
         <DCCReference Include="..\Source\OpenApiUtils.pas"/>
         <DCCReference Include="Forms.Empresa.pas">
             <Form>fmEmpresa</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Forms.Certificado.pas">
+            <Form>fmCertificado</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Forms.Nfse.pas">
+            <Form>fmNfse</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

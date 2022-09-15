@@ -1,4 +1,4 @@
-object Form1: TForm1
+object fmMain: TfmMain
   Left = 0
   Top = 0
   Caption = 'Nuvem Fiscal - Demo'
@@ -10,6 +10,7 @@ object Form1: TForm1
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poMainFormCenter
   OnCreate = FormCreate
   DesignSize = (
     762
@@ -201,7 +202,7 @@ object Form1: TForm1
           TabOrder = 2
           OnClick = btAlterarEmpresaClick
         end
-        object Button1: TButton
+        object btCertificado: TButton
           Left = 3
           Top = 85
           Width = 129
@@ -209,6 +210,7 @@ object Form1: TForm1
           Anchors = [akLeft, akTop, akRight]
           Caption = 'Certificado'
           TabOrder = 3
+          OnClick = btCertificadoClick
         end
       end
       object Panel2: TPanel
@@ -264,6 +266,26 @@ object Form1: TForm1
           Caption = 'Emitir NFSe'
           TabOrder = 0
         end
+        object btCancelarNfse: TButton
+          Left = 6
+          Top = 103
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Cancelar'
+          TabOrder = 1
+          OnClick = btCancelarNfseClick
+        end
+        object btVerDetalhesNfse: TButton
+          Left = 6
+          Top = 72
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Ver Detalhes'
+          TabOrder = 2
+          OnClick = btVerDetalhesNfseClick
+        end
       end
       object Panel3: TPanel
         Left = 0
@@ -273,10 +295,6 @@ object Form1: TForm1
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitLeft = 76
-        ExplicitTop = 74
-        ExplicitWidth = 373
-        ExplicitHeight = 289
         object lvNfses: TListView
           Left = 0
           Top = 41
@@ -285,17 +303,32 @@ object Form1: TForm1
           Align = alClient
           Columns = <
             item
-              Caption = 'ID da nota'
-              Width = 150
+              Caption = 'ID'
             end
             item
-              Caption = 'Raz'#227'o social'
-              Width = 350
+              Caption = 'N'#176' Nota'
+              Width = 75
+            end
+            item
+              Caption = 'N'#176' RPS'
+              Width = 75
+            end
+            item
+              Caption = 'Situa'#231#227'o'
+              Width = 100
+            end
+            item
+              Caption = 'Data Emiss'#227'o'
+              Width = 125
+            end
+            item
+              Alignment = taRightJustify
+              Caption = 'Valor'
+              Width = 100
             end>
           RowSelect = True
           TabOrder = 0
           ViewStyle = vsReport
-          ExplicitWidth = 578
         end
         object Panel5: TPanel
           Left = 0
