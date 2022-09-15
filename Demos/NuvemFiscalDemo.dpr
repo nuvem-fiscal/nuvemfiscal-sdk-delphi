@@ -9,7 +9,8 @@ uses
   OpenApiRest in '..\Source\OpenApiRest.pas',
   NuvemFiscalClient in '..\Source\NuvemFiscalClient.pas',
   NuvemFiscalDtos in '..\Source\NuvemFiscalDtos.pas',
-  OpenApiUtils in '..\Source\OpenApiUtils.pas';
+  OpenApiUtils in '..\Source\OpenApiUtils.pas',
+  Forms.Empresa in 'Forms.Empresa.pas' {fmEmpresa};
 
 {$R *.res}
 

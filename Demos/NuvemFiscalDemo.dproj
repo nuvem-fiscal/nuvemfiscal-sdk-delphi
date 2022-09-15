@@ -112,6 +112,10 @@
         <DCCReference Include="..\Source\NuvemFiscalClient.pas"/>
         <DCCReference Include="..\Source\NuvemFiscalDtos.pas"/>
         <DCCReference Include="..\Source\OpenApiUtils.pas"/>
+        <DCCReference Include="Forms.Empresa.pas">
+            <Form>fmEmpresa</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

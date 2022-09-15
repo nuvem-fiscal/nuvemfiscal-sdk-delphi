@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, NuvemFiscalClient, NuvemFiscalDTOs,
-  OpenApiRest, Vcl.ComCtrls;
+  OpenApiRest, Vcl.ComCtrls, Vcl.ExtCtrls,
+  Forms.Empresa;
 
 type
   TForm1 = class(TForm)
@@ -27,11 +28,18 @@ type
     mmLog: TMemo;
     edCep: TEdit;
     btConsultarCep: TButton;
-    TabSheet2: TTabSheet;
+    tsEmpresas: TTabSheet;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    lvEmpresas: TListView;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btConsultarCnpjClick(Sender: TObject);
     procedure btConsultarCepClick(Sender: TObject);
     procedure btTokenClick(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     Client: INuvemFiscalClient;
     TokenProvider: IClientCredencialsTokenProvider;
@@ -90,8 +98,25 @@ begin
   Client.Config.AccessToken := edToken.Text;
 end;
 
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  Empresa: TEmpresa;
+begin
+  Empresa := TEmpresa.Create;
+  try
+    TfmEmpresa.Editar(Empresa,
+      procedure
+      begin
+        Client.Empresa.CriarEmpresa(Empresa).Free;
+      end);
+  finally
+    Empresa.Free;
+  end;
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
+  PageControl1.ActivePageIndex := 0;
   Client := TNuvemFiscalClient.Create;
   TokenProvider := TClientCredentialsTokenProvider.Create;
   TokenProvider.TokenEndpoint := 'https://auth.nuvemfiscal.com.br/oauth/token';

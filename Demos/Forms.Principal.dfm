@@ -94,7 +94,7 @@ object Form1: TForm1
     Top = 80
     Width = 727
     Height = 468
-    ActivePage = TabSheet2
+    ActivePage = tsEmpresas
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 5
     object TabSheet1: TTabSheet
@@ -139,8 +139,6 @@ object Form1: TForm1
         Height = 386
         Anchors = [akLeft, akTop, akRight, akBottom]
         TabOrder = 2
-        ExplicitWidth = 707
-        ExplicitHeight = 383
       end
       object edCep: TEdit
         Left = 374
@@ -159,9 +157,73 @@ object Form1: TForm1
         OnClick = btConsultarCepClick
       end
     end
-    object TabSheet2: TTabSheet
-      Caption = 'TabSheet2'
+    object tsEmpresas: TTabSheet
+      Caption = 'Empresas'
       ImageIndex = 1
+      object Panel1: TPanel
+        Left = 584
+        Top = 0
+        Width = 135
+        Height = 438
+        Align = alRight
+        BevelOuter = bvNone
+        TabOrder = 0
+        DesignSize = (
+          135
+          438)
+        object Button1: TButton
+          Left = 2
+          Top = 3
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Atualizar'
+          TabOrder = 0
+          ExplicitWidth = 103
+        end
+        object Button2: TButton
+          Left = 3
+          Top = 31
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Criar nova'
+          TabOrder = 1
+          OnClick = Button2Click
+          ExplicitWidth = 103
+        end
+        object Button3: TButton
+          Left = 3
+          Top = 58
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Certificado'
+          TabOrder = 2
+          ExplicitWidth = 103
+        end
+      end
+      object Panel2: TPanel
+        Left = 0
+        Top = 0
+        Width = 584
+        Height = 438
+        Align = alClient
+        BevelOuter = bvNone
+        BorderWidth = 3
+        TabOrder = 1
+        ExplicitWidth = 624
+        object lvEmpresas: TListView
+          Left = 3
+          Top = 3
+          Width = 578
+          Height = 432
+          Align = alClient
+          Columns = <>
+          TabOrder = 0
+          ExplicitWidth = 592
+        end
+      end
     end
   end
 end
