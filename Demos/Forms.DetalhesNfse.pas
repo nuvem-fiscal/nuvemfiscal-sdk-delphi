@@ -113,6 +113,13 @@ type
     Label45: TLabel;
     tsMensagens: TTabSheet;
     memoMensagens: TMemo;
+    gbCancelamento: TGroupBox;
+    Label46: TLabel;
+    edCancelamentoSituacao: TEdit;
+    Label47: TLabel;
+    edCancelamentoDataHora: TEdit;
+    Label48: TLabel;
+    memoCancelamentoMensagens: TMemo;
     procedure FormCreate(Sender: TObject);
     procedure btOkClick(Sender: TObject);
     procedure cbServicoChange(Sender: TObject);
@@ -275,6 +282,33 @@ begin
       if mensagem.correcaoHasValue then
         memoMensagens.Lines.Add(Format('Correção: %s', [mensagem.correcao]));
       memoMensagens.Lines.Add('');
+    end;
+  end;
+
+  gbCancelamento.Visible := Nfse.cancelamento <> nil;
+  if Nfse.cancelamento <> nil then
+  begin
+    edCancelamentoSituacao.Text := Nfse.cancelamento.status;
+    if Nfse.cancelamento.data_horaHasValue then
+      edCancelamentoDataHora.Text := FormatDateTime('dd/mm/yyyy HH:nn:ss',
+        Nfse.cancelamento.data_hora);
+
+    if Nfse.cancelamento.mensagens.Count > 0 then
+    begin
+      for var I := 0 to Nfse.cancelamento.mensagens.Count - 1 do
+      begin
+        var mensagem := Nfse.cancelamento.mensagens[I];
+
+        memoCancelamentoMensagens.Lines.Add(Format('Mensagem %d', [I]));
+        memoCancelamentoMensagens.Lines.Add(Format('-------------', []));
+        if mensagem.codigoHasValue then
+          memoCancelamentoMensagens.Lines.Add(Format('Código: %s', [mensagem.codigo]));
+        if mensagem.descricaoHasValue then
+          memoCancelamentoMensagens.Lines.Add(Format('Descrição: %s', [mensagem.descricao]));
+        if mensagem.correcaoHasValue then
+          memoCancelamentoMensagens.Lines.Add(Format('Correção: %s', [mensagem.correcao]));
+        memoCancelamentoMensagens.Lines.Add('');
+      end;
     end;
   end;
 end;

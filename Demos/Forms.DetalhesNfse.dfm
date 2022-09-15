@@ -169,6 +169,60 @@ object fmDetalhesNfse: TfmDetalhesNfse
           ReadOnly = True
           TabOrder = 7
         end
+        object gbCancelamento: TGroupBox
+          Left = 6
+          Top = 142
+          Width = 524
+          Height = 147
+          Caption = 'Cancelamento'
+          TabOrder = 9
+          object Label46: TLabel
+            Left = 14
+            Top = 22
+            Width = 48
+            Height = 15
+            Caption = 'Situa'#231#227'o:'
+          end
+          object Label47: TLabel
+            Left = 14
+            Top = 72
+            Width = 64
+            Height = 15
+            Caption = 'Data / Hora:'
+          end
+          object Label48: TLabel
+            Left = 160
+            Top = 19
+            Width = 63
+            Height = 15
+            Caption = 'Mensagens:'
+          end
+          object edCancelamentoSituacao: TEdit
+            Left = 14
+            Top = 43
+            Width = 115
+            Height = 23
+            ReadOnly = True
+            TabOrder = 0
+          end
+          object edCancelamentoDataHora: TEdit
+            Left = 14
+            Top = 93
+            Width = 115
+            Height = 23
+            ReadOnly = True
+            TabOrder = 1
+          end
+          object memoCancelamentoMensagens: TMemo
+            Left = 160
+            Top = 40
+            Width = 353
+            Height = 97
+            ReadOnly = True
+            ScrollBars = ssBoth
+            TabOrder = 2
+          end
+        end
       end
     end
     object tsPrestador: TTabSheet
