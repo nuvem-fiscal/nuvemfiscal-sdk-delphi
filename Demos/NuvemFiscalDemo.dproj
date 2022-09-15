@@ -124,6 +124,10 @@
             <Form>fmNfse</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Forms.ConfigNFSe.pas">
+            <Form>fmConfigNFSe</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
