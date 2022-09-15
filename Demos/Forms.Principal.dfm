@@ -201,7 +201,7 @@ object Form1: TForm1
           TabOrder = 2
           OnClick = btAlterarEmpresaClick
         end
-        object Button1: TButton
+        object btCertificado: TButton
           Left = 3
           Top = 85
           Width = 129
@@ -209,6 +209,7 @@ object Form1: TForm1
           Anchors = [akLeft, akTop, akRight]
           Caption = 'Certificado'
           TabOrder = 3
+          OnClick = btCertificadoClick
         end
       end
       object Panel2: TPanel

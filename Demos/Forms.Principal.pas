@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, NuvemFiscalClient, NuvemFiscalDTOs,
   OpenApiRest, Vcl.ComCtrls, Vcl.ExtCtrls,
-  Forms.Empresa;
+  Forms.Empresa, Forms.Certificado;
 
 type
   TForm1 = class(TForm)
@@ -35,7 +35,7 @@ type
     btAtualizarEmpresas: TButton;
     btCriarEmpresa: TButton;
     btAlterarEmpresa: TButton;
-    Button1: TButton;
+    btCertificado: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btConsultarCnpjClick(Sender: TObject);
     procedure btConsultarCepClick(Sender: TObject);
@@ -43,6 +43,7 @@ type
     procedure btCriarEmpresaClick(Sender: TObject);
     procedure btAtualizarEmpresasClick(Sender: TObject);
     procedure btAlterarEmpresaClick(Sender: TObject);
+    procedure btCertificadoClick(Sender: TObject);
   private
     Client: INuvemFiscalClient;
     TokenProvider: IClientCredencialsTokenProvider;
@@ -58,6 +59,12 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm1.btCertificadoClick(Sender: TObject);
+begin
+  if CnpjSelecionado <> '' then
+    TfmCertificado.Editar(Client, CnpjSelecionado);
+end;
 
 procedure TForm1.btConsultarCepClick(Sender: TObject);
 var

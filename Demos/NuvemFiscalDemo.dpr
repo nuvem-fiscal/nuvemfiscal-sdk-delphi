@@ -10,7 +10,8 @@ uses
   NuvemFiscalClient in '..\Source\NuvemFiscalClient.pas',
   NuvemFiscalDtos in '..\Source\NuvemFiscalDtos.pas',
   OpenApiUtils in '..\Source\OpenApiUtils.pas',
-  Forms.Empresa in 'Forms.Empresa.pas' {fmEmpresa};
+  Forms.Empresa in 'Forms.Empresa.pas' {fmEmpresa},
+  Forms.Certificado in 'Forms.Certificado.pas' {fmCertificado};
 
 {$R *.res}
 
