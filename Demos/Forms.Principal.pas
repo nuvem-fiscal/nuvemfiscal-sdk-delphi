@@ -206,14 +206,6 @@ begin
 end;
 
 procedure TfmMain.btListaNfsesClick(Sender: TObject);
-
-  function GetValorTotal(Nota: TNfse): double;
-  begin
-    Result := 0;
-    for var Servico in Nota.declaracao_prestacao_servico.servicos do
-      Result := Result + Servico.valores.valor_servicos;
-  end;
-
 var
   Notas: TNfseListagem;
   Nota: TNfse;
@@ -230,7 +222,8 @@ begin
       Item.SubItems.Add(Nota.declaracao_prestacao_servico.rps.identificacao_rps.numero);
       Item.SubItems.Add(Nota.status);
       Item.SubItems.Add(FormatDateTime('dd/mm/yyyy HH:nn:ss', Nota.data_emissao));
-      Item.SubItems.Add(FormatFloat('"R$" #,0.00', GetValorTotal(Nota)));
+      Item.SubItems.Add(Nota.declaracao_prestacao_servico.tomador.nome_razao_social);
+      Item.SubItems.Add(FormatFloat('"R$" #,0.00', TfmNfse.GetValorTotal(Nota)));
     end;
   finally
     Notas.Free;

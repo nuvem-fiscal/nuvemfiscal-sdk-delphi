@@ -96,11 +96,30 @@ type
     Label38: TLabel;
     cbRegimeEspecial: TComboBox;
     chSimplesNacional: TCheckBox;
+    tsServico: TTabSheet;
+    Label39: TLabel;
+    edValorTotal: TEdit;
+    cbServico: TComboBox;
+    Label40: TLabel;
+    Label41: TLabel;
+    edServicoDiscriminacao: TEdit;
+    Label42: TLabel;
+    edServicoItemListaServico: TEdit;
+    Label43: TLabel;
+    edServicoQuantidade: TEdit;
+    edServicoValorUnitario: TEdit;
+    Label44: TLabel;
+    edServicoValorTotal: TEdit;
+    Label45: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btCancelarClick(Sender: TObject);
     procedure btOkClick(Sender: TObject);
+    procedure cbServicoChange(Sender: TObject);
   private
     FNfse: TNfse;
+  public
+    class function GetValorTotal(Nfse: TNfse): double;
+    procedure SetServico(servico: TRpsDadosServico);
   public
     class procedure VerDetalhes(ANfse: TNfse);
     procedure SetNfse(Nfse: TNfse);
@@ -115,6 +134,13 @@ begin
   PageControl1.ActivePageIndex := 0;
 end;
 
+class function TfmNfse.GetValorTotal(Nfse: TNfse): double;
+begin
+  Result := 0;
+  for var servico in Nfse.declaracao_prestacao_servico.servicos do
+    Result := Result + servico.valores.valor_servicos;
+end;
+
 procedure TfmNfse.btCancelarClick(Sender: TObject);
 begin
 
@@ -125,6 +151,12 @@ end;
 procedure TfmNfse.btOkClick(Sender: TObject);
 begin
   ModalResult := mrOk;
+end;
+
+procedure TfmNfse.cbServicoChange(Sender: TObject);
+begin
+  var servico := TRpsDadosServico(cbServico.Items.Objects[cbServico.ItemIndex]);
+  SetServico(servico);
 end;
 
 class procedure TfmNfse.VerDetalhes(ANfse: TNfse);
@@ -151,6 +183,7 @@ begin
   edAmbiente.Text := Nfse.ambiente;
   edReferencia.Text := Nfse.referencia;
   edCodigoVerificacao.Text := Nfse.codigo_verificacao;
+  edValorTotal.Text := FormatFloat('"R$" #,0.00', GetValorTotal(FNfse));
   edLinkUrl.Text := Nfse.link_url;
 
   if Nfse.declaracao_prestacao_servico.prestador <> nil then
@@ -218,6 +251,27 @@ begin
     edCodigoObra.Text := construcao_civil.codigo_obra;
     edART.Text := construcao_civil.art;
   end;
+
+  if Nfse.declaracao_prestacao_servico.servicos.Count > 0 then
+  begin
+    cbServico.Items.Clear;
+    for var I := 0 to Nfse.declaracao_prestacao_servico.servicos.Count - 1 do
+    begin
+      var servico := Nfse.declaracao_prestacao_servico.servicos[I];
+      cbServico.Items.AddObject(Format('%d: %s', [I, servico.discriminacao]), servico);
+    end;
+    cbServico.ItemIndex := 0;
+    SetServico(Nfse.declaracao_prestacao_servico.servicos.First);
+  end;
+end;
+
+procedure TfmNfse.SetServico(servico: TRpsDadosServico);
+begin
+  edServicoItemListaServico.Text := servico.item_lista_servico;
+  edServicoDiscriminacao.Text := servico.discriminacao;
+  edServicoQuantidade.Text := FormatFloat('#,0.##', servico.quantidade);
+  edServicoValorUnitario.Text := FormatFloat('"R$" #,0.00', servico.valores.valor_unitario);
+  edServicoValorTotal.Text := FormatFloat('"R$" #,0.00', servico.valores.valor_servicos);
 end;
 
 end.

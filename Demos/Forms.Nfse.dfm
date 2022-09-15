@@ -2,7 +2,7 @@ object fmNfse: TfmNfse
   Left = 0
   Top = 0
   Caption = 'NFS-e'
-  ClientHeight = 513
+  ClientHeight = 372
   ClientWidth = 560
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -14,28 +14,30 @@ object fmNfse: TfmNfse
   OnCreate = FormCreate
   DesignSize = (
     560
-    513)
+    372)
   TextHeight = 15
   object PageControl1: TPageControl
     Left = 6
     Top = 8
     Width = 548
-    Height = 467
-    ActivePage = tsDadosGerais
+    Height = 326
+    ActivePage = tsServico
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
+    ExplicitHeight = 467
     object tsDadosGerais: TTabSheet
       Caption = 'Dados gerais'
       object Panel1: TPanel
         Left = 0
         Top = 0
         Width = 540
-        Height = 437
+        Height = 296
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
         ExplicitLeft = 168
         ExplicitTop = 40
+        ExplicitHeight = 437
         object lbId: TLabel
           Left = 6
           Top = -1
@@ -58,7 +60,7 @@ object fmNfse: TfmNfse
           Caption = 'N'#176' Nota:'
         end
         object Label17: TLabel
-          Left = 408
+          Left = 294
           Top = 46
           Width = 102
           Height = 15
@@ -86,11 +88,18 @@ object fmNfse: TfmNfse
           Caption = 'Ambiente:'
         end
         object Label21: TLabel
-          Left = 216
+          Left = 207
           Top = 46
           Width = 58
           Height = 15
           Caption = 'Refer'#234'ncia:'
+        end
+        object Label39: TLabel
+          Left = 408
+          Top = 46
+          Width = 57
+          Height = 15
+          Caption = 'Valor Total:'
         end
         object edId: TEdit
           Left = 6
@@ -117,9 +126,9 @@ object fmNfse: TfmNfse
           TabOrder = 3
         end
         object edCodigoVerificacao: TEdit
-          Left = 408
+          Left = 294
           Top = 67
-          Width = 122
+          Width = 108
           Height = 23
           ReadOnly = True
           TabOrder = 6
@@ -138,23 +147,31 @@ object fmNfse: TfmNfse
           Width = 524
           Height = 23
           ReadOnly = True
-          TabOrder = 7
+          TabOrder = 8
         end
         object edAmbiente: TEdit
           Left = 111
           Top = 67
-          Width = 99
+          Width = 90
           Height = 23
           ReadOnly = True
           TabOrder = 4
         end
         object edReferencia: TEdit
-          Left = 216
+          Left = 207
           Top = 67
-          Width = 186
+          Width = 81
           Height = 23
           ReadOnly = True
           TabOrder = 5
+        end
+        object edValorTotal: TEdit
+          Left = 408
+          Top = 67
+          Width = 122
+          Height = 23
+          ReadOnly = True
+          TabOrder = 7
         end
       end
     end
@@ -163,7 +180,7 @@ object fmNfse: TfmNfse
       ImageIndex = 2
       DesignSize = (
         540
-        437)
+        296)
       object Label12: TLabel
         Left = 3
         Top = 7
@@ -416,7 +433,7 @@ object fmNfse: TfmNfse
       ImageIndex = 1
       DesignSize = (
         540
-        437)
+        296)
       object Label5: TLabel
         Left = 3
         Top = 7
@@ -614,7 +631,7 @@ object fmNfse: TfmNfse
       ImageIndex = 3
       DesignSize = (
         540
-        437)
+        296)
       object Label32: TLabel
         Left = 3
         Top = 7
@@ -669,7 +686,7 @@ object fmNfse: TfmNfse
       ImageIndex = 4
       DesignSize = (
         540
-        437)
+        296)
       object Label35: TLabel
         Left = 3
         Top = 7
@@ -702,15 +719,119 @@ object fmNfse: TfmNfse
         TabOrder = 1
       end
     end
+    object tsServico: TTabSheet
+      Caption = 'Servi'#231'o'
+      ImageIndex = 5
+      DesignSize = (
+        540
+        296)
+      object Label40: TLabel
+        Left = 3
+        Top = 5
+        Width = 41
+        Height = 15
+        Caption = 'Servi'#231'o:'
+      end
+      object Label41: TLabel
+        Left = 3
+        Top = 102
+        Width = 135
+        Height = 15
+        Caption = 'Discrimina'#231#227'o do servi'#231'o:'
+      end
+      object Label42: TLabel
+        Left = 3
+        Top = 55
+        Width = 91
+        Height = 15
+        Caption = 'Item lista servi'#231'o:'
+      end
+      object Label43: TLabel
+        Left = 3
+        Top = 152
+        Width = 65
+        Height = 15
+        Caption = 'Quantidade:'
+      end
+      object Label44: TLabel
+        Left = 87
+        Top = 152
+        Width = 73
+        Height = 15
+        Caption = 'Valor unit'#225'rio:'
+      end
+      object Label45: TLabel
+        Left = 196
+        Top = 152
+        Width = 56
+        Height = 15
+        Caption = 'Valor total:'
+      end
+      object cbServico: TComboBox
+        Left = 3
+        Top = 24
+        Width = 518
+        Height = 23
+        Style = csDropDownList
+        TabOrder = 0
+        OnChange = cbServicoChange
+      end
+      object edServicoDiscriminacao: TEdit
+        Left = 3
+        Top = 123
+        Width = 518
+        Height = 23
+        Anchors = [akLeft, akTop, akRight]
+        ReadOnly = True
+        TabOrder = 2
+      end
+      object edServicoItemListaServico: TEdit
+        Left = 3
+        Top = 73
+        Width = 91
+        Height = 23
+        Anchors = [akLeft, akTop, akRight]
+        ReadOnly = True
+        TabOrder = 1
+      end
+      object edServicoQuantidade: TEdit
+        Left = 3
+        Top = 170
+        Width = 78
+        Height = 23
+        Anchors = [akLeft, akTop, akRight]
+        ReadOnly = True
+        TabOrder = 3
+      end
+      object edServicoValorUnitario: TEdit
+        Left = 87
+        Top = 170
+        Width = 103
+        Height = 23
+        Anchors = [akLeft, akTop, akRight]
+        ReadOnly = True
+        TabOrder = 4
+      end
+      object edServicoValorTotal: TEdit
+        Left = 196
+        Top = 170
+        Width = 103
+        Height = 23
+        Anchors = [akLeft, akTop, akRight]
+        ReadOnly = True
+        TabOrder = 5
+      end
+    end
   end
   object btOk: TButton
     Left = 477
-    Top = 481
+    Top = 340
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = 'Ok'
     TabOrder = 1
     OnClick = btOkClick
+    ExplicitTop = 481
   end
 end
