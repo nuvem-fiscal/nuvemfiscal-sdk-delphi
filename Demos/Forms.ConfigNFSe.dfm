@@ -1,4 +1,4 @@
-object fmConfigNFSe: TfmConfigNFSe
+object fmConfigNfse: TfmConfigNfse
   Left = 0
   Top = 0
   Caption = 'Configura'#231#227'o NFS-e'

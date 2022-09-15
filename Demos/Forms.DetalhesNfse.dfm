@@ -1,4 +1,4 @@
-object fmNfse: TfmNfse
+object fmDetalhesNfse: TfmDetalhesNfse
   Left = 0
   Top = 0
   Caption = 'NFS-e'
@@ -21,10 +21,9 @@ object fmNfse: TfmNfse
     Top = 8
     Width = 548
     Height = 326
-    ActivePage = tsServico
+    ActivePage = tsDadosGerais
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitHeight = 467
     object tsDadosGerais: TTabSheet
       Caption = 'Dados gerais'
       object Panel1: TPanel
@@ -35,9 +34,6 @@ object fmNfse: TfmNfse
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitLeft = 168
-        ExplicitTop = 40
-        ExplicitHeight = 437
         object lbId: TLabel
           Left = 6
           Top = -1
@@ -822,6 +818,20 @@ object fmNfse: TfmNfse
         TabOrder = 5
       end
     end
+    object tsMensagens: TTabSheet
+      Caption = 'Mensagens'
+      ImageIndex = 6
+      object memoMensagens: TMemo
+        Left = 0
+        Top = 0
+        Width = 540
+        Height = 296
+        Align = alClient
+        ReadOnly = True
+        ScrollBars = ssBoth
+        TabOrder = 0
+      end
+    end
   end
   object btOk: TButton
     Left = 477
@@ -832,6 +842,5 @@ object fmNfse: TfmNfse
     Caption = 'Ok'
     TabOrder = 1
     OnClick = btOkClick
-    ExplicitTop = 481
   end
 end

@@ -120,12 +120,16 @@
             <Form>fmCertificado</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Forms.Nfse.pas">
-            <Form>fmNfse</Form>
+        <DCCReference Include="Forms.DetalhesNfse.pas">
+            <Form>fmDetalhesNfse</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Forms.ConfigNFSe.pas">
-            <Form>fmConfigNFSe</Form>
+        <DCCReference Include="Forms.ConfigNfse.pas">
+            <Form>fmConfigNfse</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Forms.EmitirNfse.pas">
+            <Form>fmEmitirNfse</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

@@ -1,4 +1,4 @@
-unit Forms.Nfse;
+unit Forms.DetalhesNfse;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   NuvemFiscalDTOs;
 
 type
-  TfmNfse = class(TForm)
+  TfmDetalhesNfse = class(TForm)
     PageControl1: TPageControl;
     tsDadosGerais: TTabSheet;
     Panel1: TPanel;
@@ -111,8 +111,9 @@ type
     Label44: TLabel;
     edServicoValorTotal: TEdit;
     Label45: TLabel;
+    tsMensagens: TTabSheet;
+    memoMensagens: TMemo;
     procedure FormCreate(Sender: TObject);
-    procedure btCancelarClick(Sender: TObject);
     procedure btOkClick(Sender: TObject);
     procedure cbServicoChange(Sender: TObject);
   private
@@ -121,7 +122,7 @@ type
     class function GetValorTotal(Nfse: TNfse): double;
     procedure SetServico(servico: TRpsDadosServico);
   public
-    class procedure VerDetalhes(ANfse: TNfse);
+    class procedure Visualizar(ANfse: TNfse);
     procedure SetNfse(Nfse: TNfse);
   end;
 
@@ -129,41 +130,36 @@ implementation
 
 {$R *.dfm}
 
-procedure TfmNfse.FormCreate(Sender: TObject);
+{ TfmDetalhesNfse }
+
+procedure TfmDetalhesNfse.FormCreate(Sender: TObject);
 begin
   PageControl1.ActivePageIndex := 0;
 end;
 
-class function TfmNfse.GetValorTotal(Nfse: TNfse): double;
+class function TfmDetalhesNfse.GetValorTotal(Nfse: TNfse): double;
 begin
   Result := 0;
   for var servico in Nfse.declaracao_prestacao_servico.servicos do
     Result := Result + servico.valores.valor_servicos;
 end;
 
-procedure TfmNfse.btCancelarClick(Sender: TObject);
-begin
-
-end;
-
-{ TfmNfse }
-
-procedure TfmNfse.btOkClick(Sender: TObject);
+procedure TfmDetalhesNfse.btOkClick(Sender: TObject);
 begin
   ModalResult := mrOk;
 end;
 
-procedure TfmNfse.cbServicoChange(Sender: TObject);
+procedure TfmDetalhesNfse.cbServicoChange(Sender: TObject);
 begin
   var servico := TRpsDadosServico(cbServico.Items.Objects[cbServico.ItemIndex]);
   SetServico(servico);
 end;
 
-class procedure TfmNfse.VerDetalhes(ANfse: TNfse);
+class procedure TfmDetalhesNfse.Visualizar(ANfse: TNfse);
 var
-  Form: TfmNfse;
+  Form: TfmDetalhesNfse;
 begin
-  Form := TfmNfse.Create(nil);
+  Form := TfmDetalhesNfse.Create(nil);
   try
     Form.SetNfse(ANfse);
     Form.ShowModal;
@@ -172,7 +168,7 @@ begin
   end;
 end;
 
-procedure TfmNfse.SetNfse(Nfse: TNfse);
+procedure TfmDetalhesNfse.SetNfse(Nfse: TNfse);
 begin
   FNfse := Nfse;
 
@@ -263,9 +259,27 @@ begin
     cbServico.ItemIndex := 0;
     SetServico(Nfse.declaracao_prestacao_servico.servicos.First);
   end;
+
+  if Nfse.mensagens.Count > 0 then
+  begin
+    for var I := 0 to Nfse.mensagens.Count - 1 do
+    begin
+      var mensagem := Nfse.mensagens[I];
+
+      memoMensagens.Lines.Add(Format('Mensagem %d', [I]));
+      memoMensagens.Lines.Add(Format('-------------', []));
+      if mensagem.codigoHasValue then
+        memoMensagens.Lines.Add(Format('Código: %s', [mensagem.codigo]));
+      if mensagem.descricaoHasValue then
+        memoMensagens.Lines.Add(Format('Descrição: %s', [mensagem.descricao]));
+      if mensagem.correcaoHasValue then
+        memoMensagens.Lines.Add(Format('Correção: %s', [mensagem.correcao]));
+      memoMensagens.Lines.Add('');
+    end;
+  end;
 end;
 
-procedure TfmNfse.SetServico(servico: TRpsDadosServico);
+procedure TfmDetalhesNfse.SetServico(servico: TRpsDadosServico);
 begin
   edServicoItemListaServico.Text := servico.item_lista_servico;
   edServicoDiscriminacao.Text := servico.discriminacao;

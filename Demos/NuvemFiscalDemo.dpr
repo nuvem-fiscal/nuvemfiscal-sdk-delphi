@@ -12,8 +12,9 @@ uses
   OpenApiUtils in '..\Source\OpenApiUtils.pas',
   Forms.Empresa in 'Forms.Empresa.pas' {fmEmpresa},
   Forms.Certificado in 'Forms.Certificado.pas' {fmCertificado},
-  Forms.Nfse in 'Forms.Nfse.pas' {fmNfse},
-  Forms.ConfigNFSe in 'Forms.ConfigNFSe.pas' {fmConfigNFSe};
+  Forms.DetalhesNfse in 'Forms.DetalhesNfse.pas' {fmDetalhesNfse},
+  Forms.ConfigNfse in 'Forms.ConfigNfse.pas' {fmConfigNfse},
+  Forms.EmitirNfse in 'Forms.EmitirNfse.pas' {fmEmitirNfse};
 
 {$R *.res}
 
@@ -23,5 +24,7 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfmMain, fmMain);
   Application.CreateForm(TfmConfigNFSe, fmConfigNFSe);
+  Application.CreateForm(TfmConfigNfse, fmConfigNfse);
+  Application.CreateForm(TfmEmitirNfse, fmEmitirNfse);
   Application.Run;
 end.

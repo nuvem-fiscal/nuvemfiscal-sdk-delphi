@@ -1,4 +1,4 @@
-unit Forms.ConfigNFSe;
+unit Forms.ConfigNfse;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   NuvemFiscalClient, NuvemFiscalDtos, OpenApiRest, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls;
 
 type
-  TfmConfigNFSe = class(TForm)
+  TfmConfigNfse = class(TForm)
     PageControl1: TPageControl;
     tsDados: TTabSheet;
     pnCertificado: TPanel;
@@ -34,19 +34,19 @@ type
   end;
 
 var
-  fmConfigNFSe: TfmConfigNFSe;
+  fmConfigNfse: TfmConfigNfse;
 
 implementation
 
 {$R *.dfm}
 
-{ TfmConfigNFSe }
+{ TfmConfigNfse }
 
-procedure TfmConfigNFSe.AtualizarConfig;
+procedure TfmConfigNfse.AtualizarConfig;
 var
-  Config: TEmpresaConfigNFSe;
+  Config: TEmpresaConfigNfse;
 begin
-  Config := TEmpresaConfigNFSe.Create;
+  Config := TEmpresaConfigNfse.Create;
   try
     case cbAmbiente.ItemIndex of
       0: Config.ambiente := 'homologacao';
@@ -62,13 +62,13 @@ begin
   end;
 end;
 
-procedure TfmConfigNFSe.btOkClick(Sender: TObject);
+procedure TfmConfigNfse.btOkClick(Sender: TObject);
 begin
   AtualizarConfig;
   ModalResult := mrOk;
 end;
 
-procedure TfmConfigNFSe.CarregarConfig;
+procedure TfmConfigNfse.CarregarConfig;
 var
   Config: TEmpresaConfigNfse;
 begin
@@ -86,11 +86,11 @@ begin
   end;
 end;
 
-class procedure TfmConfigNFSe.Editar(Client: INuvemFiscalClient; const Cnpj: string);
+class procedure TfmConfigNfse.Editar(Client: INuvemFiscalClient; const Cnpj: string);
 var
-  Form: TfmConfigNFSe;
+  Form: TfmConfigNfse;
 begin
-  Form := TfmConfigNFSe.Create(nil);
+  Form := TfmConfigNfse.Create(nil);
   try
     Form.Caption := Format('Configuração NFS-e - %s', [Cnpj]);
     Form.Client := Client;
@@ -102,7 +102,7 @@ begin
   end;
 end;
 
-procedure TfmConfigNFSe.MostrarDadosConfig(Config: TEmpresaConfigNfse);
+procedure TfmConfigNfse.MostrarDadosConfig(Config: TEmpresaConfigNfse);
 begin
   if Config.ambiente = 'producao' then
     cbAmbiente.ItemIndex := 1

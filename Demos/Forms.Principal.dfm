@@ -285,6 +285,7 @@ object fmMain: TfmMain
           Anchors = [akLeft, akTop, akRight]
           Caption = 'Emitir NFSe'
           TabOrder = 0
+          OnClick = btEmitirNfseClick
         end
         object btCancelarNfse: TButton
           Left = 6

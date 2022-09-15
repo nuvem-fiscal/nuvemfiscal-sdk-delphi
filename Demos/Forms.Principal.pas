@@ -6,7 +6,11 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, NuvemFiscalClient, NuvemFiscalDTOs,
   OpenApiRest, Vcl.ComCtrls, Vcl.ExtCtrls,
-  Forms.Empresa, Forms.Certificado, Forms.Nfse, Forms.ConfigNFSe;
+  Forms.Empresa,
+  Forms.Certificado,
+  Forms.ConfigNfse,
+  Forms.DetalhesNfse,
+  Forms.EmitirNfse;
 
 type
   TfmMain = class(TForm)
@@ -59,6 +63,7 @@ type
     procedure btCertificadoClick(Sender: TObject);
     procedure btListaNfsesClick(Sender: TObject);
     procedure btConfigNFSeClick(Sender: TObject);
+    procedure btEmitirNfseClick(Sender: TObject);
     procedure btVerDetalhesNfseClick(Sender: TObject);
   private
     Client: INuvemFiscalClient;
@@ -205,6 +210,11 @@ begin
   end;
 end;
 
+procedure TfmMain.btEmitirNfseClick(Sender: TObject);
+begin
+  TfmEmitirNfse.Emitir(Client);
+end;
+
 procedure TfmMain.btListaNfsesClick(Sender: TObject);
 var
   Notas: TNfseListagem;
@@ -223,7 +233,7 @@ begin
       Item.SubItems.Add(Nota.status);
       Item.SubItems.Add(FormatDateTime('dd/mm/yyyy HH:nn:ss', Nota.data_emissao));
       Item.SubItems.Add(Nota.declaracao_prestacao_servico.tomador.nome_razao_social);
-      Item.SubItems.Add(FormatFloat('"R$" #,0.00', TfmNfse.GetValorTotal(Nota)));
+      Item.SubItems.Add(FormatFloat('"R$" #,0.00', TfmDetalhesNfse.GetValorTotal(Nota)));
     end;
   finally
     Notas.Free;
@@ -236,7 +246,7 @@ var
 begin
   Nfse := Client.Nfse.ConsultarNfse(NfseSelecionada);
   try
-    TfmNfse.VerDetalhes(Nfse);
+    TfmDetalhesNfse.Visualizar(Nfse);
   finally
     Nfse.Free;
   end;
