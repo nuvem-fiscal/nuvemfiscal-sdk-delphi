@@ -231,7 +231,10 @@ begin
       Item.SubItems.Add(Nota.numero);
       Item.SubItems.Add(Nota.declaracao_prestacao_servico.rps.identificacao_rps.numero);
       Item.SubItems.Add(Nota.status);
-      Item.SubItems.Add(FormatDateTime('dd/mm/yyyy HH:nn:ss', Nota.data_emissao));
+      if Nota.data_emissaoHasValue then
+        Item.SubItems.Add(FormatDateTime('dd/mm/yyyy HH:nn:ss', Nota.data_emissao))
+      else
+        Item.SubItems.Add('');
       Item.SubItems.Add(Nota.declaracao_prestacao_servico.tomador.nome_razao_social);
       Item.SubItems.Add(FormatFloat('"R$" #,0.00', TfmDetalhesNfse.GetValorTotal(Nota)));
     end;
