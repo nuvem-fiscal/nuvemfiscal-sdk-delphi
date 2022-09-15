@@ -32,19 +32,23 @@ type
     Panel1: TPanel;
     Panel2: TPanel;
     lvEmpresas: TListView;
+    btAtualizarEmpresas: TButton;
+    btCriarEmpresa: TButton;
+    btAlterarEmpresa: TButton;
     Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btConsultarCnpjClick(Sender: TObject);
     procedure btConsultarCepClick(Sender: TObject);
     procedure btTokenClick(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    procedure btCriarEmpresaClick(Sender: TObject);
+    procedure btAtualizarEmpresasClick(Sender: TObject);
+    procedure btAlterarEmpresaClick(Sender: TObject);
   private
     Client: INuvemFiscalClient;
     TokenProvider: IClientCredencialsTokenProvider;
     TokenData: ITokenData;
     procedure Log(const Msg: string);
+    function CnpjSelecionado: string;
   public
   end;
 
@@ -91,14 +95,58 @@ procedure TForm1.btTokenClick(Sender: TObject);
 begin
   TokenProvider.ClientId := edClientId.Text;
   TokenProvider.ClientSecret := edClientSecret.Text;
-  TokenProvider.Scope := 'cep cnpj';
+  TokenProvider.Scope := 'cep cnpj empresa nfse';
   TokenData := TokenProvider.RetrieveToken;
   edToken.Text := TokenData.AccessToken;
   edExpiracao.Text := DateTimeToStr(TokenData.ExpirationTime);
   Client.Config.AccessToken := edToken.Text;
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+function TForm1.CnpjSelecionado: string;
+begin
+  if lvEmpresas.Selected <> nil then
+    Result := lvEmpresas.Selected.Caption
+  else
+    Result := '';
+end;
+
+procedure TForm1.btAlterarEmpresaClick(Sender: TObject);
+var
+  Empresa: TEmpresa;
+begin
+  Empresa := Client.Empresa.ConsultarEmpresa(CnpjSelecionado);
+  try
+    TfmEmpresa.Editar(Empresa,
+      procedure
+      begin
+        Client.Empresa.AtualizarEmpresa(Empresa, Empresa.cpf_cnpj).Free;
+      end);
+  finally
+    Empresa.Free;
+  end;
+end;
+
+procedure TForm1.btAtualizarEmpresasClick(Sender: TObject);
+var
+  Empresas: TEmpresaListagem;
+  Empresa: TEmpresa;
+  Item: TListItem;
+begin
+  Empresas := Client.Empresa.ListarEmpresas(30, 0, '');
+  try
+    lvEmpresas.Clear;
+    for Empresa in Empresas.data do
+    begin
+      Item := lvEmpresas.Items.Add;
+      Item.Caption := Empresa.cpf_cnpj;
+      Item.SubItems.Add(Empresa.nome_razao_social);
+    end;
+  finally
+    Empresas.Free;
+  end;
+end;
+
+procedure TForm1.btCriarEmpresaClick(Sender: TObject);
 var
   Empresa: TEmpresa;
 begin
@@ -117,6 +165,9 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   PageControl1.ActivePageIndex := 0;
+  edClientId.Text := GetEnvironmentVariable('NUVEMFISCAL_CLIENTID');
+  edClientSecret.Text := GetEnvironmentVariable('NUVEMFISCAL_CLIENTSECRET');
+
   Client := TNuvemFiscalClient.Create;
   TokenProvider := TClientCredentialsTokenProvider.Create;
   TokenProvider.TokenEndpoint := 'https://auth.nuvemfiscal.com.br/oauth/token';

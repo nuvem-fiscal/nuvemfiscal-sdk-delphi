@@ -47,6 +47,7 @@ type
     procedure btOkClick(Sender: TObject);
   private
     GravaProc: TProc;
+    FEmpresa: TEmpresa;
     procedure AtualizarEmpresa(Empresa: TEmpresa);
   public
     class procedure Editar(Empresa: TEmpresa; GravaProc: TProc);
@@ -83,6 +84,7 @@ end;
 
 procedure TfmEmpresa.btOkClick(Sender: TObject);
 begin
+  AtualizarEmpresa(FEmpresa);
   GravaProc();
   ModalResult := mrOk;
 end;
@@ -103,6 +105,7 @@ end;
 
 procedure TfmEmpresa.SetEmpresa(Empresa: TEmpresa);
 begin
+  FEmpresa := Empresa;
   edCNPJ.Text := Empresa.cpf_cnpj;
   edRazaoSocial.Text := Empresa.nome_razao_social;
   edEmail.Text := Empresa.email;

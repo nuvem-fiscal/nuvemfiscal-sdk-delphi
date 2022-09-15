@@ -23,7 +23,6 @@ object fmEmpresa: TfmEmpresa
     ActivePage = tsEndereco
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitWidth = 521
     object tsEndereco: TTabSheet
       Caption = 'Dados gerais'
       object Panel1: TPanel
@@ -34,9 +33,6 @@ object fmEmpresa: TfmEmpresa
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitLeft = 16
-        ExplicitWidth = 701
-        ExplicitHeight = 463
         DesignSize = (
           540
           299)
@@ -133,11 +129,10 @@ object fmEmpresa: TfmEmpresa
         object Label13: TLabel
           Left = 176
           Top = 101
-          Width = 170
+          Width = 161
           Height = 15
           Anchors = [akLeft, akTop, akRight]
           Caption = 'Regime especial de tributa'#231#227'o:'
-          ExplicitWidth = 161
         end
         object Label14: TLabel
           Left = 421
@@ -162,7 +157,6 @@ object fmEmpresa: TfmEmpresa
           Height = 23
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 10
-          ExplicitWidth = 312
         end
         object edNumero: TEdit
           Left = 354
@@ -171,7 +165,6 @@ object fmEmpresa: TfmEmpresa
           Height = 23
           Anchors = [akTop, akRight]
           TabOrder = 11
-          ExplicitLeft = 327
         end
         object edCidade: TEdit
           Left = 6
@@ -216,7 +209,6 @@ object fmEmpresa: TfmEmpresa
           Height = 23
           Anchors = [akTop, akRight]
           TabOrder = 3
-          ExplicitLeft = 215
         end
         object edInscrMunicipal: TEdit
           Left = 395
@@ -225,7 +217,6 @@ object fmEmpresa: TfmEmpresa
           Height = 23
           Anchors = [akTop, akRight]
           TabOrder = 4
-          ExplicitLeft = 368
         end
         object edRazaoSocial: TEdit
           Left = 175
@@ -234,7 +225,6 @@ object fmEmpresa: TfmEmpresa
           Height = 23
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 1
-          ExplicitWidth = 330
         end
         object edEmail: TEdit
           Left = 6
@@ -243,7 +233,6 @@ object fmEmpresa: TfmEmpresa
           Height = 23
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 2
-          ExplicitWidth = 203
         end
         object cbRegimeTributacao: TComboBox
           Left = 6
@@ -275,7 +264,6 @@ object fmEmpresa: TfmEmpresa
             '4: Cooperativa'
             '5: Microempres'#225'rio individual (MEI)'
             '6: Microempresa ou pequeno porte (ME/EPP)')
-          ExplicitWidth = 202
         end
         object chSimplesNacional: TCheckBox
           Left = 401
@@ -285,7 +273,6 @@ object fmEmpresa: TfmEmpresa
           Anchors = [akTop, akRight]
           Caption = 'Simples nacional'
           TabOrder = 7
-          ExplicitLeft = 374
         end
         object edBairro: TEdit
           Left = 421
@@ -294,7 +281,6 @@ object fmEmpresa: TfmEmpresa
           Height = 23
           Anchors = [akTop, akRight]
           TabOrder = 12
-          ExplicitLeft = 394
         end
       end
     end
@@ -308,7 +294,6 @@ object fmEmpresa: TfmEmpresa
     Caption = 'Cancelar'
     ModalResult = 2
     TabOrder = 2
-    ExplicitLeft = 447
   end
   object btOk: TButton
     Left = 394
@@ -319,6 +304,5 @@ object fmEmpresa: TfmEmpresa
     Caption = 'Ok'
     TabOrder = 1
     OnClick = btOkClick
-    ExplicitLeft = 367
   end
 end

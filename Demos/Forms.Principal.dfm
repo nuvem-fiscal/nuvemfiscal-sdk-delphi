@@ -171,17 +171,17 @@ object Form1: TForm1
         DesignSize = (
           135
           438)
-        object Button1: TButton
+        object btAtualizarEmpresas: TButton
           Left = 2
           Top = 3
           Width = 129
           Height = 25
           Anchors = [akLeft, akTop, akRight]
-          Caption = 'Atualizar'
+          Caption = 'Atualizar lista'
           TabOrder = 0
-          ExplicitWidth = 103
+          OnClick = btAtualizarEmpresasClick
         end
-        object Button2: TButton
+        object btCriarEmpresa: TButton
           Left = 3
           Top = 31
           Width = 129
@@ -189,18 +189,26 @@ object Form1: TForm1
           Anchors = [akLeft, akTop, akRight]
           Caption = 'Criar nova'
           TabOrder = 1
-          OnClick = Button2Click
-          ExplicitWidth = 103
+          OnClick = btCriarEmpresaClick
         end
-        object Button3: TButton
+        object btAlterarEmpresa: TButton
           Left = 3
           Top = 58
           Width = 129
           Height = 25
           Anchors = [akLeft, akTop, akRight]
-          Caption = 'Certificado'
+          Caption = 'Alterar'
           TabOrder = 2
-          ExplicitWidth = 103
+          OnClick = btAlterarEmpresaClick
+        end
+        object Button1: TButton
+          Left = 3
+          Top = 85
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Certificado'
+          TabOrder = 3
         end
       end
       object Panel2: TPanel
@@ -212,16 +220,24 @@ object Form1: TForm1
         BevelOuter = bvNone
         BorderWidth = 3
         TabOrder = 1
-        ExplicitWidth = 624
         object lvEmpresas: TListView
           Left = 3
           Top = 3
           Width = 578
           Height = 432
           Align = alClient
-          Columns = <>
+          Columns = <
+            item
+              Caption = 'CNPJ'
+              Width = 150
+            end
+            item
+              Caption = 'Raz'#227'o social'
+              Width = 350
+            end>
+          RowSelect = True
           TabOrder = 0
-          ExplicitWidth = 592
+          ViewStyle = vsReport
         end
       end
     end
