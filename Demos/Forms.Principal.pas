@@ -52,6 +52,7 @@ type
     Label7: TLabel;
     btCancelarNfse: TButton;
     btVerDetalhesNfse: TButton;
+    btListarNfse: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btConsultarCnpjClick(Sender: TObject);
     procedure btConsultarCepClick(Sender: TObject);
@@ -65,6 +66,7 @@ type
     procedure btConfigNFSeClick(Sender: TObject);
     procedure btEmitirNfseClick(Sender: TObject);
     procedure btVerDetalhesNfseClick(Sender: TObject);
+    procedure btListarNfseClick(Sender: TObject);
   private
     Client: INuvemFiscalClient;
     TokenProvider: IClientCredencialsTokenProvider;
@@ -185,6 +187,11 @@ procedure TfmMain.btCancelarNfseClick(Sender: TObject);
 var
   Cancelamento: TNfseCancelamento;
 begin
+  if NfseSelecionada = '' then Exit;
+
+  if MessageDlg('Tem certeza que deseja cancelar a nota ' + NfseSelecionada, mtConfirmation, [mbOk, mbCancel], 0, mbCancel) <> mrOk then
+    Exit;
+
   Cancelamento := Client.Nfse.CancelarNfse(NfseSelecionada);
   try
     ShowMessage(Format('Pedido de cancelamento %s em processamento.',
@@ -241,6 +248,15 @@ begin
   finally
     Notas.Free;
   end;
+end;
+
+procedure TfmMain.btListarNfseClick(Sender: TObject);
+begin
+  if CnpjSelecionado = '' then Exit;
+
+  edNfseCnpj.Text := CnpjSelecionado;
+  PageControl1.ActivePage := tsNfse;
+  btListaNfsesClick(nil);
 end;
 
 procedure TfmMain.btVerDetalhesNfseClick(Sender: TObject);

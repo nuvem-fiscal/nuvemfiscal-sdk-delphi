@@ -61,7 +61,6 @@ object fmMain: TfmMain
     Anchors = [akLeft, akTop, akRight]
     PasswordChar = '*'
     TabOrder = 1
-    ExplicitWidth = 207
   end
   object edToken: TEdit
     Left = 114
@@ -71,7 +70,6 @@ object fmMain: TfmMain
     Anchors = [akLeft, akTop, akRight]
     ReadOnly = True
     TabOrder = 3
-    ExplicitWidth = 379
   end
   object btToken: TButton
     Left = 721
@@ -82,7 +80,6 @@ object fmMain: TfmMain
     Caption = 'Get Token'
     TabOrder = 2
     OnClick = btTokenClick
-    ExplicitLeft = 630
   end
   object edExpiracao: TEdit
     Left = 664
@@ -92,17 +89,15 @@ object fmMain: TfmMain
     Anchors = [akTop, akRight]
     ReadOnly = True
     TabOrder = 4
-    ExplicitLeft = 573
   end
   object PageControl1: TPageControl
     Left = 16
     Top = 80
     Width = 818
     Height = 468
-    ActivePage = tsNfse
+    ActivePage = tsEmpresas
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 5
-    ExplicitWidth = 727
     object tsConsultas: TTabSheet
       Caption = 'Consultas'
       DesignSize = (
@@ -145,7 +140,6 @@ object fmMain: TfmMain
         Height = 386
         Anchors = [akLeft, akTop, akRight, akBottom]
         TabOrder = 2
-        ExplicitWidth = 702
       end
       object edCep: TEdit
         Left = 374
@@ -175,7 +169,6 @@ object fmMain: TfmMain
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitLeft = 584
         DesignSize = (
           135
           438)
@@ -229,6 +222,16 @@ object fmMain: TfmMain
           TabOrder = 4
           OnClick = btConfigNFSeClick
         end
+        object btListarNfse: TButton
+          Left = 3
+          Top = 139
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Listar NFS-e'
+          TabOrder = 5
+          OnClick = btListarNfseClick
+        end
       end
       object Panel2: TPanel
         Left = 0
@@ -239,7 +242,6 @@ object fmMain: TfmMain
         BevelOuter = bvNone
         BorderWidth = 3
         TabOrder = 1
-        ExplicitWidth = 584
         object lvEmpresas: TListView
           Left = 3
           Top = 3
@@ -258,7 +260,6 @@ object fmMain: TfmMain
           RowSelect = True
           TabOrder = 0
           ViewStyle = vsReport
-          ExplicitWidth = 578
         end
       end
     end
@@ -273,7 +274,6 @@ object fmMain: TfmMain
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitLeft = 584
         DesignSize = (
           135
           438)
@@ -316,7 +316,6 @@ object fmMain: TfmMain
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 584
         object lvNfses: TListView
           Left = 0
           Top = 41
@@ -364,7 +363,6 @@ object fmMain: TfmMain
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitWidth = 584
           object Label7: TLabel
             Left = 8
             Top = 13
