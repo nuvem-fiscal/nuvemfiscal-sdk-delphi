@@ -53,6 +53,7 @@ type
     btCancelarNfse: TButton;
     btVerDetalhesNfse: TButton;
     btListarNfse: TButton;
+    cbAmbiente: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure btConsultarCnpjClick(Sender: TObject);
     procedure btConsultarCepClick(Sender: TObject);
@@ -71,6 +72,7 @@ type
     Client: INuvemFiscalClient;
     TokenProvider: IClientCredencialsTokenProvider;
     TokenData: ITokenData;
+    function AmbienteNfse: string;
     procedure Log(const Msg: string);
     function CnpjSelecionado: string;
     function NfseSelecionada: string;
@@ -147,6 +149,13 @@ begin
     Result := '';
 end;
 
+function TfmMain.AmbienteNfse: string;
+begin
+  if cbAmbiente.ItemIndex = -1 then
+    cbAmbiente.ItemIndex := 0;
+  Result := cbAmbiente.Text;
+end;
+
 procedure TfmMain.btAlterarEmpresaClick(Sender: TObject);
 var
   Empresa: TEmpresa;
@@ -219,7 +228,7 @@ end;
 
 procedure TfmMain.btEmitirNfseClick(Sender: TObject);
 begin
-  TfmEmitirNfse.Emitir(Client);
+  TfmEmitirNfse.Emitir(Client, AmbienteNfse);
 end;
 
 procedure TfmMain.btListaNfsesClick(Sender: TObject);
@@ -228,7 +237,7 @@ var
   Nota: TNfse;
   Item: TListItem;
 begin
-  Notas := Client.Nfse.ListarNfse(30, 0, edNfseCnpj.Text, '', '');
+  Notas := Client.Nfse.ListarNfse(30, 0, edNfseCnpj.Text, '', AmbienteNfse);
   try
     lvNfses.Clear;
     for Nota in Notas.data do

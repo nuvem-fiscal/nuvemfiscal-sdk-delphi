@@ -38,7 +38,7 @@ type
     Client: INuvemFiscalClient;
     procedure EmitirNfse;
   public
-    class procedure Emitir(Client: INuvemFiscalClient);
+    class procedure Emitir(Client: INuvemFiscalClient; Ambiente: string = '');
   end;
 
 var
@@ -66,12 +66,13 @@ begin
   end;
 end;
 
-class procedure TfmEmitirNfse.Emitir(Client: INuvemFiscalClient);
+class procedure TfmEmitirNfse.Emitir(Client: INuvemFiscalClient; Ambiente: string = '');
 var
   Form: TfmEmitirNfse;
 begin
   Form := TfmEmitirNfse.Create(nil);
   try
+    Form.cbAmbiente.ItemIndex := Form.cbAmbiente.Items.IndexOf(Ambiente);
     Form.Client := Client;
     Form.ShowModal;
   finally
@@ -87,10 +88,7 @@ var
 begin
   PedidoEmissao := TNfsePedidoEmissao.Create;
   try
-    case cbAmbiente.ItemIndex of
-      0: PedidoEmissao.ambiente := 'homologacao';
-      1: PedidoEmissao.ambiente := 'producao';
-    end;
+    PedidoEmissao.ambiente := cbAmbiente.Text;
     PedidoEmissao.rps := TRpsPedidoEmissao.Create;
     PedidoEmissao.rps.prestador := TRpsIdentificacaoPrestador.Create;
     PedidoEmissao.rps.prestador.cpf_cnpj := edPrestadorCpfCnpj.Text;

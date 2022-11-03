@@ -95,7 +95,7 @@ object fmMain: TfmMain
     Top = 80
     Width = 818
     Height = 468
-    ActivePage = tsEmpresas
+    ActivePage = tsNfse
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 5
     object tsConsultas: TTabSheet
@@ -371,8 +371,8 @@ object fmMain: TfmMain
             Caption = 'CNPJ:'
           end
           object btListaNfses: TButton
-            Left = 195
-            Top = 9
+            Left = 342
+            Top = 10
             Width = 96
             Height = 25
             Caption = 'Listar Notas'
@@ -385,6 +385,17 @@ object fmMain: TfmMain
             Width = 145
             Height = 23
             TabOrder = 1
+          end
+          object cbAmbiente: TComboBox
+            Left = 195
+            Top = 10
+            Width = 139
+            Height = 23
+            Style = csDropDownList
+            TabOrder = 2
+            Items.Strings = (
+              'homologacao'
+              'producao')
           end
         end
       end

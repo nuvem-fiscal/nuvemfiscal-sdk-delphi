@@ -180,7 +180,8 @@ begin
   FNfse := Nfse;
 
   edId.Text := Nfse.id;
-  edDataEmissao.Text := FormatDateTime('dd/mm/yyyy HH:nn:ss', Nfse.data_emissao);
+  if Nfse.data_emissaoHasValue and (Nfse.data_emissao > 0) then
+    edDataEmissao.Text := FormatDateTime('dd/mm/yyyy HH:nn:ss', Nfse.data_emissao);
   edSituacao.Text := Nfse.status;
   edNumeroNota.Text := Nfse.numero;
   edAmbiente.Text := Nfse.ambiente;

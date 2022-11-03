@@ -34,9 +34,6 @@ object fmEmitirNfse: TfmEmitirNfse
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitLeft = 24
-        ExplicitTop = 4
-        ExplicitHeight = 149
         object Label11: TLabel
           Left = 6
           Top = 6
@@ -59,8 +56,8 @@ object fmEmitirNfse: TfmEmitirNfse
           Style = csDropDownList
           TabOrder = 0
           Items.Strings = (
-            'Homologa'#231#227'o'
-            'Produ'#231#227'o')
+            'homologacao'
+            'producao')
         end
         object edPrestadorCpfCnpj: TEdit
           Left = 239
