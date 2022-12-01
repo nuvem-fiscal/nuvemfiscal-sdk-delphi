@@ -419,6 +419,7 @@ type
   TCnpjNaturezaJuridica = class;
   TCnpjPorteEmpresa = class;
   TCnpjSituacaoCadastral = class;
+  TCnpjMotivoSituacaoCadastral = class;
   TCnpjPais = class;
   TCnpjCnae = class;
   TCnpjCnaeList = class;
@@ -426,8 +427,12 @@ type
   TCnpjEndereco = class;
   TCnpjTelefone = class;
   TCnpjTelefoneList = class;
+  TCnpjSituacaoEspecial = class;
   TCnpjOpcaoSimples = class;
+  TCnpjOpcaoSimei = class;
   TCnpjEmpresa = class;
+  TCnpjEmpresaList = class;
+  TCnpjListagem = class;
   TCepEndereco = class;
   
   TEmpresaEndereco = class
@@ -1992,8 +1997,9 @@ type
   TCteSefazIde = class
   private
     FcUF: Integer;
-    FcCT: Integer;
-    FCFOP: Integer;
+    FcCT: string;
+    FcCTHasValue: Boolean;
+    FCFOP: string;
     FnatOp: string;
     Fmod: Integer;
     FmodHasValue: Boolean;
@@ -2003,6 +2009,7 @@ type
     FtpImp: Integer;
     FtpEmis: Integer;
     FcDV: Integer;
+    FcDVHasValue: Boolean;
     FtpAmb: Integer;
     FtpAmbHasValue: Boolean;
     FtpCTe: Integer;
@@ -2031,7 +2038,9 @@ type
     FdhContHasValue: Boolean;
     FxJust: string;
     FxJustHasValue: Boolean;
+    procedure SetcCT(const Value: string);
     procedure Setmod(const Value: Integer);
+    procedure SetcDV(const Value: Integer);
     procedure SettpAmb(const Value: Integer);
     procedure SetindGlobalizado(const Value: Integer);
     procedure SetxDetRetira(const Value: string);
@@ -2049,12 +2058,14 @@ type
     /// <summary>
     /// Código numérico que compõe a Chave de Acesso.
     /// Número aleatório gerado pelo emitente para cada CT-e, com o objetivo de evitar acessos indevidos ao documento.
+    /// Geramos automaticamente quando nenhum valor é informado.
     /// </summary>
-    property cCT: Integer read FcCT write FcCT;
+    property cCT: string read FcCT write SetcCT;
+    property cCTHasValue: Boolean read FcCTHasValue write FcCTHasValue;
     /// <summary>
     /// Código Fiscal de Operações e Prestações.
     /// </summary>
-    property CFOP: Integer read FCFOP write FCFOP;
+    property CFOP: string read FCFOP write FCFOP;
     /// <summary>
     /// Natureza da Operação.
     /// </summary>
@@ -2096,8 +2107,10 @@ type
     /// <summary>
     /// Digito Verificador da chave de acesso do CT-e.
     /// Informar o dígito  de controle da chave de acesso do CT-e, que deve ser calculado com a aplicação do algoritmo módulo 11 (base 2,9) da chave de acesso.
+    /// Geramos automaticamente quando nenhum valor é informado.
     /// </summary>
-    property cDV: Integer read FcDV write FcDV;
+    property cDV: Integer read FcDV write SetcDV;
+    property cDVHasValue: Boolean read FcDVHasValue write FcDVHasValue;
     /// <summary>
     /// Tipo do Ambiente.
     /// Preencher com:1 - Produção; 2 - Homologação.
@@ -3573,7 +3586,7 @@ type
     FvST: Double;
     FvProd: Double;
     FvNF: Double;
-    FnCFOP: Integer;
+    FnCFOP: string;
     FnPeso: Double;
     FnPesoHasValue: Boolean;
     FPIN: string;
@@ -3649,7 +3662,7 @@ type
     /// CFOP Predominante.
     /// CFOP da NF ou, na existência de mais de um, predominância pelo critério de valor econômico.
     /// </summary>
-    property nCFOP: Integer read FnCFOP write FnCFOP;
+    property nCFOP: string read FnCFOP write FnCFOP;
     /// <summary>
     /// Peso total em Kg.
     /// </summary>
@@ -6349,8 +6362,10 @@ type
     FmodHasValue: Boolean;
     Fserie: Integer;
     FnMDF: Integer;
-    FcMDF: Integer;
+    FcMDF: string;
+    FcMDFHasValue: Boolean;
     FcDV: Integer;
+    FcDVHasValue: Boolean;
     Fmodal: Integer;
     FdhEmi: TDateTime;
     FtpEmis: Integer;
@@ -6369,6 +6384,8 @@ type
     procedure SettpAmb(const Value: Integer);
     procedure SettpTransp(const Value: Integer);
     procedure Setmod(const Value: Integer);
+    procedure SetcMDF(const Value: string);
+    procedure SetcDV(const Value: Integer);
     procedure SetinfMunCarrega(const Value: TMdfeSefazInfMunCarregaList);
     procedure SetinfPercurso(const Value: TMdfeSefazInfPercursoList);
     procedure SetdhIniViagem(const Value: TDateTime);
@@ -6428,13 +6445,17 @@ type
     /// <summary>
     /// Código numérico que compõe a Chave de Acesso.
     /// Código aleatório gerado pelo emitente, com o objetivo de evitar acessos indevidos ao documento.
+    /// Geramos automaticamente quando nenhum valor é informado.
     /// </summary>
-    property cMDF: Integer read FcMDF write FcMDF;
+    property cMDF: string read FcMDF write SetcMDF;
+    property cMDFHasValue: Boolean read FcMDFHasValue write FcMDFHasValue;
     /// <summary>
     /// Digito verificador da chave de acesso do Manifesto.
     /// Informar o dígito  de controle da chave de acesso do MDF-e, que deve ser calculado com a aplicação do algoritmo módulo 11 (base 2,9) da chave de acesso.
+    /// Geramos automaticamente quando nenhum valor é informado.
     /// </summary>
-    property cDV: Integer read FcDV write FcDV;
+    property cDV: Integer read FcDV write SetcDV;
+    property cDVHasValue: Boolean read FcDVHasValue write FcDVHasValue;
     /// <summary>
     /// Modalidade de transporte.
     /// 1 - Rodoviário;
@@ -8384,13 +8405,13 @@ type
   private
     FCEP: string;
     FCEPHasValue: Boolean;
-    Flatitude: Double;
+    Flatitude: string;
     FlatitudeHasValue: Boolean;
-    Flongitude: Double;
+    Flongitude: string;
     FlongitudeHasValue: Boolean;
     procedure SetCEP(const Value: string);
-    procedure Setlatitude(const Value: Double);
-    procedure Setlongitude(const Value: Double);
+    procedure Setlatitude(const Value: string);
+    procedure Setlongitude(const Value: string);
   public
     /// <summary>
     /// CEP onde foi carregado o MDF-e.
@@ -8401,12 +8422,12 @@ type
     /// <summary>
     /// Latitude do ponto geográfico onde foi carregado o MDF-e.
     /// </summary>
-    property latitude: Double read Flatitude write Setlatitude;
+    property latitude: string read Flatitude write Setlatitude;
     property latitudeHasValue: Boolean read FlatitudeHasValue write FlatitudeHasValue;
     /// <summary>
     /// Latitude do ponto geográfico onde foi carregado o MDF-e.
     /// </summary>
-    property longitude: Double read Flongitude write Setlongitude;
+    property longitude: string read Flongitude write Setlongitude;
     property longitudeHasValue: Boolean read FlongitudeHasValue write FlongitudeHasValue;
   end;
   
@@ -8414,13 +8435,13 @@ type
   private
     FCEP: string;
     FCEPHasValue: Boolean;
-    Flatitude: Double;
+    Flatitude: string;
     FlatitudeHasValue: Boolean;
-    Flongitude: Double;
+    Flongitude: string;
     FlongitudeHasValue: Boolean;
     procedure SetCEP(const Value: string);
-    procedure Setlatitude(const Value: Double);
-    procedure Setlongitude(const Value: Double);
+    procedure Setlatitude(const Value: string);
+    procedure Setlongitude(const Value: string);
   public
     /// <summary>
     /// CEP onde foi descarregado o MDF-e.
@@ -8431,12 +8452,12 @@ type
     /// <summary>
     /// Latitude do ponto geográfico onde foi descarregado o MDF-e.
     /// </summary>
-    property latitude: Double read Flatitude write Setlatitude;
+    property latitude: string read Flatitude write Setlatitude;
     property latitudeHasValue: Boolean read FlatitudeHasValue write FlatitudeHasValue;
     /// <summary>
     /// Latitude do ponto geográfico onde foi descarregado o MDF-e.
     /// </summary>
-    property longitude: Double read Flongitude write Setlongitude;
+    property longitude: string read Flongitude write Setlongitude;
     property longitudeHasValue: Boolean read FlongitudeHasValue write FlongitudeHasValue;
   end;
   
@@ -9510,7 +9531,8 @@ type
   TNfeSefazIde = class
   private
     FcUF: Integer;
-    FcNF: Integer;
+    FcNF: string;
+    FcNFHasValue: Boolean;
     FnatOp: string;
     Fmod: Integer;
     FmodHasValue: Boolean;
@@ -9525,6 +9547,7 @@ type
     FtpImp: Integer;
     FtpEmis: Integer;
     FcDV: Integer;
+    FcDVHasValue: Boolean;
     FtpAmb: Integer;
     FtpAmbHasValue: Boolean;
     FfinNFe: Integer;
@@ -9539,8 +9562,10 @@ type
     FxJust: string;
     FxJustHasValue: Boolean;
     FNFref: TNfeSefazNFrefList;
+    procedure SetcNF(const Value: string);
     procedure Setmod(const Value: Integer);
     procedure SetdhSaiEnt(const Value: TDateTime);
+    procedure SetcDV(const Value: Integer);
     procedure SettpAmb(const Value: Integer);
     procedure SetindIntermed(const Value: Integer);
     procedure SetdhCont(const Value: TDateTime);
@@ -9554,8 +9579,10 @@ type
     property cUF: Integer read FcUF write FcUF;
     /// <summary>
     /// Código numérico que compõe a Chave de Acesso. Número aleatório gerado pelo emitente para cada NF-e.
+    /// Geramos automaticamente quando nenhum valor é informado.
     /// </summary>
-    property cNF: Integer read FcNF write FcNF;
+    property cNF: string read FcNF write SetcNF;
+    property cNFHasValue: Boolean read FcNFHasValue write FcNFHasValue;
     /// <summary>
     /// Descrição da Natureza da Operação.
     /// </summary>
@@ -9616,8 +9643,10 @@ type
     property tpEmis: Integer read FtpEmis write FtpEmis;
     /// <summary>
     /// Digito Verificador da Chave de Acesso da NF-e.
+    /// Geramos automaticamente quando nenhum valor é informado.
     /// </summary>
-    property cDV: Integer read FcDV write FcDV;
+    property cDV: Integer read FcDV write SetcDV;
+    property cDVHasValue: Boolean read FcDVHasValue write FcDVHasValue;
     /// <summary>
     /// Identificação do Ambiente:
     /// 1 - Produção
@@ -10835,7 +10864,7 @@ type
     FcBenefHasValue: Boolean;
     FEXTIPI: string;
     FEXTIPIHasValue: Boolean;
-    FCFOP: Integer;
+    FCFOP: string;
     FuCom: string;
     FqCom: Double;
     FvUnCom: Double;
@@ -10947,7 +10976,7 @@ type
     /// <summary>
     /// Cfop.
     /// </summary>
-    property CFOP: Integer read FCFOP write FCFOP;
+    property CFOP: string read FCFOP write FCFOP;
     /// <summary>
     /// Unidade comercial.
     /// </summary>
@@ -14420,7 +14449,7 @@ type
     FvBCRet: Double;
     FpICMSRet: Double;
     FvICMSRet: Double;
-    FCFOP: Integer;
+    FCFOP: string;
     FcMunFG: string;
   public
     /// <summary>
@@ -14442,7 +14471,7 @@ type
     /// <summary>
     /// Código Fiscal de Operações e Prestações.
     /// </summary>
-    property CFOP: Integer read FCFOP write FCFOP;
+    property CFOP: string read FCFOP write FCFOP;
     /// <summary>
     /// Código do Município de Ocorrência do Fato Gerador (utilizar a tabela do IBGE).
     /// </summary>
@@ -15493,8 +15522,14 @@ type
     procedure Setcodigo(const Value: string);
     procedure Setdescricao(const Value: string);
   public
+    /// <summary>
+    /// Código da natureza jurídica.
+    /// </summary>
     property codigo: string read Fcodigo write Setcodigo;
     property codigoHasValue: Boolean read FcodigoHasValue write FcodigoHasValue;
+    /// <summary>
+    /// Nome da natureza jurídica.
+    /// </summary>
     property descricao: string read Fdescricao write Setdescricao;
     property descricaoHasValue: Boolean read FdescricaoHasValue write FdescricaoHasValue;
   end;
@@ -15508,8 +15543,14 @@ type
     procedure Setcodigo(const Value: string);
     procedure Setdescricao(const Value: string);
   public
+    /// <summary>
+    /// Código do porte da empresa.
+    /// </summary>
     property codigo: string read Fcodigo write Setcodigo;
     property codigoHasValue: Boolean read FcodigoHasValue write FcodigoHasValue;
+    /// <summary>
+    /// Descrição do porte da empresa.
+    /// </summary>
     property descricao: string read Fdescricao write Setdescricao;
     property descricaoHasValue: Boolean read FdescricaoHasValue write FdescricaoHasValue;
   end;
@@ -15526,10 +15567,48 @@ type
     procedure Setcodigo(const Value: string);
     procedure Setdescricao(const Value: string);
   public
+    /// <summary>
+    /// Data do evento da situação cadastral.
+    /// </summary>
     property data: TDate read Fdata write Setdata;
     property dataHasValue: Boolean read FdataHasValue write FdataHasValue;
+    /// <summary>
+    /// Código da situação cadastral.
+    /// </summary>
     property codigo: string read Fcodigo write Setcodigo;
     property codigoHasValue: Boolean read FcodigoHasValue write FcodigoHasValue;
+    /// <summary>
+    /// Descrição da situação cadastral.
+    /// </summary>
+    property descricao: string read Fdescricao write Setdescricao;
+    property descricaoHasValue: Boolean read FdescricaoHasValue write FdescricaoHasValue;
+  end;
+  
+  TCnpjMotivoSituacaoCadastral = class
+  private
+    Fdata: TDate;
+    FdataHasValue: Boolean;
+    Fcodigo: string;
+    FcodigoHasValue: Boolean;
+    Fdescricao: string;
+    FdescricaoHasValue: Boolean;
+    procedure Setdata(const Value: TDate);
+    procedure Setcodigo(const Value: string);
+    procedure Setdescricao(const Value: string);
+  public
+    /// <summary>
+    /// Data do evento.
+    /// </summary>
+    property data: TDate read Fdata write Setdata;
+    property dataHasValue: Boolean read FdataHasValue write FdataHasValue;
+    /// <summary>
+    /// Código do motivo da situação cadastral.
+    /// </summary>
+    property codigo: string read Fcodigo write Setcodigo;
+    property codigoHasValue: Boolean read FcodigoHasValue write FcodigoHasValue;
+    /// <summary>
+    /// Descrição do motivo da situação cadastral.
+    /// </summary>
     property descricao: string read Fdescricao write Setdescricao;
     property descricaoHasValue: Boolean read FdescricaoHasValue write FdescricaoHasValue;
   end;
@@ -15543,8 +15622,14 @@ type
     procedure Setcodigo(const Value: string);
     procedure Setdescricao(const Value: string);
   public
+    /// <summary>
+    /// Código do país.
+    /// </summary>
     property codigo: string read Fcodigo write Setcodigo;
     property codigoHasValue: Boolean read FcodigoHasValue write FcodigoHasValue;
+    /// <summary>
+    /// Nome do país.
+    /// </summary>
     property descricao: string read Fdescricao write Setdescricao;
     property descricaoHasValue: Boolean read FdescricaoHasValue write FdescricaoHasValue;
   end;
@@ -15558,8 +15643,14 @@ type
     procedure Setcodigo(const Value: string);
     procedure Setdescricao(const Value: string);
   public
+    /// <summary>
+    /// Código da atividade econômica.
+    /// </summary>
     property codigo: string read Fcodigo write Setcodigo;
     property codigoHasValue: Boolean read FcodigoHasValue write FcodigoHasValue;
+    /// <summary>
+    /// Nome da atividade econômica.
+    /// </summary>
     property descricao: string read Fdescricao write Setdescricao;
     property descricaoHasValue: Boolean read FdescricaoHasValue write FdescricaoHasValue;
   end;
@@ -15579,10 +15670,19 @@ type
     procedure Setcodigo_ibge(const Value: string);
     procedure Setdescricao(const Value: string);
   public
+    /// <summary>
+    /// Código TOM do município.
+    /// </summary>
     property codigo_tom: string read Fcodigo_tom write Setcodigo_tom;
     property codigo_tomHasValue: Boolean read Fcodigo_tomHasValue write Fcodigo_tomHasValue;
+    /// <summary>
+    /// Código IBGE do município.
+    /// </summary>
     property codigo_ibge: string read Fcodigo_ibge write Setcodigo_ibge;
     property codigo_ibgeHasValue: Boolean read Fcodigo_ibgeHasValue write Fcodigo_ibgeHasValue;
+    /// <summary>
+    /// Nome do município.
+    /// </summary>
     property descricao: string read Fdescricao write Setdescricao;
     property descricaoHasValue: Boolean read FdescricaoHasValue write FdescricaoHasValue;
   end;
@@ -15614,20 +15714,46 @@ type
     procedure Setmunicipio(const Value: TCnpjMunicipio);
   public
     destructor Destroy; override;
+    /// <summary>
+    /// Descrição do tipo de logradouro.
+    /// </summary>
     property tipo_logradouro: string read Ftipo_logradouro write Settipo_logradouro;
     property tipo_logradouroHasValue: Boolean read Ftipo_logradouroHasValue write Ftipo_logradouroHasValue;
+    /// <summary>
+    /// Nome do logradouro onde se localiza o estabelecimento.
+    /// </summary>
     property logradouro: string read Flogradouro write Setlogradouro;
     property logradouroHasValue: Boolean read FlogradouroHasValue write FlogradouroHasValue;
+    /// <summary>
+    /// Número onde se localiza o estabelecimento. Quando não houver
+    /// preenchimento do número haverá ‘S/N’.
+    /// </summary>
     property numero: string read Fnumero write Setnumero;
     property numeroHasValue: Boolean read FnumeroHasValue write FnumeroHasValue;
+    /// <summary>
+    /// Complemento para o endereço de localização do estabelecimento.
+    /// </summary>
     property complemento: string read Fcomplemento write Setcomplemento;
     property complementoHasValue: Boolean read FcomplementoHasValue write FcomplementoHasValue;
+    /// <summary>
+    /// Bairro onde se localiza o estabelecimento.
+    /// </summary>
     property bairro: string read Fbairro write Setbairro;
     property bairroHasValue: Boolean read FbairroHasValue write FbairroHasValue;
+    /// <summary>
+    /// Código de endereçamento postal referente ao logradouro no qual o
+    /// estabelecimento esta localizado.
+    /// </summary>
     property cep: string read Fcep write Setcep;
     property cepHasValue: Boolean read FcepHasValue write FcepHasValue;
+    /// <summary>
+    /// Sigla da unidade da federação em que se encontra o estabelecimento.
+    /// </summary>
     property uf: string read Fuf write Setuf;
     property ufHasValue: Boolean read FufHasValue write FufHasValue;
+    /// <summary>
+    /// Município de jurisdição onde se encontra o estabelecimento.
+    /// </summary>
     property municipio: TCnpjMunicipio read Fmunicipio write Setmunicipio;
   end;
   
@@ -15640,13 +15766,48 @@ type
     procedure Setddd(const Value: string);
     procedure Setnumero(const Value: string);
   public
+    /// <summary>
+    /// Código de DDD (Discagem Direta à Distância)
+    /// </summary>
     property ddd: string read Fddd write Setddd;
     property dddHasValue: Boolean read FdddHasValue write FdddHasValue;
+    /// <summary>
+    /// Número do telefone.
+    /// </summary>
     property numero: string read Fnumero write Setnumero;
     property numeroHasValue: Boolean read FnumeroHasValue write FnumeroHasValue;
   end;
   
   TCnpjTelefoneList = class(TObjectList<TCnpjTelefone>)
+  end;
+  
+  TCnpjSituacaoEspecial = class
+  private
+    Fdata: TDate;
+    FdataHasValue: Boolean;
+    Fcodigo: string;
+    FcodigoHasValue: Boolean;
+    Fdescricao: string;
+    FdescricaoHasValue: Boolean;
+    procedure Setdata(const Value: TDate);
+    procedure Setcodigo(const Value: string);
+    procedure Setdescricao(const Value: string);
+  public
+    /// <summary>
+    /// Data em que a empresa entrou em situação especial.
+    /// </summary>
+    property data: TDate read Fdata write Setdata;
+    property dataHasValue: Boolean read FdataHasValue write FdataHasValue;
+    /// <summary>
+    /// Código da situação especial da empresa.
+    /// </summary>
+    property codigo: string read Fcodigo write Setcodigo;
+    property codigoHasValue: Boolean read FcodigoHasValue write FcodigoHasValue;
+    /// <summary>
+    /// Descrição da situação especial da empresa.
+    /// </summary>
+    property descricao: string read Fdescricao write Setdescricao;
+    property descricaoHasValue: Boolean read FdescricaoHasValue write FdescricaoHasValue;
   end;
   
   TCnpjOpcaoSimples = class
@@ -15661,10 +15822,52 @@ type
     procedure Setdata_opcao(const Value: TDate);
     procedure Setdata_exclusao(const Value: TDate);
   public
+    /// <summary>
+    /// Indicador da existência da opção pelo Simples Nacional:
+    /// * `true` - É optante.
+    /// * `false` - Não é optante.
+    /// </summary>
     property optante: Boolean read Foptante write Setoptante;
     property optanteHasValue: Boolean read FoptanteHasValue write FoptanteHasValue;
+    /// <summary>
+    /// Data da opção pelo Simples Nacional.
+    /// </summary>
     property data_opcao: TDate read Fdata_opcao write Setdata_opcao;
     property data_opcaoHasValue: Boolean read Fdata_opcaoHasValue write Fdata_opcaoHasValue;
+    /// <summary>
+    /// Data da exclusão do Simples Nacional.
+    /// </summary>
+    property data_exclusao: TDate read Fdata_exclusao write Setdata_exclusao;
+    property data_exclusaoHasValue: Boolean read Fdata_exclusaoHasValue write Fdata_exclusaoHasValue;
+  end;
+  
+  TCnpjOpcaoSimei = class
+  private
+    Foptante: Boolean;
+    FoptanteHasValue: Boolean;
+    Fdata_opcao: TDate;
+    Fdata_opcaoHasValue: Boolean;
+    Fdata_exclusao: TDate;
+    Fdata_exclusaoHasValue: Boolean;
+    procedure Setoptante(const Value: Boolean);
+    procedure Setdata_opcao(const Value: TDate);
+    procedure Setdata_exclusao(const Value: TDate);
+  public
+    /// <summary>
+    /// Indicador da existência da opção pelo MEI:
+    /// * `true` - É optante.
+    /// * `false` - Não é optante.
+    /// </summary>
+    property optante: Boolean read Foptante write Setoptante;
+    property optanteHasValue: Boolean read FoptanteHasValue write FoptanteHasValue;
+    /// <summary>
+    /// Data da opção pelo MEI.
+    /// </summary>
+    property data_opcao: TDate read Fdata_opcao write Setdata_opcao;
+    property data_opcaoHasValue: Boolean read Fdata_opcaoHasValue write Fdata_opcaoHasValue;
+    /// <summary>
+    /// Data da exclusão do MEI.
+    /// </summary>
     property data_exclusao: TDate read Fdata_exclusao write Setdata_exclusao;
     property data_exclusaoHasValue: Boolean read Fdata_exclusaoHasValue write Fdata_exclusaoHasValue;
   end;
@@ -15688,7 +15891,7 @@ type
     Fente_federativo_responsavel: string;
     Fente_federativo_responsavelHasValue: Boolean;
     Fsituacao_cadastral: TCnpjSituacaoCadastral;
-    Fmotivo_situacao_cadastral: TCnpjSituacaoCadastral;
+    Fmotivo_situacao_cadastral: TCnpjMotivoSituacaoCadastral;
     Fnome_da_cidade_no_exterior: string;
     Fnome_da_cidade_no_exteriorHasValue: Boolean;
     Fpais: TCnpjPais;
@@ -15698,9 +15901,9 @@ type
     Ftelefones: TCnpjTelefoneList;
     Femail: string;
     FemailHasValue: Boolean;
-    Fsituacao_especial: TCnpjSituacaoCadastral;
+    Fsituacao_especial: TCnpjSituacaoEspecial;
     Fsimples: TCnpjOpcaoSimples;
-    Fsimei: TCnpjOpcaoSimples;
+    Fsimei: TCnpjOpcaoSimei;
     procedure Setcnpj(const Value: string);
     procedure Setrazao_social(const Value: string);
     procedure Setnome_fantasia(const Value: string);
@@ -15711,7 +15914,7 @@ type
     procedure Setporte(const Value: TCnpjPorteEmpresa);
     procedure Setente_federativo_responsavel(const Value: string);
     procedure Setsituacao_cadastral(const Value: TCnpjSituacaoCadastral);
-    procedure Setmotivo_situacao_cadastral(const Value: TCnpjSituacaoCadastral);
+    procedure Setmotivo_situacao_cadastral(const Value: TCnpjMotivoSituacaoCadastral);
     procedure Setnome_da_cidade_no_exterior(const Value: string);
     procedure Setpais(const Value: TCnpjPais);
     procedure Setatividade_principal(const Value: TCnpjCnae);
@@ -15719,41 +15922,125 @@ type
     procedure Setendereco(const Value: TCnpjEndereco);
     procedure Settelefones(const Value: TCnpjTelefoneList);
     procedure Setemail(const Value: string);
-    procedure Setsituacao_especial(const Value: TCnpjSituacaoCadastral);
+    procedure Setsituacao_especial(const Value: TCnpjSituacaoEspecial);
     procedure Setsimples(const Value: TCnpjOpcaoSimples);
-    procedure Setsimei(const Value: TCnpjOpcaoSimples);
+    procedure Setsimei(const Value: TCnpjOpcaoSimei);
   public
     destructor Destroy; override;
+    /// <summary>
+    /// Número de inscrição do CNPJ.
+    /// </summary>
     property cnpj: string read Fcnpj write Setcnpj;
     property cnpjHasValue: Boolean read FcnpjHasValue write FcnpjHasValue;
+    /// <summary>
+    /// Nome empresarial da pessoa jurídica.
+    /// </summary>
     property razao_social: string read Frazao_social write Setrazao_social;
     property razao_socialHasValue: Boolean read Frazao_socialHasValue write Frazao_socialHasValue;
+    /// <summary>
+    /// Corresponde ao nome fantasia.
+    /// </summary>
     property nome_fantasia: string read Fnome_fantasia write Setnome_fantasia;
     property nome_fantasiaHasValue: Boolean read Fnome_fantasiaHasValue write Fnome_fantasiaHasValue;
+    /// <summary>
+    /// Data de início da atividade.
+    /// </summary>
     property data_inicio_atividade: TDate read Fdata_inicio_atividade write Setdata_inicio_atividade;
     property data_inicio_atividadeHasValue: Boolean read Fdata_inicio_atividadeHasValue write Fdata_inicio_atividadeHasValue;
+    /// <summary>
+    /// Indicador de matriz/filial:
+    /// * `true` - É matriz
+    /// * `false` - É filial
+    /// </summary>
     property matriz: Boolean read Fmatriz write Setmatriz;
     property matrizHasValue: Boolean read FmatrizHasValue write FmatrizHasValue;
+    /// <summary>
+    /// Natureza jurídica.
+    /// </summary>
     property natureza_juridica: TCnpjNaturezaJuridica read Fnatureza_juridica write Setnatureza_juridica;
+    /// <summary>
+    /// Capital social da empresa.
+    /// </summary>
     property capital_social: Double read Fcapital_social write Setcapital_social;
     property capital_socialHasValue: Boolean read Fcapital_socialHasValue write Fcapital_socialHasValue;
+    /// <summary>
+    /// Porte da empresa.
+    /// </summary>
     property porte: TCnpjPorteEmpresa read Fporte write Setporte;
+    /// <summary>
+    /// O ente federativo responsável é preenchido para os casos de órgãos e
+    /// entidades do grupo de natureza jurídica 1XXX. Para as demais naturezas,
+    /// este atributo fica em branco.
+    /// </summary>
     property ente_federativo_responsavel: string read Fente_federativo_responsavel write Setente_federativo_responsavel;
     property ente_federativo_responsavelHasValue: Boolean read Fente_federativo_responsavelHasValue write Fente_federativo_responsavelHasValue;
+    /// <summary>
+    /// Situação cadastral.
+    /// </summary>
     property situacao_cadastral: TCnpjSituacaoCadastral read Fsituacao_cadastral write Setsituacao_cadastral;
-    property motivo_situacao_cadastral: TCnpjSituacaoCadastral read Fmotivo_situacao_cadastral write Setmotivo_situacao_cadastral;
+    /// <summary>
+    /// Motivo da situação cadastral.
+    /// </summary>
+    property motivo_situacao_cadastral: TCnpjMotivoSituacaoCadastral read Fmotivo_situacao_cadastral write Setmotivo_situacao_cadastral;
+    /// <summary>
+    /// Nome da cidade no exterior.
+    /// </summary>
     property nome_da_cidade_no_exterior: string read Fnome_da_cidade_no_exterior write Setnome_da_cidade_no_exterior;
     property nome_da_cidade_no_exteriorHasValue: Boolean read Fnome_da_cidade_no_exteriorHasValue write Fnome_da_cidade_no_exteriorHasValue;
+    /// <summary>
+    /// País.
+    /// </summary>
     property pais: TCnpjPais read Fpais write Setpais;
+    /// <summary>
+    /// Atividade econômica principal do estabelecimento.
+    /// </summary>
     property atividade_principal: TCnpjCnae read Fatividade_principal write Setatividade_principal;
+    /// <summary>
+    /// Atividades econômicas secundárias do estabelecimento.
+    /// </summary>
     property atividades_secundarias: TCnpjCnaeList read Fatividades_secundarias write Setatividades_secundarias;
+    /// <summary>
+    /// Endereço do estabelecimento.
+    /// </summary>
     property endereco: TCnpjEndereco read Fendereco write Setendereco;
+    /// <summary>
+    /// Telefones do estabelecimento.
+    /// </summary>
     property telefones: TCnpjTelefoneList read Ftelefones write Settelefones;
+    /// <summary>
+    /// E-mail do contribuinte.
+    /// </summary>
     property email: string read Femail write Setemail;
     property emailHasValue: Boolean read FemailHasValue write FemailHasValue;
-    property situacao_especial: TCnpjSituacaoCadastral read Fsituacao_especial write Setsituacao_especial;
+    /// <summary>
+    /// Situação especial da empresa.
+    /// </summary>
+    property situacao_especial: TCnpjSituacaoEspecial read Fsituacao_especial write Setsituacao_especial;
+    /// <summary>
+    /// Informações da opção do Simples Nacional.
+    /// </summary>
     property simples: TCnpjOpcaoSimples read Fsimples write Setsimples;
-    property simei: TCnpjOpcaoSimples read Fsimei write Setsimei;
+    /// <summary>
+    /// Informações da opção pelo MEI.
+    /// </summary>
+    property simei: TCnpjOpcaoSimei read Fsimei write Setsimei;
+  end;
+  
+  TCnpjEmpresaList = class(TObjectList<TCnpjEmpresa>)
+  end;
+  
+  TCnpjListagem = class
+  private
+    F_count: Integer;
+    F_countHasValue: Boolean;
+    Fdata: TCnpjEmpresaList;
+    procedure Set_count(const Value: Integer);
+    procedure Setdata(const Value: TCnpjEmpresaList);
+  public
+    destructor Destroy; override;
+    property _count: Integer read F_count write Set_count;
+    property _countHasValue: Boolean read F_countHasValue write F_countHasValue;
+    property data: TCnpjEmpresaList read Fdata write Setdata;
   end;
   
   TCepEndereco = class
@@ -17423,10 +17710,22 @@ begin
   inherited;
 end;
 
+procedure TCteSefazIde.SetcCT(const Value: string);
+begin
+  FcCT := Value;
+  FcCTHasValue := True;
+end;
+
 procedure TCteSefazIde.Setmod(const Value: Integer);
 begin
   Fmod := Value;
   FmodHasValue := True;
+end;
+
+procedure TCteSefazIde.SetcDV(const Value: Integer);
+begin
+  FcDV := Value;
+  FcDVHasValue := True;
 end;
 
 procedure TCteSefazIde.SettpAmb(const Value: Integer);
@@ -20462,6 +20761,18 @@ begin
   FmodHasValue := True;
 end;
 
+procedure TMdfeSefazIde.SetcMDF(const Value: string);
+begin
+  FcMDF := Value;
+  FcMDFHasValue := True;
+end;
+
+procedure TMdfeSefazIde.SetcDV(const Value: Integer);
+begin
+  FcDV := Value;
+  FcDVHasValue := True;
+end;
+
 procedure TMdfeSefazIde.SetinfMunCarrega(const Value: TMdfeSefazInfMunCarregaList);
 begin
   if Value <> FinfMunCarrega then
@@ -21669,13 +21980,13 @@ begin
   FCEPHasValue := True;
 end;
 
-procedure TMdfeSefazInfLocalCarrega.Setlatitude(const Value: Double);
+procedure TMdfeSefazInfLocalCarrega.Setlatitude(const Value: string);
 begin
   Flatitude := Value;
   FlatitudeHasValue := True;
 end;
 
-procedure TMdfeSefazInfLocalCarrega.Setlongitude(const Value: Double);
+procedure TMdfeSefazInfLocalCarrega.Setlongitude(const Value: string);
 begin
   Flongitude := Value;
   FlongitudeHasValue := True;
@@ -21689,13 +22000,13 @@ begin
   FCEPHasValue := True;
 end;
 
-procedure TMdfeSefazInfLocalDescarrega.Setlatitude(const Value: Double);
+procedure TMdfeSefazInfLocalDescarrega.Setlatitude(const Value: string);
 begin
   Flatitude := Value;
   FlatitudeHasValue := True;
 end;
 
-procedure TMdfeSefazInfLocalDescarrega.Setlongitude(const Value: Double);
+procedure TMdfeSefazInfLocalDescarrega.Setlongitude(const Value: string);
 begin
   Flongitude := Value;
   FlongitudeHasValue := True;
@@ -22518,6 +22829,12 @@ begin
   inherited;
 end;
 
+procedure TNfeSefazIde.SetcNF(const Value: string);
+begin
+  FcNF := Value;
+  FcNFHasValue := True;
+end;
+
 procedure TNfeSefazIde.Setmod(const Value: Integer);
 begin
   Fmod := Value;
@@ -22528,6 +22845,12 @@ procedure TNfeSefazIde.SetdhSaiEnt(const Value: TDateTime);
 begin
   FdhSaiEnt := Value;
   FdhSaiEntHasValue := True;
+end;
+
+procedure TNfeSefazIde.SetcDV(const Value: Integer);
+begin
+  FcDV := Value;
+  FcDVHasValue := True;
 end;
 
 procedure TNfeSefazIde.SettpAmb(const Value: Integer);
@@ -26023,6 +26346,26 @@ begin
   FdescricaoHasValue := True;
 end;
 
+{ TCnpjMotivoSituacaoCadastral }
+
+procedure TCnpjMotivoSituacaoCadastral.Setdata(const Value: TDate);
+begin
+  Fdata := Value;
+  FdataHasValue := True;
+end;
+
+procedure TCnpjMotivoSituacaoCadastral.Setcodigo(const Value: string);
+begin
+  Fcodigo := Value;
+  FcodigoHasValue := True;
+end;
+
+procedure TCnpjMotivoSituacaoCadastral.Setdescricao(const Value: string);
+begin
+  Fdescricao := Value;
+  FdescricaoHasValue := True;
+end;
+
 { TCnpjPais }
 
 procedure TCnpjPais.Setcodigo(const Value: string);
@@ -26144,6 +26487,26 @@ begin
   FnumeroHasValue := True;
 end;
 
+{ TCnpjSituacaoEspecial }
+
+procedure TCnpjSituacaoEspecial.Setdata(const Value: TDate);
+begin
+  Fdata := Value;
+  FdataHasValue := True;
+end;
+
+procedure TCnpjSituacaoEspecial.Setcodigo(const Value: string);
+begin
+  Fcodigo := Value;
+  FcodigoHasValue := True;
+end;
+
+procedure TCnpjSituacaoEspecial.Setdescricao(const Value: string);
+begin
+  Fdescricao := Value;
+  FdescricaoHasValue := True;
+end;
+
 { TCnpjOpcaoSimples }
 
 procedure TCnpjOpcaoSimples.Setoptante(const Value: Boolean);
@@ -26159,6 +26522,26 @@ begin
 end;
 
 procedure TCnpjOpcaoSimples.Setdata_exclusao(const Value: TDate);
+begin
+  Fdata_exclusao := Value;
+  Fdata_exclusaoHasValue := True;
+end;
+
+{ TCnpjOpcaoSimei }
+
+procedure TCnpjOpcaoSimei.Setoptante(const Value: Boolean);
+begin
+  Foptante := Value;
+  FoptanteHasValue := True;
+end;
+
+procedure TCnpjOpcaoSimei.Setdata_opcao(const Value: TDate);
+begin
+  Fdata_opcao := Value;
+  Fdata_opcaoHasValue := True;
+end;
+
+procedure TCnpjOpcaoSimei.Setdata_exclusao(const Value: TDate);
 begin
   Fdata_exclusao := Value;
   Fdata_exclusaoHasValue := True;
@@ -26252,7 +26635,7 @@ begin
   end;
 end;
 
-procedure TCnpjEmpresa.Setmotivo_situacao_cadastral(const Value: TCnpjSituacaoCadastral);
+procedure TCnpjEmpresa.Setmotivo_situacao_cadastral(const Value: TCnpjMotivoSituacaoCadastral);
 begin
   if Value <> Fmotivo_situacao_cadastral then
   begin
@@ -26318,7 +26701,7 @@ begin
   FemailHasValue := True;
 end;
 
-procedure TCnpjEmpresa.Setsituacao_especial(const Value: TCnpjSituacaoCadastral);
+procedure TCnpjEmpresa.Setsituacao_especial(const Value: TCnpjSituacaoEspecial);
 begin
   if Value <> Fsituacao_especial then
   begin
@@ -26336,12 +26719,35 @@ begin
   end;
 end;
 
-procedure TCnpjEmpresa.Setsimei(const Value: TCnpjOpcaoSimples);
+procedure TCnpjEmpresa.Setsimei(const Value: TCnpjOpcaoSimei);
 begin
   if Value <> Fsimei then
   begin
     Fsimei.Free;
     Fsimei := Value;
+  end;
+end;
+
+{ TCnpjListagem }
+
+destructor TCnpjListagem.Destroy;
+begin
+  Fdata.Free;
+  inherited;
+end;
+
+procedure TCnpjListagem.Set_count(const Value: Integer);
+begin
+  F_count := Value;
+  F_countHasValue := True;
+end;
+
+procedure TCnpjListagem.Setdata(const Value: TCnpjEmpresaList);
+begin
+  if Value <> Fdata then
+  begin
+    Fdata.Free;
+    Fdata := Value;
   end;
 end;
 

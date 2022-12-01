@@ -49,6 +49,32 @@ type
   ICnpjService = interface(IInvokable)
     ['{8E151A0C-46A6-4752-A292-DBE060A33E46}']
     /// <summary>
+    /// Listar estabelecimentos a partir da base de CNPJ
+    /// </summary>
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// Valor padrão: `10`.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="CnaePrincipal">
+    /// Filtro pelo código CNAE da atividade principal do estabelecimento.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Municipio">
+    /// Filtro pelo código IBGE ou TOM (Tabela de Órgãos e Municípios) do município do estabelecimento.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="NaturezaJuridica">
+    /// Filtro pela natureza jurídica do estabelecimento
+    ///  Utilize o valor de quatro dígitos sem máscara.
+    /// </param>
+    /// <remarks>
+    /// Retorna uma lista de estabelecimentos de acordo com os critérios de busca utilizados.
+    /// </remarks>
+    function ListarCnpj(Top: Integer; Skip: Integer; CnaePrincipal: string; Municipio: string; NaturezaJuridica: string): TCnpjListagem;
+    /// <summary>
     /// Consultar dados do CNPJ
     /// </summary>
     /// <param name="Cnpj">
@@ -59,6 +85,26 @@ type
   
   TCnpjService = class(TRestService, ICnpjService)
   public
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// Valor padrão: `10`.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="CnaePrincipal">
+    /// Filtro pelo código CNAE da atividade principal do estabelecimento.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Municipio">
+    /// Filtro pelo código IBGE ou TOM (Tabela de Órgãos e Municípios) do município do estabelecimento.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="NaturezaJuridica">
+    /// Filtro pela natureza jurídica do estabelecimento
+    ///  Utilize o valor de quatro dígitos sem máscara.
+    /// </param>
+    function ListarCnpj(Top: Integer; Skip: Integer; CnaePrincipal: string; Municipio: string; NaturezaJuridica: string): TCnpjListagem;
     /// <param name="Cnpj">
     /// CNPJ sem máscara.
     /// </param>
@@ -1481,6 +1527,23 @@ begin
 end;
 
 { TCnpjService }
+
+function TCnpjService.ListarCnpj(Top: Integer; Skip: Integer; CnaePrincipal: string; Municipio: string; NaturezaJuridica: string): TCnpjListagem;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cnpj', 'GET');
+  Request.AddQueryParam('$top', IntToStr(Top));
+  Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('cnae_principal', CnaePrincipal);
+  Request.AddQueryParam('municipio', Municipio);
+  Request.AddQueryParam('natureza_juridica', NaturezaJuridica);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TCnpjListagemFromJson(Response.ContentAsString);
+end;
 
 function TCnpjService.ConsultarCnpj(Cnpj: string): TCnpjEmpresa;
 var
