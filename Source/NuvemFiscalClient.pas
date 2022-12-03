@@ -222,7 +222,7 @@ type
     /// 
     /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 3.0.0a, item 4.6.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
     /// </remarks>
-    function ConsultarStatusSefazCte(CpfCnpj: string): TDfeVisaoGeralSefazStatus;
+    function ConsultarStatusSefazCte(CpfCnpj: string): TDfeSefazStatus;
     /// <summary>
     /// Consultar CT-e
     /// </summary>
@@ -348,7 +348,7 @@ type
     /// CPF/CNPJ do emitente.
     /// Utilize o valor sem máscara.
     /// </param>
-    function ConsultarStatusSefazCte(CpfCnpj: string): TDfeVisaoGeralSefazStatus;
+    function ConsultarStatusSefazCte(CpfCnpj: string): TDfeSefazStatus;
     /// <param name="Id">
     /// ID único do CT-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -613,7 +613,7 @@ type
     /// 
     /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 3.0.0a, item 4.6.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
     /// </remarks>
-    function ConsultarStatusSefazMdfe(CpfCnpj: string): TDfeVisaoGeralSefazStatus;
+    function ConsultarStatusSefazMdfe(CpfCnpj: string): TDfeSefazStatus;
     /// <summary>
     /// Consultar manifesto
     /// </summary>
@@ -741,7 +741,7 @@ type
     /// CPF/CNPJ do emitente.
     /// Utilize o valor sem máscara.
     /// </param>
-    function ConsultarStatusSefazMdfe(CpfCnpj: string): TDfeVisaoGeralSefazStatus;
+    function ConsultarStatusSefazMdfe(CpfCnpj: string): TDfeSefazStatus;
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -881,7 +881,7 @@ type
     /// 
     /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 7.0, item 5.5.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
     /// </remarks>
-    function ConsultarStatusSefazNfce(CpfCnpj: string): TDfeVisaoGeralSefazStatus;
+    function ConsultarStatusSefazNfce(CpfCnpj: string): TDfeSefazStatus;
     /// <summary>
     /// Consultar NFC-e
     /// </summary>
@@ -982,7 +982,7 @@ type
     /// CPF/CNPJ do emitente.
     /// Utilize o valor sem máscara.
     /// </param>
-    function ConsultarStatusSefazNfce(CpfCnpj: string): TDfeVisaoGeralSefazStatus;
+    function ConsultarStatusSefazNfce(CpfCnpj: string): TDfeSefazStatus;
     /// <param name="Id">
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -1120,7 +1120,7 @@ type
     /// 
     /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 7.0, item 5.5.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
     /// </remarks>
-    function ConsultarStatusSefazNfe(CpfCnpj: string): TDfeVisaoGeralSefazStatus;
+    function ConsultarStatusSefazNfe(CpfCnpj: string): TDfeSefazStatus;
     /// <summary>
     /// Consultar NF-e
     /// </summary>
@@ -1253,7 +1253,7 @@ type
     /// CPF/CNPJ do emitente.
     /// Utilize o valor sem máscara.
     /// </param>
-    function ConsultarStatusSefazNfe(CpfCnpj: string): TDfeVisaoGeralSefazStatus;
+    function ConsultarStatusSefazNfe(CpfCnpj: string): TDfeSefazStatus;
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -1699,7 +1699,7 @@ begin
   Result := Converter.TDfeLoteFromJson(Response.ContentAsString);
 end;
 
-function TCteService.ConsultarStatusSefazCte(CpfCnpj: string): TDfeVisaoGeralSefazStatus;
+function TCteService.ConsultarStatusSefazCte(CpfCnpj: string): TDfeSefazStatus;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -1709,7 +1709,7 @@ begin
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
-  Result := Converter.TDfeVisaoGeralSefazStatusFromJson(Response.ContentAsString);
+  Result := Converter.TDfeSefazStatusFromJson(Response.ContentAsString);
 end;
 
 function TCteService.ConsultarCte(Id: string): TDfe;
@@ -2168,7 +2168,7 @@ begin
   Result := Converter.TDfeLoteFromJson(Response.ContentAsString);
 end;
 
-function TMdfeService.ConsultarStatusSefazMdfe(CpfCnpj: string): TDfeVisaoGeralSefazStatus;
+function TMdfeService.ConsultarStatusSefazMdfe(CpfCnpj: string): TDfeSefazStatus;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2178,7 +2178,7 @@ begin
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
-  Result := Converter.TDfeVisaoGeralSefazStatusFromJson(Response.ContentAsString);
+  Result := Converter.TDfeSefazStatusFromJson(Response.ContentAsString);
 end;
 
 function TMdfeService.ConsultarMdfe(Id: string): TDfe;
@@ -2432,7 +2432,7 @@ begin
   Result := Converter.TDfeLoteFromJson(Response.ContentAsString);
 end;
 
-function TNfceService.ConsultarStatusSefazNfce(CpfCnpj: string): TDfeVisaoGeralSefazStatus;
+function TNfceService.ConsultarStatusSefazNfce(CpfCnpj: string): TDfeSefazStatus;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2442,7 +2442,7 @@ begin
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
-  Result := Converter.TDfeVisaoGeralSefazStatusFromJson(Response.ContentAsString);
+  Result := Converter.TDfeSefazStatusFromJson(Response.ContentAsString);
 end;
 
 function TNfceService.ConsultarNfce(Id: string): TDfe;
@@ -2663,7 +2663,7 @@ begin
   Result := Converter.TDfeLoteFromJson(Response.ContentAsString);
 end;
 
-function TNfeService.ConsultarStatusSefazNfe(CpfCnpj: string): TDfeVisaoGeralSefazStatus;
+function TNfeService.ConsultarStatusSefazNfe(CpfCnpj: string): TDfeSefazStatus;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2673,7 +2673,7 @@ begin
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
-  Result := Converter.TDfeVisaoGeralSefazStatusFromJson(Response.ContentAsString);
+  Result := Converter.TDfeSefazStatusFromJson(Response.ContentAsString);
 end;
 
 function TNfeService.ConsultarNfe(Id: string): TDfe;
