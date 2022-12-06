@@ -7,6 +7,8 @@ uses
   OpenApiJson;
 
 type
+  TCustomJsonConverter = OpenApiJson.TCustomJsonConverter;
+
   IRestResponse = interface
   ['{C2CE5CD8-FA9F-442F-9980-988A2A0EFF3D}']
     function StatusCode: Integer;

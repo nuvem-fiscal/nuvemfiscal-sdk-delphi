@@ -23,7 +23,7 @@ type
   
   TRestService = class(TCustomRestService)
   protected
-    function CreateConverter: TJsonConverter; override;
+    function CreateConverter: TCustomJsonConverter; override;
     function Converter: TJsonConverter;
   end;
   
@@ -1501,7 +1501,7 @@ implementation
 
 { TRestService }
 
-function TRestService.CreateConverter: TJsonConverter;
+function TRestService.CreateConverter: TCustomJsonConverter;
 begin
   Result := TJsonConverter.Create;
 end;
