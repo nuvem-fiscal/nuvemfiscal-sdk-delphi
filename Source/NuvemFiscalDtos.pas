@@ -1,10 +1,12 @@
 unit NuvemFiscalDtos;
 
+{$IFDEF FPC}{$MODE Delphi}{$ENDIF}
+
 interface
 
 uses
-  System.Generics.Collections, 
-  System.SysUtils;
+  Generics.Collections, 
+  SysUtils;
 
 type
   TEmpresaEndereco = class;

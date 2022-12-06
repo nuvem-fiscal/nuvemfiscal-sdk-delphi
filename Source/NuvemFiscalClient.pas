@@ -3,7 +3,7 @@ unit NuvemFiscalClient;
 interface
 
 uses
-  System.SysUtils, 
+  SysUtils, 
   OpenApiRest, 
   NuvemFiscalJson, 
   NuvemFiscalDtos;
@@ -23,7 +23,7 @@ type
   
   TRestService = class(TCustomRestService)
   protected
-    function CreateConverter: TJsonConverter;
+    function CreateConverter: TJsonConverter; override;
     function Converter: TJsonConverter;
   end;
   
