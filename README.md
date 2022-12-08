@@ -1,9 +1,9 @@
 ﻿# nuvemfiscal-sdk-delphi
-Biblioteca Delphi para uso da API da [Nuvem Fiscal](https://www.nuvemfiscal.com.br). É importante também consultar a [documentação da Nuvem Fiscal](https://dev.nuvemfiscal.com.br/docs).
+Biblioteca para uso da API da [Nuvem Fiscal](https://www.nuvemfiscal.com.br) com [Delphi](https://www.embarcadero.com/products/delphi) e [Lazarus](https://www.lazarus-ide.org)/[FreePascal](https://www.freepascal.org). É importante também consultar a [documentação da API Nuvem Fiscal](https://dev.nuvemfiscal.com.br/docs).
 
 ## Instalação
 
-Para utilizar a biblioteca, basta adicionar o caminho completo da pasta [Source](/Source) ao `Library Path` da IDE do Delphi (ou ao `Search Path` do seu projeto).
+Para utilizar a biblioteca, basta adicionar o caminho completo da pasta [Source](/Source) ao `Library Path` da IDE do Delphi (ou ao `Search Path` do seu projeto) ou do Lazarus.
 
 ## Utilização
 
