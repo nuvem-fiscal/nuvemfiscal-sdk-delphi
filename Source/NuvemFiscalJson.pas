@@ -4783,7 +4783,7 @@ begin
       Json.ObjAddProp(Result, 'CEP', Self.stringToJsonValue(Source.CEP));
     Json.ObjAddProp(Result, 'UF', Self.stringToJsonValue(Source.UF));
     if Source.cPaisHasValue then
-      Json.ObjAddProp(Result, 'cPais', Self.IntegerToJsonValue(Source.cPais));
+      Json.ObjAddProp(Result, 'cPais', Self.stringToJsonValue(Source.cPais));
     if Source.xPaisHasValue then
       Json.ObjAddProp(Result, 'xPais', Self.stringToJsonValue(Source.xPais));
   except
@@ -4832,7 +4832,7 @@ begin
     if Json.ObjContains(Source, 'UF', JValue) then
       Result.UF := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'cPais', JValue) then
-      Result.cPais := Self.IntegerFromJsonValue(JValue);
+      Result.cPais := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'xPais', JValue) then
       Result.xPais := Self.stringFromJsonValue(JValue);
   except
@@ -21388,7 +21388,7 @@ begin
     if Source.data_encerramentoHasValue then
       Json.ObjAddProp(Result, 'data_encerramento', Self.TDateToJsonValue(Source.data_encerramento));
     Json.ObjAddProp(Result, 'uf', Self.stringToJsonValue(Source.uf));
-    Json.ObjAddProp(Result, 'codigo_municipio', Self.IntegerToJsonValue(Source.codigo_municipio));
+    Json.ObjAddProp(Result, 'codigo_municipio', Self.stringToJsonValue(Source.codigo_municipio));
   except
     Result.Free;
     raise;
@@ -21423,7 +21423,7 @@ begin
     if Json.ObjContains(Source, 'uf', JValue) then
       Result.uf := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'codigo_municipio', JValue) then
-      Result.codigo_municipio := Self.IntegerFromJsonValue(JValue);
+      Result.codigo_municipio := Self.stringFromJsonValue(JValue);
   except
     Result.Free;
     raise;
@@ -21456,7 +21456,7 @@ begin
     if Source.ufHasValue then
       Json.ObjAddProp(Result, 'uf', Self.stringToJsonValue(Source.uf));
     if Source.codigo_municipioHasValue then
-      Json.ObjAddProp(Result, 'codigo_municipio', Self.IntegerToJsonValue(Source.codigo_municipio));
+      Json.ObjAddProp(Result, 'codigo_municipio', Self.stringToJsonValue(Source.codigo_municipio));
     if Source.idHasValue then
       Json.ObjAddProp(Result, 'id', Self.stringToJsonValue(Source.id));
     if Source.ambienteHasValue then
@@ -21519,7 +21519,7 @@ begin
     if Json.ObjContains(Source, 'uf', JValue) then
       Result.uf := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'codigo_municipio', JValue) then
-      Result.codigo_municipio := Self.IntegerFromJsonValue(JValue);
+      Result.codigo_municipio := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'id', JValue) then
       Result.id := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'ambiente', JValue) then
@@ -21758,7 +21758,7 @@ begin
   Result := Json.CreateObject;
   try
     if Source.codigo_municipio_descargaHasValue then
-      Json.ObjAddProp(Result, 'codigo_municipio_descarga', Self.IntegerToJsonValue(Source.codigo_municipio_descarga));
+      Json.ObjAddProp(Result, 'codigo_municipio_descarga', Self.stringToJsonValue(Source.codigo_municipio_descarga));
     if Source.municipio_descargaHasValue then
       Json.ObjAddProp(Result, 'municipio_descarga', Self.stringToJsonValue(Source.municipio_descarga));
     if Source.chave_acesso_nfeHasValue then
@@ -21793,7 +21793,7 @@ begin
   Result := TMdfeDocumentoVinculado.Create;
   try
     if Json.ObjContains(Source, 'codigo_municipio_descarga', JValue) then
-      Result.codigo_municipio_descarga := Self.IntegerFromJsonValue(JValue);
+      Result.codigo_municipio_descarga := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'municipio_descarga', JValue) then
       Result.municipio_descarga := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'chave_acesso_nfe', JValue) then
@@ -21888,7 +21888,7 @@ begin
   Result := Json.CreateObject;
   try
     if Source.codigo_municipio_carregaHasValue then
-      Json.ObjAddProp(Result, 'codigo_municipio_carrega', Self.IntegerToJsonValue(Source.codigo_municipio_carrega));
+      Json.ObjAddProp(Result, 'codigo_municipio_carrega', Self.stringToJsonValue(Source.codigo_municipio_carrega));
     if Source.municipio_carregaHasValue then
       Json.ObjAddProp(Result, 'municipio_carrega', Self.stringToJsonValue(Source.municipio_carrega));
     if Assigned(Source.documentos) then
@@ -21925,7 +21925,7 @@ begin
   Result := TMdfePedidoInclusaoDfe.Create;
   try
     if Json.ObjContains(Source, 'codigo_municipio_carrega', JValue) then
-      Result.codigo_municipio_carrega := Self.IntegerFromJsonValue(JValue);
+      Result.codigo_municipio_carrega := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'municipio_carrega', JValue) then
       Result.municipio_carrega := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'documentos', JValue) then
@@ -21960,7 +21960,7 @@ begin
   Result := Json.CreateObject;
   try
     if Source.codigo_municipio_carregaHasValue then
-      Json.ObjAddProp(Result, 'codigo_municipio_carrega', Self.IntegerToJsonValue(Source.codigo_municipio_carrega));
+      Json.ObjAddProp(Result, 'codigo_municipio_carrega', Self.stringToJsonValue(Source.codigo_municipio_carrega));
     if Source.municipio_carregaHasValue then
       Json.ObjAddProp(Result, 'municipio_carrega', Self.stringToJsonValue(Source.municipio_carrega));
     if Assigned(Source.documentos) then
@@ -22023,7 +22023,7 @@ begin
   Result := TMdfeInclusaoDfe.Create;
   try
     if Json.ObjContains(Source, 'codigo_municipio_carrega', JValue) then
-      Result.codigo_municipio_carrega := Self.IntegerFromJsonValue(JValue);
+      Result.codigo_municipio_carrega := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'municipio_carrega', JValue) then
       Result.municipio_carrega := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'documentos', JValue) then
@@ -22596,7 +22596,7 @@ begin
     if Source.CEPHasValue then
       Json.ObjAddProp(Result, 'CEP', Self.stringToJsonValue(Source.CEP));
     if Source.cPaisHasValue then
-      Json.ObjAddProp(Result, 'cPais', Self.IntegerToJsonValue(Source.cPais));
+      Json.ObjAddProp(Result, 'cPais', Self.stringToJsonValue(Source.cPais));
     if Source.xPaisHasValue then
       Json.ObjAddProp(Result, 'xPais', Self.stringToJsonValue(Source.xPais));
     if Source.foneHasValue then
@@ -22647,7 +22647,7 @@ begin
     if Json.ObjContains(Source, 'CEP', JValue) then
       Result.CEP := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'cPais', JValue) then
-      Result.cPais := Self.IntegerFromJsonValue(JValue);
+      Result.cPais := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'xPais', JValue) then
       Result.xPais := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'fone', JValue) then
@@ -22880,7 +22880,7 @@ begin
     if Source.CEPHasValue then
       Json.ObjAddProp(Result, 'CEP', Self.stringToJsonValue(Source.CEP));
     if Source.cPaisHasValue then
-      Json.ObjAddProp(Result, 'cPais', Self.IntegerToJsonValue(Source.cPais));
+      Json.ObjAddProp(Result, 'cPais', Self.stringToJsonValue(Source.cPais));
     if Source.xPaisHasValue then
       Json.ObjAddProp(Result, 'xPais', Self.stringToJsonValue(Source.xPais));
     if Source.foneHasValue then
@@ -22931,7 +22931,7 @@ begin
     if Json.ObjContains(Source, 'CEP', JValue) then
       Result.CEP := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'cPais', JValue) then
-      Result.cPais := Self.IntegerFromJsonValue(JValue);
+      Result.cPais := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'xPais', JValue) then
       Result.xPais := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'fone', JValue) then
@@ -23075,7 +23075,7 @@ begin
     if Source.CEPHasValue then
       Json.ObjAddProp(Result, 'CEP', Self.stringToJsonValue(Source.CEP));
     if Source.cPaisHasValue then
-      Json.ObjAddProp(Result, 'cPais', Self.IntegerToJsonValue(Source.cPais));
+      Json.ObjAddProp(Result, 'cPais', Self.stringToJsonValue(Source.cPais));
     if Source.xPaisHasValue then
       Json.ObjAddProp(Result, 'xPais', Self.stringToJsonValue(Source.xPais));
     if Source.foneHasValue then
@@ -23136,7 +23136,7 @@ begin
     if Json.ObjContains(Source, 'CEP', JValue) then
       Result.CEP := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'cPais', JValue) then
-      Result.cPais := Self.IntegerFromJsonValue(JValue);
+      Result.cPais := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'xPais', JValue) then
       Result.xPais := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'fone', JValue) then
@@ -26994,7 +26994,7 @@ begin
     if Source.cMunHasValue then
       Json.ObjAddProp(Result, 'cMun', Self.stringToJsonValue(Source.cMun));
     if Source.cPaisHasValue then
-      Json.ObjAddProp(Result, 'cPais', Self.IntegerToJsonValue(Source.cPais));
+      Json.ObjAddProp(Result, 'cPais', Self.stringToJsonValue(Source.cPais));
     if Source.nProcessoHasValue then
       Json.ObjAddProp(Result, 'nProcesso', Self.stringToJsonValue(Source.nProcesso));
     Json.ObjAddProp(Result, 'indIncentivo', Self.IntegerToJsonValue(Source.indIncentivo));
@@ -27054,7 +27054,7 @@ begin
     if Json.ObjContains(Source, 'cMun', JValue) then
       Result.cMun := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'cPais', JValue) then
-      Result.cPais := Self.IntegerFromJsonValue(JValue);
+      Result.cPais := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'nProcesso', JValue) then
       Result.nProcesso := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'indIncentivo', JValue) then

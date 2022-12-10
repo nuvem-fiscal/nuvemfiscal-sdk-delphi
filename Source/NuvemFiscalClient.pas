@@ -159,7 +159,7 @@ type
     /// <summary>
     /// Inutilizar uma sequência de numeração de CT-e
     /// </summary>
-    function InutilizarCte(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
+    function InutilizarNumeracaoCte(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <summary>
     /// Consultar a inutilização de sequência de numeração
     /// </summary>
@@ -314,7 +314,7 @@ type
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlEventoCte(Id: string): TBytes;
-    function InutilizarCte(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
+    function InutilizarNumeracaoCte(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
@@ -818,7 +818,7 @@ type
     /// <summary>
     /// Inutilizar uma sequência de numeração de NFC-e
     /// </summary>
-    function InutilizarNfce(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
+    function InutilizarNumeracaoNfce(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <summary>
     /// Consultar a inutilização de sequência de numeração
     /// </summary>
@@ -948,7 +948,7 @@ type
     /// </param>
     function ListarNfce(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeListagem;
     function EmitirNfce(Body: TNfePedidoEmissao): TDfe;
-    function InutilizarNfce(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
+    function InutilizarNumeracaoNfce(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
@@ -1057,7 +1057,7 @@ type
     /// <summary>
     /// Inutilizar uma sequência de numeração de NF-e
     /// </summary>
-    function InutilizarNfe(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
+    function InutilizarNumeracaoNfe(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <summary>
     /// Consultar a inutilização de sequência de numeração
     /// </summary>
@@ -1219,7 +1219,7 @@ type
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlEventoNfe(Id: string): TBytes;
-    function InutilizarNfe(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
+    function InutilizarNumeracaoNfe(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
@@ -1616,7 +1616,7 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TCteService.InutilizarCte(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
+function TCteService.InutilizarNumeracaoCte(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2349,7 +2349,7 @@ begin
   Result := Converter.TDfeFromJson(Response.ContentAsString);
 end;
 
-function TNfceService.InutilizarNfce(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
+function TNfceService.InutilizarNumeracaoNfce(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2580,7 +2580,7 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TNfeService.InutilizarNfe(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
+function TNfeService.InutilizarNumeracaoNfe(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
 var
   Request: IRestRequest;
   Response: IRestResponse;

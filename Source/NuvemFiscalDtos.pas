@@ -748,8 +748,28 @@ type
     Fserie: string;
     Fnumero: Integer;
   public
+    /// <summary>
+    /// Número do Lote de RPS.
+    /// Informe o próximo número do lote RPS a ser utilizado. Após isso, a Nuvem
+    /// Fiscal gerenciará esse campo (a cada novo envio de lote o número é
+    /// incrementado em + 1). Portanto, basta informá-lo no cadastro da empresa
+    /// uma única vez.
+    /// </summary>
     property lote: Integer read Flote write Flote;
+    /// <summary>
+    /// Série do RPS.
+    /// A série dos RPS varia de acordo com cada prefeitura, podendo ser
+    /// número (1, 2 ou 3, por exemplo) ou letras (A, S, NFS, por exemplo).
+    /// Portanto, consulte-a com o município da empresa antes de iniciar a
+    /// </summary>
     property serie: string read Fserie write Fserie;
+    /// <summary>
+    /// Número do RPS.
+    /// Informe o próximo número de RPS a ser utilizado. Após isso, a Nuvem
+    /// Fiscal gerenciará esse campo (a cada novo envio de RPS o número é
+    /// incrementado em + 1). Portanto, basta informá-lo no cadastro da empresa
+    /// uma única vez.
+    /// </summary>
     property numero: Integer read Fnumero write Fnumero;
   end;
   
@@ -1770,13 +1790,13 @@ type
     FCEP: string;
     FCEPHasValue: Boolean;
     FUF: string;
-    FcPais: Integer;
+    FcPais: string;
     FcPaisHasValue: Boolean;
     FxPais: string;
     FxPaisHasValue: Boolean;
     procedure SetxCpl(const Value: string);
     procedure SetCEP(const Value: string);
-    procedure SetcPais(const Value: Integer);
+    procedure SetcPais(const Value: string);
     procedure SetxPais(const Value: string);
   public
     /// <summary>
@@ -1821,7 +1841,7 @@ type
     /// Código do país.
     /// Utilizar a tabela do BACEN.
     /// </summary>
-    property cPais: Integer read FcPais write SetcPais;
+    property cPais: string read FcPais write SetcPais;
     property cPaisHasValue: Boolean read FcPaisHasValue write FcPaisHasValue;
     /// <summary>
     /// Nome do país.
@@ -8792,7 +8812,7 @@ type
     Fdata_encerramento: TDate;
     Fdata_encerramentoHasValue: Boolean;
     Fuf: string;
-    Fcodigo_municipio: Integer;
+    Fcodigo_municipio: string;
     procedure Setdata_encerramento(const Value: TDate);
   public
     /// <summary>
@@ -8808,7 +8828,7 @@ type
     /// <summary>
     /// Código IBGE do Município de encerramento do manifesto.
     /// </summary>
-    property codigo_municipio: Integer read Fcodigo_municipio write Fcodigo_municipio;
+    property codigo_municipio: string read Fcodigo_municipio write Fcodigo_municipio;
   end;
   
   TMdfeEncerramento = class
@@ -8817,7 +8837,7 @@ type
     Fdata_encerramentoHasValue: Boolean;
     Fuf: string;
     FufHasValue: Boolean;
-    Fcodigo_municipio: Integer;
+    Fcodigo_municipio: string;
     Fcodigo_municipioHasValue: Boolean;
     Fid: string;
     FidHasValue: Boolean;
@@ -8848,7 +8868,7 @@ type
     Ftipo_eventoHasValue: Boolean;
     procedure Setdata_encerramento(const Value: TDate);
     procedure Setuf(const Value: string);
-    procedure Setcodigo_municipio(const Value: Integer);
+    procedure Setcodigo_municipio(const Value: string);
     procedure Setid(const Value: string);
     procedure Setambiente(const Value: string);
     procedure Setstatus(const Value: string);
@@ -8878,7 +8898,7 @@ type
     /// <summary>
     /// Código do Município de encerramento do manifesto.
     /// </summary>
-    property codigo_municipio: Integer read Fcodigo_municipio write Setcodigo_municipio;
+    property codigo_municipio: string read Fcodigo_municipio write Setcodigo_municipio;
     property codigo_municipioHasValue: Boolean read Fcodigo_municipioHasValue write Fcodigo_municipioHasValue;
     /// <summary>
     /// ID único gerado pela Nuvem Fiscal para este evento.
@@ -9094,20 +9114,20 @@ type
   
   TMdfeDocumentoVinculado = class
   private
-    Fcodigo_municipio_descarga: Integer;
+    Fcodigo_municipio_descarga: string;
     Fcodigo_municipio_descargaHasValue: Boolean;
     Fmunicipio_descarga: string;
     Fmunicipio_descargaHasValue: Boolean;
     Fchave_acesso_nfe: string;
     Fchave_acesso_nfeHasValue: Boolean;
-    procedure Setcodigo_municipio_descarga(const Value: Integer);
+    procedure Setcodigo_municipio_descarga(const Value: string);
     procedure Setmunicipio_descarga(const Value: string);
     procedure Setchave_acesso_nfe(const Value: string);
   public
     /// <summary>
     /// Código do Município de descarregamento.
     /// </summary>
-    property codigo_municipio_descarga: Integer read Fcodigo_municipio_descarga write Setcodigo_municipio_descarga;
+    property codigo_municipio_descarga: string read Fcodigo_municipio_descarga write Setcodigo_municipio_descarga;
     property codigo_municipio_descargaHasValue: Boolean read Fcodigo_municipio_descargaHasValue write Fcodigo_municipio_descargaHasValue;
     /// <summary>
     /// Nome do Município de descarregamento.
@@ -9126,14 +9146,14 @@ type
   
   TMdfePedidoInclusaoDfe = class
   private
-    Fcodigo_municipio_carrega: Integer;
+    Fcodigo_municipio_carrega: string;
     Fcodigo_municipio_carregaHasValue: Boolean;
     Fmunicipio_carrega: string;
     Fmunicipio_carregaHasValue: Boolean;
     Fdocumentos: TMdfeDocumentoVinculadoList;
     Fprotocolo_autorizacao: string;
     Fprotocolo_autorizacaoHasValue: Boolean;
-    procedure Setcodigo_municipio_carrega(const Value: Integer);
+    procedure Setcodigo_municipio_carrega(const Value: string);
     procedure Setmunicipio_carrega(const Value: string);
     procedure Setdocumentos(const Value: TMdfeDocumentoVinculadoList);
     procedure Setprotocolo_autorizacao(const Value: string);
@@ -9142,7 +9162,7 @@ type
     /// <summary>
     /// Código do Município de carregamento.
     /// </summary>
-    property codigo_municipio_carrega: Integer read Fcodigo_municipio_carrega write Setcodigo_municipio_carrega;
+    property codigo_municipio_carrega: string read Fcodigo_municipio_carrega write Setcodigo_municipio_carrega;
     property codigo_municipio_carregaHasValue: Boolean read Fcodigo_municipio_carregaHasValue write Fcodigo_municipio_carregaHasValue;
     /// <summary>
     /// Nome do Município de carregamento.
@@ -9159,7 +9179,7 @@ type
   
   TMdfeInclusaoDfe = class
   private
-    Fcodigo_municipio_carrega: Integer;
+    Fcodigo_municipio_carrega: string;
     Fcodigo_municipio_carregaHasValue: Boolean;
     Fmunicipio_carrega: string;
     Fmunicipio_carregaHasValue: Boolean;
@@ -9191,7 +9211,7 @@ type
     FmensagemHasValue: Boolean;
     Ftipo_evento: string;
     Ftipo_eventoHasValue: Boolean;
-    procedure Setcodigo_municipio_carrega(const Value: Integer);
+    procedure Setcodigo_municipio_carrega(const Value: string);
     procedure Setmunicipio_carrega(const Value: string);
     procedure Setdocumentos(const Value: TMdfeDocumentoVinculadoList);
     procedure Setid(const Value: string);
@@ -9213,7 +9233,7 @@ type
     /// <summary>
     /// Código do Município de carregamento.
     /// </summary>
-    property codigo_municipio_carrega: Integer read Fcodigo_municipio_carrega write Setcodigo_municipio_carrega;
+    property codigo_municipio_carrega: string read Fcodigo_municipio_carrega write Setcodigo_municipio_carrega;
     property codigo_municipio_carregaHasValue: Boolean read Fcodigo_municipio_carregaHasValue write Fcodigo_municipio_carregaHasValue;
     /// <summary>
     /// Nome do Município de carregamento.
@@ -9640,7 +9660,7 @@ type
     FUFHasValue: Boolean;
     FCEP: string;
     FCEPHasValue: Boolean;
-    FcPais: Integer;
+    FcPais: string;
     FcPaisHasValue: Boolean;
     FxPais: string;
     FxPaisHasValue: Boolean;
@@ -9654,7 +9674,7 @@ type
     procedure SetxMun(const Value: string);
     procedure SetUF(const Value: string);
     procedure SetCEP(const Value: string);
-    procedure SetcPais(const Value: Integer);
+    procedure SetcPais(const Value: string);
     procedure SetxPais(const Value: string);
     procedure Setfone(const Value: string);
   public
@@ -9710,7 +9730,7 @@ type
     /// Código do país.
     /// Caso não seja informado, será utilizado o do cadastro da empresa.
     /// </summary>
-    property cPais: Integer read FcPais write SetcPais;
+    property cPais: string read FcPais write SetcPais;
     property cPaisHasValue: Boolean read FcPaisHasValue write FcPaisHasValue;
     /// <summary>
     /// Nome do país.
@@ -9911,7 +9931,7 @@ type
     FUF: string;
     FCEP: string;
     FCEPHasValue: Boolean;
-    FcPais: Integer;
+    FcPais: string;
     FcPaisHasValue: Boolean;
     FxPais: string;
     FxPaisHasValue: Boolean;
@@ -9919,7 +9939,7 @@ type
     FfoneHasValue: Boolean;
     procedure SetxCpl(const Value: string);
     procedure SetCEP(const Value: string);
-    procedure SetcPais(const Value: Integer);
+    procedure SetcPais(const Value: string);
     procedure SetxPais(const Value: string);
     procedure Setfone(const Value: string);
   public
@@ -9960,7 +9980,7 @@ type
     /// <summary>
     /// Código de Pais.
     /// </summary>
-    property cPais: Integer read FcPais write SetcPais;
+    property cPais: string read FcPais write SetcPais;
     property cPaisHasValue: Boolean read FcPaisHasValue write FcPaisHasValue;
     /// <summary>
     /// Nome do país.
@@ -10077,7 +10097,7 @@ type
     FUF: string;
     FCEP: string;
     FCEPHasValue: Boolean;
-    FcPais: Integer;
+    FcPais: string;
     FcPaisHasValue: Boolean;
     FxPais: string;
     FxPaisHasValue: Boolean;
@@ -10092,7 +10112,7 @@ type
     procedure SetxNome(const Value: string);
     procedure SetxCpl(const Value: string);
     procedure SetCEP(const Value: string);
-    procedure SetcPais(const Value: Integer);
+    procedure SetcPais(const Value: string);
     procedure SetxPais(const Value: string);
     procedure Setfone(const Value: string);
     procedure Setemail(const Value: string);
@@ -10150,7 +10170,7 @@ type
     /// <summary>
     /// Código de Pais.
     /// </summary>
-    property cPais: Integer read FcPais write SetcPais;
+    property cPais: string read FcPais write SetcPais;
     property cPaisHasValue: Boolean read FcPaisHasValue write FcPaisHasValue;
     /// <summary>
     /// Nome do país.
@@ -13187,7 +13207,7 @@ type
     FcServicoHasValue: Boolean;
     FcMun: string;
     FcMunHasValue: Boolean;
-    FcPais: Integer;
+    FcPais: string;
     FcPaisHasValue: Boolean;
     FnProcesso: string;
     FnProcessoHasValue: Boolean;
@@ -13199,7 +13219,7 @@ type
     procedure SetvISSRet(const Value: Double);
     procedure SetcServico(const Value: string);
     procedure SetcMun(const Value: string);
-    procedure SetcPais(const Value: Integer);
+    procedure SetcPais(const Value: string);
     procedure SetnProcesso(const Value: string);
   public
     /// <summary>
@@ -13264,7 +13284,7 @@ type
     /// <summary>
     /// Código de Pais.
     /// </summary>
-    property cPais: Integer read FcPais write SetcPais;
+    property cPais: string read FcPais write SetcPais;
     property cPaisHasValue: Boolean read FcPaisHasValue write FcPaisHasValue;
     /// <summary>
     /// Número do Processo administrativo ou judicial de suspenção do processo.
@@ -17267,7 +17287,7 @@ begin
   FCEPHasValue := True;
 end;
 
-procedure TCteSefazEndereco.SetcPais(const Value: Integer);
+procedure TCteSefazEndereco.SetcPais(const Value: string);
 begin
   FcPais := Value;
   FcPaisHasValue := True;
@@ -22023,7 +22043,7 @@ begin
   FufHasValue := True;
 end;
 
-procedure TMdfeEncerramento.Setcodigo_municipio(const Value: Integer);
+procedure TMdfeEncerramento.Setcodigo_municipio(const Value: string);
 begin
   Fcodigo_municipio := Value;
   Fcodigo_municipioHasValue := True;
@@ -22225,7 +22245,7 @@ end;
 
 { TMdfeDocumentoVinculado }
 
-procedure TMdfeDocumentoVinculado.Setcodigo_municipio_descarga(const Value: Integer);
+procedure TMdfeDocumentoVinculado.Setcodigo_municipio_descarga(const Value: string);
 begin
   Fcodigo_municipio_descarga := Value;
   Fcodigo_municipio_descargaHasValue := True;
@@ -22251,7 +22271,7 @@ begin
   inherited;
 end;
 
-procedure TMdfePedidoInclusaoDfe.Setcodigo_municipio_carrega(const Value: Integer);
+procedure TMdfePedidoInclusaoDfe.Setcodigo_municipio_carrega(const Value: string);
 begin
   Fcodigo_municipio_carrega := Value;
   Fcodigo_municipio_carregaHasValue := True;
@@ -22287,7 +22307,7 @@ begin
   inherited;
 end;
 
-procedure TMdfeInclusaoDfe.Setcodigo_municipio_carrega(const Value: Integer);
+procedure TMdfeInclusaoDfe.Setcodigo_municipio_carrega(const Value: string);
 begin
   Fcodigo_municipio_carrega := Value;
   Fcodigo_municipio_carregaHasValue := True;
@@ -22573,7 +22593,7 @@ begin
   FCEPHasValue := True;
 end;
 
-procedure TNfeSefazEnderEmi.SetcPais(const Value: Integer);
+procedure TNfeSefazEnderEmi.SetcPais(const Value: string);
 begin
   FcPais := Value;
   FcPaisHasValue := True;
@@ -22708,7 +22728,7 @@ begin
   FCEPHasValue := True;
 end;
 
-procedure TNfeSefazEndereco.SetcPais(const Value: Integer);
+procedure TNfeSefazEndereco.SetcPais(const Value: string);
 begin
   FcPais := Value;
   FcPaisHasValue := True;
@@ -22823,7 +22843,7 @@ begin
   FCEPHasValue := True;
 end;
 
-procedure TNfeSefazLocal.SetcPais(const Value: Integer);
+procedure TNfeSefazLocal.SetcPais(const Value: string);
 begin
   FcPais := Value;
   FcPaisHasValue := True;
@@ -24373,7 +24393,7 @@ begin
   FcMunHasValue := True;
 end;
 
-procedure TNfeSefazISSQN.SetcPais(const Value: Integer);
+procedure TNfeSefazISSQN.SetcPais(const Value: string);
 begin
   FcPais := Value;
   FcPaisHasValue := True;
