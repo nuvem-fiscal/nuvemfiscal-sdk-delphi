@@ -167,6 +167,10 @@ type
     function TNfseListagemToJson(Source: TNfseListagem): string;
     function TNfseListagemFromJsonValue(Source: TJSONValue): TNfseListagem;
     function TNfseListagemFromJson(Source: string): TNfseListagem;
+    function TNfsePedidoCancelamentoToJsonValue(Source: TNfsePedidoCancelamento): TJSONValue;
+    function TNfsePedidoCancelamentoToJson(Source: TNfsePedidoCancelamento): string;
+    function TNfsePedidoCancelamentoFromJsonValue(Source: TJSONValue): TNfsePedidoCancelamento;
+    function TNfsePedidoCancelamentoFromJson(Source: string): TNfsePedidoCancelamento;
     function TDfeSefazStatusToJsonValue(Source: TDfeSefazStatus): TJSONValue;
     function TDfeSefazStatusToJson(Source: TDfeSefazStatus): string;
     function TDfeSefazStatusFromJsonValue(Source: TJSONValue): TDfeSefazStatus;
@@ -2056,10 +2060,8 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    if Source.certificadoHasValue then
-      Json.ObjAddProp(Result, 'certificado', Self.TBytesToJsonValue(Source.certificado));
-    if Source.passwordHasValue then
-      Json.ObjAddProp(Result, 'password', Self.stringToJsonValue(Source.password));
+    Json.ObjAddProp(Result, 'certificado', Self.TBytesToJsonValue(Source.certificado));
+    Json.ObjAddProp(Result, 'password', Self.stringToJsonValue(Source.password));
   except
     Result.Free;
     raise;
@@ -4059,6 +4061,10 @@ begin
       Json.ObjAddProp(Result, 'id', Self.stringToJsonValue(Source.id));
     if Source.statusHasValue then
       Json.ObjAddProp(Result, 'status', Self.stringToJsonValue(Source.status));
+    if Source.codigoHasValue then
+      Json.ObjAddProp(Result, 'codigo', Self.stringToJsonValue(Source.codigo));
+    if Source.motivoHasValue then
+      Json.ObjAddProp(Result, 'motivo', Self.stringToJsonValue(Source.motivo));
     if Source.data_horaHasValue then
       Json.ObjAddProp(Result, 'data_hora', Self.TDateTimeToJsonValue(Source.data_hora));
     if Assigned(Source.mensagens) then
@@ -4096,6 +4102,10 @@ begin
       Result.id := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'status', JValue) then
       Result.status := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'codigo', JValue) then
+      Result.codigo := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'motivo', JValue) then
+      Result.motivo := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'data_hora', JValue) then
       Result.data_hora := Self.TDateTimeFromJsonValue(JValue);
     if Json.ObjContains(Source, 'mensagens', JValue) then
@@ -4615,6 +4625,70 @@ begin
   JValue := JsonToJsonValue(Source);
   try
     Result := TNfseListagemFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfsePedidoCancelamentoToJsonValue(Source: TNfsePedidoCancelamento): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    if Source.codigoHasValue then
+      Json.ObjAddProp(Result, 'codigo', Self.stringToJsonValue(Source.codigo));
+    if Source.motivoHasValue then
+      Json.ObjAddProp(Result, 'motivo', Self.stringToJsonValue(Source.motivo));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfsePedidoCancelamentoToJson(Source: TNfsePedidoCancelamento): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TNfsePedidoCancelamentoToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfsePedidoCancelamentoFromJsonValue(Source: TJSONValue): TNfsePedidoCancelamento;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TNfsePedidoCancelamento.Create;
+  try
+    if Json.ObjContains(Source, 'codigo', JValue) then
+      Result.codigo := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'motivo', JValue) then
+      Result.motivo := Self.stringFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfsePedidoCancelamentoFromJson(Source: string): TNfsePedidoCancelamento;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TNfsePedidoCancelamentoFromJsonValue(JValue);
   finally
     JValue.Free;
   end;

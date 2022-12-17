@@ -48,6 +48,7 @@ type
   TRpsLoteListagem = class;
   TNfsePedidoEmissao = class;
   TNfseListagem = class;
+  TNfsePedidoCancelamento = class;
   TDfeSefazStatus = class;
   TCteSefazToma3 = class;
   TCteSefazEndereco = class;
@@ -651,16 +652,16 @@ type
   TEmpresaPedidoCadastroCertificado = class
   private
     Fcertificado: TBytes;
-    FcertificadoHasValue: Boolean;
     Fpassword: string;
-    FpasswordHasValue: Boolean;
-    procedure Setcertificado(const Value: TBytes);
-    procedure Setpassword(const Value: string);
   public
-    property certificado: TBytes read Fcertificado write Setcertificado;
-    property certificadoHasValue: Boolean read FcertificadoHasValue write FcertificadoHasValue;
-    property password: string read Fpassword write Setpassword;
-    property passwordHasValue: Boolean read FpasswordHasValue write FpasswordHasValue;
+    /// <summary>
+    /// Binário do certificado digital (.pfx ou .p12) codificado em base64.
+    /// </summary>
+    property certificado: TBytes read Fcertificado write Fcertificado;
+    /// <summary>
+    /// Senha do certificado.
+    /// </summary>
+    property password: string read Fpassword write Fpassword;
   end;
   
   TEmpresaCertificado = class
@@ -712,6 +713,9 @@ type
   private
     Fambiente: string;
   public
+    /// <summary>
+    /// Indica se a empresa irá emitir em produção ou homologação.
+    /// </summary>
     property ambiente: string read Fambiente write Fambiente;
   end;
   
@@ -739,6 +743,9 @@ type
     constructor Create;
     destructor Destroy; override;
     property sefaz: TEmpresaConfigNfceSefaz read Fsefaz write Setsefaz;
+    /// <summary>
+    /// Indica se a empresa irá emitir em produção ou homologação.
+    /// </summary>
     property ambiente: string read Fambiente write Fambiente;
   end;
   
@@ -785,10 +792,19 @@ type
     procedure Setsenha(const Value: string);
     procedure Settoken(const Value: string);
   public
+    /// <summary>
+    /// Login de autenticação com a prefeitura, caso não utilize certificado digital.
+    /// </summary>
     property login: string read Flogin write Setlogin;
     property loginHasValue: Boolean read FloginHasValue write FloginHasValue;
+    /// <summary>
+    /// Senha de autenticação com a prefeitura, caso não utilize certificado digital.
+    /// </summary>
     property senha: string read Fsenha write Setsenha;
     property senhaHasValue: Boolean read FsenhaHasValue write FsenhaHasValue;
+    /// <summary>
+    /// Token de autenticação com a prefeitura, caso não utilize certificado digital.
+    /// </summary>
     property token: string read Ftoken write Settoken;
     property tokenHasValue: Boolean read FtokenHasValue write FtokenHasValue;
   end;
@@ -804,7 +820,14 @@ type
     constructor Create;
     destructor Destroy; override;
     property rps: TEmpresaConfigRps read Frps write Setrps;
+    /// <summary>
+    /// Dados adicionais para comunicação com a prefeitura. Essa validação é
+    /// dinâmica, de acordo com a necessidade de cada município.
+    /// </summary>
     property prefeitura: TEmpresaConfigPrefeitura read Fprefeitura write Setprefeitura;
+    /// <summary>
+    /// Indica se a empresa irá emitir em produção ou homologação.
+    /// </summary>
     property ambiente: string read Fambiente write Fambiente;
   end;
   
@@ -812,6 +835,9 @@ type
   private
     Fambiente: string;
   public
+    /// <summary>
+    /// Indica se a empresa irá emitir em produção ou homologação.
+    /// </summary>
     property ambiente: string read Fambiente write Fambiente;
   end;
   
@@ -819,6 +845,9 @@ type
   private
     Fambiente: string;
   public
+    /// <summary>
+    /// Indica se a empresa irá emitir em produção ou homologação.
+    /// </summary>
     property ambiente: string read Fambiente write Fambiente;
   end;
   
@@ -1526,11 +1555,17 @@ type
     FidHasValue: Boolean;
     Fstatus: string;
     FstatusHasValue: Boolean;
+    Fcodigo: string;
+    FcodigoHasValue: Boolean;
+    Fmotivo: string;
+    FmotivoHasValue: Boolean;
     Fdata_hora: TDateTime;
     Fdata_horaHasValue: Boolean;
     Fmensagens: TNfseMensagemRetornoList;
     procedure Setid(const Value: string);
     procedure Setstatus(const Value: string);
+    procedure Setcodigo(const Value: string);
+    procedure Setmotivo(const Value: string);
     procedure Setdata_hora(const Value: TDateTime);
     procedure Setmensagens(const Value: TNfseMensagemRetornoList);
   public
@@ -1542,6 +1577,10 @@ type
     property idHasValue: Boolean read FidHasValue write FidHasValue;
     property status: string read Fstatus write Setstatus;
     property statusHasValue: Boolean read FstatusHasValue write FstatusHasValue;
+    property codigo: string read Fcodigo write Setcodigo;
+    property codigoHasValue: Boolean read FcodigoHasValue write FcodigoHasValue;
+    property motivo: string read Fmotivo write Setmotivo;
+    property motivoHasValue: Boolean read FmotivoHasValue write FmotivoHasValue;
     property data_hora: TDateTime read Fdata_hora write Setdata_hora;
     property data_horaHasValue: Boolean read Fdata_horaHasValue write Fdata_horaHasValue;
     property mensagens: TNfseMensagemRetornoList read Fmensagens write Setmensagens;
@@ -1699,6 +1738,28 @@ type
     property _count: Integer read F_count write Set_count;
     property _countHasValue: Boolean read F_countHasValue write F_countHasValue;
     property data: TNfseList read Fdata write Setdata;
+  end;
+  
+  TNfsePedidoCancelamento = class
+  private
+    Fcodigo: string;
+    FcodigoHasValue: Boolean;
+    Fmotivo: string;
+    FmotivoHasValue: Boolean;
+    procedure Setcodigo(const Value: string);
+    procedure Setmotivo(const Value: string);
+  public
+    /// <summary>
+    /// Código de cancelamento, exigido por algumas prefeituras.
+    /// Para saber quais valores são aceitos, consulte o manual da prefeitura.
+    /// </summary>
+    property codigo: string read Fcodigo write Setcodigo;
+    property codigoHasValue: Boolean read FcodigoHasValue write FcodigoHasValue;
+    /// <summary>
+    /// Motivo de cancelamento, exigido por algumas prefeituras.
+    /// </summary>
+    property motivo: string read Fmotivo write Setmotivo;
+    property motivoHasValue: Boolean read FmotivoHasValue write FmotivoHasValue;
   end;
   
   TDfeSefazStatus = class
@@ -16150,20 +16211,6 @@ begin
   end;
 end;
 
-{ TEmpresaPedidoCadastroCertificado }
-
-procedure TEmpresaPedidoCadastroCertificado.Setcertificado(const Value: TBytes);
-begin
-  Fcertificado := Value;
-  FcertificadoHasValue := True;
-end;
-
-procedure TEmpresaPedidoCadastroCertificado.Setpassword(const Value: string);
-begin
-  Fpassword := Value;
-  FpasswordHasValue := True;
-end;
-
 { TEmpresaCertificado }
 
 procedure TEmpresaCertificado.Setserial_number(const Value: string);
@@ -17001,6 +17048,18 @@ begin
   FstatusHasValue := True;
 end;
 
+procedure TNfseCancelamento.Setcodigo(const Value: string);
+begin
+  Fcodigo := Value;
+  FcodigoHasValue := True;
+end;
+
+procedure TNfseCancelamento.Setmotivo(const Value: string);
+begin
+  Fmotivo := Value;
+  FmotivoHasValue := True;
+end;
+
 procedure TNfseCancelamento.Setdata_hora(const Value: TDateTime);
 begin
   Fdata_hora := Value;
@@ -17227,6 +17286,20 @@ begin
     Fdata.Free;
     Fdata := Value;
   end;
+end;
+
+{ TNfsePedidoCancelamento }
+
+procedure TNfsePedidoCancelamento.Setcodigo(const Value: string);
+begin
+  Fcodigo := Value;
+  FcodigoHasValue := True;
+end;
+
+procedure TNfsePedidoCancelamento.Setmotivo(const Value: string);
+begin
+  Fmotivo := Value;
+  FmotivoHasValue := True;
 end;
 
 { TDfeSefazStatus }

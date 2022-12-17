@@ -49,7 +49,7 @@ type
   ICnpjService = interface(IInvokable)
     ['{8E151A0C-46A6-4752-A292-DBE060A33E46}']
     /// <summary>
-    /// Listar estabelecimentos a partir da base de CNPJ
+    /// Listar estabelecimentos ativos a partir da base de CNPJ
     /// </summary>
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
@@ -72,6 +72,7 @@ type
     /// </param>
     /// <remarks>
     /// Retorna uma lista de estabelecimentos de acordo com os critérios de busca utilizados.
+    /// Somente serão retornados estabelecimentos com situação cadastral "Ativa".
     /// </remarks>
     function ListarCnpj(Top: Integer; Skip: Integer; CnaePrincipal: string; Municipio: string; NaturezaJuridica: string): TCnpjListagem;
     /// <summary>
@@ -634,6 +635,9 @@ type
     /// <summary>
     /// Cancelar um MDF-e autorizado
     /// </summary>
+    /// <param name="Body">
+    /// Dados do cancelamento.
+    /// </param>
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -750,6 +754,9 @@ type
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
     function ConsultarCancelamentoMdfe(Id: string): TDfeCancelamento;
+    /// <param name="Body">
+    /// Dados do cancelamento.
+    /// </param>
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -1162,6 +1169,9 @@ type
     /// <summary>
     /// Solicitar correção da NF-e
     /// </summary>
+    /// <param name="Body">
+    /// Contém os dados do pedido para carta de correção.
+    /// </param>
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -1274,6 +1284,9 @@ type
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
     function ConsultarCartaCorrecaoNfe(Id: string): TDfeCartaCorrecao;
+    /// <param name="Body">
+    /// Contém os dados do pedido para carta de correção.
+    /// </param>
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -1382,7 +1395,7 @@ type
     /// <param name="Id">
     /// ID único da NFS-e gerado pela Nuvem Fiscal.
     /// </param>
-    function CancelarNfse(Id: string): TNfseCancelamento;
+    function CancelarNfse(Body: TNfsePedidoCancelamento; Id: string): TNfseCancelamento;
     /// <summary>
     /// Baixar XML da NFS-e processada
     /// </summary>
@@ -1443,7 +1456,7 @@ type
     /// <param name="Id">
     /// ID único da NFS-e gerado pela Nuvem Fiscal.
     /// </param>
-    function CancelarNfse(Id: string): TNfseCancelamento;
+    function CancelarNfse(Body: TNfsePedidoCancelamento; Id: string): TNfseCancelamento;
     /// <param name="Id">
     /// ID único da NFS-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -2896,13 +2909,15 @@ begin
   Result := Converter.TNfseCancelamentoFromJson(Response.ContentAsString);
 end;
 
-function TNfseService.CancelarNfse(Id: string): TNfseCancelamento;
+function TNfseService.CancelarNfse(Body: TNfsePedidoCancelamento; Id: string): TNfseCancelamento;
 var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
   Request := CreateRequest('/nfse/{id}/cancelamento', 'POST');
+  Request.AddBody(Converter.TNfsePedidoCancelamentoToJson(Body));
   Request.AddUrlParam('id', Id);
+  Request.AddHeader('Content-Type', 'application/json');
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
