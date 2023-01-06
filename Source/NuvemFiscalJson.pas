@@ -3417,6 +3417,8 @@ begin
     if Assigned(Source.construcao_civil) then
       Json.ObjAddProp(Result, 'construcao_civil', Self.TRpsDadosConstrucaoCivilToJsonValue(Source.construcao_civil));
     Json.ObjAddProp(Result, 'servicos', Self.TRpsDadosServicoListToJsonValue(Source.servicos));
+    if Source.outras_informacoesHasValue then
+      Json.ObjAddProp(Result, 'outras_informacoes', Self.stringToJsonValue(Source.outras_informacoes));
   except
     Result.Free;
     raise;
@@ -3464,6 +3466,8 @@ begin
       Result.construcao_civil := Self.TRpsDadosConstrucaoCivilFromJsonValue(JValue);
     if Json.ObjContains(Source, 'servicos', JValue) then
       Result.servicos := Self.TRpsDadosServicoListFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'outras_informacoes', JValue) then
+      Result.outras_informacoes := Self.stringFromJsonValue(JValue);
   except
     Result.Free;
     raise;
@@ -3871,6 +3875,8 @@ begin
     if Assigned(Source.construcao_civil) then
       Json.ObjAddProp(Result, 'construcao_civil', Self.TRpsDadosConstrucaoCivilToJsonValue(Source.construcao_civil));
     Json.ObjAddProp(Result, 'servicos', Self.TRpsDadosServicoListToJsonValue(Source.servicos));
+    if Source.outras_informacoesHasValue then
+      Json.ObjAddProp(Result, 'outras_informacoes', Self.stringToJsonValue(Source.outras_informacoes));
   except
     Result.Free;
     raise;
@@ -3916,6 +3922,8 @@ begin
       Result.construcao_civil := Self.TRpsDadosConstrucaoCivilFromJsonValue(JValue);
     if Json.ObjContains(Source, 'servicos', JValue) then
       Result.servicos := Self.TRpsDadosServicoListFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'outras_informacoes', JValue) then
+      Result.outras_informacoes := Self.stringFromJsonValue(JValue);
   except
     Result.Free;
     raise;

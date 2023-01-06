@@ -1308,6 +1308,8 @@ type
     Fintermediario: TRpsDadosIntermediario;
     Fconstrucao_civil: TRpsDadosConstrucaoCivil;
     Fservicos: TRpsDadosServicoList;
+    Foutras_informacoes: string;
+    Foutras_informacoesHasValue: Boolean;
     procedure Setreferencia(const Value: string);
     procedure Setdata_emissao(const Value: TDateTime);
     procedure Setcompetencia(const Value: TDate);
@@ -1317,6 +1319,7 @@ type
     procedure Setintermediario(const Value: TRpsDadosIntermediario);
     procedure Setconstrucao_civil(const Value: TRpsDadosConstrucaoCivil);
     procedure Setservicos(const Value: TRpsDadosServicoList);
+    procedure Setoutras_informacoes(const Value: string);
   public
     constructor Create;
     destructor Destroy; override;
@@ -1362,6 +1365,11 @@ type
     property intermediario: TRpsDadosIntermediario read Fintermediario write Setintermediario;
     property construcao_civil: TRpsDadosConstrucaoCivil read Fconstrucao_civil write Setconstrucao_civil;
     property servicos: TRpsDadosServicoList read Fservicos write Setservicos;
+    /// <summary>
+    /// Informações adicionais ao documento.
+    /// </summary>
+    property outras_informacoes: string read Foutras_informacoes write Setoutras_informacoes;
+    property outras_informacoesHasValue: Boolean read Foutras_informacoesHasValue write Foutras_informacoesHasValue;
   end;
   
   TRpsPedidoEmissaoList = class(TObjectList<TRpsPedidoEmissao>)
@@ -1499,6 +1507,8 @@ type
     Fintermediario: TRpsDadosIntermediario;
     Fconstrucao_civil: TRpsDadosConstrucaoCivil;
     Fservicos: TRpsDadosServicoList;
+    Foutras_informacoes: string;
+    Foutras_informacoesHasValue: Boolean;
     procedure Setrps(const Value: TRpsDados);
     procedure Setcompetencia(const Value: TDate);
     procedure Setnatureza_tributacao(const Value: Integer);
@@ -1507,6 +1517,7 @@ type
     procedure Setintermediario(const Value: TRpsDadosIntermediario);
     procedure Setconstrucao_civil(const Value: TRpsDadosConstrucaoCivil);
     procedure Setservicos(const Value: TRpsDadosServicoList);
+    procedure Setoutras_informacoes(const Value: string);
   public
     constructor Create;
     destructor Destroy; override;
@@ -1529,6 +1540,11 @@ type
     property intermediario: TRpsDadosIntermediario read Fintermediario write Setintermediario;
     property construcao_civil: TRpsDadosConstrucaoCivil read Fconstrucao_civil write Setconstrucao_civil;
     property servicos: TRpsDadosServicoList read Fservicos write Setservicos;
+    /// <summary>
+    /// Informações adicionais ao documento.
+    /// </summary>
+    property outras_informacoes: string read Foutras_informacoes write Setoutras_informacoes;
+    property outras_informacoesHasValue: Boolean read Foutras_informacoesHasValue write Foutras_informacoesHasValue;
   end;
   
   TNfseMensagemRetorno = class
@@ -16836,6 +16852,12 @@ begin
   end;
 end;
 
+procedure TRpsPedidoEmissao.Setoutras_informacoes(const Value: string);
+begin
+  Foutras_informacoes := Value;
+  Foutras_informacoesHasValue := True;
+end;
+
 { TRpsPedidoEmissaoLote }
 
 destructor TRpsPedidoEmissaoLote.Destroy;
@@ -17068,6 +17090,12 @@ begin
     Fservicos.Free;
     Fservicos := Value;
   end;
+end;
+
+procedure TRps.Setoutras_informacoes(const Value: string);
+begin
+  Foutras_informacoes := Value;
+  Foutras_informacoesHasValue := True;
 end;
 
 { TNfseMensagemRetorno }
