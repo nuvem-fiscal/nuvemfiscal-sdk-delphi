@@ -151,6 +151,10 @@ type
     function TRpsLoteToJson(Source: TRpsLote): string;
     function TRpsLoteFromJsonValue(Source: TJSONValue): TRpsLote;
     function TRpsLoteFromJson(Source: string): TRpsLote;
+    function TDpsToJsonValue(Source: TDps): TJSONValue;
+    function TDpsToJson(Source: TDps): string;
+    function TDpsFromJsonValue(Source: TJSONValue): TDps;
+    function TDpsFromJson(Source: string): TDps;
     function TRpsLoteListToJsonValue(Source: TRpsLoteList): TJSONValue;
     function TRpsLoteListToJson(Source: TRpsLoteList): string;
     function TRpsLoteListFromJsonValue(Source: TJSONValue): TRpsLoteList;
@@ -171,6 +175,18 @@ type
     function TNfsePedidoCancelamentoToJson(Source: TNfsePedidoCancelamento): string;
     function TNfsePedidoCancelamentoFromJsonValue(Source: TJSONValue): TNfsePedidoCancelamento;
     function TNfsePedidoCancelamentoFromJson(Source: string): TNfsePedidoCancelamento;
+    function TContaCotaToJsonValue(Source: TContaCota): TJSONValue;
+    function TContaCotaToJson(Source: TContaCota): string;
+    function TContaCotaFromJsonValue(Source: TJSONValue): TContaCota;
+    function TContaCotaFromJson(Source: string): TContaCota;
+    function TContaCotaListToJsonValue(Source: TContaCotaList): TJSONValue;
+    function TContaCotaListToJson(Source: TContaCotaList): string;
+    function TContaCotaListFromJsonValue(Source: TJSONValue): TContaCotaList;
+    function TContaCotaListFromJson(Source: string): TContaCotaList;
+    function TContaCotaListagemToJsonValue(Source: TContaCotaListagem): TJSONValue;
+    function TContaCotaListagemToJson(Source: TContaCotaListagem): string;
+    function TContaCotaListagemFromJsonValue(Source: TJSONValue): TContaCotaListagem;
+    function TContaCotaListagemFromJson(Source: string): TContaCotaListagem;
     function TDfeSefazStatusToJsonValue(Source: TDfeSefazStatus): TJSONValue;
     function TDfeSefazStatusToJson(Source: TDfeSefazStatus): string;
     function TDfeSefazStatusFromJsonValue(Source: TJSONValue): TDfeSefazStatus;
@@ -4378,6 +4394,74 @@ begin
   end;
 end;
 
+function TJsonConverter.TDpsToJsonValue(Source: TDps): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    if Source.idHasValue then
+      Json.ObjAddProp(Result, 'id', Self.stringToJsonValue(Source.id));
+    if Source.numeroHasValue then
+      Json.ObjAddProp(Result, 'numero', Self.stringToJsonValue(Source.numero));
+    if Source.serieHasValue then
+      Json.ObjAddProp(Result, 'serie', Self.stringToJsonValue(Source.serie));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDpsToJson(Source: TDps): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDpsToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDpsFromJsonValue(Source: TJSONValue): TDps;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDps.Create;
+  try
+    if Json.ObjContains(Source, 'id', JValue) then
+      Result.id := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'numero', JValue) then
+      Result.numero := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'serie', JValue) then
+      Result.serie := Self.stringFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDpsFromJson(Source: string): TDps;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDpsFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
 function TJsonConverter.TRpsLoteListToJsonValue(Source: TRpsLoteList): TJSONValue;
 var
   Index: Integer;
@@ -4689,6 +4773,200 @@ begin
   JValue := JsonToJsonValue(Source);
   try
     Result := TNfsePedidoCancelamentoFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TContaCotaToJsonValue(Source: TContaCota): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    if Source.nomeHasValue then
+      Json.ObjAddProp(Result, 'nome', Self.stringToJsonValue(Source.nome));
+    if Source.consumoHasValue then
+      Json.ObjAddProp(Result, 'consumo', Self.IntegerToJsonValue(Source.consumo));
+    if Source.limiteHasValue then
+      Json.ObjAddProp(Result, 'limite', Self.IntegerToJsonValue(Source.limite));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TContaCotaToJson(Source: TContaCota): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TContaCotaToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TContaCotaFromJsonValue(Source: TJSONValue): TContaCota;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TContaCota.Create;
+  try
+    if Json.ObjContains(Source, 'nome', JValue) then
+      Result.nome := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'consumo', JValue) then
+      Result.consumo := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'limite', JValue) then
+      Result.limite := Self.IntegerFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TContaCotaFromJson(Source: string): TContaCota;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TContaCotaFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TContaCotaListToJsonValue(Source: TContaCotaList): TJSONValue;
+var
+  Index: Integer;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateArray;
+  try
+    for Index := 0 to Source.Count - 1 do
+      Json.ArrayAdd(Result, Self.TContaCotaToJsonValue(Source[Index]));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TContaCotaListToJson(Source: TContaCotaList): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TContaCotaListToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TContaCotaListFromJsonValue(Source: TJSONValue): TContaCotaList;
+var
+  Index: Integer;
+begin
+  if not Json.IsArray(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TContaCotaList.Create;
+  try
+    for Index := 0 to Json.ArrayLength(Source) - 1 do
+      Result.Add(Self.TContaCotaFromJsonValue(Json.ArrayGet(Source, Index)));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TContaCotaListFromJson(Source: string): TContaCotaList;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TContaCotaListFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TContaCotaListagemToJsonValue(Source: TContaCotaListagem): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    if Source._countHasValue then
+      Json.ObjAddProp(Result, '@count', Self.IntegerToJsonValue(Source._count));
+    if Assigned(Source.data) then
+      Json.ObjAddProp(Result, 'data', Self.TContaCotaListToJsonValue(Source.data));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TContaCotaListagemToJson(Source: TContaCotaListagem): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TContaCotaListagemToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TContaCotaListagemFromJsonValue(Source: TJSONValue): TContaCotaListagem;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TContaCotaListagem.Create;
+  try
+    if Json.ObjContains(Source, '@count', JValue) then
+      Result._count := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'data', JValue) then
+      Result.data := Self.TContaCotaListFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TContaCotaListagemFromJson(Source: string): TContaCotaListagem;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TContaCotaListagemFromJsonValue(JValue);
   finally
     JValue.Free;
   end;

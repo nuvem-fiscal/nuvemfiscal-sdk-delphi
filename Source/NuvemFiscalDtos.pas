@@ -44,11 +44,15 @@ type
   TNfse = class;
   TNfseList = class;
   TRpsLote = class;
+  TDps = class;
   TRpsLoteList = class;
   TRpsLoteListagem = class;
   TNfsePedidoEmissao = class;
   TNfseListagem = class;
   TNfsePedidoCancelamento = class;
+  TContaCota = class;
+  TContaCotaList = class;
+  TContaCotaListagem = class;
   TDfeSefazStatus = class;
   TCteSefazToma3 = class;
   TCteSefazEndereco = class;
@@ -1224,6 +1228,7 @@ type
     property discriminacao: string read Fdiscriminacao write Fdiscriminacao;
     /// <summary>
     /// Código IBGE do município de prestação do serviço.
+    /// Caso não informado, será considerado o município do prestador.
     /// </summary>
     property codigo_municipio: string read Fcodigo_municipio write Setcodigo_municipio;
     property codigo_municipioHasValue: Boolean read Fcodigo_municipioHasValue write Fcodigo_municipioHasValue;
@@ -1694,6 +1699,26 @@ type
     property notas: TNfseList read Fnotas write Setnotas;
   end;
   
+  TDps = class
+  private
+    Fid: string;
+    FidHasValue: Boolean;
+    Fnumero: string;
+    FnumeroHasValue: Boolean;
+    Fserie: string;
+    FserieHasValue: Boolean;
+    procedure Setid(const Value: string);
+    procedure Setnumero(const Value: string);
+    procedure Setserie(const Value: string);
+  public
+    property id: string read Fid write Setid;
+    property idHasValue: Boolean read FidHasValue write FidHasValue;
+    property numero: string read Fnumero write Setnumero;
+    property numeroHasValue: Boolean read FnumeroHasValue write FnumeroHasValue;
+    property serie: string read Fserie write Setserie;
+    property serieHasValue: Boolean read FserieHasValue write FserieHasValue;
+  end;
+  
   TRpsLoteList = class(TObjectList<TRpsLote>)
   end;
   
@@ -1760,6 +1785,43 @@ type
     /// </summary>
     property motivo: string read Fmotivo write Setmotivo;
     property motivoHasValue: Boolean read FmotivoHasValue write FmotivoHasValue;
+  end;
+  
+  TContaCota = class
+  private
+    Fnome: string;
+    FnomeHasValue: Boolean;
+    Fconsumo: Integer;
+    FconsumoHasValue: Boolean;
+    Flimite: Integer;
+    FlimiteHasValue: Boolean;
+    procedure Setnome(const Value: string);
+    procedure Setconsumo(const Value: Integer);
+    procedure Setlimite(const Value: Integer);
+  public
+    property nome: string read Fnome write Setnome;
+    property nomeHasValue: Boolean read FnomeHasValue write FnomeHasValue;
+    property consumo: Integer read Fconsumo write Setconsumo;
+    property consumoHasValue: Boolean read FconsumoHasValue write FconsumoHasValue;
+    property limite: Integer read Flimite write Setlimite;
+    property limiteHasValue: Boolean read FlimiteHasValue write FlimiteHasValue;
+  end;
+  
+  TContaCotaList = class(TObjectList<TContaCota>)
+  end;
+  
+  TContaCotaListagem = class
+  private
+    F_count: Integer;
+    F_countHasValue: Boolean;
+    Fdata: TContaCotaList;
+    procedure Set_count(const Value: Integer);
+    procedure Setdata(const Value: TContaCotaList);
+  public
+    destructor Destroy; override;
+    property _count: Integer read F_count write Set_count;
+    property _countHasValue: Boolean read F_countHasValue write F_countHasValue;
+    property data: TContaCotaList read Fdata write Setdata;
   end;
   
   TDfeSefazStatus = class
@@ -17219,6 +17281,26 @@ begin
   end;
 end;
 
+{ TDps }
+
+procedure TDps.Setid(const Value: string);
+begin
+  Fid := Value;
+  FidHasValue := True;
+end;
+
+procedure TDps.Setnumero(const Value: string);
+begin
+  Fnumero := Value;
+  FnumeroHasValue := True;
+end;
+
+procedure TDps.Setserie(const Value: string);
+begin
+  Fserie := Value;
+  FserieHasValue := True;
+end;
+
 { TRpsLoteListagem }
 
 destructor TRpsLoteListagem.Destroy;
@@ -17300,6 +17382,49 @@ procedure TNfsePedidoCancelamento.Setmotivo(const Value: string);
 begin
   Fmotivo := Value;
   FmotivoHasValue := True;
+end;
+
+{ TContaCota }
+
+procedure TContaCota.Setnome(const Value: string);
+begin
+  Fnome := Value;
+  FnomeHasValue := True;
+end;
+
+procedure TContaCota.Setconsumo(const Value: Integer);
+begin
+  Fconsumo := Value;
+  FconsumoHasValue := True;
+end;
+
+procedure TContaCota.Setlimite(const Value: Integer);
+begin
+  Flimite := Value;
+  FlimiteHasValue := True;
+end;
+
+{ TContaCotaListagem }
+
+destructor TContaCotaListagem.Destroy;
+begin
+  Fdata.Free;
+  inherited;
+end;
+
+procedure TContaCotaListagem.Set_count(const Value: Integer);
+begin
+  F_count := Value;
+  F_countHasValue := True;
+end;
+
+procedure TContaCotaListagem.Setdata(const Value: TContaCotaList);
+begin
+  if Value <> Fdata then
+  begin
+    Fdata.Free;
+    Fdata := Value;
+  end;
 end;
 
 { TDfeSefazStatus }

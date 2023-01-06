@@ -12,6 +12,7 @@ type
   TRestService = class;
   TCepService = class;
   TCnpjService = class;
+  TContaService = class;
   TCteService = class;
   TEmpresaService = class;
   TMdfeService = class;
@@ -112,6 +113,30 @@ type
     function ConsultarCnpj(Cnpj: string): TCnpjEmpresa;
   end;
   
+  IContaService = interface(IInvokable)
+    ['{E92E7424-BA3B-46A5-89A5-BD5569788EE2}']
+    /// <summary>
+    /// Consultar os limites de uso e consumo de todas as cotas existentes.
+    /// </summary>
+    function ListarCotasConta: TContaCotaListagem;
+    /// <summary>
+    /// Consultar o limite de uso e o consumo de uma cota específica.
+    /// </summary>
+    /// <param name="Nome">
+    /// Nome da cota a ser consultada.
+    /// </param>
+    function ConsultarCotaConta(Nome: string): TContaCota;
+  end;
+  
+  TContaService = class(TRestService, IContaService)
+  public
+    function ListarCotasConta: TContaCotaListagem;
+    /// <param name="Nome">
+    /// Nome da cota a ser consultada.
+    /// </param>
+    function ConsultarCotaConta(Nome: string): TContaCota;
+  end;
+  
   /// <summary>
   /// Conhecimento de Transporte Eletrônico.
   /// </summary>
@@ -135,10 +160,13 @@ type
     /// Identificação do Ambiente.
     /// Valores aceitos: homologacao, producao
     /// </param>
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
     /// <remarks>
     /// Retorna a lista de CT-e de acordo com os critérios de busca utilizados. Os CT-e são retornados ordenados pela data da criação, com os mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarCte(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeListagem;
+    function ListarCte(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     /// <summary>
     /// Emitir CT-e
     /// </summary>
@@ -305,7 +333,10 @@ type
     /// Identificação do Ambiente.
     /// Valores aceitos: homologacao, producao
     /// </param>
-    function ListarCte(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeListagem;
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
+    function ListarCte(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     function EmitirCte(Body: TCtePedidoEmissao): TDfe;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
@@ -544,10 +575,13 @@ type
     /// Identificação do Ambiente.
     /// Valores aceitos: homologacao, producao
     /// </param>
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
     /// <remarks>
     /// Retorna a lista de manifestos de acordo com os critérios de busca utilizados. Os manifestos são retornados ordenados pela data da criação, com os mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarMdfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeListagem;
+    function ListarMdfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     /// <summary>
     /// Emitir MDF-e
     /// </summary>
@@ -710,7 +744,10 @@ type
     /// Identificação do Ambiente.
     /// Valores aceitos: homologacao, producao
     /// </param>
-    function ListarMdfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeListagem;
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
+    function ListarMdfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     function EmitirMdfe(Body: TMdfePedidoEmissao): TDfe;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
@@ -814,10 +851,13 @@ type
     /// Identificação do Ambiente.
     /// Valores aceitos: homologacao, producao
     /// </param>
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
     /// <remarks>
     /// Retorna a lista de notas de acordo com os critérios de busca utilizados. As notas são retornadas ordenadas pela data da criação, com as mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarNfce(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeListagem;
+    function ListarNfce(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     /// <summary>
     /// Emitir NFC-e
     /// </summary>
@@ -953,7 +993,10 @@ type
     /// Identificação do Ambiente.
     /// Valores aceitos: homologacao, producao
     /// </param>
-    function ListarNfce(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeListagem;
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
+    function ListarNfce(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     function EmitirNfce(Body: TNfePedidoEmissao): TDfe;
     function InutilizarNumeracaoNfce(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <param name="Id">
@@ -1039,10 +1082,13 @@ type
     /// Identificação do Ambiente.
     /// Valores aceitos: homologacao, producao
     /// </param>
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
     /// <remarks>
     /// Retorna a lista de notas de acordo com os critérios de busca utilizados. As notas são retornadas ordenadas pela data da criação, com as mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarNfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeListagem;
+    function ListarNfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     /// <summary>
     /// Emitir NF-e
     /// </summary>
@@ -1219,7 +1265,10 @@ type
     /// Identificação do Ambiente.
     /// Valores aceitos: homologacao, producao
     /// </param>
-    function ListarNfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeListagem;
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
+    function ListarNfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     function EmitirNfe(Body: TNfePedidoEmissao): TDfe;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
@@ -1328,10 +1377,13 @@ type
     /// Identificação do Ambiente.
     /// Valores aceitos: homologacao, producao
     /// </param>
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
     /// <remarks>
     /// Retorna a lista de notas de acordo com os critérios de busca utilizados. As notas são retornadas ordenadas pela data da criação, com as mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarNfse(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TNfseListagem;
+    function ListarNfse(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TNfseListagem;
     /// <summary>
     /// Emitir NFS-e
     /// </summary>
@@ -1397,6 +1449,13 @@ type
     /// </param>
     function CancelarNfse(Body: TNfsePedidoCancelamento; Id: string): TNfseCancelamento;
     /// <summary>
+    /// Baixar PDF do DANFSE
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfNfse(Id: string): TBytes;
+    /// <summary>
     /// Baixar XML da NFS-e processada
     /// </summary>
     /// <param name="Id">
@@ -1422,7 +1481,10 @@ type
     /// Identificação do Ambiente.
     /// Valores aceitos: homologacao, producao
     /// </param>
-    function ListarNfse(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TNfseListagem;
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
+    function ListarNfse(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TNfseListagem;
     function EmitirNfse(Body: TNfsePedidoEmissao): TNfse;
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
@@ -1460,6 +1522,10 @@ type
     /// <param name="Id">
     /// ID único da NFS-e gerado pela Nuvem Fiscal.
     /// </param>
+    function BaixarPdfNfse(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// </param>
     function BaixarXmlNfse(Id: string): TBytes;
   end;
   
@@ -1471,6 +1537,7 @@ type
   INuvemFiscalClient = interface(IRestClient)
     function Cep: ICepService;
     function Cnpj: ICnpjService;
+    function Conta: IContaService;
     /// <summary>
     /// Conhecimento de Transporte Eletrônico.
     /// </summary>
@@ -1501,6 +1568,7 @@ type
   public
     function Cep: ICepService;
     function Cnpj: ICnpjService;
+    function Conta: IContaService;
     function Cte: ICteService;
     function Empresa: IEmpresaService;
     function Mdfe: IMdfeService;
@@ -1571,9 +1639,36 @@ begin
   Result := Converter.TCnpjEmpresaFromJson(Response.ContentAsString);
 end;
 
+{ TContaService }
+
+function TContaService.ListarCotasConta: TContaCotaListagem;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/conta/cotas', 'GET');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TContaCotaListagemFromJson(Response.ContentAsString);
+end;
+
+function TContaService.ConsultarCotaConta(Nome: string): TContaCota;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/conta/cotas/{nome}', 'GET');
+  Request.AddUrlParam('nome', Nome);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TContaCotaFromJson(Response.ContentAsString);
+end;
+
 { TCteService }
 
-function TCteService.ListarCte(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeListagem;
+function TCteService.ListarCte(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -1584,6 +1679,7 @@ begin
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
+  Request.AddQueryParam('chave', Chave);
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
@@ -2081,7 +2177,7 @@ end;
 
 { TMdfeService }
 
-function TMdfeService.ListarMdfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeListagem;
+function TMdfeService.ListarMdfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2092,6 +2188,7 @@ begin
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
+  Request.AddQueryParam('chave', Chave);
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
@@ -2331,7 +2428,7 @@ end;
 
 { TNfceService }
 
-function TNfceService.ListarNfce(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeListagem;
+function TNfceService.ListarNfce(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2342,6 +2439,7 @@ begin
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
+  Request.AddQueryParam('chave', Chave);
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
@@ -2537,7 +2635,7 @@ end;
 
 { TNfeService }
 
-function TNfeService.ListarNfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeListagem;
+function TNfeService.ListarNfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2548,6 +2646,7 @@ begin
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
+  Request.AddQueryParam('chave', Chave);
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
@@ -2808,7 +2907,7 @@ end;
 
 { TNfseService }
 
-function TNfseService.ListarNfse(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TNfseListagem;
+function TNfseService.ListarNfse(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TNfseListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2819,6 +2918,7 @@ begin
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
+  Request.AddQueryParam('chave', Chave);
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
@@ -2924,6 +3024,18 @@ begin
   Result := Converter.TNfseCancelamentoFromJson(Response.ContentAsString);
 end;
 
+function TNfseService.BaixarPdfNfse(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfse/{id}/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
 function TNfseService.BaixarXmlNfse(Id: string): TBytes;
 var
   Request: IRestRequest;
@@ -2954,6 +3066,11 @@ end;
 function TNuvemFiscalClient.Cnpj: ICnpjService;
 begin
   Result := TCnpjService.Create(Config);
+end;
+
+function TNuvemFiscalClient.Conta: IContaService;
+begin
+  Result := TContaService.Create(Config);
 end;
 
 function TNuvemFiscalClient.Cte: ICteService;
