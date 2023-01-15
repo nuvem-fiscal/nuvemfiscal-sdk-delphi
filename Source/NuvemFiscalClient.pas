@@ -54,10 +54,12 @@ type
     /// </summary>
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="CnaePrincipal">
     /// Filtro pelo código CNAE da atividade principal do estabelecimento.
@@ -75,7 +77,7 @@ type
     /// Retorna uma lista de estabelecimentos de acordo com os critérios de busca utilizados.
     /// Somente serão retornados estabelecimentos com situação cadastral "Ativa".
     /// </remarks>
-    function ListarCnpj(Top: Integer; Skip: Integer; CnaePrincipal: string; Municipio: string; NaturezaJuridica: string): TCnpjListagem;
+    function ListarCnpj(Top: Integer; Skip: Integer; Inlinecount: Boolean; CnaePrincipal: string; Municipio: string; NaturezaJuridica: string): TCnpjListagem;
     /// <summary>
     /// Consultar dados do CNPJ
     /// </summary>
@@ -89,10 +91,12 @@ type
   public
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="CnaePrincipal">
     /// Filtro pelo código CNAE da atividade principal do estabelecimento.
@@ -106,7 +110,7 @@ type
     /// Filtro pela natureza jurídica do estabelecimento
     ///  Utilize o valor de quatro dígitos sem máscara.
     /// </param>
-    function ListarCnpj(Top: Integer; Skip: Integer; CnaePrincipal: string; Municipio: string; NaturezaJuridica: string): TCnpjListagem;
+    function ListarCnpj(Top: Integer; Skip: Integer; Inlinecount: Boolean; CnaePrincipal: string; Municipio: string; NaturezaJuridica: string): TCnpjListagem;
     /// <param name="Cnpj">
     /// CNPJ sem máscara.
     /// </param>
@@ -147,17 +151,21 @@ type
     /// </summary>
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
     /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
     /// Utilize o valor sem máscara.
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
     /// <param name="Chave">
@@ -166,7 +174,7 @@ type
     /// <remarks>
     /// Retorna a lista de CT-e de acordo com os critérios de busca utilizados. Os CT-e são retornados ordenados pela data da criação, com os mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarCte(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
+    function ListarCte(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     /// <summary>
     /// Emitir CT-e
     /// </summary>
@@ -208,10 +216,12 @@ type
     /// </summary>
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
@@ -219,12 +229,13 @@ type
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
     /// <remarks>
     /// Retorna a lista dos lotes de acordo com os critérios de busca utilizados. Os lotes são retornados ordenados pela data da criação, com os mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarLotesCte(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
+    function ListarLotesCte(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
     /// <summary>
     /// Emitir lote de CT-e
     /// </summary>
@@ -320,23 +331,27 @@ type
   public
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
     /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
     /// Utilize o valor sem máscara.
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
     /// <param name="Chave">
     /// Chave de acesso do DF-e.
     /// </param>
-    function ListarCte(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
+    function ListarCte(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     function EmitirCte(Body: TCtePedidoEmissao): TDfe;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
@@ -357,10 +372,12 @@ type
     function BaixarXmlInutilizacaoCte(Id: string): TBytes;
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
@@ -368,9 +385,10 @@ type
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
-    function ListarLotesCte(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
+    function ListarLotesCte(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
     function EmitirLoteCte(Body: TCtePedidoEmissaoLote): TDfeLote;
     /// <param name="Id">
     /// ID único do lote gerado pela Nuvem Fiscal.
@@ -425,10 +443,12 @@ type
     /// </summary>
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ da empresa.
@@ -437,7 +457,7 @@ type
     /// <remarks>
     /// Retorna a lista das empresas associadas à sua conta. As empresas são retornadas ordenadas pela data da criação, com as mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarEmpresas(Top: Integer; Skip: Integer; CpfCnpj: string): TEmpresaListagem;
+    function ListarEmpresas(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string): TEmpresaListagem;
     /// <summary>
     /// Cadastrar empresa
     /// </summary>
@@ -523,16 +543,18 @@ type
   public
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ da empresa.
     /// Utilize o valor sem máscara.
     /// </param>
-    function ListarEmpresas(Top: Integer; Skip: Integer; CpfCnpj: string): TEmpresaListagem;
+    function ListarEmpresas(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string): TEmpresaListagem;
     function CriarEmpresa(Body: TEmpresa): TEmpresa;
     function ConsultarEmpresa(CpfCnpj: string): TEmpresa;
     function AtualizarEmpresa(Body: TEmpresa; CpfCnpj: string): TEmpresa;
@@ -562,17 +584,21 @@ type
     /// </summary>
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
     /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
     /// Utilize o valor sem máscara.
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
     /// <param name="Chave">
@@ -581,7 +607,7 @@ type
     /// <remarks>
     /// Retorna a lista de manifestos de acordo com os critérios de busca utilizados. Os manifestos são retornados ordenados pela data da criação, com os mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarMdfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
+    function ListarMdfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     /// <summary>
     /// Emitir MDF-e
     /// </summary>
@@ -605,10 +631,12 @@ type
     /// </summary>
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
@@ -616,12 +644,13 @@ type
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
     /// <remarks>
     /// Retorna a lista dos lotes de acordo com os critérios de busca utilizados. Os lotes são retornados ordenados pela data da criação, com os mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarLotesMdfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
+    function ListarLotesMdfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
     /// <summary>
     /// Emitir lote de MDF-e
     /// </summary>
@@ -731,23 +760,27 @@ type
   public
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
     /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
     /// Utilize o valor sem máscara.
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
     /// <param name="Chave">
     /// Chave de acesso do DF-e.
     /// </param>
-    function ListarMdfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
+    function ListarMdfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     function EmitirMdfe(Body: TMdfePedidoEmissao): TDfe;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
@@ -759,10 +792,12 @@ type
     function BaixarXmlEventoMdfe(Id: string): TBytes;
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
@@ -770,9 +805,10 @@ type
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
-    function ListarLotesMdfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
+    function ListarLotesMdfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
     function EmitirLoteMdfe(Body: TMdfePedidoEmissaoLote): TDfeLote;
     /// <param name="Id">
     /// ID único do lote gerado pela Nuvem Fiscal.
@@ -838,17 +874,21 @@ type
     /// </summary>
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
     /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
     /// Utilize o valor sem máscara.
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
     /// <param name="Chave">
@@ -857,7 +897,7 @@ type
     /// <remarks>
     /// Retorna a lista de notas de acordo com os critérios de busca utilizados. As notas são retornadas ordenadas pela data da criação, com as mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarNfce(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
+    function ListarNfce(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     /// <summary>
     /// Emitir NFC-e
     /// </summary>
@@ -885,10 +925,12 @@ type
     /// </summary>
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
@@ -896,12 +938,13 @@ type
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
     /// <remarks>
     /// Retorna a lista dos lotes de acordo com os critérios de busca utilizados. Os lotes são retornados ordenados pela data da criação, com os mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarLotesNfce(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
+    function ListarLotesNfce(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
     /// <summary>
     /// Emitir lote de NFC-e
     /// </summary>
@@ -980,23 +1023,27 @@ type
   public
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
     /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
     /// Utilize o valor sem máscara.
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
     /// <param name="Chave">
     /// Chave de acesso do DF-e.
     /// </param>
-    function ListarNfce(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
+    function ListarNfce(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     function EmitirNfce(Body: TNfePedidoEmissao): TDfe;
     function InutilizarNumeracaoNfce(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <param name="Id">
@@ -1009,10 +1056,12 @@ type
     function BaixarXmlInutilizacaoNfce(Id: string): TBytes;
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
@@ -1020,9 +1069,10 @@ type
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
-    function ListarLotesNfce(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
+    function ListarLotesNfce(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
     function EmitirLoteNfce(Body: TNfePedidoEmissaoLote): TDfeLote;
     /// <param name="Id">
     /// ID único do lote gerado pela Nuvem Fiscal.
@@ -1069,17 +1119,21 @@ type
     /// </summary>
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
     /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
     /// Utilize o valor sem máscara.
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
     /// <param name="Chave">
@@ -1088,7 +1142,7 @@ type
     /// <remarks>
     /// Retorna a lista de notas de acordo com os critérios de busca utilizados. As notas são retornadas ordenadas pela data da criação, com as mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarNfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
+    function ListarNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     /// <summary>
     /// Emitir NF-e
     /// </summary>
@@ -1130,10 +1184,12 @@ type
     /// </summary>
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
@@ -1141,12 +1197,13 @@ type
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
     /// <remarks>
     /// Retorna a lista dos lotes de acordo com os critérios de busca utilizados. Os lotes são retornados ordenados pela data da criação, com os mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarLotesNfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
+    function ListarLotesNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
     /// <summary>
     /// Emitir lote de NF-e
     /// </summary>
@@ -1252,23 +1309,27 @@ type
   public
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
     /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
     /// Utilize o valor sem máscara.
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
     /// <param name="Chave">
     /// Chave de acesso do DF-e.
     /// </param>
-    function ListarNfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
+    function ListarNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     function EmitirNfe(Body: TNfePedidoEmissao): TDfe;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
@@ -1289,10 +1350,12 @@ type
     function BaixarXmlInutilizacaoNfe(Id: string): TBytes;
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
@@ -1300,9 +1363,10 @@ type
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
-    function ListarLotesNfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
+    function ListarLotesNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
     function EmitirLoteNfe(Body: TNfePedidoEmissaoLote): TDfeLote;
     /// <param name="Id">
     /// ID único do lote gerado pela Nuvem Fiscal.
@@ -1364,17 +1428,21 @@ type
     /// </summary>
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
     /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
     /// Utilize o valor sem máscara.
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
     /// <param name="Chave">
@@ -1383,20 +1451,30 @@ type
     /// <remarks>
     /// Retorna a lista de notas de acordo com os critérios de busca utilizados. As notas são retornadas ordenadas pela data da criação, com as mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarNfse(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TNfseListagem;
+    function ListarNfse(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TNfseListagem;
     /// <summary>
     /// Emitir NFS-e
     /// </summary>
     function EmitirNfse(Body: TNfsePedidoEmissao): TNfse;
     /// <summary>
+    /// Emitir NFS-e
+    /// </summary>
+    function EmitirNfseDps(Body: TNfseDpsPedidoEmissao): TNfse;
+    /// <summary>
+    /// Emitir lote de NFS-e
+    /// </summary>
+    function EmitirLoteNfseDps(Body: TNfseLoteDpsPedidoEmissao): TRpsLote;
+    /// <summary>
     /// Listar lotes de NFS-e
     /// </summary>
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
@@ -1404,12 +1482,13 @@ type
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
     /// <remarks>
     /// Retorna a lista dos lotes de acordo com os critérios de busca utilizados. Os lotes são retornados ordenados pela data da criação, com os mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarLotesNfse(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TRpsLoteListagem;
+    function ListarLotesNfse(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TRpsLoteListagem;
     /// <summary>
     /// Emitir lote de NFS-e
     /// </summary>
@@ -1468,30 +1547,38 @@ type
   public
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
     /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
     /// Utilize o valor sem máscara.
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
     /// <param name="Chave">
     /// Chave de acesso do DF-e.
     /// </param>
-    function ListarNfse(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TNfseListagem;
+    function ListarNfse(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TNfseListagem;
     function EmitirNfse(Body: TNfsePedidoEmissao): TNfse;
+    function EmitirNfseDps(Body: TNfseDpsPedidoEmissao): TNfse;
+    function EmitirLoteNfseDps(Body: TNfseLoteDpsPedidoEmissao): TRpsLote;
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// Valor padrão: `10`.
     /// </param>
     /// <param name="Skip">
     /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ do emitente.
@@ -1499,9 +1586,10 @@ type
     /// </param>
     /// <param name="Ambiente">
     /// Identificação do Ambiente.
+    /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
-    function ListarLotesNfse(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TRpsLoteListagem;
+    function ListarLotesNfse(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TRpsLoteListagem;
     function EmitirLoteNfse(Body: TRpsPedidoEmissaoLote): TRpsLote;
     /// <param name="Id">
     /// ID único do lote gerado pela Nuvem Fiscal.
@@ -1609,7 +1697,7 @@ end;
 
 { TCnpjService }
 
-function TCnpjService.ListarCnpj(Top: Integer; Skip: Integer; CnaePrincipal: string; Municipio: string; NaturezaJuridica: string): TCnpjListagem;
+function TCnpjService.ListarCnpj(Top: Integer; Skip: Integer; Inlinecount: Boolean; CnaePrincipal: string; Municipio: string; NaturezaJuridica: string): TCnpjListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -1617,6 +1705,7 @@ begin
   Request := CreateRequest('/cnpj', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
   Request.AddQueryParam('cnae_principal', CnaePrincipal);
   Request.AddQueryParam('municipio', Municipio);
   Request.AddQueryParam('natureza_juridica', NaturezaJuridica);
@@ -1668,7 +1757,7 @@ end;
 
 { TCteService }
 
-function TCteService.ListarCte(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
+function TCteService.ListarCte(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -1676,6 +1765,7 @@ begin
   Request := CreateRequest('/cte', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -1764,7 +1854,7 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TCteService.ListarLotesCte(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
+function TCteService.ListarLotesCte(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -1772,6 +1862,7 @@ begin
   Request := CreateRequest('/cte/lotes', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -1928,7 +2019,7 @@ end;
 
 { TEmpresaService }
 
-function TEmpresaService.ListarEmpresas(Top: Integer; Skip: Integer; CpfCnpj: string): TEmpresaListagem;
+function TEmpresaService.ListarEmpresas(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string): TEmpresaListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -1936,6 +2027,7 @@ begin
   Request := CreateRequest('/empresas', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
@@ -2177,7 +2269,7 @@ end;
 
 { TMdfeService }
 
-function TMdfeService.ListarMdfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
+function TMdfeService.ListarMdfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2185,6 +2277,7 @@ begin
   Request := CreateRequest('/mdfe', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -2234,7 +2327,7 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TMdfeService.ListarLotesMdfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
+function TMdfeService.ListarLotesMdfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2242,6 +2335,7 @@ begin
   Request := CreateRequest('/mdfe/lotes', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -2428,7 +2522,7 @@ end;
 
 { TNfceService }
 
-function TNfceService.ListarNfce(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
+function TNfceService.ListarNfce(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2436,6 +2530,7 @@ begin
   Request := CreateRequest('/nfce', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -2499,7 +2594,7 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TNfceService.ListarLotesNfce(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
+function TNfceService.ListarLotesNfce(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2507,6 +2602,7 @@ begin
   Request := CreateRequest('/nfce/lotes', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -2635,7 +2731,7 @@ end;
 
 { TNfeService }
 
-function TNfeService.ListarNfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
+function TNfeService.ListarNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2643,6 +2739,7 @@ begin
   Request := CreateRequest('/nfe', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -2731,7 +2828,7 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TNfeService.ListarLotesNfe(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
+function TNfeService.ListarLotesNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2739,6 +2836,7 @@ begin
   Request := CreateRequest('/nfe/lotes', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -2907,7 +3005,7 @@ end;
 
 { TNfseService }
 
-function TNfseService.ListarNfse(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TNfseListagem;
+function TNfseService.ListarNfse(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TNfseListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2915,6 +3013,7 @@ begin
   Request := CreateRequest('/nfse', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -2939,7 +3038,35 @@ begin
   Result := Converter.TNfseFromJson(Response.ContentAsString);
 end;
 
-function TNfseService.ListarLotesNfse(Top: Integer; Skip: Integer; CpfCnpj: string; Referencia: string; Ambiente: string): TRpsLoteListagem;
+function TNfseService.EmitirNfseDps(Body: TNfseDpsPedidoEmissao): TNfse;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfse/dps', 'POST');
+  Request.AddBody(Converter.TNfseDpsPedidoEmissaoToJson(Body));
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TNfseFromJson(Response.ContentAsString);
+end;
+
+function TNfseService.EmitirLoteNfseDps(Body: TNfseLoteDpsPedidoEmissao): TRpsLote;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfse/dps/lotes', 'POST');
+  Request.AddBody(Converter.TNfseLoteDpsPedidoEmissaoToJson(Body));
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TRpsLoteFromJson(Response.ContentAsString);
+end;
+
+function TNfseService.ListarLotesNfse(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TRpsLoteListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -2947,6 +3074,7 @@ begin
   Request := CreateRequest('/nfse/lotes', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
