@@ -1720,7 +1720,7 @@ type
     FDPS: TDPS;
     Fcancelamento: TNfseCancelamento;
     Fmensagens: TNfseMensagemRetornoList;
-    Frps: TRps;
+    Fdeclaracao_prestacao_servico: TRps;
     procedure Setid(const Value: string);
     procedure Setcreated_at(const Value: TDateTime);
     procedure Setstatus(const Value: string);
@@ -1733,7 +1733,7 @@ type
     procedure SetDPS(const Value: TDPS);
     procedure Setcancelamento(const Value: TNfseCancelamento);
     procedure Setmensagens(const Value: TNfseMensagemRetornoList);
-    procedure Setrps(const Value: TRps);
+    procedure Setdeclaracao_prestacao_servico(const Value: TRps);
   public
     destructor Destroy; override;
     /// <summary>
@@ -1757,13 +1757,10 @@ type
     property ambienteHasValue: Boolean read FambienteHasValue write FambienteHasValue;
     property referencia: string read Freferencia write Setreferencia;
     property referenciaHasValue: Boolean read FreferenciaHasValue write FreferenciaHasValue;
-    /// <summary>
-    /// .
-    /// </summary>
     property DPS: TDPS read FDPS write SetDPS;
     property cancelamento: TNfseCancelamento read Fcancelamento write Setcancelamento;
     property mensagens: TNfseMensagemRetornoList read Fmensagens write Setmensagens;
-    property rps: TRps read Frps write Setrps;
+    property declaracao_prestacao_servico: TRps read Fdeclaracao_prestacao_servico write Setdeclaracao_prestacao_servico;
   end;
   
   TNfseList = class(TObjectList<TNfse>)
@@ -1871,7 +1868,6 @@ type
   
   /// <summary>
   /// Grupo de informações específicas de endereço nacional.
-  /// Caso não seja informado, será utilizado o do cadastro da empresa.
   /// </summary>
   TEnderNac = class
   private
@@ -1884,13 +1880,11 @@ type
   public
     /// <summary>
     /// Código do município, conforme Tabela do IBGE.
-    /// Caso não seja informado, será utilizado o do cadastro da empresa.
     /// </summary>
     property cMun: string read FcMun write SetcMun;
     property cMunHasValue: Boolean read FcMunHasValue write FcMunHasValue;
     /// <summary>
     /// Número do CEP.
-    /// Caso não seja informado, será utilizado o do cadastro da empresa.
     /// </summary>
     property CEP: string read FCEP write SetCEP;
     property CEPHasValue: Boolean read FCEPHasValue write FCEPHasValue;
@@ -1951,25 +1945,21 @@ type
     property endExt: TEnderExt read FendExt write SetendExt;
     /// <summary>
     /// Tipo e nome do logradouro da localização do imóvel.
-    /// Caso não seja informado, será utilizado o do cadastro da empresa.
     /// </summary>
     property xLgr: string read FxLgr write SetxLgr;
     property xLgrHasValue: Boolean read FxLgrHasValue write FxLgrHasValue;
     /// <summary>
     /// Número do imóvel.
-    /// Caso não seja informado, será utilizado o do cadastro da empresa.
     /// </summary>
     property nro: string read Fnro write Setnro;
     property nroHasValue: Boolean read FnroHasValue write FnroHasValue;
     /// <summary>
     /// Complemento do endereço.
-    /// Caso não seja informado, será utilizado o do cadastro da empresa.
     /// </summary>
     property xCpl: string read FxCpl write SetxCpl;
     property xCplHasValue: Boolean read FxCplHasValue write FxCplHasValue;
     /// <summary>
     /// Bairro.
-    /// Caso não seja informado, será utilizado o do cadastro da empresa.
     /// </summary>
     property xBairro: string read FxBairro write SetxBairro;
     property xBairroHasValue: Boolean read FxBairroHasValue write FxBairroHasValue;
@@ -18939,7 +18929,7 @@ end;
 
 destructor TNfse.Destroy;
 begin
-  Frps.Free;
+  Fdeclaracao_prestacao_servico.Free;
   Fmensagens.Free;
   Fcancelamento.Free;
   FDPS.Free;
@@ -19027,12 +19017,12 @@ begin
   end;
 end;
 
-procedure TNfse.Setrps(const Value: TRps);
+procedure TNfse.Setdeclaracao_prestacao_servico(const Value: TRps);
 begin
-  if Value <> Frps then
+  if Value <> Fdeclaracao_prestacao_servico then
   begin
-    Frps.Free;
-    Frps := Value;
+    Fdeclaracao_prestacao_servico.Free;
+    Fdeclaracao_prestacao_servico := Value;
   end;
 end;
 

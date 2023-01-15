@@ -4487,8 +4487,8 @@ begin
       Json.ObjAddProp(Result, 'cancelamento', Self.TNfseCancelamentoToJsonValue(Source.cancelamento));
     if Assigned(Source.mensagens) then
       Json.ObjAddProp(Result, 'mensagens', Self.TNfseMensagemRetornoListToJsonValue(Source.mensagens));
-    if Assigned(Source.rps) then
-      Json.ObjAddProp(Result, 'rps', Self.TRpsToJsonValue(Source.rps));
+    if Assigned(Source.declaracao_prestacao_servico) then
+      Json.ObjAddProp(Result, 'declaracao_prestacao_servico', Self.TRpsToJsonValue(Source.declaracao_prestacao_servico));
   except
     Result.Free;
     raise;
@@ -4542,8 +4542,8 @@ begin
       Result.cancelamento := Self.TNfseCancelamentoFromJsonValue(JValue);
     if Json.ObjContains(Source, 'mensagens', JValue) then
       Result.mensagens := Self.TNfseMensagemRetornoListFromJsonValue(JValue);
-    if Json.ObjContains(Source, 'rps', JValue) then
-      Result.rps := Self.TRpsFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'declaracao_prestacao_servico', JValue) then
+      Result.declaracao_prestacao_servico := Self.TRpsFromJsonValue(JValue);
   except
     Result.Free;
     raise;

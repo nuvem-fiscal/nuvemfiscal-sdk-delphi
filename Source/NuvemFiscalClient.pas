@@ -439,7 +439,7 @@ type
   IEmpresaService = interface(IInvokable)
     ['{F9F29CFD-FEC1-4997-804F-2BD718558EEE}']
     /// <summary>
-    /// Consultar empresas
+    /// Listar empresas
     /// </summary>
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
