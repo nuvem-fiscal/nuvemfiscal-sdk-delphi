@@ -6832,6 +6832,8 @@ begin
   Result := Json.CreateObject;
   try
     Json.ObjAddProp(Result, 'tribISSQN', Self.IntegerToJsonValue(Source.tribISSQN));
+    if Source.cLocIncidHasValue then
+      Json.ObjAddProp(Result, 'cLocIncid', Self.stringToJsonValue(Source.cLocIncid));
     if Source.cPaisResultHasValue then
       Json.ObjAddProp(Result, 'cPaisResult', Self.stringToJsonValue(Source.cPaisResult));
     if Assigned(Source.BM) then
@@ -6875,6 +6877,8 @@ begin
   try
     if Json.ObjContains(Source, 'tribISSQN', JValue) then
       Result.tribISSQN := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cLocIncid', JValue) then
+      Result.cLocIncid := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'cPaisResult', JValue) then
       Result.cPaisResult := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'BM', JValue) then

@@ -2975,6 +2975,8 @@ type
   TTribMunicipal = class
   private
     FtribISSQN: Integer;
+    FcLocIncid: string;
+    FcLocIncidHasValue: Boolean;
     FcPaisResult: string;
     FcPaisResultHasValue: Boolean;
     FBM: TBeneficioMunicipal;
@@ -2985,6 +2987,7 @@ type
     FpAliqHasValue: Boolean;
     FtpRetISSQN: Integer;
     FtpRetISSQNHasValue: Boolean;
+    procedure SetcLocIncid(const Value: string);
     procedure SetcPaisResult(const Value: string);
     procedure SetBM(const Value: TBeneficioMunicipal);
     procedure SetexigSusp(const Value: TExigSuspensa);
@@ -3001,6 +3004,13 @@ type
     /// * 4 - Imunidade
     /// </summary>
     property tribISSQN: Integer read FtribISSQN write FtribISSQN;
+    /// <summary>
+    /// Código do município de incidência do ISSQN (tabela do IBGE).
+    /// 
+    /// Caso o envio seja pelo Sistema Nacional NFS-e, essa propriedade é ignorada e o município de incidência do ISSQN é determinado automaticamente pela SEFIN nacional, conforme regras do aspecto espacial da lei complementar federal (LC 116/03) que são válidas para todos os municípios.
+    /// </summary>
+    property cLocIncid: string read FcLocIncid write SetcLocIncid;
+    property cLocIncidHasValue: Boolean read FcLocIncidHasValue write FcLocIncidHasValue;
     /// <summary>
     /// Código do país onde se verficou o resultado da prestação do serviço para o caso de Exportação de Serviço.(Tabela de Países ISO).
     /// </summary>
@@ -19765,6 +19775,12 @@ begin
   FexigSusp.Free;
   FBM.Free;
   inherited;
+end;
+
+procedure TTribMunicipal.SetcLocIncid(const Value: string);
+begin
+  FcLocIncid := Value;
+  FcLocIncidHasValue := True;
 end;
 
 procedure TTribMunicipal.SetcPaisResult(const Value: string);
