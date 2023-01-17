@@ -914,6 +914,13 @@ type
     /// </param>
     function ConsultarInutilizacaoNfce(Id: string): TDfeInutilizacao;
     /// <summary>
+    /// Baixar PDF da inutilização
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfInutilizacaoNfce(Id: string): TBytes;
+    /// <summary>
     /// Baixar XML da inutilização
     /// </summary>
     /// <param name="Id">
@@ -997,6 +1004,13 @@ type
     /// </param>
     function CancelarNfce(Body: TNfePedidoCancelamento; Id: string): TDfeCancelamento;
     /// <summary>
+    /// Baixar PDF do cancelamento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfCancelamentoNfce(Id: string): TBytes;
+    /// <summary>
     /// Baixar XML do cancelamento
     /// </summary>
     /// <param name="Id">
@@ -1053,6 +1067,10 @@ type
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
+    function BaixarPdfInutilizacaoNfce(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
     function BaixarXmlInutilizacaoNfce(Id: string): TBytes;
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
@@ -1095,6 +1113,10 @@ type
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
     function CancelarNfce(Body: TNfePedidoCancelamento; Id: string): TDfeCancelamento;
+    /// <param name="Id">
+    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfCancelamentoNfce(Id: string): TBytes;
     /// <param name="Id">
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -1155,6 +1177,13 @@ type
     /// </param>
     function ConsultarEventoNfe(Id: string): TDfeEvento;
     /// <summary>
+    /// Baixar PDF do evento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfEventoNfe(Id: string): TBytes;
+    /// <summary>
     /// Baixar XML do evento
     /// </summary>
     /// <param name="Id">
@@ -1172,6 +1201,13 @@ type
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
     function ConsultarInutilizacaoNfe(Id: string): TDfeInutilizacao;
+    /// <summary>
+    /// Baixar PDF da inutilização
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfInutilizacaoNfe(Id: string): TBytes;
     /// <summary>
     /// Baixar XML da inutilização
     /// </summary>
@@ -1256,6 +1292,13 @@ type
     /// </param>
     function CancelarNfe(Body: TNfePedidoCancelamento; Id: string): TDfeCancelamento;
     /// <summary>
+    /// Baixar PDF do cancelamento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfCancelamentoNfe(Id: string): TBytes;
+    /// <summary>
     /// Baixar XML do cancelamento
     /// </summary>
     /// <param name="Id">
@@ -1282,6 +1325,13 @@ type
     /// É possível enviar até 20 correções diferentes, sendo que será válido sempre a última correção enviada.
     /// </remarks>
     function CriarCartaCorrecaoNfe(Body: TNfePedidoCartaCorrecao; Id: string): TDfeCartaCorrecao;
+    /// <summary>
+    /// Baixar PDF da carta de correção
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfCartaCorrecaoNfe(Id: string): TBytes;
     /// <summary>
     /// Baixar XML da carta de correção
     /// </summary>
@@ -1338,12 +1388,20 @@ type
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
+    function BaixarPdfEventoNfe(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
     function BaixarXmlEventoNfe(Id: string): TBytes;
     function InutilizarNumeracaoNfe(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
     function ConsultarInutilizacaoNfe(Id: string): TDfeInutilizacao;
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfInutilizacaoNfe(Id: string): TBytes;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
@@ -1392,6 +1450,10 @@ type
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
+    function BaixarPdfCancelamentoNfe(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// </param>
     function BaixarXmlCancelamentoNfe(Id: string): TBytes;
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
@@ -1404,6 +1466,10 @@ type
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
     function CriarCartaCorrecaoNfe(Body: TNfePedidoCartaCorrecao; Id: string): TDfeCartaCorrecao;
+    /// <param name="Id">
+    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfCartaCorrecaoNfe(Id: string): TBytes;
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -2582,6 +2648,18 @@ begin
   Result := Converter.TDfeInutilizacaoFromJson(Response.ContentAsString);
 end;
 
+function TNfceService.BaixarPdfInutilizacaoNfce(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfce/inutilizacoes/{id}/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
 function TNfceService.BaixarXmlInutilizacaoNfce(Id: string): TBytes;
 var
   Request: IRestRequest;
@@ -2693,6 +2771,18 @@ begin
   Result := Converter.TDfeCancelamentoFromJson(Response.ContentAsString);
 end;
 
+function TNfceService.BaixarPdfCancelamentoNfce(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfce/{id}/cancelamento/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
 function TNfceService.BaixarXmlCancelamentoNfce(Id: string): TBytes;
 var
   Request: IRestRequest;
@@ -2777,6 +2867,18 @@ begin
   Result := Converter.TDfeEventoFromJson(Response.ContentAsString);
 end;
 
+function TNfeService.BaixarPdfEventoNfe(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfe/eventos/{id}/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
 function TNfeService.BaixarXmlEventoNfe(Id: string): TBytes;
 var
   Request: IRestRequest;
@@ -2814,6 +2916,18 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Converter.TDfeInutilizacaoFromJson(Response.ContentAsString);
+end;
+
+function TNfeService.BaixarPdfInutilizacaoNfe(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfe/inutilizacoes/{id}/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
 end;
 
 function TNfeService.BaixarXmlInutilizacaoNfe(Id: string): TBytes;
@@ -2927,6 +3041,18 @@ begin
   Result := Converter.TDfeCancelamentoFromJson(Response.ContentAsString);
 end;
 
+function TNfeService.BaixarPdfCancelamentoNfe(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfe/{id}/cancelamento/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
 function TNfeService.BaixarXmlCancelamentoNfe(Id: string): TBytes;
 var
   Request: IRestRequest;
@@ -2965,6 +3091,18 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Converter.TDfeCartaCorrecaoFromJson(Response.ContentAsString);
+end;
+
+function TNfeService.BaixarPdfCartaCorrecaoNfe(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfe/{id}/carta-correcao/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
 end;
 
 function TNfeService.BaixarXmlCartaCorrecaoNfe(Id: string): TBytes;
