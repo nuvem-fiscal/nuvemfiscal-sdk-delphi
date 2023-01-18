@@ -5,6 +5,7 @@ interface
 uses
   SysUtils, 
   OpenApiRest, 
+  OpenApiUtils, 
   NuvemFiscalJson, 
   NuvemFiscalDtos;
 
@@ -1870,7 +1871,7 @@ begin
   Request := CreateRequest('/cnpj', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
-  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
   Request.AddQueryParam('cnae_principal', CnaePrincipal);
   Request.AddQueryParam('municipio', Municipio);
   Request.AddQueryParam('natureza_juridica', NaturezaJuridica);
@@ -1930,7 +1931,7 @@ begin
   Request := CreateRequest('/cte', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
-  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -2051,7 +2052,7 @@ begin
   Request := CreateRequest('/cte/lotes', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
-  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -2252,7 +2253,7 @@ begin
   Request := CreateRequest('/empresas', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
-  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
@@ -2502,7 +2503,7 @@ begin
   Request := CreateRequest('/mdfe', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
-  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -2572,7 +2573,7 @@ begin
   Request := CreateRequest('/mdfe/lotes', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
-  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -2803,7 +2804,7 @@ begin
   Request := CreateRequest('/nfce', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
-  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -2887,7 +2888,7 @@ begin
   Request := CreateRequest('/nfce/lotes', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
-  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -3036,7 +3037,7 @@ begin
   Request := CreateRequest('/nfe', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
-  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -3157,7 +3158,7 @@ begin
   Request := CreateRequest('/nfe/lotes', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
-  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -3358,7 +3359,7 @@ begin
   Request := CreateRequest('/nfse', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
-  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
@@ -3419,7 +3420,7 @@ begin
   Request := CreateRequest('/nfse/lotes', 'GET');
   Request.AddQueryParam('$top', IntToStr(Top));
   Request.AddQueryParam('$skip', IntToStr(Skip));
-  Request.AddQueryParam('$inlinecount', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('referencia', Referencia);
   Request.AddQueryParam('ambiente', Ambiente);
