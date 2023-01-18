@@ -187,6 +187,13 @@ type
     /// </param>
     function ConsultarEventoCte(Id: string): TDfeEvento;
     /// <summary>
+    /// Baixar PDF do evento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfEventoCte(Id: string): TBytes;
+    /// <summary>
     /// Baixar XML do evento
     /// </summary>
     /// <param name="Id">
@@ -204,6 +211,13 @@ type
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
     function ConsultarInutilizacaoCte(Id: string): TDfeInutilizacao;
+    /// <summary>
+    /// Baixar PDF da inutilização
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfInutilizacaoCte(Id: string): TBytes;
     /// <summary>
     /// Baixar XML da inutilização
     /// </summary>
@@ -288,6 +302,13 @@ type
     /// </param>
     function CancelarCte(Body: TCtePedidoCancelamento; Id: string): TDfeCancelamento;
     /// <summary>
+    /// Baixar PDF do cancelamento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfCancelamentoCte(Id: string): TBytes;
+    /// <summary>
     /// Baixar XML do cancelamento
     /// </summary>
     /// <param name="Id">
@@ -312,12 +333,26 @@ type
     /// </remarks>
     function CriarCartaCorrecaoCte(Body: TCtePedidoCartaCorrecao; Id: string): TCteCartaCorrecao;
     /// <summary>
+    /// Baixar PDF da carta de correção
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfCartaCorrecaoCte(Id: string): TBytes;
+    /// <summary>
     /// Baixar XML da carta de correção
     /// </summary>
     /// <param name="Id">
     /// ID único do CT-e gerado pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlCartaCorrecaoCte(Id: string): TBytes;
+    /// <summary>
+    /// Baixar PDF do DACTE
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfCte(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do CT-e processado
     /// </summary>
@@ -360,12 +395,20 @@ type
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
+    function BaixarPdfEventoCte(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
     function BaixarXmlEventoCte(Id: string): TBytes;
     function InutilizarNumeracaoCte(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
     function ConsultarInutilizacaoCte(Id: string): TDfeInutilizacao;
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfInutilizacaoCte(Id: string): TBytes;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
@@ -414,6 +457,10 @@ type
     /// <param name="Id">
     /// ID único do CT-e gerado pela Nuvem Fiscal.
     /// </param>
+    function BaixarPdfCancelamentoCte(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// </param>
     function BaixarXmlCancelamentoCte(Id: string): TBytes;
     /// <param name="Id">
     /// ID único do CT-e gerado pela Nuvem Fiscal.
@@ -426,7 +473,15 @@ type
     /// <param name="Id">
     /// ID único do CT-e gerado pela Nuvem Fiscal.
     /// </param>
+    function BaixarPdfCartaCorrecaoCte(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// </param>
     function BaixarXmlCartaCorrecaoCte(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfCte(Id: string): TBytes;
     /// <param name="Id">
     /// ID único do CT-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -620,6 +675,13 @@ type
     /// </param>
     function ConsultarEventoMdfe(Id: string): TDfeEvento;
     /// <summary>
+    /// Baixar PDF do evento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfEventoMdfe(Id: string): TBytes;
+    /// <summary>
     /// Baixar XML do evento
     /// </summary>
     /// <param name="Id">
@@ -706,6 +768,13 @@ type
     /// </param>
     function CancelarMdfe(Body: TMdfePedidoCancelamento; Id: string): TDfeCancelamento;
     /// <summary>
+    /// Baixar PDF do cancelamento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfCancelamentoMdfe(Id: string): TBytes;
+    /// <summary>
     /// Baixar XML do cancelamento
     /// </summary>
     /// <param name="Id">
@@ -727,6 +796,13 @@ type
     /// </param>
     function EncerrarMdfe(Body: TMdfePedidoEncerramento; Id: string): TMdfeEncerramento;
     /// <summary>
+    /// Baixar PDF do encerramento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfEncerramentoMdfe(Id: string): TBytes;
+    /// <summary>
     /// Baixar XML do encerramento
     /// </summary>
     /// <param name="Id">
@@ -747,6 +823,13 @@ type
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
     function IncluirDfeMdfe(Body: TMdfePedidoInclusaoDfe; Id: string): TMdfeInclusaoDfe;
+    /// <summary>
+    /// Baixar PDF do DAMDFE
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfMdfe(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do MDF-e processado
     /// </summary>
@@ -786,6 +869,10 @@ type
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
     function ConsultarEventoMdfe(Id: string): TDfeEvento;
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfEventoMdfe(Id: string): TBytes;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
@@ -837,6 +924,10 @@ type
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
+    function BaixarPdfCancelamentoMdfe(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// </param>
     function BaixarXmlCancelamentoMdfe(Id: string): TBytes;
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
@@ -849,6 +940,10 @@ type
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
+    function BaixarPdfEncerramentoMdfe(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// </param>
     function BaixarXmlEncerramentoMdfe(Id: string): TBytes;
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
@@ -858,6 +953,10 @@ type
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
     function IncluirDfeMdfe(Body: TMdfePedidoInclusaoDfe; Id: string): TMdfeInclusaoDfe;
+    /// <param name="Id">
+    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfMdfe(Id: string): TBytes;
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -1869,6 +1968,18 @@ begin
   Result := Converter.TDfeEventoFromJson(Response.ContentAsString);
 end;
 
+function TCteService.BaixarPdfEventoCte(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cte/eventos/{id}/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
 function TCteService.BaixarXmlEventoCte(Id: string): TBytes;
 var
   Request: IRestRequest;
@@ -1906,6 +2017,18 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Converter.TDfeInutilizacaoFromJson(Response.ContentAsString);
+end;
+
+function TCteService.BaixarPdfInutilizacaoCte(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cte/inutilizacoes/{id}/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
 end;
 
 function TCteService.BaixarXmlInutilizacaoCte(Id: string): TBytes;
@@ -2019,6 +2142,18 @@ begin
   Result := Converter.TDfeCancelamentoFromJson(Response.ContentAsString);
 end;
 
+function TCteService.BaixarPdfCancelamentoCte(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cte/{id}/cancelamento/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
 function TCteService.BaixarXmlCancelamentoCte(Id: string): TBytes;
 var
   Request: IRestRequest;
@@ -2059,12 +2194,36 @@ begin
   Result := Converter.TCteCartaCorrecaoFromJson(Response.ContentAsString);
 end;
 
+function TCteService.BaixarPdfCartaCorrecaoCte(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cte/{id}/carta-correcao/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
 function TCteService.BaixarXmlCartaCorrecaoCte(Id: string): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
   Request := CreateRequest('/cte/{id}/carta-correcao/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TCteService.BaixarPdfCte(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cte/{id}/pdf', 'GET');
   Request.AddUrlParam('id', Id);
   Response := Request.Execute;
   CheckError(Response);
@@ -2381,6 +2540,18 @@ begin
   Result := Converter.TDfeEventoFromJson(Response.ContentAsString);
 end;
 
+function TMdfeService.BaixarPdfEventoMdfe(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/mdfe/eventos/{id}/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
 function TMdfeService.BaixarXmlEventoMdfe(Id: string): TBytes;
 var
   Request: IRestRequest;
@@ -2492,6 +2663,18 @@ begin
   Result := Converter.TDfeCancelamentoFromJson(Response.ContentAsString);
 end;
 
+function TMdfeService.BaixarPdfCancelamentoMdfe(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/mdfe/{id}/cancelamento/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
 function TMdfeService.BaixarXmlCancelamentoMdfe(Id: string): TBytes;
 var
   Request: IRestRequest;
@@ -2530,6 +2713,18 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Converter.TMdfeEncerramentoFromJson(Response.ContentAsString);
+end;
+
+function TMdfeService.BaixarPdfEncerramentoMdfe(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/mdfe/{id}/encerramento/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
 end;
 
 function TMdfeService.BaixarXmlEncerramentoMdfe(Id: string): TBytes;
@@ -2572,6 +2767,18 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Converter.TMdfeInclusaoDfeFromJson(Response.ContentAsString);
+end;
+
+function TMdfeService.BaixarPdfMdfe(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/mdfe/{id}/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
 end;
 
 function TMdfeService.BaixarXmlMdfe(Id: string): TBytes;
