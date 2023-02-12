@@ -19,21 +19,23 @@ object fmEmitirNfse: TfmEmitirNfse
   object PageControl1: TPageControl
     Left = 5
     Top = 8
-    Width = 577
+    Width = 573
     Height = 397
     ActivePage = tsDados
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
+    ExplicitWidth = 569
     object tsDados: TTabSheet
       Caption = 'Dados'
       object pnCertificado: TPanel
         Left = 0
         Top = 0
-        Width = 569
+        Width = 565
         Height = 367
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 561
         object Label11: TLabel
           Left = 6
           Top = 6
@@ -96,6 +98,7 @@ object fmEmitirNfse: TfmEmitirNfse
             Top = 44
             Width = 163
             Height = 23
+            NumbersOnly = True
             TabOrder = 0
           end
           object edTomadorNomeRazaoSocial: TEdit
@@ -171,7 +174,7 @@ object fmEmitirNfse: TfmEmitirNfse
       object memoLog: TMemo
         Left = 0
         Top = 0
-        Width = 569
+        Width = 565
         Height = 367
         Align = alClient
         ScrollBars = ssBoth
@@ -180,7 +183,7 @@ object fmEmitirNfse: TfmEmitirNfse
     end
   end
   object btCancelar: TButton
-    Left = 507
+    Left = 503
     Top = 411
     Width = 75
     Height = 25
@@ -188,9 +191,10 @@ object fmEmitirNfse: TfmEmitirNfse
     Caption = 'Cancelar'
     ModalResult = 2
     TabOrder = 2
+    ExplicitLeft = 499
   end
   object btOk: TButton
-    Left = 426
+    Left = 422
     Top = 411
     Width = 75
     Height = 25
@@ -200,5 +204,6 @@ object fmEmitirNfse: TfmEmitirNfse
     ModalResult = 2
     TabOrder = 1
     OnClick = btOkClick
+    ExplicitLeft = 418
   end
 end

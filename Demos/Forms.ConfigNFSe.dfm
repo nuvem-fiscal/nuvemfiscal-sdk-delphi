@@ -2,8 +2,8 @@ object fmConfigNfse: TfmConfigNfse
   Left = 0
   Top = 0
   Caption = 'Configura'#231#227'o NFS-e'
-  ClientHeight = 138
-  ClientWidth = 590
+  ClientHeight = 266
+  ClientWidth = 599
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,14 +12,14 @@ object fmConfigNfse: TfmConfigNfse
   Font.Style = []
   Position = poMainFormCenter
   DesignSize = (
-    590
-    138)
+    599
+    266)
   TextHeight = 15
   object PageControl1: TPageControl
     Left = 5
     Top = 8
-    Width = 577
-    Height = 91
+    Width = 586
+    Height = 217
     ActivePage = tsDados
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
@@ -28,11 +28,16 @@ object fmConfigNfse: TfmConfigNfse
       object pnCertificado: TPanel
         Left = 0
         Top = 0
-        Width = 569
-        Height = 61
+        Width = 578
+        Height = 187
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitTop = 4
+        ExplicitHeight = 203
+        DesignSize = (
+          578
+          187)
         object Label6: TLabel
           Left = 354
           Top = 6
@@ -60,6 +65,20 @@ object fmConfigNfse: TfmConfigNfse
           Width = 70
           Height = 15
           Caption = 'N'#250'mero RPS:'
+        end
+        object Label12: TLabel
+          Left = 5
+          Top = 71
+          Width = 142
+          Height = 15
+          Caption = 'Situa'#231#227'o Simples Nacional:'
+        end
+        object Label13: TLabel
+          Left = 6
+          Top = 127
+          Width = 173
+          Height = 15
+          Caption = 'Regime especial de tributa'#231#227'o:'
         end
         object edSerieRPS: TEdit
           Left = 352
@@ -95,12 +114,49 @@ object fmConfigNfse: TfmConfigNfse
           NumbersOnly = True
           TabOrder = 1
         end
+        object cbSimplesNacional: TComboBox
+          Left = 6
+          Top = 92
+          Width = 399
+          Height = 23
+          Style = csDropDownList
+          TabOrder = 4
+          Items.Strings = (
+            '1: N'#227'o Optante'
+            '2: Optante - Microempreendedor Individual (MEI)'
+            '3: Optante - Microempresa ou Empresa de Pequeno Porte (ME/EPP)')
+        end
+        object cbRegimeEspecial: TComboBox
+          Left = 6
+          Top = 148
+          Width = 211
+          Height = 23
+          Style = csDropDownList
+          Anchors = [akLeft, akTop, akRight]
+          TabOrder = 5
+          Items.Strings = (
+            '0: Nenhum'
+            '1: Ato Cooperado (Cooperativa)'
+            '2: Estimativa'
+            '3: Microempresa Municipal'
+            '4: Not'#225'rio ou Registrador'
+            '5: Profissional Aut'#244'nomo'
+            '6: Sociedade de Profissionais')
+        end
+        object chkIncentivoFiscal: TCheckBox
+          Left = 257
+          Top = 151
+          Width = 113
+          Height = 17
+          Caption = 'Incentivo Fiscal'
+          TabOrder = 6
+        end
       end
     end
   end
   object btCancelar: TButton
-    Left = 496
-    Top = 105
+    Left = 516
+    Top = 231
     Width = 75
     Height = 25
     Anchors = [akTop, akRight]
@@ -109,8 +165,8 @@ object fmConfigNfse: TfmConfigNfse
     TabOrder = 2
   end
   object btOk: TButton
-    Left = 415
-    Top = 105
+    Left = 435
+    Top = 231
     Width = 75
     Height = 25
     Anchors = [akTop, akRight]

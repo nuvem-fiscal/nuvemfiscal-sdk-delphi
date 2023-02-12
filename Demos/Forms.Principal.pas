@@ -68,6 +68,7 @@ type
     procedure btEmitirNfseClick(Sender: TObject);
     procedure btVerDetalhesNfseClick(Sender: TObject);
     procedure btListarNfseClick(Sender: TObject);
+    procedure lvEmpresasDblClick(Sender: TObject);
   private
     Client: INuvemFiscalClient;
     TokenProvider: IClientCredencialsTokenProvider;
@@ -178,7 +179,7 @@ var
   Empresa: TEmpresa;
   Item: TListItem;
 begin
-  Empresas := Client.Empresa.ListarEmpresas(30, 0, '');
+  Empresas := Client.Empresa.ListarEmpresas(30, 0, False, '');
   try
     lvEmpresas.Clear;
     for Empresa in Empresas.data do
@@ -195,18 +196,27 @@ end;
 procedure TfmMain.btCancelarNfseClick(Sender: TObject);
 var
   Cancelamento: TNfseCancelamento;
+  PedidoCancelamento: TNfsePedidoCancelamento;
 begin
   if NfseSelecionada = '' then Exit;
 
   if MessageDlg('Tem certeza que deseja cancelar a nota ' + NfseSelecionada, mtConfirmation, [mbOk, mbCancel], 0, mbCancel) <> mrOk then
     Exit;
 
-  Cancelamento := Client.Nfse.CancelarNfse(NfseSelecionada);
+  PedidoCancelamento := TNfsePedidoCancelamento.Create;
   try
-    ShowMessage(Format('Pedido de cancelamento %s em processamento.',
-      [Cancelamento.id]));
+    PedidoCancelamento.codigo := '01';
+    PedidoCancelamento.motivo := 'Nota fiscal emitida com erro de preenchimento';
+
+    Cancelamento := Client.Nfse.CancelarNfse(PedidoCancelamento, NfseSelecionada);
+    try
+      ShowMessage(Format('Pedido de cancelamento %s em processamento.',
+        [Cancelamento.id]));
+    finally
+      Cancelamento.Free;
+    end;
   finally
-    Cancelamento.Free;
+    PedidoCancelamento.Free;
   end;
 end;
 
@@ -237,7 +247,7 @@ var
   Nota: TNfse;
   Item: TListItem;
 begin
-  Notas := Client.Nfse.ListarNfse(30, 0, edNfseCnpj.Text, '', AmbienteNfse);
+  Notas := Client.Nfse.ListarNfse(30, 0, False, edNfseCnpj.Text, '', AmbienteNfse, '');
   try
     lvNfses.Clear;
     for Nota in Notas.data do
@@ -294,6 +304,12 @@ end;
 procedure TfmMain.Log(const Msg: string);
 begin
   mmLog.Lines.Add(Msg);
+end;
+
+procedure TfmMain.lvEmpresasDblClick(Sender: TObject);
+begin
+  if btAlterarEmpresa.Enabled then
+    btAlterarEmpresa.Click;
 end;
 
 function TfmMain.NfseSelecionada: string;

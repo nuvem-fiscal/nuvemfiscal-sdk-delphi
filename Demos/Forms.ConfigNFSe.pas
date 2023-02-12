@@ -22,6 +22,11 @@ type
     edNumeroRPS: TEdit;
     btCancelar: TButton;
     btOk: TButton;
+    Label12: TLabel;
+    cbSimplesNacional: TComboBox;
+    Label13: TLabel;
+    cbRegimeEspecial: TComboBox;
+    chkIncentivoFiscal: TCheckBox;
     procedure btOkClick(Sender: TObject);
   private
     Client: INuvemFiscalClient;
@@ -56,6 +61,12 @@ begin
     Config.rps.numero := StrToInt(edNumeroRPS.Text);
     Config.rps.serie := edSerieRps.Text;
     Config.rps.lote := StrToInt(edLoteRPS.Text);
+    Config.regTrib := TEmpresaConfigNfseRegTrib.Create;
+    if cbSimplesNacional.ItemIndex >= 0 then
+      Config.regTrib.opSimpNac := cbSimplesNacional.ItemIndex + 1;
+    if cbRegimeEspecial.ItemIndex >= 0 then
+      Config.regTrib.regEspTrib := cbRegimeEspecial.ItemIndex;
+    Config.incentivo_fiscal := chkIncentivoFiscal.Checked;
     Client.Empresa.AlterarConfigNfse(Config, Cnpj).Free;
   finally
     Config.Free;
@@ -115,6 +126,19 @@ begin
     edSerieRPS.Text := Config.rps.serie;
     edLoteRPS.Text := IntToStr(Config.rps.lote);
   end;
+  if Config.regTrib <> nil then
+  begin
+    if Config.regTrib.opSimpNacHasValue then
+      cbSimplesNacional.ItemIndex := Config.regTrib.opSimpNac - 1
+    else
+      cbSimplesNacional.ItemIndex := -1;
+
+    if Config.regTrib.regEspTribHasValue then
+      cbRegimeEspecial.ItemIndex := Config.regTrib.regEspTrib
+    else
+      cbRegimeEspecial.ItemIndex := -1;
+  end;
+  chkIncentivoFiscal.Checked := Config.incentivo_fiscal;
 end;
 
 end.

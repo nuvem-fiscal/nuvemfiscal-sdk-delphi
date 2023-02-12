@@ -2,8 +2,8 @@ object fmMain: TfmMain
   Left = 0
   Top = 0
   Caption = 'Nuvem Fiscal - Demo'
-  ClientHeight = 571
-  ClientWidth = 853
+  ClientHeight = 570
+  ClientWidth = 849
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,8 +13,8 @@ object fmMain: TfmMain
   Position = poMainFormCenter
   OnCreate = FormCreate
   DesignSize = (
-    853
-    571)
+    849
+    570)
   TextHeight = 15
   object Label1: TLabel
     Left = 16
@@ -38,7 +38,7 @@ object fmMain: TfmMain
     Caption = 'Token de acesso:'
   end
   object Label6: TLabel
-    Left = 600
+    Left = 592
     Top = 43
     Width = 55
     Height = 15
@@ -56,23 +56,25 @@ object fmMain: TfmMain
   object edClientSecret: TEdit
     Left = 408
     Top = 8
-    Width = 298
+    Width = 290
     Height = 23
     Anchors = [akLeft, akTop, akRight]
     PasswordChar = '*'
     TabOrder = 1
+    ExplicitWidth = 286
   end
   object edToken: TEdit
     Left = 114
     Top = 40
-    Width = 470
+    Width = 462
     Height = 23
     Anchors = [akLeft, akTop, akRight]
     ReadOnly = True
     TabOrder = 3
+    ExplicitWidth = 458
   end
   object btToken: TButton
-    Left = 721
+    Left = 713
     Top = 7
     Width = 113
     Height = 25
@@ -80,29 +82,33 @@ object fmMain: TfmMain
     Caption = 'Get Token'
     TabOrder = 2
     OnClick = btTokenClick
+    ExplicitLeft = 709
   end
   object edExpiracao: TEdit
-    Left = 664
+    Left = 656
     Top = 40
     Width = 170
     Height = 23
     Anchors = [akTop, akRight]
     ReadOnly = True
     TabOrder = 4
+    ExplicitLeft = 652
   end
   object PageControl1: TPageControl
     Left = 16
     Top = 80
-    Width = 818
-    Height = 468
+    Width = 810
+    Height = 467
     ActivePage = tsNfse
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 5
+    ExplicitWidth = 806
+    ExplicitHeight = 466
     object tsConsultas: TTabSheet
       Caption = 'Consultas'
       DesignSize = (
-        810
-        438)
+        802
+        437)
       object Label2: TLabel
         Left = 6
         Top = 12
@@ -136,8 +142,8 @@ object fmMain: TfmMain
       object mmLog: TMemo
         Left = 6
         Top = 42
-        Width = 793
-        Height = 386
+        Width = 785
+        Height = 385
         Anchors = [akLeft, akTop, akRight, akBottom]
         TabOrder = 2
       end
@@ -162,16 +168,16 @@ object fmMain: TfmMain
       Caption = 'Empresas'
       ImageIndex = 1
       object Panel1: TPanel
-        Left = 675
+        Left = 667
         Top = 0
         Width = 135
-        Height = 438
+        Height = 437
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 0
         DesignSize = (
           135
-          438)
+          437)
         object btAtualizarEmpresas: TButton
           Left = 2
           Top = 3
@@ -236,8 +242,8 @@ object fmMain: TfmMain
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 675
-        Height = 438
+        Width = 667
+        Height = 437
         Align = alClient
         BevelOuter = bvNone
         BorderWidth = 3
@@ -245,8 +251,8 @@ object fmMain: TfmMain
         object lvEmpresas: TListView
           Left = 3
           Top = 3
-          Width = 669
-          Height = 432
+          Width = 661
+          Height = 431
           Align = alClient
           Columns = <
             item
@@ -260,6 +266,7 @@ object fmMain: TfmMain
           RowSelect = True
           TabOrder = 0
           ViewStyle = vsReport
+          OnDblClick = lvEmpresasDblClick
         end
       end
     end
@@ -267,16 +274,18 @@ object fmMain: TfmMain
       Caption = 'NFS-e'
       ImageIndex = 2
       object Panel4: TPanel
-        Left = 675
+        Left = 667
         Top = 0
         Width = 135
-        Height = 438
+        Height = 437
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitLeft = 663
+        ExplicitHeight = 436
         DesignSize = (
           135
-          438)
+          437)
         object btEmitirNfse: TButton
           Left = 6
           Top = 41
@@ -311,16 +320,18 @@ object fmMain: TfmMain
       object Panel3: TPanel
         Left = 0
         Top = 0
-        Width = 675
-        Height = 438
+        Width = 667
+        Height = 437
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
+        ExplicitWidth = 663
+        ExplicitHeight = 436
         object lvNfses: TListView
           Left = 0
           Top = 41
-          Width = 675
-          Height = 397
+          Width = 667
+          Height = 396
           Align = alClient
           Columns = <
             item
@@ -354,15 +365,18 @@ object fmMain: TfmMain
           RowSelect = True
           TabOrder = 0
           ViewStyle = vsReport
+          ExplicitWidth = 663
+          ExplicitHeight = 395
         end
         object Panel5: TPanel
           Left = 0
           Top = 0
-          Width = 675
+          Width = 667
           Height = 41
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
+          ExplicitWidth = 663
           object Label7: TLabel
             Left = 8
             Top = 13

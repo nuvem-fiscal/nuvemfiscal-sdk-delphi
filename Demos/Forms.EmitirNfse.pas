@@ -3,8 +3,8 @@ unit Forms.EmitirNfse;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   NuvemFiscalClient, NuvemFiscalDtos, OpenApiRest, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls;
 
 type
@@ -46,6 +46,9 @@ var
 
 implementation
 
+uses
+  System.DateUtils;
+
 {$R *.dfm}
 
 procedure TfmEmitirNfse.FormCreate(Sender: TObject);
@@ -82,34 +85,58 @@ end;
 
 procedure TfmEmitirNfse.EmitirNfse;
 var
-  PedidoEmissao: TNfsePedidoEmissao;
+  PedidoEmissao: TNfseDpsPedidoEmissao;
+  InfDPS: TInfDPS;
   Servico: TRpsDadosServico;
   Nfse: TNfse;
 begin
-  PedidoEmissao := TNfsePedidoEmissao.Create;
+  PedidoEmissao := TNfseDpsPedidoEmissao.Create;
   try
     PedidoEmissao.ambiente := cbAmbiente.Text;
-    PedidoEmissao.rps := TRpsPedidoEmissao.Create;
-    PedidoEmissao.rps.prestador := TRpsIdentificacaoPrestador.Create;
-    PedidoEmissao.rps.prestador.cpf_cnpj := edPrestadorCpfCnpj.Text;
+    PedidoEmissao.infDPS := TInfDPS.Create;
 
-    PedidoEmissao.rps.tomador := TRpsDadosTomador.Create;
-    if edTomadorCpfCnpj.Text <> '' then
-      PedidoEmissao.rps.tomador.cpf_cnpj := edTomadorCpfCnpj.Text;
-    PedidoEmissao.rps.tomador.nome_razao_social := edTomadorNomeRazaoSocial.Text;
+    InfDPS := PedidoEmissao.infDPS;
+    InfDPS.dhEmi := Now;
+    InfDPS.dCompet := DateOf(Now);
+    InfDPS.prest := TInfoPrestador.Create;
 
-    PedidoEmissao.rps.servicos := TRpsDadosServicoList.Create;
+    if Length(edPrestadorCpfCnpj.Text) = 14 then
+      InfDPS.prest.CNPJ := edPrestadorCpfCnpj.Text
+    else if Length(edPrestadorCpfCnpj.Text) = 11 then
+      InfDPS.prest.CPF := edPrestadorCpfCnpj.Text
+    else
+      raise Exception.Create('CPF ou CNPJ inválido');
 
-    Servico := TRpsDadosServico.Create;
-    PedidoEmissao.rps.servicos.Add(Servico);
-    Servico.item_lista_servico := edServicoItemListaServico.Text;
-    Servico.discriminacao := edServicoDiscriminacao.Text;
+    if (edTomadorCpfCnpj.Text <> '') or (edTomadorNomeRazaoSocial.Text <> '') then
+    begin
+      InfDPS.toma := TInfoTomador.Create;
+      if Length(edTomadorCpfCnpj.Text) = 14 then
+        InfDPS.toma.CNPJ := edTomadorCpfCnpj.Text
+      else if Length(edTomadorCpfCnpj.Text) = 11 then
+        InfDPS.toma.CPF := edTomadorCpfCnpj.Text;
+      InfDPS.toma.xNome := edTomadorNomeRazaoSocial.Text;
+    end;
 
-    Servico.valores := TRpsServicoValores.Create;
-    Servico.valores.valor_unitario := StrToFloat(edServicoValorUnitario.Text);
+    InfDPS.serv := TServ.Create;
+    InfDPS.serv.cServ := TCServ.Create;
+    InfDPS.serv.cServ.cTribNac := edServicoItemListaServico.Text;
+    InfDPS.serv.cServ.xDescServ := edServicoDiscriminacao.Text;
+
+    InfDPS.valores := TInfoValores.Create;
+    InfDPS.valores.vServPrest := TVServPrest.Create;
+    InfDPS.valores.vServPrest.vServ := StrToFloat(edServicoValorUnitario.Text);
+
+    InfDPS.valores.trib := TInfoTributacao.Create;
+    InfDPS.valores.trib.tribMun := TTribMunicipal.Create;
+
+    // 1 - Operação tributável
+    // 2 - Exportação de serviço
+    // 3 - Não Incidência
+    // 4 - Imunidade
+    InfDPS.valores.trib.tribMun.tribISSQN := 1;
 
     try
-      Nfse := Client.Nfse.EmitirNfse(PedidoEmissao);
+      Nfse := Client.Nfse.EmitirNfseDps(PedidoEmissao);
       try
         ShowMessage(Format('Nota %s em processamento.', [Nfse.id]));
       finally

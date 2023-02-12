@@ -35,11 +35,6 @@ type
     edRazaoSocial: TEdit;
     Label11: TLabel;
     edEmail: TEdit;
-    Label12: TLabel;
-    cbRegimeTributacao: TComboBox;
-    Label13: TLabel;
-    cbRegimeEspecial: TComboBox;
-    chSimplesNacional: TCheckBox;
     Label14: TLabel;
     edBairro: TEdit;
     btCancelar: TButton;
@@ -67,9 +62,6 @@ begin
   Empresa.email := edEmail.Text;
   Empresa.inscricao_estadual := edInscrEstadual.Text;
   Empresa.inscricao_municipal := edInscrMunicipal.Text;
-  Empresa.regime_tributacao := cbRegimeTributacao.ItemIndex;
-  Empresa.regime_especial_tributacao := cbRegimeEspecial.ItemIndex;
-  Empresa.optante_simples_nacional := chSimplesNacional.Checked;
 
   Empresa.endereco := TEmpresaEndereco.Create;
   Empresa.endereco.cep := edCEP.Text;
@@ -110,11 +102,6 @@ begin
   edEmail.Text := Empresa.email;
   edInscrEstadual.Text := Empresa.inscricao_estadual;
   edInscrMunicipal.Text := Empresa.inscricao_municipal;
-  if Empresa.regime_tributacao < cbRegimeTributacao.Items.Count then
-    cbRegimeTributacao.ItemIndex := Empresa.regime_tributacao;
-  if Empresa.regime_especial_tributacao < cbRegimeEspecial.Items.Count then
-    cbRegimeEspecial.ItemIndex := Empresa.regime_especial_tributacao;
-  chSimplesNacional.Checked := Empresa.optante_simples_nacional;
   if Empresa.endereco <> nil then
   begin
     edCEP.Text := Empresa.endereco.cep;
