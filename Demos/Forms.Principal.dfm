@@ -106,7 +106,7 @@ object fmMain: TfmMain
     Top = 104
     Width = 830
     Height = 458
-    ActivePage = tsNfce
+    ActivePage = tsConsultas
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 5
     ExplicitWidth = 826
@@ -163,7 +163,7 @@ object fmMain: TfmMain
       end
       object btConsultarCep: TButton
         Left = 525
-        Top = 8
+        Top = 11
         Width = 122
         Height = 25
         Caption = 'Consultar CEP'
@@ -614,5 +614,14 @@ object fmMain: TfmMain
     Items.Strings = (
       'Sandbox'
       'Produ'#231#227'o')
+  end
+  object btListarCotas: TButton
+    Left = 718
+    Top = 95
+    Width = 97
+    Height = 25
+    Caption = 'Listar Cotas'
+    TabOrder = 7
+    OnClick = btListarCotasClick
   end
 end

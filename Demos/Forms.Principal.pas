@@ -77,6 +77,7 @@ type
     btDownloadXmlNfce: TButton;
     btDownloadPdfNfce: TButton;
     btConsultarStatusSefaz: TButton;
+    btListarCotas: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btConsultarCnpjClick(Sender: TObject);
     procedure btConsultarCepClick(Sender: TObject);
@@ -100,6 +101,7 @@ type
     procedure btVerDetalhesNfceClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure btListarCotasClick(Sender: TObject);
     procedure cbAPIChange(Sender: TObject);
     procedure lvEmpresasDblClick(Sender: TObject);
     procedure lvNfcesDblClick(Sender: TObject);
@@ -467,6 +469,28 @@ begin
   edNfceCnpj.Text := CnpjSelecionado;
   PageControl1.ActivePage := tsNfce;
   btListaNfcesClick(nil);
+end;
+
+procedure TfmMain.btListarCotasClick(Sender: TObject);
+var
+  Listagem: TContaCotaListagem;
+  I: integer;
+  Cotas: string;
+begin
+  Listagem := Client.Conta.ListarCotasConta;
+  try
+    Cotas := '';
+    for I := 0 to Listagem.data.Count - 1 do
+    begin
+      Cotas := Format(
+        '%s' + sLineBreak +
+        'Cota: %s, Consumo: %d, Limite: %d',
+        [Cotas, Listagem.data[I].nome, Listagem.data[I].consumo, Listagem.data[I].limite]);
+
+    end;
+  finally
+    Listagem.Free;
+  end;
 end;
 
 procedure TfmMain.cbAPIChange(Sender: TObject);
