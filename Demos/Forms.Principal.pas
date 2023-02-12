@@ -76,6 +76,7 @@ type
     Label9: TLabel;
     btDownloadXmlNfce: TButton;
     btDownloadPdfNfce: TButton;
+    btConsultarStatusSefaz: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btConsultarCnpjClick(Sender: TObject);
     procedure btConsultarCepClick(Sender: TObject);
@@ -88,6 +89,7 @@ type
     procedure btCertificadoClick(Sender: TObject);
     procedure btListaNfsesClick(Sender: TObject);
     procedure btConfigNFSeClick(Sender: TObject);
+    procedure btConsultarStatusSefazClick(Sender: TObject);
     procedure btDownloadPdfNfceClick(Sender: TObject);
     procedure btDownloadXmlNfceClick(Sender: TObject);
     procedure btEmitirNfceClick(Sender: TObject);
@@ -294,6 +296,22 @@ begin
     end;
   finally
     PedidoCancelamento.Free;
+  end;
+end;
+
+procedure TfmMain.btConsultarStatusSefazClick(Sender: TObject);
+var
+  Status: TDfeSefazStatus;
+begin
+  Status := Client.Nfce.ConsultarStatusSefazNfce(edNfceCnpj.Text);
+  try
+    ShowMessage(Format(
+      'Autorizador: %s' + sLineBreak +
+      'Código: %d' + sLineBreak +
+      'Motivo: %s',
+      [Status.autorizador, Status.codigo_status, Status.motivo_status]));
+  finally
+    Status.Free;
   end;
 end;
 

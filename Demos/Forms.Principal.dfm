@@ -153,7 +153,6 @@ object fmMain: TfmMain
         Height = 376
         Anchors = [akLeft, akTop, akRight, akBottom]
         TabOrder = 2
-        ExplicitWidth = 785
       end
       object edCep: TEdit
         Left = 374
@@ -183,7 +182,6 @@ object fmMain: TfmMain
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitLeft = 667
         DesignSize = (
           135
           428)
@@ -277,7 +275,6 @@ object fmMain: TfmMain
         BevelOuter = bvNone
         BorderWidth = 3
         TabOrder = 1
-        ExplicitWidth = 667
         object lvEmpresas: TListView
           Left = 3
           Top = 3
@@ -297,8 +294,6 @@ object fmMain: TfmMain
           TabOrder = 0
           ViewStyle = vsReport
           OnDblClick = lvEmpresasDblClick
-          ExplicitWidth = 661
-          ExplicitHeight = 431
         end
       end
     end
@@ -313,7 +308,6 @@ object fmMain: TfmMain
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitLeft = 667
         DesignSize = (
           135
           428)
@@ -356,7 +350,6 @@ object fmMain: TfmMain
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 667
         object lvNfses: TListView
           Left = 0
           Top = 41
@@ -387,8 +380,6 @@ object fmMain: TfmMain
           TabOrder = 0
           ViewStyle = vsReport
           OnDblClick = lvNfsesDblClick
-          ExplicitWidth = 663
-          ExplicitHeight = 395
         end
         object Panel5: TPanel
           Left = 0
@@ -398,7 +389,6 @@ object fmMain: TfmMain
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitWidth = 667
           object Label7: TLabel
             Left = 8
             Top = 13
@@ -597,6 +587,15 @@ object fmMain: TfmMain
             Items.Strings = (
               'homologacao'
               'producao')
+          end
+          object btConsultarStatusSefaz: TButton
+            Left = 444
+            Top = 10
+            Width = 85
+            Height = 25
+            Caption = 'Status SEFAZ'
+            TabOrder = 3
+            OnClick = btConsultarStatusSefazClick
           end
         end
       end
