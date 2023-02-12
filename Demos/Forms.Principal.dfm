@@ -106,7 +106,7 @@ object fmMain: TfmMain
     Top = 104
     Width = 830
     Height = 458
-    ActivePage = tsConsultas
+    ActivePage = tsNfce
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 5
     ExplicitWidth = 826
@@ -596,6 +596,15 @@ object fmMain: TfmMain
             Caption = 'Status SEFAZ'
             TabOrder = 3
             OnClick = btConsultarStatusSefazClick
+          end
+          object btInutilizarNumeracaoNfce: TButton
+            Left = 535
+            Top = 10
+            Width = 130
+            Height = 25
+            Caption = 'Inutilizar Numera'#231#227'o'
+            TabOrder = 4
+            OnClick = btInutilizarNumeracaoNfceClick
           end
         end
       end

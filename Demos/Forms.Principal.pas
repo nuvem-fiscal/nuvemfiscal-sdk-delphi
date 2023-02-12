@@ -78,6 +78,7 @@ type
     btDownloadPdfNfce: TButton;
     btConsultarStatusSefaz: TButton;
     btListarCotas: TButton;
+    btInutilizarNumeracaoNfce: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btConsultarCnpjClick(Sender: TObject);
     procedure btConsultarCepClick(Sender: TObject);
@@ -95,6 +96,7 @@ type
     procedure btDownloadXmlNfceClick(Sender: TObject);
     procedure btEmitirNfceClick(Sender: TObject);
     procedure btEmitirNfseClick(Sender: TObject);
+    procedure btInutilizarNumeracaoNfceClick(Sender: TObject);
     procedure btListaNfcesClick(Sender: TObject);
     procedure btVerDetalhesNfseClick(Sender: TObject);
     procedure btListarNfseClick(Sender: TObject);
@@ -354,9 +356,8 @@ begin
   if NfceSelecionada = '' then Exit;
 
   Xml := Client.Nfce.BaixarXmlNfce(NfceSelecionada);
-  XmlString := TEncoding.UTF8.GetString(Xml);
-
-  ShowMessage(XmlString);
+  TFile.WriteAllBytes('nfce.xml', Xml);
+  ShellExecute(Application.Handle, 'open', PChar('nfce.xml'), nil, nil, SW_SHOWMAXIMIZED);
 end;
 
 procedure TfmMain.btEmitirNfceClick(Sender: TObject);
@@ -367,6 +368,56 @@ end;
 procedure TfmMain.btEmitirNfseClick(Sender: TObject);
 begin
   TfmEmitirNfse.Emitir(Client, AmbienteNfse);
+end;
+
+procedure TfmMain.btInutilizarNumeracaoNfceClick(Sender: TObject);
+var
+  Ano: string;
+  Serie: string;
+  NumeroInicial: string;
+  NumeroFinal: string;
+  Justificativa: string;
+  PedidoInutilizacao: TDfePedidoInutilizacao;
+  Inutilizacao: TDfeInutilizacao;
+begin
+  Ano := '';
+  if not(InputQuery('Inutilização ', 'Ano',    Ano)) then
+    Exit;
+  Serie := '';
+  if not(InputQuery('Inutilização ', 'Serie',  Serie)) then
+    Exit;
+  NumeroInicial := '';
+  if not(InputQuery('Inutilização ', 'Número Inicial', NumeroInicial)) then
+    Exit;
+  NumeroFinal := '';
+  if not(InputQuery('Inutilização ', 'Número Final', NumeroFinal)) then
+    Exit;
+  Justificativa := '';
+  if not(InputQuery('Inutilização ', 'Justificativa', Justificativa)) then
+    Exit;
+
+  PedidoInutilizacao := TDfePedidoInutilizacao.Create;
+  try
+    PedidoInutilizacao.ambiente := AmbienteNfce;
+    PedidoInutilizacao.cnpj := edNfceCnpj.Text;
+    PedidoInutilizacao.ano := StrToInt(Ano);
+    PedidoInutilizacao.serie := StrToInt(Serie);
+    PedidoInutilizacao.numero_inicial := StrToInt(NumeroInicial);
+    PedidoInutilizacao.numero_final := StrToInt(NumeroFinal);
+    PedidoInutilizacao.justificativa := Justificativa;
+
+    Inutilizacao := Client.Nfce.InutilizarNumeracaoNfce(PedidoInutilizacao);
+    try
+      ShowMessage(Format('Status: %s' + sLineBreak +
+        'Código: %d' + sLineBreak +
+        'Motivo: %s',
+        [Inutilizacao.status, Inutilizacao.codigo_status, Inutilizacao.motivo_status]));
+    finally
+      Inutilizacao.Free;
+    end;
+  finally
+    PedidoInutilizacao.Free;
+  end;
 end;
 
 procedure TfmMain.btListaNfcesClick(Sender: TObject);
