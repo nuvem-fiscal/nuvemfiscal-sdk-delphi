@@ -27,13 +27,11 @@ type
     Label3: TLabel;
     Label4: TLabel;
     edEmitenteCpfCnpj: TEdit;
-    Edit3: TEdit;
     edEmitenteCodigoUf: TEdit;
     GroupBox4: TGroupBox;
     Label1: TLabel;
     Label6: TLabel;
     edSerie: TEdit;
-    Edit2: TEdit;
     edNumeroNota: TEdit;
     edCodigoMunicipioFatoGerador: TEdit;
     Label2: TLabel;

@@ -254,6 +254,8 @@ procedure TfmMain.btCancelarNfceClick(Sender: TObject);
 var
   Cancelamento: TDfeCancelamento;
   PedidoCancelamento: TNfePedidoCancelamento;
+  Pdf: TBytes;
+  Xml: TBytes;
 begin
   if NfceSelecionada = '' then Exit;
 
@@ -268,6 +270,18 @@ begin
     try
       ShowMessage(Format('Status do cancelamento: %s' + sLineBreak + '%d: %s',
         [Cancelamento.status, Cancelamento.codigo_status, Cancelamento.motivo_status]));
+
+      if Cancelamento.status = 'registrado' then
+      begin
+        Xml := Client.Nfce.BaixarXmlCancelamentoNfce(NfceSelecionada);
+        Pdf := Client.Nfce.BaixarPdfCancelamentoNfce(NfceSelecionada);
+
+        TFile.WriteAllBytes('cancelamento-nfce.xml', Xml);
+        TFile.WriteAllBytes('cancelamento-nfce.pdf', Pdf);
+
+        ShellExecute(Application.Handle, 'open', PChar('cancelamento-nfce.xml'), nil, nil, SW_SHOW);
+        ShellExecute(Application.Handle, 'open', PChar('cancelamento-nfce.pdf'), nil, nil, SW_SHOW);
+      end;
     finally
       Cancelamento.Free;
     end;
@@ -344,7 +358,7 @@ begin
 
   Pdf := Client.Nfce.BaixarPdfNfce(NfceSelecionada);
   TFile.WriteAllBytes('danfce.pdf', Pdf);
-  ShellExecute(Application.Handle, 'open', PChar('danfce.pdf'), nil, nil, SW_SHOWMAXIMIZED);
+  ShellExecute(Application.Handle, 'open', PChar('danfce.pdf'), nil, nil, SW_SHOW);
 end;
 
 procedure TfmMain.btDownloadXmlNfceClick(Sender: TObject);
@@ -357,7 +371,7 @@ begin
 
   Xml := Client.Nfce.BaixarXmlNfce(NfceSelecionada);
   TFile.WriteAllBytes('nfce.xml', Xml);
-  ShellExecute(Application.Handle, 'open', PChar('nfce.xml'), nil, nil, SW_SHOWMAXIMIZED);
+  ShellExecute(Application.Handle, 'open', PChar('nfce.xml'), nil, nil, SW_SHOW);
 end;
 
 procedure TfmMain.btEmitirNfceClick(Sender: TObject);
@@ -423,10 +437,9 @@ begin
         TFile.WriteAllBytes('inutilizacao-nfce.xml', Xml);
         TFile.WriteAllBytes('inutilizacao-nfce.pdf', Pdf);
 
-        ShellExecute(Application.Handle, 'open', PChar('inutilizacao-nfce.xml'), nil, nil, SW_SHOWMAXIMIZED);
-        ShellExecute(Application.Handle, 'open', PChar('inutilizacao-nfce.pdf'), nil, nil, SW_SHOWMAXIMIZED);
+        ShellExecute(Application.Handle, 'open', PChar('inutilizacao-nfce.xml'), nil, nil, SW_SHOW);
+        ShellExecute(Application.Handle, 'open', PChar('inutilizacao-nfce.pdf'), nil, nil, SW_SHOW);
       end;
-      
     finally
       Inutilizacao.Free;
     end;

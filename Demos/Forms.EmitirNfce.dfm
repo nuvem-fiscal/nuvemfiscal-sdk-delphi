@@ -19,23 +19,23 @@ object fmEmitirNfce: TfmEmitirNfce
   object PageControl1: TPageControl
     Left = 5
     Top = 8
-    Width = 581
+    Width = 577
     Height = 409
     ActivePage = tsDados
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
+    ExplicitWidth = 573
     object tsDados: TTabSheet
       Caption = 'Dados'
       object pnCertificado: TPanel
         Left = 0
         Top = 0
-        Width = 573
+        Width = 569
         Height = 379
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 557
-        ExplicitHeight = 367
+        ExplicitWidth = 565
         object Label11: TLabel
           Left = 6
           Top = 6
@@ -60,7 +60,7 @@ object fmEmitirNfce: TfmEmitirNfce
           Width = 555
           Height = 136
           Caption = 'Produto'
-          TabOrder = 1
+          TabOrder = 3
           DesignSize = (
             555
             136)
@@ -120,7 +120,7 @@ object fmEmitirNfce: TfmEmitirNfce
             Width = 479
             Height = 23
             Anchors = [akLeft, akTop, akRight]
-            TabOrder = 1
+            TabOrder = 5
           end
           object edCEAN: TEdit
             Left = 108
@@ -128,7 +128,7 @@ object fmEmitirNfce: TfmEmitirNfce
             Width = 91
             Height = 23
             Anchors = [akLeft, akTop, akRight]
-            TabOrder = 2
+            TabOrder = 1
           end
           object edNCM: TEdit
             Left = 205
@@ -136,7 +136,7 @@ object fmEmitirNfce: TfmEmitirNfce
             Width = 91
             Height = 23
             Anchors = [akLeft, akTop, akRight]
-            TabOrder = 3
+            TabOrder = 2
           end
           object edCFOP: TEdit
             Left = 302
@@ -144,7 +144,7 @@ object fmEmitirNfce: TfmEmitirNfce
             Width = 91
             Height = 23
             Anchors = [akLeft, akTop, akRight]
-            TabOrder = 4
+            TabOrder = 3
           end
           object edVProd: TEdit
             Left = 399
@@ -152,7 +152,7 @@ object fmEmitirNfce: TfmEmitirNfce
             Width = 91
             Height = 23
             Anchors = [akLeft, akTop, akRight]
-            TabOrder = 5
+            TabOrder = 4
           end
         end
         object GroupBox3: TGroupBox
@@ -162,9 +162,6 @@ object fmEmitirNfce: TfmEmitirNfce
           Height = 84
           Caption = 'Emitente'
           TabOrder = 2
-          DesignSize = (
-            555
-            84)
           object Label3: TLabel
             Left = 11
             Top = 23
@@ -188,14 +185,6 @@ object fmEmitirNfce: TfmEmitirNfce
             NumbersOnly = True
             TabOrder = 0
           end
-          object Edit3: TEdit
-            Left = 284
-            Top = -64
-            Width = 357
-            Height = 23
-            Anchors = [akLeft, akTop, akRight]
-            TabOrder = 1
-          end
           object edEmitenteCodigoUf: TEdit
             Left = 180
             Top = 44
@@ -203,7 +192,7 @@ object fmEmitirNfce: TfmEmitirNfce
             Height = 23
             MaxLength = 2
             NumbersOnly = True
-            TabOrder = 2
+            TabOrder = 1
           end
         end
         object GroupBox4: TGroupBox
@@ -212,10 +201,7 @@ object fmEmitirNfce: TfmEmitirNfce
           Width = 555
           Height = 84
           Caption = 'Identifica'#231#227'o da NFC-e'
-          TabOrder = 3
-          DesignSize = (
-            555
-            84)
+          TabOrder = 1
           object Label1: TLabel
             Left = 11
             Top = 23
@@ -246,14 +232,6 @@ object fmEmitirNfce: TfmEmitirNfce
             NumbersOnly = True
             TabOrder = 0
           end
-          object Edit2: TEdit
-            Left = 284
-            Top = -64
-            Width = 357
-            Height = 23
-            Anchors = [akLeft, akTop, akRight]
-            TabOrder = 1
-          end
           object edNumeroNota: TEdit
             Left = 71
             Top = 44
@@ -261,7 +239,7 @@ object fmEmitirNfce: TfmEmitirNfce
             Height = 23
             MaxLength = 10
             NumbersOnly = True
-            TabOrder = 2
+            TabOrder = 1
           end
           object edCodigoMunicipioFatoGerador: TEdit
             Left = 169
@@ -270,7 +248,7 @@ object fmEmitirNfce: TfmEmitirNfce
             Height = 23
             MaxLength = 7
             NumbersOnly = True
-            TabOrder = 3
+            TabOrder = 2
           end
         end
       end
@@ -281,18 +259,16 @@ object fmEmitirNfce: TfmEmitirNfce
       object memoLog: TMemo
         Left = 0
         Top = 0
-        Width = 573
+        Width = 569
         Height = 379
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 0
-        ExplicitWidth = 561
-        ExplicitHeight = 367
       end
     end
   end
   object btCancelar: TButton
-    Left = 511
+    Left = 507
     Top = 423
     Width = 75
     Height = 25
@@ -300,9 +276,10 @@ object fmEmitirNfce: TfmEmitirNfce
     Caption = 'Cancelar'
     ModalResult = 2
     TabOrder = 2
+    ExplicitLeft = 503
   end
   object btOk: TButton
-    Left = 430
+    Left = 426
     Top = 423
     Width = 75
     Height = 25
@@ -312,5 +289,6 @@ object fmEmitirNfce: TfmEmitirNfce
     ModalResult = 2
     TabOrder = 1
     OnClick = btOkClick
+    ExplicitLeft = 422
   end
 end
