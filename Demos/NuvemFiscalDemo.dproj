@@ -84,8 +84,9 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
-        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -124,12 +125,24 @@
             <Form>fmDetalhesNfse</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Forms.ConfigNfse.pas">
+        <DCCReference Include="Forms.ConfigNFSe.pas">
             <Form>fmConfigNfse</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Forms.EmitirNfse.pas">
             <Form>fmEmitirNfse</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Forms.ConfigNfce.pas">
+            <Form>fmConfigNfce</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Forms.DetalhesNfce.pas">
+            <Form>fmDetalhesNfce</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Forms.EmitirNfce.pas">
+            <Form>fmEmitirNfce</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
@@ -152,9 +165,19 @@
                 <Source>
                     <Source Name="MainSource">NuvemFiscalDemo.dpr</Source>
                 </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k280.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp280.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="4">
                 <DeployFile LocalName="Win32\Debug\NuvemFiscalDemo.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="Win32\Debug\NuvemFiscalDemo.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>NuvemFiscalDemo.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>

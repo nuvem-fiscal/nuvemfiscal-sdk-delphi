@@ -1,7 +1,7 @@
-object fmDetalhesNfse: TfmDetalhesNfse
+object fmDetalhesNfce: TfmDetalhesNfce
   Left = 0
   Top = 0
-  Caption = 'NFS-e'
+  Caption = 'NFC-e'
   ClientHeight = 372
   ClientWidth = 570
   Color = clBtnFace
@@ -19,24 +19,22 @@ object fmDetalhesNfse: TfmDetalhesNfse
   object PageControl1: TPageControl
     Left = 6
     Top = 8
-    Width = 546
+    Width = 542
     Height = 326
     ActivePage = tsDadosGerais
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitWidth = 532
-    ExplicitHeight = 325
     object tsDadosGerais: TTabSheet
       Caption = 'Dados gerais'
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 538
+        Width = 534
         Height = 296
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 524
+        ExplicitWidth = 530
         ExplicitHeight = 295
         object lbId: TLabel
           Left = 6
@@ -62,9 +60,9 @@ object fmDetalhesNfse: TfmDetalhesNfse
         object Label17: TLabel
           Left = 294
           Top = 46
-          Width = 102
+          Width = 57
           Height = 15
-          Caption = 'C'#243'digo Verifica'#231#227'o:'
+          Caption = 'Valor Total:'
         end
         object Label18: TLabel
           Left = 408
@@ -76,9 +74,9 @@ object fmDetalhesNfse: TfmDetalhesNfse
         object Label19: TLabel
           Left = 6
           Top = 94
-          Width = 43
+          Width = 92
           Height = 15
-          Caption = 'Link Url:'
+          Caption = 'Chave de Acesso:'
         end
         object Label20: TLabel
           Left = 111
@@ -118,7 +116,7 @@ object fmDetalhesNfse: TfmDetalhesNfse
           ReadOnly = True
           TabOrder = 3
         end
-        object edCodigoVerificacao: TEdit
+        object edValorTotal: TEdit
           Left = 294
           Top = 67
           Width = 108
@@ -134,7 +132,7 @@ object fmDetalhesNfse: TfmDetalhesNfse
           ReadOnly = True
           TabOrder = 2
         end
-        object edLinkUrl: TEdit
+        object edChaveAcesso: TEdit
           Left = 6
           Top = 113
           Width = 524
@@ -158,12 +156,12 @@ object fmDetalhesNfse: TfmDetalhesNfse
           ReadOnly = True
           TabOrder = 5
         end
-        object gbCancelamento: TGroupBox
+        object gbAutorizacao: TGroupBox
           Left = 6
           Top = 142
           Width = 524
           Height = 147
-          Caption = 'Cancelamento'
+          Caption = 'Autoriza'#231#227'o'
           TabOrder = 8
           object Label46: TLabel
             Left = 14
@@ -182,11 +180,11 @@ object fmDetalhesNfse: TfmDetalhesNfse
           object Label48: TLabel
             Left = 160
             Top = 19
-            Width = 63
+            Width = 127
             Height = 15
-            Caption = 'Mensagens:'
+            Caption = 'Informa'#231#245'es Adicionais:'
           end
-          object edCancelamentoSituacao: TEdit
+          object edAutorizacaoSituacao: TEdit
             Left = 14
             Top = 43
             Width = 115
@@ -194,7 +192,7 @@ object fmDetalhesNfse: TfmDetalhesNfse
             ReadOnly = True
             TabOrder = 0
           end
-          object edCancelamentoDataHora: TEdit
+          object edAutorizacaoDataHora: TEdit
             Left = 14
             Top = 93
             Width = 115
@@ -202,7 +200,7 @@ object fmDetalhesNfse: TfmDetalhesNfse
             ReadOnly = True
             TabOrder = 1
           end
-          object memoCancelamentoMensagens: TMemo
+          object memoAutorizacaoInfo: TMemo
             Left = 160
             Top = 40
             Width = 353
@@ -214,24 +212,9 @@ object fmDetalhesNfse: TfmDetalhesNfse
         end
       end
     end
-    object tsMensagens: TTabSheet
-      Caption = 'Mensagens'
-      ImageIndex = 6
-      object memoMensagens: TMemo
-        Left = 0
-        Top = 0
-        Width = 538
-        Height = 296
-        Align = alClient
-        ReadOnly = True
-        ScrollBars = ssBoth
-        TabOrder = 0
-        ExplicitWidth = 528
-      end
-    end
   end
   object btOk: TButton
-    Left = 475
+    Left = 471
     Top = 340
     Width = 75
     Height = 25
@@ -239,7 +222,7 @@ object fmDetalhesNfse: TfmDetalhesNfse
     Caption = 'Ok'
     TabOrder = 1
     OnClick = btOkClick
-    ExplicitLeft = 461
+    ExplicitLeft = 467
     ExplicitTop = 339
   end
 end

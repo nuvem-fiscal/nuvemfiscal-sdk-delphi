@@ -29,8 +29,6 @@ type
     edAmbiente: TEdit;
     Label21: TLabel;
     edReferencia: TEdit;
-    Label39: TLabel;
-    edValorTotal: TEdit;
     tsMensagens: TTabSheet;
     memoMensagens: TMemo;
     gbCancelamento: TGroupBox;
@@ -45,8 +43,6 @@ type
   private
     FNfse: TNfse;
   public
-    class function GetValorTotal(Nfse: TNfse): double;
-  public
     class procedure Visualizar(ANfse: TNfse);
     procedure SetNfse(Nfse: TNfse);
   end;
@@ -60,13 +56,6 @@ implementation
 procedure TfmDetalhesNfse.FormCreate(Sender: TObject);
 begin
   PageControl1.ActivePageIndex := 0;
-end;
-
-class function TfmDetalhesNfse.GetValorTotal(Nfse: TNfse): double;
-begin
-  Result := 0;
-  for var servico in Nfse.declaracao_prestacao_servico.servicos do
-    Result := Result + servico.valores.valor_servicos;
 end;
 
 procedure TfmDetalhesNfse.btOkClick(Sender: TObject);
@@ -99,7 +88,6 @@ begin
   edAmbiente.Text := Nfse.ambiente;
   edReferencia.Text := Nfse.referencia;
   edCodigoVerificacao.Text := Nfse.codigo_verificacao;
-  edValorTotal.Text := FormatFloat('"R$" #,0.00', GetValorTotal(FNfse));
   edLinkUrl.Text := Nfse.link_url;
 
   if Nfse.mensagens.Count > 0 then

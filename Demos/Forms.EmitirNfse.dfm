@@ -3,7 +3,7 @@ object fmEmitirNfse: TfmEmitirNfse
   Top = 0
   Caption = 'Emitir NFS-e'
   ClientHeight = 444
-  ClientWidth = 590
+  ClientWidth = 603
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,29 +13,29 @@ object fmEmitirNfse: TfmEmitirNfse
   Position = poMainFormCenter
   OnCreate = FormCreate
   DesignSize = (
-    590
+    603
     444)
   TextHeight = 15
   object PageControl1: TPageControl
     Left = 5
     Top = 8
-    Width = 573
+    Width = 582
     Height = 397
     ActivePage = tsDados
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
-    ExplicitWidth = 569
+    ExplicitWidth = 565
     object tsDados: TTabSheet
       Caption = 'Dados'
       object pnCertificado: TPanel
         Left = 0
         Top = 0
-        Width = 565
+        Width = 574
         Height = 367
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 561
+        ExplicitWidth = 557
         object Label11: TLabel
           Left = 6
           Top = 6
@@ -183,7 +183,7 @@ object fmEmitirNfse: TfmEmitirNfse
     end
   end
   object btCancelar: TButton
-    Left = 503
+    Left = 512
     Top = 411
     Width = 75
     Height = 25
@@ -191,10 +191,10 @@ object fmEmitirNfse: TfmEmitirNfse
     Caption = 'Cancelar'
     ModalResult = 2
     TabOrder = 2
-    ExplicitLeft = 499
+    ExplicitLeft = 495
   end
   object btOk: TButton
-    Left = 422
+    Left = 431
     Top = 411
     Width = 75
     Height = 25
@@ -204,6 +204,6 @@ object fmEmitirNfse: TfmEmitirNfse
     ModalResult = 2
     TabOrder = 1
     OnClick = btOkClick
-    ExplicitLeft = 418
+    ExplicitLeft = 414
   end
 end

@@ -18,44 +18,50 @@ object fmMain: TfmMain
   TextHeight = 15
   object Label1: TLabel
     Left = 16
-    Top = 11
+    Top = 40
     Width = 48
     Height = 15
     Caption = 'Client ID:'
   end
   object Label4: TLabel
     Left = 328
-    Top = 11
+    Top = 40
     Width = 69
     Height = 15
     Caption = 'Client Secret:'
   end
   object Label5: TLabel
     Left = 16
-    Top = 43
+    Top = 69
     Width = 88
     Height = 15
     Caption = 'Token de acesso:'
   end
   object Label6: TLabel
     Left = 592
-    Top = 43
+    Top = 69
     Width = 55
     Height = 15
     Anchors = [akTop, akRight]
     Caption = 'Expira em:'
-    ExplicitLeft = 512
+  end
+  object Label9: TLabel
+    Left = 18
+    Top = 11
+    Width = 21
+    Height = 15
+    Caption = 'API:'
   end
   object edClientId: TEdit
     Left = 72
-    Top = 8
+    Top = 37
     Width = 249
     Height = 23
     TabOrder = 0
   end
   object edClientSecret: TEdit
     Left = 408
-    Top = 8
+    Top = 37
     Width = 290
     Height = 23
     Anchors = [akLeft, akTop, akRight]
@@ -64,8 +70,8 @@ object fmMain: TfmMain
     ExplicitWidth = 286
   end
   object edToken: TEdit
-    Left = 114
-    Top = 40
+    Left = 110
+    Top = 66
     Width = 462
     Height = 23
     Anchors = [akLeft, akTop, akRight]
@@ -74,41 +80,41 @@ object fmMain: TfmMain
     ExplicitWidth = 458
   end
   object btToken: TButton
-    Left = 713
-    Top = 7
-    Width = 113
+    Left = 704
+    Top = 35
+    Width = 114
     Height = 25
     Anchors = [akTop, akRight]
     Caption = 'Get Token'
     TabOrder = 2
     OnClick = btTokenClick
-    ExplicitLeft = 709
+    ExplicitLeft = 700
   end
   object edExpiracao: TEdit
-    Left = 656
-    Top = 40
-    Width = 170
+    Left = 653
+    Top = 66
+    Width = 165
     Height = 23
     Anchors = [akTop, akRight]
     ReadOnly = True
     TabOrder = 4
-    ExplicitLeft = 652
+    ExplicitLeft = 649
   end
   object PageControl1: TPageControl
-    Left = 16
-    Top = 80
+    Left = 8
+    Top = 104
     Width = 810
-    Height = 467
-    ActivePage = tsNfse
+    Height = 458
+    ActivePage = tsNfce
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 5
     ExplicitWidth = 806
-    ExplicitHeight = 466
+    ExplicitHeight = 457
     object tsConsultas: TTabSheet
       Caption = 'Consultas'
       DesignSize = (
         802
-        437)
+        428)
       object Label2: TLabel
         Left = 6
         Top = 12
@@ -143,7 +149,7 @@ object fmMain: TfmMain
         Left = 6
         Top = 42
         Width = 785
-        Height = 385
+        Height = 376
         Anchors = [akLeft, akTop, akRight, akBottom]
         TabOrder = 2
       end
@@ -171,13 +177,13 @@ object fmMain: TfmMain
         Left = 667
         Top = 0
         Width = 135
-        Height = 437
+        Height = 428
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 0
         DesignSize = (
           135
-          437)
+          428)
         object btAtualizarEmpresas: TButton
           Left = 2
           Top = 3
@@ -238,12 +244,32 @@ object fmMain: TfmMain
           TabOrder = 5
           OnClick = btListarNfseClick
         end
+        object Button1: TButton
+          Left = 3
+          Top = 168
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Configura'#231#227'o NFC-e'
+          TabOrder = 6
+          OnClick = Button1Click
+        end
+        object Button2: TButton
+          Left = 3
+          Top = 195
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Listar NFC-e'
+          TabOrder = 7
+          OnClick = Button2Click
+        end
       end
       object Panel2: TPanel
         Left = 0
         Top = 0
         Width = 667
-        Height = 437
+        Height = 428
         Align = alClient
         BevelOuter = bvNone
         BorderWidth = 3
@@ -252,7 +278,7 @@ object fmMain: TfmMain
           Left = 3
           Top = 3
           Width = 661
-          Height = 431
+          Height = 422
           Align = alClient
           Columns = <
             item
@@ -267,6 +293,7 @@ object fmMain: TfmMain
           TabOrder = 0
           ViewStyle = vsReport
           OnDblClick = lvEmpresasDblClick
+          ExplicitHeight = 431
         end
       end
     end
@@ -277,15 +304,13 @@ object fmMain: TfmMain
         Left = 667
         Top = 0
         Width = 135
-        Height = 437
+        Height = 428
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitLeft = 663
-        ExplicitHeight = 436
         DesignSize = (
           135
-          437)
+          428)
         object btEmitirNfse: TButton
           Left = 6
           Top = 41
@@ -321,17 +346,15 @@ object fmMain: TfmMain
         Left = 0
         Top = 0
         Width = 667
-        Height = 437
+        Height = 428
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 663
-        ExplicitHeight = 436
         object lvNfses: TListView
           Left = 0
           Top = 41
           Width = 667
-          Height = 396
+          Height = 387
           Align = alClient
           Columns = <
             item
@@ -352,19 +375,11 @@ object fmMain: TfmMain
             item
               Caption = 'Data Emiss'#227'o'
               Width = 125
-            end
-            item
-              AutoSize = True
-              Caption = 'Tomador do Servi'#231'o'
-            end
-            item
-              Alignment = taRightJustify
-              Caption = 'Valor'
-              Width = 100
             end>
           RowSelect = True
           TabOrder = 0
           ViewStyle = vsReport
+          OnDblClick = lvNfsesDblClick
           ExplicitWidth = 663
           ExplicitHeight = 395
         end
@@ -376,7 +391,6 @@ object fmMain: TfmMain
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitWidth = 663
           object Label7: TLabel
             Left = 8
             Top = 13
@@ -400,7 +414,7 @@ object fmMain: TfmMain
             Height = 23
             TabOrder = 1
           end
-          object cbAmbiente: TComboBox
+          object cbNfseAmbiente: TComboBox
             Left = 195
             Top = 10
             Width = 139
@@ -414,5 +428,184 @@ object fmMain: TfmMain
         end
       end
     end
+    object tsNfce: TTabSheet
+      Caption = 'NFC-e'
+      ImageIndex = 3
+      object Panel6: TPanel
+        Left = 667
+        Top = 0
+        Width = 135
+        Height = 428
+        Align = alRight
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitLeft = 663
+        ExplicitHeight = 427
+        DesignSize = (
+          135
+          428)
+        object btEmitirNfce: TButton
+          Left = 6
+          Top = 41
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Emitir NFCe'
+          TabOrder = 0
+          OnClick = btEmitirNfceClick
+        end
+        object btCancelarNfce: TButton
+          Left = 6
+          Top = 103
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Cancelar'
+          TabOrder = 1
+          OnClick = btCancelarNfceClick
+        end
+        object btVerDetalhesNfce: TButton
+          Left = 6
+          Top = 72
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Ver Detalhes'
+          TabOrder = 2
+          OnClick = btVerDetalhesNfceClick
+        end
+        object btDownloadXmlNfce: TButton
+          Left = 6
+          Top = 134
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Baixar XML'
+          TabOrder = 3
+          OnClick = btDownloadXmlNfceClick
+        end
+        object btDownloadPdfNfce: TButton
+          Left = 6
+          Top = 165
+          Width = 129
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Baixar DANFCE'
+          TabOrder = 4
+          OnClick = btDownloadPdfNfceClick
+        end
+      end
+      object Panel7: TPanel
+        Left = 0
+        Top = 0
+        Width = 667
+        Height = 428
+        Align = alClient
+        BevelOuter = bvNone
+        TabOrder = 1
+        ExplicitWidth = 663
+        ExplicitHeight = 427
+        object lvNfces: TListView
+          Left = 0
+          Top = 41
+          Width = 667
+          Height = 387
+          Align = alClient
+          Columns = <
+            item
+              Caption = 'ID'
+            end
+            item
+              Caption = 'N'#176' Nota'
+              Width = 75
+            end
+            item
+              Caption = 'S'#233'rie'
+              Width = 75
+            end
+            item
+              Caption = 'Situa'#231#227'o'
+              Width = 100
+            end
+            item
+              Caption = 'Data Emiss'#227'o'
+              Width = 125
+            end
+            item
+              AutoSize = True
+              Caption = 'Chave'
+            end
+            item
+              Alignment = taRightJustify
+              Caption = 'Valor'
+              Width = 100
+            end>
+          RowSelect = True
+          TabOrder = 0
+          ViewStyle = vsReport
+          OnDblClick = lvNfcesDblClick
+          ExplicitWidth = 663
+          ExplicitHeight = 396
+        end
+        object Panel8: TPanel
+          Left = 0
+          Top = 0
+          Width = 667
+          Height = 41
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 1
+          ExplicitWidth = 663
+          object Label8: TLabel
+            Left = 8
+            Top = 13
+            Width = 30
+            Height = 15
+            Caption = 'CNPJ:'
+          end
+          object btListaNfces: TButton
+            Left = 342
+            Top = 10
+            Width = 96
+            Height = 25
+            Caption = 'Listar Notas'
+            TabOrder = 0
+            OnClick = btListaNfcesClick
+          end
+          object edNfceCnpj: TEdit
+            Left = 44
+            Top = 10
+            Width = 145
+            Height = 23
+            TabOrder = 1
+          end
+          object cbNfceAmbiente: TComboBox
+            Left = 195
+            Top = 10
+            Width = 139
+            Height = 23
+            Style = csDropDownList
+            TabOrder = 2
+            Items.Strings = (
+              'homologacao'
+              'producao')
+          end
+        end
+      end
+    end
+  end
+  object cbAPI: TComboBox
+    Left = 72
+    Top = 8
+    Width = 145
+    Height = 23
+    Style = csDropDownList
+    ItemIndex = 0
+    TabOrder = 6
+    Text = 'Sandbox'
+    OnChange = cbAPIChange
+    Items.Strings = (
+      'Sandbox'
+      'Produ'#231#227'o')
   end
 end

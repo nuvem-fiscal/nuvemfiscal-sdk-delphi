@@ -4,13 +4,17 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, System.UITypes,
+  System.IOUtils, ShellApi,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, NuvemFiscalClient, NuvemFiscalDTOs,
   OpenApiRest, Vcl.ComCtrls, Vcl.ExtCtrls,
   Forms.Empresa,
   Forms.Certificado,
   Forms.ConfigNfse,
+  Forms.ConfigNfce,
   Forms.DetalhesNfse,
-  Forms.EmitirNfse;
+  Forms.DetalhesNfce,
+  Forms.EmitirNfse,
+  Forms.EmitirNfce;
 
 type
   TfmMain = class(TForm)
@@ -53,7 +57,25 @@ type
     btCancelarNfse: TButton;
     btVerDetalhesNfse: TButton;
     btListarNfse: TButton;
-    cbAmbiente: TComboBox;
+    cbNfseAmbiente: TComboBox;
+    Button1: TButton;
+    Button2: TButton;
+    tsNfce: TTabSheet;
+    Panel6: TPanel;
+    btEmitirNfce: TButton;
+    btCancelarNfce: TButton;
+    btVerDetalhesNfce: TButton;
+    Panel7: TPanel;
+    lvNfces: TListView;
+    Panel8: TPanel;
+    Label8: TLabel;
+    btListaNfces: TButton;
+    edNfceCnpj: TEdit;
+    cbNfceAmbiente: TComboBox;
+    cbAPI: TComboBox;
+    Label9: TLabel;
+    btDownloadXmlNfce: TButton;
+    btDownloadPdfNfce: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btConsultarCnpjClick(Sender: TObject);
     procedure btConsultarCepClick(Sender: TObject);
@@ -61,22 +83,36 @@ type
     procedure btCriarEmpresaClick(Sender: TObject);
     procedure btAtualizarEmpresasClick(Sender: TObject);
     procedure btAlterarEmpresaClick(Sender: TObject);
+    procedure btCancelarNfceClick(Sender: TObject);
     procedure btCancelarNfseClick(Sender: TObject);
     procedure btCertificadoClick(Sender: TObject);
     procedure btListaNfsesClick(Sender: TObject);
     procedure btConfigNFSeClick(Sender: TObject);
+    procedure btDownloadPdfNfceClick(Sender: TObject);
+    procedure btDownloadXmlNfceClick(Sender: TObject);
+    procedure btEmitirNfceClick(Sender: TObject);
     procedure btEmitirNfseClick(Sender: TObject);
+    procedure btListaNfcesClick(Sender: TObject);
     procedure btVerDetalhesNfseClick(Sender: TObject);
     procedure btListarNfseClick(Sender: TObject);
+    procedure btVerDetalhesNfceClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure cbAPIChange(Sender: TObject);
     procedure lvEmpresasDblClick(Sender: TObject);
+    procedure lvNfcesDblClick(Sender: TObject);
+    procedure lvNfsesDblClick(Sender: TObject);
   private
     Client: INuvemFiscalClient;
     TokenProvider: IClientCredencialsTokenProvider;
     TokenData: ITokenData;
+    function BaseUrl: string;
     function AmbienteNfse: string;
+    function AmbienteNfce: string;
     procedure Log(const Msg: string);
     function CnpjSelecionado: string;
     function NfseSelecionada: string;
+    function NfceSelecionada: string;
   public
   end;
 
@@ -150,11 +186,26 @@ begin
     Result := '';
 end;
 
+function TfmMain.AmbienteNfce: string;
+begin
+  if cbNfceAmbiente.ItemIndex = -1 then
+    cbNfceAmbiente.ItemIndex := 0;
+  Result := cbNfceAmbiente.Text;
+end;
+
 function TfmMain.AmbienteNfse: string;
 begin
-  if cbAmbiente.ItemIndex = -1 then
-    cbAmbiente.ItemIndex := 0;
-  Result := cbAmbiente.Text;
+  if cbNfseAmbiente.ItemIndex = -1 then
+    cbNfseAmbiente.ItemIndex := 0;
+  Result := cbNfseAmbiente.Text;
+end;
+
+function TfmMain.BaseUrl: string;
+begin
+  if cbAPI.ItemIndex = 1 then
+    Result := 'https://api.nuvemfiscal.com.br/'
+  else
+    Result := 'https://api.sandbox.nuvemfiscal.com.br/';
 end;
 
 procedure TfmMain.btAlterarEmpresaClick(Sender: TObject);
@@ -191,6 +242,11 @@ begin
   finally
     Empresas.Free;
   end;
+end;
+
+procedure TfmMain.btCancelarNfceClick(Sender: TObject);
+begin
+  raise Exception.Create('Não implementado');
 end;
 
 procedure TfmMain.btCancelarNfseClick(Sender: TObject);
@@ -236,9 +292,68 @@ begin
   end;
 end;
 
+procedure TfmMain.btDownloadPdfNfceClick(Sender: TObject);
+var
+  Nfce: TDfe;
+  Pdf: TBytes;
+begin
+  if NfceSelecionada = '' then Exit;
+
+  Pdf := Client.Nfce.BaixarPdfNfce(NfceSelecionada);
+  TFile.WriteAllBytes('danfce.pdf', Pdf);
+  ShellExecute(Application.Handle, 'open', PChar('danfce.pdf'), nil, nil, SW_SHOWMAXIMIZED);
+end;
+
+procedure TfmMain.btDownloadXmlNfceClick(Sender: TObject);
+var
+  Nfce: TDfe;
+  Xml: TBytes;
+  XmlString: string;
+begin
+  if NfceSelecionada = '' then Exit;
+
+  Xml := Client.Nfce.BaixarXmlNfce(NfceSelecionada);
+  XmlString := TEncoding.UTF8.GetString(Xml);
+
+  ShowMessage(XmlString);
+end;
+
+procedure TfmMain.btEmitirNfceClick(Sender: TObject);
+begin
+  TfmEmitirNfce.Emitir(Client, AmbienteNfce);
+end;
+
 procedure TfmMain.btEmitirNfseClick(Sender: TObject);
 begin
   TfmEmitirNfse.Emitir(Client, AmbienteNfse);
+end;
+
+procedure TfmMain.btListaNfcesClick(Sender: TObject);
+var
+  Notas: TDfeListagem;
+  Nota: TDfe;
+  Item: TListItem;
+begin
+  Notas := Client.Nfce.ListarNfce(30, 0, False, edNfceCnpj.Text, '', AmbienteNfce, '');
+  try
+    lvNfces.Clear;
+    for Nota in Notas.data do
+    begin
+      Item := lvNfces.Items.Add;
+      Item.Caption := Nota.id;
+      Item.SubItems.Add(IntToStr(Nota.numero));
+      Item.SubItems.Add(IntToStr(Nota.serie));
+      Item.SubItems.Add(Nota.status);
+      if Nota.data_emissaoHasValue then
+        Item.SubItems.Add(FormatDateTime('dd/mm/yyyy HH:nn:ss', Nota.data_emissao))
+      else
+        Item.SubItems.Add('');
+      Item.SubItems.Add(Nota.chave);
+      Item.SubItems.Add(FormatFloat('"R$" #,0.00', Nota.valor_total));
+    end;
+  finally
+    Notas.Free;
+  end;
 end;
 
 procedure TfmMain.btListaNfsesClick(Sender: TObject);
@@ -255,14 +370,12 @@ begin
       Item := lvNfses.Items.Add;
       Item.Caption := Nota.id;
       Item.SubItems.Add(Nota.numero);
-      Item.SubItems.Add(Nota.declaracao_prestacao_servico.rps.identificacao_rps.numero);
+      Item.SubItems.Add(Nota.DPS.nDPS);
       Item.SubItems.Add(Nota.status);
       if Nota.data_emissaoHasValue then
         Item.SubItems.Add(FormatDateTime('dd/mm/yyyy HH:nn:ss', Nota.data_emissao))
       else
         Item.SubItems.Add('');
-      Item.SubItems.Add(Nota.declaracao_prestacao_servico.tomador.nome_razao_social);
-      Item.SubItems.Add(FormatFloat('"R$" #,0.00', TfmDetalhesNfse.GetValorTotal(Nota)));
     end;
   finally
     Notas.Free;
@@ -278,6 +391,18 @@ begin
   btListaNfsesClick(nil);
 end;
 
+procedure TfmMain.btVerDetalhesNfceClick(Sender: TObject);
+var
+  Nfce: TDfe;
+begin
+  Nfce := Client.Nfce.ConsultarNfce(NfceSelecionada);
+  try
+    TfmDetalhesNfce.Visualizar(Nfce);
+  finally
+    Nfce.Free;
+  end;
+end;
+
 procedure TfmMain.btVerDetalhesNfseClick(Sender: TObject);
 var
   Nfse: TNfse;
@@ -290,6 +415,26 @@ begin
   end;
 end;
 
+procedure TfmMain.Button1Click(Sender: TObject);
+begin
+  if CnpjSelecionado <> '' then
+    TfmConfigNFCe.Editar(Client, CnpjSelecionado);
+end;
+
+procedure TfmMain.Button2Click(Sender: TObject);
+begin
+  if CnpjSelecionado = '' then Exit;
+
+  edNfceCnpj.Text := CnpjSelecionado;
+  PageControl1.ActivePage := tsNfce;
+  btListaNfcesClick(nil);
+end;
+
+procedure TfmMain.cbAPIChange(Sender: TObject);
+begin
+  Client.Config.BaseUrl := BaseUrl;
+end;
+
 procedure TfmMain.FormCreate(Sender: TObject);
 begin
   PageControl1.ActivePageIndex := 0;
@@ -297,6 +442,7 @@ begin
   edClientSecret.Text := GetEnvironmentVariable('NUVEMFISCAL_CLIENTSECRET');
 
   Client := TNuvemFiscalClient.Create;
+  Client.Config.BaseUrl := BaseUrl;
   TokenProvider := TClientCredentialsTokenProvider.Create;
   TokenProvider.TokenEndpoint := 'https://auth.nuvemfiscal.com.br/oauth/token';
 end;
@@ -308,8 +454,28 @@ end;
 
 procedure TfmMain.lvEmpresasDblClick(Sender: TObject);
 begin
-  if btAlterarEmpresa.Enabled then
+  if (lvEmpresas.Items.Count > 0) and btAlterarEmpresa.Enabled then
     btAlterarEmpresa.Click;
+end;
+
+procedure TfmMain.lvNfcesDblClick(Sender: TObject);
+begin
+  if (lvNfces.Items.Count > 0) and btVerDetalhesNfce.Enabled then
+    btVerDetalhesNfce.Click;
+end;
+
+procedure TfmMain.lvNfsesDblClick(Sender: TObject);
+begin
+  if (lvNfses.Items.Count > 0) and btVerDetalhesNfse.Enabled then
+    btVerDetalhesNfse.Click;
+end;
+
+function TfmMain.NfceSelecionada: string;
+begin
+  if lvNfces.Selected <> nil then
+    Result := lvNfces.Selected.Caption
+  else
+    Result := '';
 end;
 
 function TfmMain.NfseSelecionada: string;
