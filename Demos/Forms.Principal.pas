@@ -245,8 +245,29 @@ begin
 end;
 
 procedure TfmMain.btCancelarNfceClick(Sender: TObject);
+var
+  Cancelamento: TDfeCancelamento;
+  PedidoCancelamento: TNfePedidoCancelamento;
 begin
-  raise Exception.Create('Não implementado');
+  if NfceSelecionada = '' then Exit;
+
+  if MessageDlg('Tem certeza que deseja cancelar a nota ' + NfceSelecionada, mtConfirmation, [mbOk, mbCancel], 0, mbCancel) <> mrOk then
+    Exit;
+
+  PedidoCancelamento := TNfePedidoCancelamento.Create;
+  try
+    PedidoCancelamento.justificativa := 'Nota fiscal emitida com erro de preenchimento';
+
+    Cancelamento := Client.Nfce.CancelarNfce(PedidoCancelamento, NfceSelecionada);
+    try
+      ShowMessage(Format('Status do cancelamento: %s' + sLineBreak + '%d: %s',
+        [Cancelamento.status, Cancelamento.codigo_status, Cancelamento.motivo_status]));
+    finally
+      Cancelamento.Free;
+    end;
+  finally
+    PedidoCancelamento.Free;
+  end;
 end;
 
 procedure TfmMain.btCancelarNfseClick(Sender: TObject);
