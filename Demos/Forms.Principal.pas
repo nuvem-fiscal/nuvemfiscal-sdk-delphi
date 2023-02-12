@@ -379,6 +379,8 @@ var
   Justificativa: string;
   PedidoInutilizacao: TDfePedidoInutilizacao;
   Inutilizacao: TDfeInutilizacao;
+  Pdf: TBytes;
+  Xml: TBytes;
 begin
   Ano := '';
   if not(InputQuery('Inutilização ', 'Ano',    Ano)) then
@@ -412,6 +414,19 @@ begin
         'Código: %d' + sLineBreak +
         'Motivo: %s',
         [Inutilizacao.status, Inutilizacao.codigo_status, Inutilizacao.motivo_status]));
+
+      if Inutilizacao.status = 'registrado' then
+      begin
+        Xml := Client.Nfce.BaixarXmlInutilizacaoNfce(Inutilizacao.id);
+        Pdf := Client.Nfce.BaixarPdfInutilizacaoNfce(Inutilizacao.id);
+
+        TFile.WriteAllBytes('inutilizacao-nfce.xml', Xml);
+        TFile.WriteAllBytes('inutilizacao-nfce.pdf', Pdf);
+
+        ShellExecute(Application.Handle, 'open', PChar('inutilizacao-nfce.xml'), nil, nil, SW_SHOWMAXIMIZED);
+        ShellExecute(Application.Handle, 'open', PChar('inutilizacao-nfce.pdf'), nil, nil, SW_SHOWMAXIMIZED);
+      end;
+      
     finally
       Inutilizacao.Free;
     end;
