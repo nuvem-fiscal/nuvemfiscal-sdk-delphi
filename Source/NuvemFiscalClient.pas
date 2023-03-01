@@ -1003,6 +1003,46 @@ type
     /// </summary>
     function EmitirNfce(Body: TNfePedidoEmissao): TDfe;
     /// <summary>
+    /// Listar eventos
+    /// </summary>
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="DfeId">
+    /// ID único gerado pela Nuvem Fiscal para o documento fiscal.
+    /// </param>
+    /// <remarks>
+    /// Retorna a lista de eventos vinculados a um documento fiscal de acordo com os critérios de busca utilizados. Os eventos são retornados ordenados pela data da criação, com as mais recentes aparecendo primeiro.
+    /// </remarks>
+    function ListarEventosNfce(Top: Integer; Skip: Integer; Inlinecount: Boolean; DfeId: string): TDfeEventoListagem;
+    /// <summary>
+    /// Consultar evento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarEventoNfe(Id: string): TDfeEvento;
+    /// <summary>
+    /// Baixar PDF do evento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfEventoNfe(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML do evento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlEventoNfe(Id: string): TBytes;
+    /// <summary>
     /// Inutilizar uma sequência de numeração de NFC-e
     /// </summary>
     function InutilizarNumeracaoNfce(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
@@ -1118,12 +1158,72 @@ type
     /// </param>
     function BaixarXmlCancelamentoNfce(Id: string): TBytes;
     /// <summary>
+    /// Comandos ESC/POS para impressão do DANFCE
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <param name="Modelo">
+    /// Modelo da impressora:
+    /// * `0` - Texto
+    /// * `1` - Epson
+    /// * `2` - Bematech
+    /// * `3` - Daruma
+    /// * `4` - Vox
+    /// * `5` - Diebold
+    /// * `6` - Epson P2
+    /// * `7` - CustomPos
+    /// * `8` - Star
+    /// * `9` - Zjiang
+    /// * `10` - GPrinter
+    /// * `11` - Datecs
+    /// * `12` - Sunmi
+    /// * `13` - Externo
+    /// </param>
+    /// <param name="Colunas">
+    /// Define o máximo de caracteres, em uma linha, usando a fonte normal.
+    /// 
+    /// Ex: 40, 42, 48, 58, 80.
+    /// </param>
+    /// <param name="QrcodeLateral">
+    /// Imprime o QRCode na lateral do DANFCe.
+    /// 
+    /// OBS: não suportado por alguns modelos de impressora.
+    /// </param>
+    /// <remarks>
+    /// ESC/POS é um sistema de comando criado pela Epson usado em diversos sistemas de impressoras POS.
+    /// 
+    /// Com o formato ESC/POS, você poderá imprimir nativamente em uma vasta quantidade de modelos de impressora térmicas utilizadas no Brasil e no mundo. Com ela, você consegue fazer o envio de comandos em ESC/POS direto para a porta da impressora.
+    /// </remarks>
+    function BaixarEscPosNfce(Id: string; Modelo: Integer; Colunas: Integer; QrcodeLateral: Boolean): TBytes;
+    /// <summary>
     /// Baixar PDF do DANFCE
     /// </summary>
     /// <param name="Id">
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
-    function BaixarPdfNfce(Id: string): TBytes;
+    /// <param name="Resumido">
+    /// Poderá ser impresso apenas o DANFE NFC-e resumido ou ecológico, sem o detalhamento dos itens da venda, desde que a Unidade Federada permita esta opção em sua legislação e o consumidor assim o solicite.
+    /// </param>
+    /// <param name="QrcodeLateral">
+    /// Imprime o QRCode na lateral do DANFE NFC-e.
+    /// </param>
+    function BaixarPdfNfce(Id: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
+    /// <summary>
+    /// Sincroniza dados na NFC-e a partir da SEFAZ
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Realiza a sincronização dos dados a partir da consulta da situação atual da NFC-e na Base de Dados do Portal da Secretaria de Fazenda Estadual.
+    /// 
+    /// **Cenários de uso**:
+    /// * Sincronizar uma nota que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizada na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
+    /// * Sincronizar uma nota que se encontra com o status `autorizado`na Nuvem Fiscal, mas está cancelada na SEFAZ.
+    /// * Sincronizar todos os eventos de Cancelamento, Carta de Correção e EPEC de uma nota que porventura não tenham sido feitos a partir da Nuvem Fiscal.
+    /// </remarks>
+    function SincronizarNfce(Id: string): TDfeSincronizacao;
     /// <summary>
     /// Baixar XML da NFC-e processada
     /// </summary>
@@ -1131,6 +1231,20 @@ type
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlNfce(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML da NFC-e
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlNfceNota(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML do Protocolo da SEFAZ
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlNfceProtocolo(Id: string): TBytes;
   end;
   
   TNfceService = class(TRestService, INfceService)
@@ -1159,6 +1273,31 @@ type
     /// </param>
     function ListarNfce(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     function EmitirNfce(Body: TNfePedidoEmissao): TDfe;
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="DfeId">
+    /// ID único gerado pela Nuvem Fiscal para o documento fiscal.
+    /// </param>
+    function ListarEventosNfce(Top: Integer; Skip: Integer; Inlinecount: Boolean; DfeId: string): TDfeEventoListagem;
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarEventoNfe(Id: string): TDfeEvento;
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfEventoNfe(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlEventoNfe(Id: string): TBytes;
     function InutilizarNumeracaoNfce(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
@@ -1224,11 +1363,60 @@ type
     /// <param name="Id">
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
-    function BaixarPdfNfce(Id: string): TBytes;
+    /// <param name="Modelo">
+    /// Modelo da impressora:
+    /// * `0` - Texto
+    /// * `1` - Epson
+    /// * `2` - Bematech
+    /// * `3` - Daruma
+    /// * `4` - Vox
+    /// * `5` - Diebold
+    /// * `6` - Epson P2
+    /// * `7` - CustomPos
+    /// * `8` - Star
+    /// * `9` - Zjiang
+    /// * `10` - GPrinter
+    /// * `11` - Datecs
+    /// * `12` - Sunmi
+    /// * `13` - Externo
+    /// </param>
+    /// <param name="Colunas">
+    /// Define o máximo de caracteres, em uma linha, usando a fonte normal.
+    /// 
+    /// Ex: 40, 42, 48, 58, 80.
+    /// </param>
+    /// <param name="QrcodeLateral">
+    /// Imprime o QRCode na lateral do DANFCe.
+    /// 
+    /// OBS: não suportado por alguns modelos de impressora.
+    /// </param>
+    function BaixarEscPosNfce(Id: string; Modelo: Integer; Colunas: Integer; QrcodeLateral: Boolean): TBytes;
+    /// <param name="Id">
+    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <param name="Resumido">
+    /// Poderá ser impresso apenas o DANFE NFC-e resumido ou ecológico, sem o detalhamento dos itens da venda, desde que a Unidade Federada permita esta opção em sua legislação e o consumidor assim o solicite.
+    /// </param>
+    /// <param name="QrcodeLateral">
+    /// Imprime o QRCode na lateral do DANFE NFC-e.
+    /// </param>
+    function BaixarPdfNfce(Id: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
+    /// <param name="Id">
+    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function SincronizarNfce(Id: string): TDfeSincronizacao;
     /// <param name="Id">
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlNfce(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlNfceNota(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlNfceProtocolo(Id: string): TBytes;
   end;
   
   /// <summary>
@@ -1269,6 +1457,25 @@ type
     /// Emitir NF-e
     /// </summary>
     function EmitirNfe(Body: TNfePedidoEmissao): TDfe;
+    /// <summary>
+    /// Listar eventos
+    /// </summary>
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="DfeId">
+    /// ID único gerado pela Nuvem Fiscal para o documento fiscal.
+    /// </param>
+    /// <remarks>
+    /// Retorna a lista de eventos vinculados a um documento fiscal de acordo com os critérios de busca utilizados. Os eventos são retornados ordenados pela data da criação, com as mais recentes aparecendo primeiro.
+    /// </remarks>
+    function ListarEventosNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; DfeId: string): TDfeEventoListagem;
     /// <summary>
     /// Consultar evento
     /// </summary>
@@ -1447,12 +1654,41 @@ type
     /// </param>
     function BaixarPdfNfe(Id: string): TBytes;
     /// <summary>
+    /// Sincroniza dados na NF-e a partir da SEFAZ
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Realiza a sincronização dos dados a partir da consulta da situação atual da NF-e na Base de Dados do Portal da Secretaria de Fazenda Estadual.
+    /// 
+    /// **Cenários de uso**:
+    /// * Sincronizar uma nota que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizada na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
+    /// * Sincronizar uma nota que se encontra com o status `autorizado`na Nuvem Fiscal, mas está cancelada na SEFAZ.
+    /// * Sincronizar todos os eventos de Cancelamento, Carta de Correção e EPEC de uma nota que porventura não tenham sido feitos a partir da Nuvem Fiscal.
+    /// </remarks>
+    function SincronizarNfe(Id: string): TDfeSincronizacao;
+    /// <summary>
     /// Baixar XML da NF-e processada
     /// </summary>
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlNfe(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML da NF-e
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlNfeNota(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML do Protocolo da SEFAZ
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlNfeProtocolo(Id: string): TBytes;
   end;
   
   TNfeService = class(TRestService, INfeService)
@@ -1481,6 +1717,19 @@ type
     /// </param>
     function ListarNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string): TDfeListagem;
     function EmitirNfe(Body: TNfePedidoEmissao): TDfe;
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="DfeId">
+    /// ID único gerado pela Nuvem Fiscal para o documento fiscal.
+    /// </param>
+    function ListarEventosNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; DfeId: string): TDfeEventoListagem;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
@@ -1581,7 +1830,19 @@ type
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
+    function SincronizarNfe(Id: string): TDfeSincronizacao;
+    /// <param name="Id">
+    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// </param>
     function BaixarXmlNfe(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlNfeNota(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlNfeProtocolo(Id: string): TBytes;
   end;
   
   /// <summary>
@@ -1707,6 +1968,13 @@ type
     /// ID único da NFS-e gerado pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlNfse(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML da DPS
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlDps(Id: string): TBytes;
   end;
   
   TNfseService = class(TRestService, INfseService)
@@ -1781,6 +2049,10 @@ type
     /// ID único da NFS-e gerado pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlNfse(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlDps(Id: string): TBytes;
   end;
   
   TNuvemFiscalConfig = class(TCustomRestConfig)
@@ -2829,6 +3101,59 @@ begin
   Result := Converter.TDfeFromJson(Response.ContentAsString);
 end;
 
+function TNfceService.ListarEventosNfce(Top: Integer; Skip: Integer; Inlinecount: Boolean; DfeId: string): TDfeEventoListagem;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfce/eventos', 'GET');
+  Request.AddQueryParam('$top', IntToStr(Top));
+  Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
+  Request.AddQueryParam('dfe_id', DfeId);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeEventoListagemFromJson(Response.ContentAsString);
+end;
+
+function TNfceService.ConsultarEventoNfe(Id: string): TDfeEvento;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfce/eventos/{id}', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeEventoFromJson(Response.ContentAsString);
+end;
+
+function TNfceService.BaixarPdfEventoNfe(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfce/eventos/{id}/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TNfceService.BaixarXmlEventoNfe(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfce/eventos/{id}/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
 function TNfceService.InutilizarNumeracaoNfce(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
 var
   Request: IRestRequest;
@@ -3003,16 +3328,46 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TNfceService.BaixarPdfNfce(Id: string): TBytes;
+function TNfceService.BaixarEscPosNfce(Id: string; Modelo: Integer; Colunas: Integer; QrcodeLateral: Boolean): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfce/{id}/escpos', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddQueryParam('modelo', IntToStr(Modelo));
+  Request.AddQueryParam('colunas', IntToStr(Colunas));
+  Request.AddQueryParam('qrcode_lateral', BoolToParam(QrcodeLateral));
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TNfceService.BaixarPdfNfce(Id: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
   Request := CreateRequest('/nfce/{id}/pdf', 'GET');
   Request.AddUrlParam('id', Id);
+  Request.AddQueryParam('resumido', BoolToParam(Resumido));
+  Request.AddQueryParam('qrcode_lateral', BoolToParam(QrcodeLateral));
   Response := Request.Execute;
   CheckError(Response);
   Result := Response.ContentAsBytes;
+end;
+
+function TNfceService.SincronizarNfce(Id: string): TDfeSincronizacao;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfce/{id}/sincronizar', 'POST');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeSincronizacaoFromJson(Response.ContentAsString);
 end;
 
 function TNfceService.BaixarXmlNfce(Id: string): TBytes;
@@ -3021,6 +3376,30 @@ var
   Response: IRestResponse;
 begin
   Request := CreateRequest('/nfce/{id}/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TNfceService.BaixarXmlNfceNota(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfce/{id}/xml/nota', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TNfceService.BaixarXmlNfceProtocolo(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfce/{id}/xml/protocolo', 'GET');
   Request.AddUrlParam('id', Id);
   Response := Request.Execute;
   CheckError(Response);
@@ -3060,6 +3439,22 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Converter.TDfeFromJson(Response.ContentAsString);
+end;
+
+function TNfeService.ListarEventosNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; DfeId: string): TDfeEventoListagem;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfe/eventos', 'GET');
+  Request.AddQueryParam('$top', IntToStr(Top));
+  Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
+  Request.AddQueryParam('dfe_id', DfeId);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeEventoListagemFromJson(Response.ContentAsString);
 end;
 
 function TNfeService.ConsultarEventoNfe(Id: string): TDfeEvento;
@@ -3337,12 +3732,49 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
+function TNfeService.SincronizarNfe(Id: string): TDfeSincronizacao;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfe/{id}/sincronizar', 'POST');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeSincronizacaoFromJson(Response.ContentAsString);
+end;
+
 function TNfeService.BaixarXmlNfe(Id: string): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
   Request := CreateRequest('/nfe/{id}/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TNfeService.BaixarXmlNfeNota(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfe/{id}/xml/nota', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TNfeService.BaixarXmlNfeProtocolo(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfe/{id}/xml/protocolo', 'GET');
   Request.AddUrlParam('id', Id);
   Response := Request.Execute;
   CheckError(Response);
@@ -3516,6 +3948,18 @@ var
   Response: IRestResponse;
 begin
   Request := CreateRequest('/nfse/{id}/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TNfseService.BaixarXmlDps(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfse/{id}/xml/dps', 'GET');
   Request.AddUrlParam('id', Id);
   Response := Request.Execute;
   CheckError(Response);

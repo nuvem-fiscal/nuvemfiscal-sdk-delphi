@@ -464,6 +464,9 @@ type
   TNfePedidoCancelamento = class;
   TNfePedidoCartaCorrecao = class;
   TDfeCartaCorrecao = class;
+  TDfeEventoList = class;
+  TDfeEventoListagem = class;
+  TDfeSincronizacao = class;
   TCnpjNaturezaJuridica = class;
   TCnpjPorteEmpresa = class;
   TCnpjSituacaoCadastral = class;
@@ -589,14 +592,16 @@ type
     /// </summary>
     property cpf_cnpj: string read Fcpf_cnpj write Fcpf_cnpj;
     /// <summary>
-    /// Data e hora que o objeto foi criado.
-    /// A Nuvem Fiscal gerencia esse campo automaticamente.
+    /// Data/hora em que o objeto foi criado na Nuvem Fiscal. Representado no formato <a href="https://en.wikipedia.org/wiki/ISO_8601" target="blank">`ISO 8601`</a>.
+    /// 
+    /// A Nuvem Fiscal gerencia esse campo automaticamente. Caso algum valor seja enviado, ele será ignorado.
     /// </summary>
     property created_at: TDateTime read Fcreated_at write Setcreated_at;
     property created_atHasValue: Boolean read Fcreated_atHasValue write Fcreated_atHasValue;
     /// <summary>
-    /// Data e hora que o objeto foi alterado pela última vez.
-    /// A Nuvem Fiscal gerencia esse campo automaticamente.
+    /// Data e hora que o objeto foi alterado pela última vez na Nuvem Fiscal. Representado no formato <a href="https://en.wikipedia.org/wiki/ISO_8601" target="blank">`ISO 8601`</a>.
+    /// 
+    /// A Nuvem Fiscal gerencia esse campo automaticamente. Caso algum valor seja enviado, ele será ignorado.
     /// </summary>
     property updated_at: TDateTime read Fupdated_at write Setupdated_at;
     property updated_atHasValue: Boolean read Fupdated_atHasValue write Fupdated_atHasValue;
@@ -3332,15 +3337,27 @@ type
   
   TNfseDpsPedidoEmissao = class
   private
+    Fprovedor: string;
+    FprovedorHasValue: Boolean;
     Fambiente: string;
     Freferencia: string;
     FreferenciaHasValue: Boolean;
     FinfDPS: TInfDPS;
+    procedure Setprovedor(const Value: string);
     procedure Setreferencia(const Value: string);
     procedure SetinfDPS(const Value: TInfDPS);
   public
     constructor Create;
     destructor Destroy; override;
+    /// <summary>
+    /// Default: `"padrao"`
+    /// 
+    /// Identificação do provedor para transmissão da DPS:
+    ///  * `"padrao"`: Provedor padrão da prefeitura.
+    ///  * `"nacional"`: Ambiente de Dados Nacional (ADN) do <a href="https://www.gov.br/nfse/pt-br" target="blank">Sistema Nacional NFS-e</a>.
+    /// </summary>
+    property provedor: string read Fprovedor write Setprovedor;
+    property provedorHasValue: Boolean read FprovedorHasValue write FprovedorHasValue;
     /// <summary>
     /// Identificação do Ambiente.
     /// </summary>
@@ -3358,14 +3375,26 @@ type
   
   TNfseLoteDpsPedidoEmissao = class
   private
+    Fprovedor: string;
+    FprovedorHasValue: Boolean;
     Fambiente: string;
     Freferencia: string;
     FreferenciaHasValue: Boolean;
     Fdocumentos: TNfseDpsPedidoEmissaoList;
+    procedure Setprovedor(const Value: string);
     procedure Setreferencia(const Value: string);
     procedure Setdocumentos(const Value: TNfseDpsPedidoEmissaoList);
   public
     destructor Destroy; override;
+    /// <summary>
+    /// Default: `"padrao"`
+    /// 
+    /// Identificação do provedor para transmissão da DPS:
+    ///  * `"padrao"`: Provedor padrão da prefeitura.
+    ///  * `"nacional"`: Ambiente de Dados Nacional (ADN) do <a href="https://www.gov.br/nfse/pt-br" target="blank">Sistema Nacional NFS-e</a>.
+    /// </summary>
+    property provedor: string read Fprovedor write Setprovedor;
+    property provedorHasValue: Boolean read FprovedorHasValue write FprovedorHasValue;
     /// <summary>
     /// Identificação do Ambiente.
     /// </summary>
@@ -7300,7 +7329,7 @@ type
     property ambiente: string read Fambiente write Setambiente;
     property ambienteHasValue: Boolean read FambienteHasValue write FambienteHasValue;
     /// <summary>
-    /// Data/hora em que o documento foi criado na Nuvem Fiscal. Representado no formato [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601).
+    /// Data/hora em que o documento foi criado na Nuvem Fiscal. Representado no formato <a href="https://en.wikipedia.org/wiki/ISO_8601" target="blank">`ISO 8601`</a>.
     /// </summary>
     property created_at: TDateTime read Fcreated_at write Setcreated_at;
     property created_atHasValue: Boolean read Fcreated_atHasValue write Fcreated_atHasValue;
@@ -17289,6 +17318,65 @@ type
     property tipo_eventoHasValue: Boolean read Ftipo_eventoHasValue write Ftipo_eventoHasValue;
   end;
   
+  TDfeEventoList = class(TObjectList<TDfeEvento>)
+  end;
+  
+  TDfeEventoListagem = class
+  private
+    F_count: Integer;
+    F_countHasValue: Boolean;
+    Fdata: TDfeEventoList;
+    procedure Set_count(const Value: Integer);
+    procedure Setdata(const Value: TDfeEventoList);
+  public
+    destructor Destroy; override;
+    property _count: Integer read F_count write Set_count;
+    property _countHasValue: Boolean read F_countHasValue write F_countHasValue;
+    property data: TDfeEventoList read Fdata write Setdata;
+  end;
+  
+  TDfeSincronizacao = class
+  private
+    Fstatus: string;
+    FstatusHasValue: Boolean;
+    Fcodigo_status: Integer;
+    Fcodigo_statusHasValue: Boolean;
+    Fmotivo_status: string;
+    Fmotivo_statusHasValue: Boolean;
+    Fdata_recebimento: TDateTime;
+    Fdata_recebimentoHasValue: Boolean;
+    Fchave: string;
+    FchaveHasValue: Boolean;
+    procedure Setstatus(const Value: string);
+    procedure Setcodigo_status(const Value: Integer);
+    procedure Setmotivo_status(const Value: string);
+    procedure Setdata_recebimento(const Value: TDateTime);
+    procedure Setchave(const Value: string);
+  public
+    property status: string read Fstatus write Setstatus;
+    property statusHasValue: Boolean read FstatusHasValue write FstatusHasValue;
+    /// <summary>
+    /// Código da situação atual do DF-e.
+    /// </summary>
+    property codigo_status: Integer read Fcodigo_status write Setcodigo_status;
+    property codigo_statusHasValue: Boolean read Fcodigo_statusHasValue write Fcodigo_statusHasValue;
+    /// <summary>
+    /// Descrição literal da situação atual do DF-e.
+    /// </summary>
+    property motivo_status: string read Fmotivo_status write Setmotivo_status;
+    property motivo_statusHasValue: Boolean read Fmotivo_statusHasValue write Fmotivo_statusHasValue;
+    /// <summary>
+    /// Data e hora de processamento.
+    /// </summary>
+    property data_recebimento: TDateTime read Fdata_recebimento write Setdata_recebimento;
+    property data_recebimentoHasValue: Boolean read Fdata_recebimentoHasValue write Fdata_recebimentoHasValue;
+    /// <summary>
+    /// Chave de Acesso do DF-e consultado.
+    /// </summary>
+    property chave: string read Fchave write Setchave;
+    property chaveHasValue: Boolean read FchaveHasValue write FchaveHasValue;
+  end;
+  
   /// <summary>
   /// Natureza jurídica.
   /// </summary>
@@ -20135,6 +20223,12 @@ begin
   inherited;
 end;
 
+procedure TNfseDpsPedidoEmissao.Setprovedor(const Value: string);
+begin
+  Fprovedor := Value;
+  FprovedorHasValue := True;
+end;
+
 procedure TNfseDpsPedidoEmissao.Setreferencia(const Value: string);
 begin
   Freferencia := Value;
@@ -20156,6 +20250,12 @@ destructor TNfseLoteDpsPedidoEmissao.Destroy;
 begin
   Fdocumentos.Free;
   inherited;
+end;
+
+procedure TNfseLoteDpsPedidoEmissao.Setprovedor(const Value: string);
+begin
+  Fprovedor := Value;
+  FprovedorHasValue := True;
 end;
 
 procedure TNfseLoteDpsPedidoEmissao.Setreferencia(const Value: string);
@@ -29029,6 +29129,61 @@ procedure TDfeCartaCorrecao.Settipo_evento(const Value: string);
 begin
   Ftipo_evento := Value;
   Ftipo_eventoHasValue := True;
+end;
+
+{ TDfeEventoListagem }
+
+destructor TDfeEventoListagem.Destroy;
+begin
+  Fdata.Free;
+  inherited;
+end;
+
+procedure TDfeEventoListagem.Set_count(const Value: Integer);
+begin
+  F_count := Value;
+  F_countHasValue := True;
+end;
+
+procedure TDfeEventoListagem.Setdata(const Value: TDfeEventoList);
+begin
+  if Value <> Fdata then
+  begin
+    Fdata.Free;
+    Fdata := Value;
+  end;
+end;
+
+{ TDfeSincronizacao }
+
+procedure TDfeSincronizacao.Setstatus(const Value: string);
+begin
+  Fstatus := Value;
+  FstatusHasValue := True;
+end;
+
+procedure TDfeSincronizacao.Setcodigo_status(const Value: Integer);
+begin
+  Fcodigo_status := Value;
+  Fcodigo_statusHasValue := True;
+end;
+
+procedure TDfeSincronizacao.Setmotivo_status(const Value: string);
+begin
+  Fmotivo_status := Value;
+  Fmotivo_statusHasValue := True;
+end;
+
+procedure TDfeSincronizacao.Setdata_recebimento(const Value: TDateTime);
+begin
+  Fdata_recebimento := Value;
+  Fdata_recebimentoHasValue := True;
+end;
+
+procedure TDfeSincronizacao.Setchave(const Value: string);
+begin
+  Fchave := Value;
+  FchaveHasValue := True;
 end;
 
 { TCnpjNaturezaJuridica }
