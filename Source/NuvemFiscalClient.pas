@@ -1027,21 +1027,21 @@ type
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
-    function ConsultarEventoNfe(Id: string): TDfeEvento;
+    function ConsultarEventoNfce(Id: string): TDfeEvento;
     /// <summary>
     /// Baixar PDF do evento
     /// </summary>
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
-    function BaixarPdfEventoNfe(Id: string): TBytes;
+    function BaixarPdfEventoNfce(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do evento
     /// </summary>
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
-    function BaixarXmlEventoNfe(Id: string): TBytes;
+    function BaixarXmlEventoNfce(Id: string): TBytes;
     /// <summary>
     /// Inutilizar uma sequência de numeração de NFC-e
     /// </summary>
@@ -1289,15 +1289,15 @@ type
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
-    function ConsultarEventoNfe(Id: string): TDfeEvento;
+    function ConsultarEventoNfce(Id: string): TDfeEvento;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
-    function BaixarPdfEventoNfe(Id: string): TBytes;
+    function BaixarPdfEventoNfce(Id: string): TBytes;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
-    function BaixarXmlEventoNfe(Id: string): TBytes;
+    function BaixarXmlEventoNfce(Id: string): TBytes;
     function InutilizarNumeracaoNfce(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <param name="Id">
     /// ID único do evento gerado pela Nuvem Fiscal.
@@ -3117,7 +3117,7 @@ begin
   Result := Converter.TDfeEventoListagemFromJson(Response.ContentAsString);
 end;
 
-function TNfceService.ConsultarEventoNfe(Id: string): TDfeEvento;
+function TNfceService.ConsultarEventoNfce(Id: string): TDfeEvento;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -3130,7 +3130,7 @@ begin
   Result := Converter.TDfeEventoFromJson(Response.ContentAsString);
 end;
 
-function TNfceService.BaixarPdfEventoNfe(Id: string): TBytes;
+function TNfceService.BaixarPdfEventoNfce(Id: string): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -3142,7 +3142,7 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TNfceService.BaixarXmlEventoNfe(Id: string): TBytes;
+function TNfceService.BaixarXmlEventoNfce(Id: string): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
