@@ -9,7 +9,7 @@ uses
   fpjson, jsonparser,
 {$ELSE}
   Generics.Collections,
-  JSON,
+  System.JSON,
 {$ENDIF}
   SysUtils;
 
@@ -19,6 +19,17 @@ type
   TJSONBool = fpjson.TJSONBoolean;
 {$ELSE}
   TJSONValue = System.JSON.TJSONValue;
+
+  {$IFDEF VER290} //Delphi XE8
+  TJSONBool = record
+    InternalValue: TJSONValue;
+
+    constructor Create(Value: TJSONValue);
+    function AsBoolean: Boolean;
+
+    class operator Explicit(Value: TJSONValue): TJSONBool;
+  end;
+  {$ENDIF}
 {$ENDIF}
 
   TJsonWrapper = class
@@ -255,7 +266,11 @@ end;
 
 function TJsonWrapper.IsBoolean(Value: TJSONValue): Boolean;
 begin
+{$IFDEF FPC}
   Result := Value is TJSONBool;
+{$ELSE}
+  Result := (Value is TJSONTrue) or (Value is TJSONFalse);
+{$ENDIF}
 end;
 
 function TJsonWrapper.IsFloatingPoint(const Value: string): Boolean;
@@ -633,6 +648,32 @@ constructor TCustomJsonConverter.Create;
 begin
   Create(_Json);
 end;
+
+{$IFDEF VER290}
+function TJSONBool.AsBoolean: Boolean;
+const
+  DEFAULT_FALSE = False;
+begin
+  Result := StrToBoolDef(InternalValue.Value, DEFAULT_FALSE);
+end;
+
+constructor TJSONBool.Create(Value: TJSONValue);
+begin
+  InternalValue := Value;
+end;
+
+class operator TJSONBool.Explicit(Value: TJSONValue): TJSONBool;
+var
+  newvalue: TJSONValue;
+begin
+  if (Value is TJSONTrue) or (Value is TJSONFalse) then
+    newvalue := Value
+  else
+    newvalue := TJSONFalse.Create;
+
+  Result := TJSONBool.Create(newvalue);
+end;
+{$ENDIF}
 
 initialization
   _Json := TJsonWrapper.Create;
