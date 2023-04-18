@@ -343,6 +343,14 @@ type
     function TNfsePedidoCancelamentoToJson(Source: TNfsePedidoCancelamento): string;
     function TNfsePedidoCancelamentoFromJsonValue(Source: TJSONValue): TNfsePedidoCancelamento;
     function TNfsePedidoCancelamentoFromJson(Source: string): TNfsePedidoCancelamento;
+    function TNfsePedidoSincronizacaoToJsonValue(Source: TNfsePedidoSincronizacao): TJSONValue;
+    function TNfsePedidoSincronizacaoToJson(Source: TNfsePedidoSincronizacao): string;
+    function TNfsePedidoSincronizacaoFromJsonValue(Source: TJSONValue): TNfsePedidoSincronizacao;
+    function TNfsePedidoSincronizacaoFromJson(Source: string): TNfsePedidoSincronizacao;
+    function TNfseSincronizacaoToJsonValue(Source: TNfseSincronizacao): TJSONValue;
+    function TNfseSincronizacaoToJson(Source: TNfseSincronizacao): string;
+    function TNfseSincronizacaoFromJsonValue(Source: TJSONValue): TNfseSincronizacao;
+    function TNfseSincronizacaoFromJson(Source: string): TNfseSincronizacao;
     function TContaCotaToJsonValue(Source: TContaCota): TJSONValue;
     function TContaCotaToJson(Source: TContaCota): string;
     function TContaCotaFromJsonValue(Source: TJSONValue): TContaCota;
@@ -1463,6 +1471,14 @@ type
     function TNfeSefazEncerranteToJson(Source: TNfeSefazEncerrante): string;
     function TNfeSefazEncerranteFromJsonValue(Source: TJSONValue): TNfeSefazEncerrante;
     function TNfeSefazEncerranteFromJson(Source: string): TNfeSefazEncerrante;
+    function TNfeSefazOrigCombToJsonValue(Source: TNfeSefazOrigComb): TJSONValue;
+    function TNfeSefazOrigCombToJson(Source: TNfeSefazOrigComb): string;
+    function TNfeSefazOrigCombFromJsonValue(Source: TJSONValue): TNfeSefazOrigComb;
+    function TNfeSefazOrigCombFromJson(Source: string): TNfeSefazOrigComb;
+    function TNfeSefazOrigCombListToJsonValue(Source: TNfeSefazOrigCombList): TJSONValue;
+    function TNfeSefazOrigCombListToJson(Source: TNfeSefazOrigCombList): string;
+    function TNfeSefazOrigCombListFromJsonValue(Source: TJSONValue): TNfeSefazOrigCombList;
+    function TNfeSefazOrigCombListFromJson(Source: string): TNfeSefazOrigCombList;
     function TNfeSefazCombToJsonValue(Source: TNfeSefazComb): TJSONValue;
     function TNfeSefazCombToJson(Source: TNfeSefazComb): string;
     function TNfeSefazCombFromJsonValue(Source: TJSONValue): TNfeSefazComb;
@@ -1475,10 +1491,18 @@ type
     function TNfeSefazICMS00ToJson(Source: TNfeSefazICMS00): string;
     function TNfeSefazICMS00FromJsonValue(Source: TJSONValue): TNfeSefazICMS00;
     function TNfeSefazICMS00FromJson(Source: string): TNfeSefazICMS00;
+    function TNfeSefazICMS02ToJsonValue(Source: TNfeSefazICMS02): TJSONValue;
+    function TNfeSefazICMS02ToJson(Source: TNfeSefazICMS02): string;
+    function TNfeSefazICMS02FromJsonValue(Source: TJSONValue): TNfeSefazICMS02;
+    function TNfeSefazICMS02FromJson(Source: string): TNfeSefazICMS02;
     function TNfeSefazICMS10ToJsonValue(Source: TNfeSefazICMS10): TJSONValue;
     function TNfeSefazICMS10ToJson(Source: TNfeSefazICMS10): string;
     function TNfeSefazICMS10FromJsonValue(Source: TJSONValue): TNfeSefazICMS10;
     function TNfeSefazICMS10FromJson(Source: string): TNfeSefazICMS10;
+    function TNfeSefazICMS15ToJsonValue(Source: TNfeSefazICMS15): TJSONValue;
+    function TNfeSefazICMS15ToJson(Source: TNfeSefazICMS15): string;
+    function TNfeSefazICMS15FromJsonValue(Source: TJSONValue): TNfeSefazICMS15;
+    function TNfeSefazICMS15FromJson(Source: string): TNfeSefazICMS15;
     function TNfeSefazICMS20ToJsonValue(Source: TNfeSefazICMS20): TJSONValue;
     function TNfeSefazICMS20ToJson(Source: TNfeSefazICMS20): string;
     function TNfeSefazICMS20FromJsonValue(Source: TJSONValue): TNfeSefazICMS20;
@@ -1495,10 +1519,18 @@ type
     function TNfeSefazICMS51ToJson(Source: TNfeSefazICMS51): string;
     function TNfeSefazICMS51FromJsonValue(Source: TJSONValue): TNfeSefazICMS51;
     function TNfeSefazICMS51FromJson(Source: string): TNfeSefazICMS51;
+    function TNfeSefazICMS53ToJsonValue(Source: TNfeSefazICMS53): TJSONValue;
+    function TNfeSefazICMS53ToJson(Source: TNfeSefazICMS53): string;
+    function TNfeSefazICMS53FromJsonValue(Source: TJSONValue): TNfeSefazICMS53;
+    function TNfeSefazICMS53FromJson(Source: string): TNfeSefazICMS53;
     function TNfeSefazICMS60ToJsonValue(Source: TNfeSefazICMS60): TJSONValue;
     function TNfeSefazICMS60ToJson(Source: TNfeSefazICMS60): string;
     function TNfeSefazICMS60FromJsonValue(Source: TJSONValue): TNfeSefazICMS60;
     function TNfeSefazICMS60FromJson(Source: string): TNfeSefazICMS60;
+    function TNfeSefazICMS61ToJsonValue(Source: TNfeSefazICMS61): TJSONValue;
+    function TNfeSefazICMS61ToJson(Source: TNfeSefazICMS61): string;
+    function TNfeSefazICMS61FromJsonValue(Source: TJSONValue): TNfeSefazICMS61;
+    function TNfeSefazICMS61FromJson(Source: string): TNfeSefazICMS61;
     function TNfeSefazICMS70ToJsonValue(Source: TNfeSefazICMS70): TJSONValue;
     function TNfeSefazICMS70ToJson(Source: TNfeSefazICMS70): string;
     function TNfeSefazICMS70FromJsonValue(Source: TJSONValue): TNfeSefazICMS70;
@@ -8020,6 +8052,126 @@ begin
   JValue := JsonToJsonValue(Source);
   try
     Result := TNfsePedidoCancelamentoFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfsePedidoSincronizacaoToJsonValue(Source: TNfsePedidoSincronizacao): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    if Source.identificadorHasValue then
+      Json.ObjAddProp(Result, 'identificador', Self.stringToJsonValue(Source.identificador));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfsePedidoSincronizacaoToJson(Source: TNfsePedidoSincronizacao): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TNfsePedidoSincronizacaoToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfsePedidoSincronizacaoFromJsonValue(Source: TJSONValue): TNfsePedidoSincronizacao;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TNfsePedidoSincronizacao.Create;
+  try
+    if Json.ObjContains(Source, 'identificador', JValue) then
+      Result.identificador := Self.stringFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfsePedidoSincronizacaoFromJson(Source: string): TNfsePedidoSincronizacao;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TNfsePedidoSincronizacaoFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfseSincronizacaoToJsonValue(Source: TNfseSincronizacao): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    if Source.statusHasValue then
+      Json.ObjAddProp(Result, 'status', Self.stringToJsonValue(Source.status));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfseSincronizacaoToJson(Source: TNfseSincronizacao): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TNfseSincronizacaoToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfseSincronizacaoFromJsonValue(Source: TJSONValue): TNfseSincronizacao;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TNfseSincronizacao.Create;
+  try
+    if Json.ObjContains(Source, 'status', JValue) then
+      Result.status := Self.stringFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfseSincronizacaoFromJson(Source: string): TNfseSincronizacao;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TNfseSincronizacaoFromJsonValue(JValue);
   finally
     JValue.Free;
   end;
@@ -28098,6 +28250,133 @@ begin
   end;
 end;
 
+function TJsonConverter.TNfeSefazOrigCombToJsonValue(Source: TNfeSefazOrigComb): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'indImport', Self.IntegerToJsonValue(Source.indImport));
+    Json.ObjAddProp(Result, 'cUFOrig', Self.IntegerToJsonValue(Source.cUFOrig));
+    Json.ObjAddProp(Result, 'pOrig', Self.DoubleToJsonValue(Source.pOrig));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazOrigCombToJson(Source: TNfeSefazOrigComb): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TNfeSefazOrigCombToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazOrigCombFromJsonValue(Source: TJSONValue): TNfeSefazOrigComb;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TNfeSefazOrigComb.Create;
+  try
+    if Json.ObjContains(Source, 'indImport', JValue) then
+      Result.indImport := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cUFOrig', JValue) then
+      Result.cUFOrig := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'pOrig', JValue) then
+      Result.pOrig := Self.DoubleFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazOrigCombFromJson(Source: string): TNfeSefazOrigComb;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TNfeSefazOrigCombFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazOrigCombListToJsonValue(Source: TNfeSefazOrigCombList): TJSONValue;
+var
+  Index: Integer;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateArray;
+  try
+    for Index := 0 to Source.Count - 1 do
+      Json.ArrayAdd(Result, Self.TNfeSefazOrigCombToJsonValue(Source[Index]));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazOrigCombListToJson(Source: TNfeSefazOrigCombList): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TNfeSefazOrigCombListToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazOrigCombListFromJsonValue(Source: TJSONValue): TNfeSefazOrigCombList;
+var
+  Index: Integer;
+begin
+  if not Json.IsArray(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TNfeSefazOrigCombList.Create;
+  try
+    for Index := 0 to Json.ArrayLength(Source) - 1 do
+      Result.Add(Self.TNfeSefazOrigCombFromJsonValue(Json.ArrayGet(Source, Index)));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazOrigCombListFromJson(Source: string): TNfeSefazOrigCombList;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TNfeSefazOrigCombListFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
 function TJsonConverter.TNfeSefazCombToJsonValue(Source: TNfeSefazComb): TJSONValue;
 begin
   if not Assigned(Source) then
@@ -28126,6 +28405,10 @@ begin
       Json.ObjAddProp(Result, 'CIDE', Self.TNfeSefazCIDEToJsonValue(Source.CIDE));
     if Assigned(Source.encerrante) then
       Json.ObjAddProp(Result, 'encerrante', Self.TNfeSefazEncerranteToJsonValue(Source.encerrante));
+    if Source.pBioHasValue then
+      Json.ObjAddProp(Result, 'pBio', Self.DoubleToJsonValue(Source.pBio));
+    if Assigned(Source.origComb) then
+      Json.ObjAddProp(Result, 'origComb', Self.TNfeSefazOrigCombListToJsonValue(Source.origComb));
   except
     Result.Free;
     raise;
@@ -28177,6 +28460,10 @@ begin
       Result.CIDE := Self.TNfeSefazCIDEFromJsonValue(JValue);
     if Json.ObjContains(Source, 'encerrante', JValue) then
       Result.encerrante := Self.TNfeSefazEncerranteFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'pBio', JValue) then
+      Result.pBio := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'origComb', JValue) then
+      Result.origComb := Self.TNfeSefazOrigCombListFromJsonValue(JValue);
   except
     Result.Free;
     raise;
@@ -28475,6 +28762,74 @@ begin
   end;
 end;
 
+function TJsonConverter.TNfeSefazICMS02ToJsonValue(Source: TNfeSefazICMS02): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'adRemICMS', Self.DoubleToJsonValue(Source.adRemICMS));
+    Json.ObjAddProp(Result, 'vICMSMono', Self.DoubleToJsonValue(Source.vICMSMono));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazICMS02ToJson(Source: TNfeSefazICMS02): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TNfeSefazICMS02ToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazICMS02FromJsonValue(Source: TJSONValue): TNfeSefazICMS02;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TNfeSefazICMS02.Create;
+  try
+    if Json.ObjContains(Source, 'orig', JValue) then
+      Result.orig := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'CST', JValue) then
+      Result.CST := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'adRemICMS', JValue) then
+      Result.adRemICMS := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'vICMSMono', JValue) then
+      Result.vICMSMono := Self.DoubleFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazICMS02FromJson(Source: string): TNfeSefazICMS02;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TNfeSefazICMS02FromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
 function TJsonConverter.TNfeSefazICMS10ToJsonValue(Source: TNfeSefazICMS10): TJSONValue;
 begin
   if not Assigned(Source) then
@@ -28596,6 +28951,80 @@ begin
   JValue := JsonToJsonValue(Source);
   try
     Result := TNfeSefazICMS10FromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazICMS15ToJsonValue(Source: TNfeSefazICMS15): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'adRemICMS', Self.DoubleToJsonValue(Source.adRemICMS));
+    Json.ObjAddProp(Result, 'vICMSMono', Self.DoubleToJsonValue(Source.vICMSMono));
+    Json.ObjAddProp(Result, 'adRemICMSReten', Self.DoubleToJsonValue(Source.adRemICMSReten));
+    Json.ObjAddProp(Result, 'vICMSMonoReten', Self.DoubleToJsonValue(Source.vICMSMonoReten));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazICMS15ToJson(Source: TNfeSefazICMS15): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TNfeSefazICMS15ToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazICMS15FromJsonValue(Source: TJSONValue): TNfeSefazICMS15;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TNfeSefazICMS15.Create;
+  try
+    if Json.ObjContains(Source, 'orig', JValue) then
+      Result.orig := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'CST', JValue) then
+      Result.CST := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'adRemICMS', JValue) then
+      Result.adRemICMS := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'vICMSMono', JValue) then
+      Result.vICMSMono := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'adRemICMSReten', JValue) then
+      Result.adRemICMSReten := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'vICMSMonoReten', JValue) then
+      Result.vICMSMonoReten := Self.DoubleFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazICMS15FromJson(Source: string): TNfeSefazICMS15;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TNfeSefazICMS15FromJsonValue(JValue);
   finally
     JValue.Free;
   end;
@@ -28988,6 +29417,74 @@ begin
   end;
 end;
 
+function TJsonConverter.TNfeSefazICMS53ToJsonValue(Source: TNfeSefazICMS53): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'adRemICMSDif', Self.DoubleToJsonValue(Source.adRemICMSDif));
+    Json.ObjAddProp(Result, 'vICMSMonoDif', Self.DoubleToJsonValue(Source.vICMSMonoDif));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazICMS53ToJson(Source: TNfeSefazICMS53): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TNfeSefazICMS53ToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazICMS53FromJsonValue(Source: TJSONValue): TNfeSefazICMS53;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TNfeSefazICMS53.Create;
+  try
+    if Json.ObjContains(Source, 'orig', JValue) then
+      Result.orig := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'CST', JValue) then
+      Result.CST := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'adRemICMSDif', JValue) then
+      Result.adRemICMSDif := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'vICMSMonoDif', JValue) then
+      Result.vICMSMonoDif := Self.DoubleFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazICMS53FromJson(Source: string): TNfeSefazICMS53;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TNfeSefazICMS53FromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
 function TJsonConverter.TNfeSefazICMS60ToJsonValue(Source: TNfeSefazICMS60): TJSONValue;
 begin
   if not Assigned(Source) then
@@ -29089,6 +29586,74 @@ begin
   JValue := JsonToJsonValue(Source);
   try
     Result := TNfeSefazICMS60FromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazICMS61ToJsonValue(Source: TNfeSefazICMS61): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
+    Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    Json.ObjAddProp(Result, 'adRemICMSRet', Self.DoubleToJsonValue(Source.adRemICMSRet));
+    Json.ObjAddProp(Result, 'vICMSMonoRet', Self.DoubleToJsonValue(Source.vICMSMonoRet));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazICMS61ToJson(Source: TNfeSefazICMS61): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TNfeSefazICMS61ToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazICMS61FromJsonValue(Source: TJSONValue): TNfeSefazICMS61;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TNfeSefazICMS61.Create;
+  try
+    if Json.ObjContains(Source, 'orig', JValue) then
+      Result.orig := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'CST', JValue) then
+      Result.CST := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'adRemICMSRet', JValue) then
+      Result.adRemICMSRet := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'vICMSMonoRet', JValue) then
+      Result.vICMSMonoRet := Self.DoubleFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfeSefazICMS61FromJson(Source: string): TNfeSefazICMS61;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TNfeSefazICMS61FromJsonValue(JValue);
   finally
     JValue.Free;
   end;
@@ -30170,8 +30735,12 @@ begin
   try
     if Assigned(Source.ICMS00) then
       Json.ObjAddProp(Result, 'ICMS00', Self.TNfeSefazICMS00ToJsonValue(Source.ICMS00));
+    if Assigned(Source.ICMS02) then
+      Json.ObjAddProp(Result, 'ICMS02', Self.TNfeSefazICMS02ToJsonValue(Source.ICMS02));
     if Assigned(Source.ICMS10) then
       Json.ObjAddProp(Result, 'ICMS10', Self.TNfeSefazICMS10ToJsonValue(Source.ICMS10));
+    if Assigned(Source.ICMS15) then
+      Json.ObjAddProp(Result, 'ICMS15', Self.TNfeSefazICMS15ToJsonValue(Source.ICMS15));
     if Assigned(Source.ICMS20) then
       Json.ObjAddProp(Result, 'ICMS20', Self.TNfeSefazICMS20ToJsonValue(Source.ICMS20));
     if Assigned(Source.ICMS30) then
@@ -30180,8 +30749,12 @@ begin
       Json.ObjAddProp(Result, 'ICMS40', Self.TNfeSefazICMS40ToJsonValue(Source.ICMS40));
     if Assigned(Source.ICMS51) then
       Json.ObjAddProp(Result, 'ICMS51', Self.TNfeSefazICMS51ToJsonValue(Source.ICMS51));
+    if Assigned(Source.ICMS53) then
+      Json.ObjAddProp(Result, 'ICMS53', Self.TNfeSefazICMS53ToJsonValue(Source.ICMS53));
     if Assigned(Source.ICMS60) then
       Json.ObjAddProp(Result, 'ICMS60', Self.TNfeSefazICMS60ToJsonValue(Source.ICMS60));
+    if Assigned(Source.ICMS61) then
+      Json.ObjAddProp(Result, 'ICMS61', Self.TNfeSefazICMS61ToJsonValue(Source.ICMS61));
     if Assigned(Source.ICMS70) then
       Json.ObjAddProp(Result, 'ICMS70', Self.TNfeSefazICMS70ToJsonValue(Source.ICMS70));
     if Assigned(Source.ICMS90) then
@@ -30233,8 +30806,12 @@ begin
   try
     if Json.ObjContains(Source, 'ICMS00', JValue) then
       Result.ICMS00 := Self.TNfeSefazICMS00FromJsonValue(JValue);
+    if Json.ObjContains(Source, 'ICMS02', JValue) then
+      Result.ICMS02 := Self.TNfeSefazICMS02FromJsonValue(JValue);
     if Json.ObjContains(Source, 'ICMS10', JValue) then
       Result.ICMS10 := Self.TNfeSefazICMS10FromJsonValue(JValue);
+    if Json.ObjContains(Source, 'ICMS15', JValue) then
+      Result.ICMS15 := Self.TNfeSefazICMS15FromJsonValue(JValue);
     if Json.ObjContains(Source, 'ICMS20', JValue) then
       Result.ICMS20 := Self.TNfeSefazICMS20FromJsonValue(JValue);
     if Json.ObjContains(Source, 'ICMS30', JValue) then
@@ -30243,8 +30820,12 @@ begin
       Result.ICMS40 := Self.TNfeSefazICMS40FromJsonValue(JValue);
     if Json.ObjContains(Source, 'ICMS51', JValue) then
       Result.ICMS51 := Self.TNfeSefazICMS51FromJsonValue(JValue);
+    if Json.ObjContains(Source, 'ICMS53', JValue) then
+      Result.ICMS53 := Self.TNfeSefazICMS53FromJsonValue(JValue);
     if Json.ObjContains(Source, 'ICMS60', JValue) then
       Result.ICMS60 := Self.TNfeSefazICMS60FromJsonValue(JValue);
+    if Json.ObjContains(Source, 'ICMS61', JValue) then
+      Result.ICMS61 := Self.TNfeSefazICMS61FromJsonValue(JValue);
     if Json.ObjContains(Source, 'ICMS70', JValue) then
       Result.ICMS70 := Self.TNfeSefazICMS70FromJsonValue(JValue);
     if Json.ObjContains(Source, 'ICMS90', JValue) then
@@ -32185,6 +32766,12 @@ begin
     Json.ObjAddProp(Result, 'vST', Self.DoubleToJsonValue(Source.vST));
     Json.ObjAddProp(Result, 'vFCPST', Self.DoubleToJsonValue(Source.vFCPST));
     Json.ObjAddProp(Result, 'vFCPSTRet', Self.DoubleToJsonValue(Source.vFCPSTRet));
+    if Source.vICMSMonoHasValue then
+      Json.ObjAddProp(Result, 'vICMSMono', Self.DoubleToJsonValue(Source.vICMSMono));
+    if Source.vICMSMonoRetenHasValue then
+      Json.ObjAddProp(Result, 'vICMSMonoReten', Self.DoubleToJsonValue(Source.vICMSMonoReten));
+    if Source.vICMSMonoRetHasValue then
+      Json.ObjAddProp(Result, 'vICMSMonoRet', Self.DoubleToJsonValue(Source.vICMSMonoRet));
     Json.ObjAddProp(Result, 'vProd', Self.DoubleToJsonValue(Source.vProd));
     Json.ObjAddProp(Result, 'vFrete', Self.DoubleToJsonValue(Source.vFrete));
     Json.ObjAddProp(Result, 'vSeg', Self.DoubleToJsonValue(Source.vSeg));
@@ -32249,6 +32836,12 @@ begin
       Result.vFCPST := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'vFCPSTRet', JValue) then
       Result.vFCPSTRet := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'vICMSMono', JValue) then
+      Result.vICMSMono := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'vICMSMonoReten', JValue) then
+      Result.vICMSMonoReten := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'vICMSMonoRet', JValue) then
+      Result.vICMSMonoRet := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'vProd', JValue) then
       Result.vProd := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'vFrete', JValue) then

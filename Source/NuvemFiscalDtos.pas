@@ -92,6 +92,8 @@ type
   TNfsePedidoEmissao = class;
   TNfseListagem = class;
   TNfsePedidoCancelamento = class;
+  TNfsePedidoSincronizacao = class;
+  TNfseSincronizacao = class;
   TContaCota = class;
   TContaCotaList = class;
   TContaCotaListagem = class;
@@ -372,15 +374,21 @@ type
   TNfeSefazArmaList = class;
   TNfeSefazCIDE = class;
   TNfeSefazEncerrante = class;
+  TNfeSefazOrigComb = class;
+  TNfeSefazOrigCombList = class;
   TNfeSefazComb = class;
   TNfeSefazProd = class;
   TNfeSefazICMS00 = class;
+  TNfeSefazICMS02 = class;
   TNfeSefazICMS10 = class;
+  TNfeSefazICMS15 = class;
   TNfeSefazICMS20 = class;
   TNfeSefazICMS30 = class;
   TNfeSefazICMS40 = class;
   TNfeSefazICMS51 = class;
+  TNfeSefazICMS53 = class;
   TNfeSefazICMS60 = class;
+  TNfeSefazICMS61 = class;
   TNfeSefazICMS70 = class;
   TNfeSefazICMS90 = class;
   TNfeSefazICMSPart = class;
@@ -3476,6 +3484,35 @@ type
     /// </summary>
     property motivo: string read Fmotivo write Setmotivo;
     property motivoHasValue: Boolean read FmotivoHasValue write FmotivoHasValue;
+  end;
+  
+  TNfsePedidoSincronizacao = class
+  private
+    Fidentificador: string;
+    FidentificadorHasValue: Boolean;
+    procedure Setidentificador(const Value: string);
+  public
+    /// <summary>
+    /// Identificador utilizado na consulta da situação atual da NFS-e.
+    /// 
+    /// O valor desse campo é opcional para as prefeituras que suportem consultas por número e série do RPS.
+    /// Para as demais, esse campo torna-se obrigatório e o seu valor pode ser a chave de acesso, número da NFS-e, chave de verificação, protocolo ou outro identificador da nota a depender da prefeitura.
+    /// </summary>
+    property identificador: string read Fidentificador write Setidentificador;
+    property identificadorHasValue: Boolean read FidentificadorHasValue write FidentificadorHasValue;
+  end;
+  
+  TNfseSincronizacao = class
+  private
+    Fstatus: string;
+    FstatusHasValue: Boolean;
+    procedure Setstatus(const Value: string);
+  public
+    /// <summary>
+    /// Situação atual da sincronização.
+    /// </summary>
+    property status: string read Fstatus write Setstatus;
+    property statusHasValue: Boolean read FstatusHasValue write FstatusHasValue;
   end;
   
   TContaCota = class
@@ -12581,6 +12618,33 @@ type
   end;
   
   /// <summary>
+  /// Grupo indicador da origem do combustível.
+  /// </summary>
+  TNfeSefazOrigComb = class
+  private
+    FindImport: Integer;
+    FcUFOrig: Integer;
+    FpOrig: Double;
+  public
+    /// <summary>
+    /// Indicador de importação 0=Nacional
+    /// * 1 - Importado
+    /// </summary>
+    property indImport: Integer read FindImport write FindImport;
+    /// <summary>
+    /// UF de origem do produtor ou do importado.
+    /// </summary>
+    property cUFOrig: Integer read FcUFOrig write FcUFOrig;
+    /// <summary>
+    /// Percentual originário para a UF.
+    /// </summary>
+    property pOrig: Double read FpOrig write FpOrig;
+  end;
+  
+  TNfeSefazOrigCombList = class(TObjectList<TNfeSefazOrigComb>)
+  end;
+  
+  /// <summary>
   /// Informar apenas para operações com combustíveis líquidos.
   /// </summary>
   TNfeSefazComb = class
@@ -12602,6 +12666,9 @@ type
     FUFCons: string;
     FCIDE: TNfeSefazCIDE;
     Fencerrante: TNfeSefazEncerrante;
+    FpBio: Double;
+    FpBioHasValue: Boolean;
+    ForigComb: TNfeSefazOrigCombList;
     procedure SetpGLP(const Value: Double);
     procedure SetpGNn(const Value: Double);
     procedure SetpGNi(const Value: Double);
@@ -12610,6 +12677,8 @@ type
     procedure SetqTemp(const Value: Double);
     procedure SetCIDE(const Value: TNfeSefazCIDE);
     procedure Setencerrante(const Value: TNfeSefazEncerrante);
+    procedure SetpBio(const Value: Double);
+    procedure SetorigComb(const Value: TNfeSefazOrigCombList);
   public
     destructor Destroy; override;
     /// <summary>
@@ -12662,6 +12731,12 @@ type
     property UFCons: string read FUFCons write FUFCons;
     property CIDE: TNfeSefazCIDE read FCIDE write SetCIDE;
     property encerrante: TNfeSefazEncerrante read Fencerrante write Setencerrante;
+    /// <summary>
+    /// Percentual do índice de mistura do Biodiesel (B100) no Óleo Diesel B instituído pelo órgão regulamentador.
+    /// </summary>
+    property pBio: Double read FpBio write SetpBio;
+    property pBioHasValue: Boolean read FpBioHasValue write FpBioHasValue;
+    property origComb: TNfeSefazOrigCombList read ForigComb write SetorigComb;
   end;
   
   /// <summary>
@@ -12963,6 +13038,44 @@ type
   end;
   
   /// <summary>
+  /// Tributação monofásica própria sobre combustíveis.
+  /// </summary>
+  TNfeSefazICMS02 = class
+  private
+    Forig: Integer;
+    FCST: string;
+    FadRemICMS: Double;
+    FvICMSMono: Double;
+  public
+    /// <summary>
+    /// Origem da mercadoria:
+    /// * 0 - Nacional, exceto as indicadas nos códigos 3, 4, 5 e 8;
+    /// * 1 - Estrangeira - Importação direta, exceto a indicada no código 6;
+    /// * 2 - Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7;
+    /// * 3 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40%% e inferior ou igual a 70%%;
+    /// * 4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam as legislações citadas nos Ajustes;
+    /// * 5 - Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%%;
+    /// * 6 - Estrangeira - Importação direta, sem similar nacional, constante em lista da CAMEX e gás natural;
+    /// * 7 - Estrangeira - Adquirida no mercado interno, sem similar nacional, constante lista CAMEX e gás natural;
+    /// * 8 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 70%%.
+    /// </summary>
+    property orig: Integer read Forig write Forig;
+    /// <summary>
+    /// Tributção pelo ICMS
+    /// * 02 - Tributação monofásica própria sobre combustíveis
+    /// </summary>
+    property CST: string read FCST write FCST;
+    /// <summary>
+    /// Alíquota ad rem do imposto.
+    /// </summary>
+    property adRemICMS: Double read FadRemICMS write FadRemICMS;
+    /// <summary>
+    /// Valor do ICMS própri.
+    /// </summary>
+    property vICMSMono: Double read FvICMSMono write FvICMSMono;
+  end;
+  
+  /// <summary>
   /// Tributação pelo ICMS
   /// * 10 - Tributada e com cobrança do ICMS por substituição tributária
   /// </summary>
@@ -13121,6 +13234,54 @@ type
     /// </summary>
     property motDesICMSST: Integer read FmotDesICMSST write SetmotDesICMSST;
     property motDesICMSSTHasValue: Boolean read FmotDesICMSSTHasValue write FmotDesICMSSTHasValue;
+  end;
+  
+  /// <summary>
+  /// Tributação monofásica própria e com responsabilidade pela retenção sobre combustíveis.
+  /// </summary>
+  TNfeSefazICMS15 = class
+  private
+    Forig: Integer;
+    FCST: string;
+    FadRemICMS: Double;
+    FvICMSMono: Double;
+    FadRemICMSReten: Double;
+    FvICMSMonoReten: Double;
+  public
+    /// <summary>
+    /// Origem da mercadoria:
+    /// * 0 - Nacional, exceto as indicadas nos códigos 3, 4, 5 e 8;
+    /// * 1 - Estrangeira - Importação direta, exceto a indicada no código 6;
+    /// * 2 - Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7;
+    /// * 3 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40%% e inferior ou igual a 70%%;
+    /// * 4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam as legislações citadas nos Ajustes;
+    /// * 5 - Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%%;
+    /// * 6 - Estrangeira - Importação direta, sem similar nacional, constante em lista da CAMEX e gás natural;
+    /// * 7 - Estrangeira - Adquirida no mercado interno, sem similar nacional, constante lista CAMEX e gás natural;
+    /// * 8 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 70%%.
+    /// </summary>
+    property orig: Integer read Forig write Forig;
+    /// <summary>
+    /// Tributção pelo ICMS
+    /// * 15 - Tributação monofásica própria e com responsabilidade pela retenção sobre combustíveis
+    /// </summary>
+    property CST: string read FCST write FCST;
+    /// <summary>
+    /// Alíquota ad rem do imposto.
+    /// </summary>
+    property adRemICMS: Double read FadRemICMS write FadRemICMS;
+    /// <summary>
+    /// Valor do ICMS próprio.
+    /// </summary>
+    property vICMSMono: Double read FvICMSMono write FvICMSMono;
+    /// <summary>
+    /// Alíquota ad rem do imposto com retenção.
+    /// </summary>
+    property adRemICMSReten: Double read FadRemICMSReten write FadRemICMSReten;
+    /// <summary>
+    /// Valor do ICMS com retenção.
+    /// </summary>
+    property vICMSMonoReten: Double read FvICMSMonoReten write FvICMSMonoReten;
   end;
   
   /// <summary>
@@ -13547,6 +13708,44 @@ type
   end;
   
   /// <summary>
+  /// Tributação monofásica sobre combustíveis com recolhimento diferido.
+  /// </summary>
+  TNfeSefazICMS53 = class
+  private
+    Forig: Integer;
+    FCST: string;
+    FadRemICMSDif: Double;
+    FvICMSMonoDif: Double;
+  public
+    /// <summary>
+    /// Origem da mercadoria:
+    /// * 0 - Nacional, exceto as indicadas nos códigos 3, 4, 5 e 8;
+    /// * 1 - Estrangeira - Importação direta, exceto a indicada no código 6;
+    /// * 2 - Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7;
+    /// * 3 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40%% e inferior ou igual a 70%%;
+    /// * 4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam as legislações citadas nos Ajustes;
+    /// * 5 - Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%%;
+    /// * 6 - Estrangeira - Importação direta, sem similar nacional, constante em lista da CAMEX e gás natural;
+    /// * 7 - Estrangeira - Adquirida no mercado interno, sem similar nacional, constante lista CAMEX e gás natural;
+    /// * 8 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 70%%.
+    /// </summary>
+    property orig: Integer read Forig write Forig;
+    /// <summary>
+    /// Tributção pelo ICMS
+    /// * 53 - Tributação monofásica sobre combustíveis com recolhimento diferido
+    /// </summary>
+    property CST: string read FCST write FCST;
+    /// <summary>
+    /// Alíquota ad rem do imposto diferido.
+    /// </summary>
+    property adRemICMSDif: Double read FadRemICMSDif write FadRemICMSDif;
+    /// <summary>
+    /// Valor do ICMS diferido.
+    /// </summary>
+    property vICMSMonoDif: Double read FvICMSMonoDif write FvICMSMonoDif;
+  end;
+  
+  /// <summary>
   /// Tributação pelo ICMS
   /// * 60 - ICMS cobrado anteriormente por substituição tributária
   /// </summary>
@@ -13661,6 +13860,44 @@ type
     /// </summary>
     property vICMSEfet: Double read FvICMSEfet write SetvICMSEfet;
     property vICMSEfetHasValue: Boolean read FvICMSEfetHasValue write FvICMSEfetHasValue;
+  end;
+  
+  /// <summary>
+  /// Tributação monofásica sobre combustíveis cobrada anteriormente.
+  /// </summary>
+  TNfeSefazICMS61 = class
+  private
+    Forig: Integer;
+    FCST: string;
+    FadRemICMSRet: Double;
+    FvICMSMonoRet: Double;
+  public
+    /// <summary>
+    /// Origem da mercadoria:
+    /// * 0 - Nacional, exceto as indicadas nos códigos 3, 4, 5 e 8;
+    /// * 1 - Estrangeira - Importação direta, exceto a indicada no código 6;
+    /// * 2 - Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7;
+    /// * 3 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40%% e inferior ou igual a 70%%;
+    /// * 4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam as legislações citadas nos Ajustes;
+    /// * 5 - Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%%;
+    /// * 6 - Estrangeira - Importação direta, sem similar nacional, constante em lista da CAMEX e gás natural;
+    /// * 7 - Estrangeira - Adquirida no mercado interno, sem similar nacional, constante lista CAMEX e gás natural;
+    /// * 8 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 70%%.
+    /// </summary>
+    property orig: Integer read Forig write Forig;
+    /// <summary>
+    /// Tributção pelo ICMS
+    /// * 61 - Tributação monofásica sobre combustíveis cobrada anteriormente
+    /// </summary>
+    property CST: string read FCST write FCST;
+    /// <summary>
+    /// Alíquota ad rem do imposto retido anteriormen.
+    /// </summary>
+    property adRemICMSRet: Double read FadRemICMSRet write FadRemICMSRet;
+    /// <summary>
+    /// Valor do ICMS retido anteriormente.
+    /// </summary>
+    property vICMSMonoRet: Double read FvICMSMonoRet write FvICMSMonoRet;
   end;
   
   /// <summary>
@@ -14874,12 +15111,16 @@ type
   TNfeSefazICMS = class
   private
     FICMS00: TNfeSefazICMS00;
+    FICMS02: TNfeSefazICMS02;
     FICMS10: TNfeSefazICMS10;
+    FICMS15: TNfeSefazICMS15;
     FICMS20: TNfeSefazICMS20;
     FICMS30: TNfeSefazICMS30;
     FICMS40: TNfeSefazICMS40;
     FICMS51: TNfeSefazICMS51;
+    FICMS53: TNfeSefazICMS53;
     FICMS60: TNfeSefazICMS60;
+    FICMS61: TNfeSefazICMS61;
     FICMS70: TNfeSefazICMS70;
     FICMS90: TNfeSefazICMS90;
     FICMSPart: TNfeSefazICMSPart;
@@ -14891,12 +15132,16 @@ type
     FICMSSN500: TNfeSefazICMSSN500;
     FICMSSN900: TNfeSefazICMSSN900;
     procedure SetICMS00(const Value: TNfeSefazICMS00);
+    procedure SetICMS02(const Value: TNfeSefazICMS02);
     procedure SetICMS10(const Value: TNfeSefazICMS10);
+    procedure SetICMS15(const Value: TNfeSefazICMS15);
     procedure SetICMS20(const Value: TNfeSefazICMS20);
     procedure SetICMS30(const Value: TNfeSefazICMS30);
     procedure SetICMS40(const Value: TNfeSefazICMS40);
     procedure SetICMS51(const Value: TNfeSefazICMS51);
+    procedure SetICMS53(const Value: TNfeSefazICMS53);
     procedure SetICMS60(const Value: TNfeSefazICMS60);
+    procedure SetICMS61(const Value: TNfeSefazICMS61);
     procedure SetICMS70(const Value: TNfeSefazICMS70);
     procedure SetICMS90(const Value: TNfeSefazICMS90);
     procedure SetICMSPart(const Value: TNfeSefazICMSPart);
@@ -14910,12 +15155,16 @@ type
   public
     destructor Destroy; override;
     property ICMS00: TNfeSefazICMS00 read FICMS00 write SetICMS00;
+    property ICMS02: TNfeSefazICMS02 read FICMS02 write SetICMS02;
     property ICMS10: TNfeSefazICMS10 read FICMS10 write SetICMS10;
+    property ICMS15: TNfeSefazICMS15 read FICMS15 write SetICMS15;
     property ICMS20: TNfeSefazICMS20 read FICMS20 write SetICMS20;
     property ICMS30: TNfeSefazICMS30 read FICMS30 write SetICMS30;
     property ICMS40: TNfeSefazICMS40 read FICMS40 write SetICMS40;
     property ICMS51: TNfeSefazICMS51 read FICMS51 write SetICMS51;
+    property ICMS53: TNfeSefazICMS53 read FICMS53 write SetICMS53;
     property ICMS60: TNfeSefazICMS60 read FICMS60 write SetICMS60;
+    property ICMS61: TNfeSefazICMS61 read FICMS61 write SetICMS61;
     property ICMS70: TNfeSefazICMS70 read FICMS70 write SetICMS70;
     property ICMS90: TNfeSefazICMS90 read FICMS90 write SetICMS90;
     property ICMSPart: TNfeSefazICMSPart read FICMSPart write SetICMSPart;
@@ -15910,6 +16159,12 @@ type
     FvST: Double;
     FvFCPST: Double;
     FvFCPSTRet: Double;
+    FvICMSMono: Double;
+    FvICMSMonoHasValue: Boolean;
+    FvICMSMonoReten: Double;
+    FvICMSMonoRetenHasValue: Boolean;
+    FvICMSMonoRet: Double;
+    FvICMSMonoRetHasValue: Boolean;
     FvProd: Double;
     FvFrete: Double;
     FvSeg: Double;
@@ -15926,6 +16181,9 @@ type
     procedure SetvFCPUFDest(const Value: Double);
     procedure SetvICMSUFDest(const Value: Double);
     procedure SetvICMSUFRemet(const Value: Double);
+    procedure SetvICMSMono(const Value: Double);
+    procedure SetvICMSMonoReten(const Value: Double);
+    procedure SetvICMSMonoRet(const Value: Double);
     procedure SetvTotTrib(const Value: Double);
   public
     /// <summary>
@@ -15975,6 +16233,21 @@ type
     /// Valor Total do FCP (Fundo de Combate à Pobreza) retido anteriormente por substituição tributária.
     /// </summary>
     property vFCPSTRet: Double read FvFCPSTRet write FvFCPSTRet;
+    /// <summary>
+    /// Valor total do ICMS monofásico próprio.
+    /// </summary>
+    property vICMSMono: Double read FvICMSMono write SetvICMSMono;
+    property vICMSMonoHasValue: Boolean read FvICMSMonoHasValue write FvICMSMonoHasValue;
+    /// <summary>
+    /// Valor total do ICMS monofásico sujeito a retenção.
+    /// </summary>
+    property vICMSMonoReten: Double read FvICMSMonoReten write SetvICMSMonoReten;
+    property vICMSMonoRetenHasValue: Boolean read FvICMSMonoRetenHasValue write FvICMSMonoRetenHasValue;
+    /// <summary>
+    /// Valor do ICMS monofásico retido anteriormente.
+    /// </summary>
+    property vICMSMonoRet: Double read FvICMSMonoRet write SetvICMSMonoRet;
+    property vICMSMonoRetHasValue: Boolean read FvICMSMonoRetHasValue write FvICMSMonoRetHasValue;
     /// <summary>
     /// Valor Total dos produtos e serviços.
     /// </summary>
@@ -17353,6 +17626,9 @@ type
     procedure Setdata_recebimento(const Value: TDateTime);
     procedure Setchave(const Value: string);
   public
+    /// <summary>
+    /// Situação atual da sincronização.
+    /// </summary>
     property status: string read Fstatus write Setstatus;
     property statusHasValue: Boolean read FstatusHasValue write FstatusHasValue;
     /// <summary>
@@ -20354,6 +20630,22 @@ procedure TNfsePedidoCancelamento.Setmotivo(const Value: string);
 begin
   Fmotivo := Value;
   FmotivoHasValue := True;
+end;
+
+{ TNfsePedidoSincronizacao }
+
+procedure TNfsePedidoSincronizacao.Setidentificador(const Value: string);
+begin
+  Fidentificador := Value;
+  FidentificadorHasValue := True;
+end;
+
+{ TNfseSincronizacao }
+
+procedure TNfseSincronizacao.Setstatus(const Value: string);
+begin
+  Fstatus := Value;
+  FstatusHasValue := True;
 end;
 
 { TContaCota }
@@ -26175,6 +26467,7 @@ end;
 
 destructor TNfeSefazComb.Destroy;
 begin
+  ForigComb.Free;
   Fencerrante.Free;
   FCIDE.Free;
   inherited;
@@ -26231,6 +26524,21 @@ begin
   begin
     Fencerrante.Free;
     Fencerrante := Value;
+  end;
+end;
+
+procedure TNfeSefazComb.SetpBio(const Value: Double);
+begin
+  FpBio := Value;
+  FpBioHasValue := True;
+end;
+
+procedure TNfeSefazComb.SetorigComb(const Value: TNfeSefazOrigCombList);
+begin
+  if Value <> ForigComb then
+  begin
+    ForigComb.Free;
+    ForigComb := Value;
   end;
 end;
 
@@ -27291,12 +27599,16 @@ begin
   FICMSPart.Free;
   FICMS90.Free;
   FICMS70.Free;
+  FICMS61.Free;
   FICMS60.Free;
+  FICMS53.Free;
   FICMS51.Free;
   FICMS40.Free;
   FICMS30.Free;
   FICMS20.Free;
+  FICMS15.Free;
   FICMS10.Free;
+  FICMS02.Free;
   FICMS00.Free;
   inherited;
 end;
@@ -27310,12 +27622,30 @@ begin
   end;
 end;
 
+procedure TNfeSefazICMS.SetICMS02(const Value: TNfeSefazICMS02);
+begin
+  if Value <> FICMS02 then
+  begin
+    FICMS02.Free;
+    FICMS02 := Value;
+  end;
+end;
+
 procedure TNfeSefazICMS.SetICMS10(const Value: TNfeSefazICMS10);
 begin
   if Value <> FICMS10 then
   begin
     FICMS10.Free;
     FICMS10 := Value;
+  end;
+end;
+
+procedure TNfeSefazICMS.SetICMS15(const Value: TNfeSefazICMS15);
+begin
+  if Value <> FICMS15 then
+  begin
+    FICMS15.Free;
+    FICMS15 := Value;
   end;
 end;
 
@@ -27355,12 +27685,30 @@ begin
   end;
 end;
 
+procedure TNfeSefazICMS.SetICMS53(const Value: TNfeSefazICMS53);
+begin
+  if Value <> FICMS53 then
+  begin
+    FICMS53.Free;
+    FICMS53 := Value;
+  end;
+end;
+
 procedure TNfeSefazICMS.SetICMS60(const Value: TNfeSefazICMS60);
 begin
   if Value <> FICMS60 then
   begin
     FICMS60.Free;
     FICMS60 := Value;
+  end;
+end;
+
+procedure TNfeSefazICMS.SetICMS61(const Value: TNfeSefazICMS61);
+begin
+  if Value <> FICMS61 then
+  begin
+    FICMS61.Free;
+    FICMS61 := Value;
   end;
 end;
 
@@ -28070,6 +28418,24 @@ procedure TNfeSefazICMSTot.SetvICMSUFRemet(const Value: Double);
 begin
   FvICMSUFRemet := Value;
   FvICMSUFRemetHasValue := True;
+end;
+
+procedure TNfeSefazICMSTot.SetvICMSMono(const Value: Double);
+begin
+  FvICMSMono := Value;
+  FvICMSMonoHasValue := True;
+end;
+
+procedure TNfeSefazICMSTot.SetvICMSMonoReten(const Value: Double);
+begin
+  FvICMSMonoReten := Value;
+  FvICMSMonoRetenHasValue := True;
+end;
+
+procedure TNfeSefazICMSTot.SetvICMSMonoRet(const Value: Double);
+begin
+  FvICMSMonoRet := Value;
+  FvICMSMonoRetHasValue := True;
 end;
 
 procedure TNfeSefazICMSTot.SetvTotTrib(const Value: Double);
