@@ -329,6 +329,9 @@ type
   TMdfeSefazInfAdic = class;
   TMdfeSefazRespTec = class;
   TMdfeSefazInfSolicNFF = class;
+  TMdfeSefazRSAKeyValueType = class;
+  TMdfeSefazPAASignature = class;
+  TMdfeSefazInfPAA = class;
   TMdfeSefazInfMDFe = class;
   TMdfeSefazInfMDFeSupl = class;
   TMdfePedidoEmissao = class;
@@ -852,6 +855,7 @@ type
     /// A série dos RPS varia de acordo com cada prefeitura, podendo ser
     /// número (1, 2 ou 3, por exemplo) ou letras (A, S, NFS, por exemplo).
     /// Portanto, consulte-a com o município da empresa antes de iniciar a
+    /// emissão das notas.
     /// </summary>
     property serie: string read Fserie write Fserie;
     /// <summary>
@@ -7370,6 +7374,13 @@ type
     /// </summary>
     property created_at: TDateTime read Fcreated_at write Setcreated_at;
     property created_atHasValue: Boolean read Fcreated_atHasValue write Fcreated_atHasValue;
+    /// <summary>
+    /// * `pendente`: o pedido de emissão do documento foi recebido pela Nuvem Fiscal e está na fila de processamento.
+    /// * `autorizado`, `rejeitado` ou `denegado`: o documento foi transmitido para a SEFAZ, que retornou um desses status.
+    /// * `cancelado`: um evento de cancelamento foi homologado pela SEFAZ e associado ao documento.
+    /// * `encerrado`: um evento de encerramento foi homologado pela SEFAZ e associado a um MDF-e.
+    /// * `erro`: status próprio da Nuvem Fiscal que significa, na maioria das vezes, que houve algum erro que impediu a transmissão do documento para a SEFAZ (erros de validação, erros interno do servidor, timeouts, etc).
+    /// </summary>
     property status: string read Fstatus write Setstatus;
     property statusHasValue: Boolean read FstatusHasValue write FstatusHasValue;
     /// <summary>
@@ -10482,6 +10493,61 @@ type
   end;
   
   /// <summary>
+  /// Chave Publica no padrão XML RSA Key.
+  /// </summary>
+  TMdfeSefazRSAKeyValueType = class
+  private
+    FModulus: string;
+    FModulusHasValue: Boolean;
+    FExponent: string;
+    FExponentHasValue: Boolean;
+    procedure SetModulus(const Value: string);
+    procedure SetExponent(const Value: string);
+  public
+    property Modulus: string read FModulus write SetModulus;
+    property ModulusHasValue: Boolean read FModulusHasValue write FModulusHasValue;
+    property Exponent: string read FExponent write SetExponent;
+    property ExponentHasValue: Boolean read FExponentHasValue write FExponentHasValue;
+  end;
+  
+  /// <summary>
+  /// Assinatura RSA do Emitente para DFe gerados por PAA.
+  /// </summary>
+  TMdfeSefazPAASignature = class
+  private
+    FSignatureValue: string;
+    FRSAKeyValue: TMdfeSefazRSAKeyValueType;
+    procedure SetRSAKeyValue(const Value: TMdfeSefazRSAKeyValueType);
+  public
+    constructor Create;
+    destructor Destroy; override;
+    /// <summary>
+    /// Assinatura digital padrão RSA.
+    /// Converter o atributo Id do DFe para array de bytes e assinar com a chave privada do RSA com algoritmo SHA1 gerando um valor no formato base64.
+    /// </summary>
+    property SignatureValue: string read FSignatureValue write FSignatureValue;
+    property RSAKeyValue: TMdfeSefazRSAKeyValueType read FRSAKeyValue write SetRSAKeyValue;
+  end;
+  
+  /// <summary>
+  /// Grupo de Informação do Provedor de Assinatura e Autorização.
+  /// </summary>
+  TMdfeSefazInfPAA = class
+  private
+    FCNPJPAA: string;
+    FPAASignature: TMdfeSefazPAASignature;
+    procedure SetPAASignature(const Value: TMdfeSefazPAASignature);
+  public
+    constructor Create;
+    destructor Destroy; override;
+    /// <summary>
+    /// CNPJ do Provedor de Assinatura e Autorização.
+    /// </summary>
+    property CNPJPAA: string read FCNPJPAA write FCNPJPAA;
+    property PAASignature: TMdfeSefazPAASignature read FPAASignature write SetPAASignature;
+  end;
+  
+  /// <summary>
   /// Informações do MDF-e.
   /// </summary>
   TMdfeSefazInfMDFe = class
@@ -10501,6 +10567,7 @@ type
     FinfAdic: TMdfeSefazInfAdic;
     FinfRespTec: TMdfeSefazRespTec;
     FinfSolicNFF: TMdfeSefazInfSolicNFF;
+    FinfPAA: TMdfeSefazInfPAA;
     procedure SetId(const Value: string);
     procedure Setide(const Value: TMdfeSefazIde);
     procedure Setemit(const Value: TMdfeSefazEmit);
@@ -10514,6 +10581,7 @@ type
     procedure SetinfAdic(const Value: TMdfeSefazInfAdic);
     procedure SetinfRespTec(const Value: TMdfeSefazRespTec);
     procedure SetinfSolicNFF(const Value: TMdfeSefazInfSolicNFF);
+    procedure SetinfPAA(const Value: TMdfeSefazInfPAA);
   public
     constructor Create;
     destructor Destroy; override;
@@ -10540,6 +10608,7 @@ type
     property infAdic: TMdfeSefazInfAdic read FinfAdic write SetinfAdic;
     property infRespTec: TMdfeSefazRespTec read FinfRespTec write SetinfRespTec;
     property infSolicNFF: TMdfeSefazInfSolicNFF read FinfSolicNFF write SetinfSolicNFF;
+    property infPAA: TMdfeSefazInfPAA read FinfPAA write SetinfPAA;
   end;
   
   /// <summary>
@@ -13044,8 +13113,11 @@ type
   private
     Forig: Integer;
     FCST: string;
+    FqBCMono: Double;
+    FqBCMonoHasValue: Boolean;
     FadRemICMS: Double;
     FvICMSMono: Double;
+    procedure SetqBCMono(const Value: Double);
   public
     /// <summary>
     /// Origem da mercadoria:
@@ -13065,6 +13137,11 @@ type
     /// * 02 - Tributação monofásica própria sobre combustíveis
     /// </summary>
     property CST: string read FCST write FCST;
+    /// <summary>
+    /// Quantidade tributada.
+    /// </summary>
+    property qBCMono: Double read FqBCMono write SetqBCMono;
+    property qBCMonoHasValue: Boolean read FqBCMonoHasValue write FqBCMonoHasValue;
     /// <summary>
     /// Alíquota ad rem do imposto.
     /// </summary>
@@ -13243,10 +13320,22 @@ type
   private
     Forig: Integer;
     FCST: string;
+    FqBCMono: Double;
+    FqBCMonoHasValue: Boolean;
     FadRemICMS: Double;
     FvICMSMono: Double;
+    FqBCMonoReten: Double;
+    FqBCMonoRetenHasValue: Boolean;
     FadRemICMSReten: Double;
     FvICMSMonoReten: Double;
+    FpRedAdRem: Double;
+    FpRedAdRemHasValue: Boolean;
+    FmotRedAdRem: Integer;
+    FmotRedAdRemHasValue: Boolean;
+    procedure SetqBCMono(const Value: Double);
+    procedure SetqBCMonoReten(const Value: Double);
+    procedure SetpRedAdRem(const Value: Double);
+    procedure SetmotRedAdRem(const Value: Integer);
   public
     /// <summary>
     /// Origem da mercadoria:
@@ -13267,6 +13356,11 @@ type
     /// </summary>
     property CST: string read FCST write FCST;
     /// <summary>
+    /// Quantidade tributada.
+    /// </summary>
+    property qBCMono: Double read FqBCMono write SetqBCMono;
+    property qBCMonoHasValue: Boolean read FqBCMonoHasValue write FqBCMonoHasValue;
+    /// <summary>
     /// Alíquota ad rem do imposto.
     /// </summary>
     property adRemICMS: Double read FadRemICMS write FadRemICMS;
@@ -13275,6 +13369,11 @@ type
     /// </summary>
     property vICMSMono: Double read FvICMSMono write FvICMSMono;
     /// <summary>
+    /// Quantidade tributada sujeita a retenção.
+    /// </summary>
+    property qBCMonoReten: Double read FqBCMonoReten write SetqBCMonoReten;
+    property qBCMonoRetenHasValue: Boolean read FqBCMonoRetenHasValue write FqBCMonoRetenHasValue;
+    /// <summary>
     /// Alíquota ad rem do imposto com retenção.
     /// </summary>
     property adRemICMSReten: Double read FadRemICMSReten write FadRemICMSReten;
@@ -13282,6 +13381,18 @@ type
     /// Valor do ICMS com retenção.
     /// </summary>
     property vICMSMonoReten: Double read FvICMSMonoReten write FvICMSMonoReten;
+    /// <summary>
+    /// Percentual de redução do valor da alíquota ad rem do ICMS.
+    /// </summary>
+    property pRedAdRem: Double read FpRedAdRem write SetpRedAdRem;
+    property pRedAdRemHasValue: Boolean read FpRedAdRemHasValue write FpRedAdRemHasValue;
+    /// <summary>
+    /// Motivo da redução do adrem
+    /// * 1 - Transporte coletivo de passageiros
+    /// * 9 - Outros
+    /// </summary>
+    property motRedAdRem: Integer read FmotRedAdRem write SetmotRedAdRem;
+    property motRedAdRemHasValue: Boolean read FmotRedAdRemHasValue write FmotRedAdRemHasValue;
   end;
   
   /// <summary>
@@ -13714,8 +13825,30 @@ type
   private
     Forig: Integer;
     FCST: string;
-    FadRemICMSDif: Double;
+    FqBCMono: Double;
+    FqBCMonoHasValue: Boolean;
+    FadRemICMS: Double;
+    FadRemICMSHasValue: Boolean;
+    FvICMSMonoOp: Double;
+    FvICMSMonoOpHasValue: Boolean;
+    FpDif: Double;
+    FpDifHasValue: Boolean;
     FvICMSMonoDif: Double;
+    FvICMSMonoDifHasValue: Boolean;
+    FvICMSMono: Double;
+    FvICMSMonoHasValue: Boolean;
+    FqBCMonoDif: Double;
+    FqBCMonoDifHasValue: Boolean;
+    FadRemICMSDif: Double;
+    FadRemICMSDifHasValue: Boolean;
+    procedure SetqBCMono(const Value: Double);
+    procedure SetadRemICMS(const Value: Double);
+    procedure SetvICMSMonoOp(const Value: Double);
+    procedure SetpDif(const Value: Double);
+    procedure SetvICMSMonoDif(const Value: Double);
+    procedure SetvICMSMono(const Value: Double);
+    procedure SetqBCMonoDif(const Value: Double);
+    procedure SetadRemICMSDif(const Value: Double);
   public
     /// <summary>
     /// Origem da mercadoria:
@@ -13736,13 +13869,47 @@ type
     /// </summary>
     property CST: string read FCST write FCST;
     /// <summary>
-    /// Alíquota ad rem do imposto diferido.
+    /// Quantidade tributada.
     /// </summary>
-    property adRemICMSDif: Double read FadRemICMSDif write FadRemICMSDif;
+    property qBCMono: Double read FqBCMono write SetqBCMono;
+    property qBCMonoHasValue: Boolean read FqBCMonoHasValue write FqBCMonoHasValue;
+    /// <summary>
+    /// Alíquota ad rem do imposto.
+    /// </summary>
+    property adRemICMS: Double read FadRemICMS write SetadRemICMS;
+    property adRemICMSHasValue: Boolean read FadRemICMSHasValue write FadRemICMSHasValue;
+    /// <summary>
+    /// Valor do ICMS da operação.
+    /// </summary>
+    property vICMSMonoOp: Double read FvICMSMonoOp write SetvICMSMonoOp;
+    property vICMSMonoOpHasValue: Boolean read FvICMSMonoOpHasValue write FvICMSMonoOpHasValue;
+    /// <summary>
+    /// Percentual do diferemento.
+    /// </summary>
+    property pDif: Double read FpDif write SetpDif;
+    property pDifHasValue: Boolean read FpDifHasValue write FpDifHasValue;
     /// <summary>
     /// Valor do ICMS diferido.
     /// </summary>
-    property vICMSMonoDif: Double read FvICMSMonoDif write FvICMSMonoDif;
+    property vICMSMonoDif: Double read FvICMSMonoDif write SetvICMSMonoDif;
+    property vICMSMonoDifHasValue: Boolean read FvICMSMonoDifHasValue write FvICMSMonoDifHasValue;
+    /// <summary>
+    /// Valor do ICMS próprio devido.
+    /// </summary>
+    property vICMSMono: Double read FvICMSMono write SetvICMSMono;
+    property vICMSMonoHasValue: Boolean read FvICMSMonoHasValue write FvICMSMonoHasValue;
+    /// <summary>
+    /// Quantidade tributada diferida.
+    /// OBS: Campo revogado pela NT2023.001v1.20
+    /// </summary>
+    property qBCMonoDif: Double read FqBCMonoDif write SetqBCMonoDif;
+    property qBCMonoDifHasValue: Boolean read FqBCMonoDifHasValue write FqBCMonoDifHasValue;
+    /// <summary>
+    /// Alíquota ad rem do imposto diferido.
+    /// OBS: Campo revogado pela NT2023.001v1.20
+    /// </summary>
+    property adRemICMSDif: Double read FadRemICMSDif write SetadRemICMSDif;
+    property adRemICMSDifHasValue: Boolean read FadRemICMSDifHasValue write FadRemICMSDifHasValue;
   end;
   
   /// <summary>
@@ -13869,8 +14036,11 @@ type
   private
     Forig: Integer;
     FCST: string;
+    FqBCMonoRet: Double;
+    FqBCMonoRetHasValue: Boolean;
     FadRemICMSRet: Double;
     FvICMSMonoRet: Double;
+    procedure SetqBCMonoRet(const Value: Double);
   public
     /// <summary>
     /// Origem da mercadoria:
@@ -13891,7 +14061,12 @@ type
     /// </summary>
     property CST: string read FCST write FCST;
     /// <summary>
-    /// Alíquota ad rem do imposto retido anteriormen.
+    /// Quantidade tributada retida anteriormente.
+    /// </summary>
+    property qBCMonoRet: Double read FqBCMonoRet write SetqBCMonoRet;
+    property qBCMonoRetHasValue: Boolean read FqBCMonoRetHasValue write FqBCMonoRetHasValue;
+    /// <summary>
+    /// Alíquota ad rem do imposto retido anteriormente.
     /// </summary>
     property adRemICMSRet: Double read FadRemICMSRet write FadRemICMSRet;
     /// <summary>
@@ -16159,10 +16334,16 @@ type
     FvST: Double;
     FvFCPST: Double;
     FvFCPSTRet: Double;
+    FqBCMono: Double;
+    FqBCMonoHasValue: Boolean;
     FvICMSMono: Double;
     FvICMSMonoHasValue: Boolean;
+    FqBCMonoReten: Double;
+    FqBCMonoRetenHasValue: Boolean;
     FvICMSMonoReten: Double;
     FvICMSMonoRetenHasValue: Boolean;
+    FqBCMonoRet: Double;
+    FqBCMonoRetHasValue: Boolean;
     FvICMSMonoRet: Double;
     FvICMSMonoRetHasValue: Boolean;
     FvProd: Double;
@@ -16181,8 +16362,11 @@ type
     procedure SetvFCPUFDest(const Value: Double);
     procedure SetvICMSUFDest(const Value: Double);
     procedure SetvICMSUFRemet(const Value: Double);
+    procedure SetqBCMono(const Value: Double);
     procedure SetvICMSMono(const Value: Double);
+    procedure SetqBCMonoReten(const Value: Double);
     procedure SetvICMSMonoReten(const Value: Double);
+    procedure SetqBCMonoRet(const Value: Double);
     procedure SetvICMSMonoRet(const Value: Double);
     procedure SetvTotTrib(const Value: Double);
   public
@@ -16234,15 +16418,30 @@ type
     /// </summary>
     property vFCPSTRet: Double read FvFCPSTRet write FvFCPSTRet;
     /// <summary>
+    /// Valor total da quantidade tributada do ICMS monofásico próprio.
+    /// </summary>
+    property qBCMono: Double read FqBCMono write SetqBCMono;
+    property qBCMonoHasValue: Boolean read FqBCMonoHasValue write FqBCMonoHasValue;
+    /// <summary>
     /// Valor total do ICMS monofásico próprio.
     /// </summary>
     property vICMSMono: Double read FvICMSMono write SetvICMSMono;
     property vICMSMonoHasValue: Boolean read FvICMSMonoHasValue write FvICMSMonoHasValue;
     /// <summary>
+    /// Valor total da quantidade tributada do ICMS monofásico sujeito a retenção.
+    /// </summary>
+    property qBCMonoReten: Double read FqBCMonoReten write SetqBCMonoReten;
+    property qBCMonoRetenHasValue: Boolean read FqBCMonoRetenHasValue write FqBCMonoRetenHasValue;
+    /// <summary>
     /// Valor total do ICMS monofásico sujeito a retenção.
     /// </summary>
     property vICMSMonoReten: Double read FvICMSMonoReten write SetvICMSMonoReten;
     property vICMSMonoRetenHasValue: Boolean read FvICMSMonoRetenHasValue write FvICMSMonoRetenHasValue;
+    /// <summary>
+    /// Valor total da quantidade tributada do ICMS monofásico retido anteriormente.
+    /// </summary>
+    property qBCMonoRet: Double read FqBCMonoRet write SetqBCMonoRet;
+    property qBCMonoRetHasValue: Boolean read FqBCMonoRetHasValue write FqBCMonoRetHasValue;
     /// <summary>
     /// Valor do ICMS monofásico retido anteriormente.
     /// </summary>
@@ -25256,6 +25455,66 @@ begin
   FhashCSRTHasValue := True;
 end;
 
+{ TMdfeSefazRSAKeyValueType }
+
+procedure TMdfeSefazRSAKeyValueType.SetModulus(const Value: string);
+begin
+  FModulus := Value;
+  FModulusHasValue := True;
+end;
+
+procedure TMdfeSefazRSAKeyValueType.SetExponent(const Value: string);
+begin
+  FExponent := Value;
+  FExponentHasValue := True;
+end;
+
+{ TMdfeSefazPAASignature }
+
+constructor TMdfeSefazPAASignature.Create;
+begin
+  inherited;
+  FRSAKeyValue := TMdfeSefazRSAKeyValueType.Create;
+end;
+
+destructor TMdfeSefazPAASignature.Destroy;
+begin
+  FRSAKeyValue.Free;
+  inherited;
+end;
+
+procedure TMdfeSefazPAASignature.SetRSAKeyValue(const Value: TMdfeSefazRSAKeyValueType);
+begin
+  if Value <> FRSAKeyValue then
+  begin
+    FRSAKeyValue.Free;
+    FRSAKeyValue := Value;
+  end;
+end;
+
+{ TMdfeSefazInfPAA }
+
+constructor TMdfeSefazInfPAA.Create;
+begin
+  inherited;
+  FPAASignature := TMdfeSefazPAASignature.Create;
+end;
+
+destructor TMdfeSefazInfPAA.Destroy;
+begin
+  FPAASignature.Free;
+  inherited;
+end;
+
+procedure TMdfeSefazInfPAA.SetPAASignature(const Value: TMdfeSefazPAASignature);
+begin
+  if Value <> FPAASignature then
+  begin
+    FPAASignature.Free;
+    FPAASignature := Value;
+  end;
+end;
+
 { TMdfeSefazInfMDFe }
 
 constructor TMdfeSefazInfMDFe.Create;
@@ -25270,6 +25529,7 @@ end;
 
 destructor TMdfeSefazInfMDFe.Destroy;
 begin
+  FinfPAA.Free;
   FinfSolicNFF.Free;
   FinfRespTec.Free;
   FinfAdic.Free;
@@ -25396,6 +25656,15 @@ begin
   begin
     FinfSolicNFF.Free;
     FinfSolicNFF := Value;
+  end;
+end;
+
+procedure TMdfeSefazInfMDFe.SetinfPAA(const Value: TMdfeSefazInfPAA);
+begin
+  if Value <> FinfPAA then
+  begin
+    FinfPAA.Free;
+    FinfPAA := Value;
   end;
 end;
 
@@ -26753,6 +27022,14 @@ begin
   FvFCPHasValue := True;
 end;
 
+{ TNfeSefazICMS02 }
+
+procedure TNfeSefazICMS02.SetqBCMono(const Value: Double);
+begin
+  FqBCMono := Value;
+  FqBCMonoHasValue := True;
+end;
+
 { TNfeSefazICMS10 }
 
 procedure TNfeSefazICMS10.SetvBCFCP(const Value: Double);
@@ -26813,6 +27090,32 @@ procedure TNfeSefazICMS10.SetmotDesICMSST(const Value: Integer);
 begin
   FmotDesICMSST := Value;
   FmotDesICMSSTHasValue := True;
+end;
+
+{ TNfeSefazICMS15 }
+
+procedure TNfeSefazICMS15.SetqBCMono(const Value: Double);
+begin
+  FqBCMono := Value;
+  FqBCMonoHasValue := True;
+end;
+
+procedure TNfeSefazICMS15.SetqBCMonoReten(const Value: Double);
+begin
+  FqBCMonoReten := Value;
+  FqBCMonoRetenHasValue := True;
+end;
+
+procedure TNfeSefazICMS15.SetpRedAdRem(const Value: Double);
+begin
+  FpRedAdRem := Value;
+  FpRedAdRemHasValue := True;
+end;
+
+procedure TNfeSefazICMS15.SetmotRedAdRem(const Value: Integer);
+begin
+  FmotRedAdRem := Value;
+  FmotRedAdRemHasValue := True;
 end;
 
 { TNfeSefazICMS20 }
@@ -26991,6 +27294,56 @@ begin
   FvFCPEfetHasValue := True;
 end;
 
+{ TNfeSefazICMS53 }
+
+procedure TNfeSefazICMS53.SetqBCMono(const Value: Double);
+begin
+  FqBCMono := Value;
+  FqBCMonoHasValue := True;
+end;
+
+procedure TNfeSefazICMS53.SetadRemICMS(const Value: Double);
+begin
+  FadRemICMS := Value;
+  FadRemICMSHasValue := True;
+end;
+
+procedure TNfeSefazICMS53.SetvICMSMonoOp(const Value: Double);
+begin
+  FvICMSMonoOp := Value;
+  FvICMSMonoOpHasValue := True;
+end;
+
+procedure TNfeSefazICMS53.SetpDif(const Value: Double);
+begin
+  FpDif := Value;
+  FpDifHasValue := True;
+end;
+
+procedure TNfeSefazICMS53.SetvICMSMonoDif(const Value: Double);
+begin
+  FvICMSMonoDif := Value;
+  FvICMSMonoDifHasValue := True;
+end;
+
+procedure TNfeSefazICMS53.SetvICMSMono(const Value: Double);
+begin
+  FvICMSMono := Value;
+  FvICMSMonoHasValue := True;
+end;
+
+procedure TNfeSefazICMS53.SetqBCMonoDif(const Value: Double);
+begin
+  FqBCMonoDif := Value;
+  FqBCMonoDifHasValue := True;
+end;
+
+procedure TNfeSefazICMS53.SetadRemICMSDif(const Value: Double);
+begin
+  FadRemICMSDif := Value;
+  FadRemICMSDifHasValue := True;
+end;
+
 { TNfeSefazICMS60 }
 
 procedure TNfeSefazICMS60.SetvBCSTRet(const Value: Double);
@@ -27057,6 +27410,14 @@ procedure TNfeSefazICMS60.SetvICMSEfet(const Value: Double);
 begin
   FvICMSEfet := Value;
   FvICMSEfetHasValue := True;
+end;
+
+{ TNfeSefazICMS61 }
+
+procedure TNfeSefazICMS61.SetqBCMonoRet(const Value: Double);
+begin
+  FqBCMonoRet := Value;
+  FqBCMonoRetHasValue := True;
 end;
 
 { TNfeSefazICMS70 }
@@ -28420,16 +28781,34 @@ begin
   FvICMSUFRemetHasValue := True;
 end;
 
+procedure TNfeSefazICMSTot.SetqBCMono(const Value: Double);
+begin
+  FqBCMono := Value;
+  FqBCMonoHasValue := True;
+end;
+
 procedure TNfeSefazICMSTot.SetvICMSMono(const Value: Double);
 begin
   FvICMSMono := Value;
   FvICMSMonoHasValue := True;
 end;
 
+procedure TNfeSefazICMSTot.SetqBCMonoReten(const Value: Double);
+begin
+  FqBCMonoReten := Value;
+  FqBCMonoRetenHasValue := True;
+end;
+
 procedure TNfeSefazICMSTot.SetvICMSMonoReten(const Value: Double);
 begin
   FvICMSMonoReten := Value;
   FvICMSMonoRetenHasValue := True;
+end;
+
+procedure TNfeSefazICMSTot.SetqBCMonoRet(const Value: Double);
+begin
+  FqBCMonoRet := Value;
+  FqBCMonoRetHasValue := True;
 end;
 
 procedure TNfeSefazICMSTot.SetvICMSMonoRet(const Value: Double);

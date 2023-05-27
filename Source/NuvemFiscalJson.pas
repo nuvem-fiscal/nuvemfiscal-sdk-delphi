@@ -1291,6 +1291,18 @@ type
     function TMdfeSefazInfSolicNFFToJson(Source: TMdfeSefazInfSolicNFF): string;
     function TMdfeSefazInfSolicNFFFromJsonValue(Source: TJSONValue): TMdfeSefazInfSolicNFF;
     function TMdfeSefazInfSolicNFFFromJson(Source: string): TMdfeSefazInfSolicNFF;
+    function TMdfeSefazRSAKeyValueTypeToJsonValue(Source: TMdfeSefazRSAKeyValueType): TJSONValue;
+    function TMdfeSefazRSAKeyValueTypeToJson(Source: TMdfeSefazRSAKeyValueType): string;
+    function TMdfeSefazRSAKeyValueTypeFromJsonValue(Source: TJSONValue): TMdfeSefazRSAKeyValueType;
+    function TMdfeSefazRSAKeyValueTypeFromJson(Source: string): TMdfeSefazRSAKeyValueType;
+    function TMdfeSefazPAASignatureToJsonValue(Source: TMdfeSefazPAASignature): TJSONValue;
+    function TMdfeSefazPAASignatureToJson(Source: TMdfeSefazPAASignature): string;
+    function TMdfeSefazPAASignatureFromJsonValue(Source: TJSONValue): TMdfeSefazPAASignature;
+    function TMdfeSefazPAASignatureFromJson(Source: string): TMdfeSefazPAASignature;
+    function TMdfeSefazInfPAAToJsonValue(Source: TMdfeSefazInfPAA): TJSONValue;
+    function TMdfeSefazInfPAAToJson(Source: TMdfeSefazInfPAA): string;
+    function TMdfeSefazInfPAAFromJsonValue(Source: TJSONValue): TMdfeSefazInfPAA;
+    function TMdfeSefazInfPAAFromJson(Source: string): TMdfeSefazInfPAA;
     function TMdfeSefazInfMDFeToJsonValue(Source: TMdfeSefazInfMDFe): TJSONValue;
     function TMdfeSefazInfMDFeToJson(Source: TMdfeSefazInfMDFe): string;
     function TMdfeSefazInfMDFeFromJsonValue(Source: TJSONValue): TMdfeSefazInfMDFe;
@@ -24699,6 +24711,194 @@ begin
   end;
 end;
 
+function TJsonConverter.TMdfeSefazRSAKeyValueTypeToJsonValue(Source: TMdfeSefazRSAKeyValueType): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    if Source.ModulusHasValue then
+      Json.ObjAddProp(Result, 'Modulus', Self.stringToJsonValue(Source.Modulus));
+    if Source.ExponentHasValue then
+      Json.ObjAddProp(Result, 'Exponent', Self.stringToJsonValue(Source.Exponent));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TMdfeSefazRSAKeyValueTypeToJson(Source: TMdfeSefazRSAKeyValueType): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TMdfeSefazRSAKeyValueTypeToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TMdfeSefazRSAKeyValueTypeFromJsonValue(Source: TJSONValue): TMdfeSefazRSAKeyValueType;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TMdfeSefazRSAKeyValueType.Create;
+  try
+    if Json.ObjContains(Source, 'Modulus', JValue) then
+      Result.Modulus := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'Exponent', JValue) then
+      Result.Exponent := Self.stringFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TMdfeSefazRSAKeyValueTypeFromJson(Source: string): TMdfeSefazRSAKeyValueType;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TMdfeSefazRSAKeyValueTypeFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TMdfeSefazPAASignatureToJsonValue(Source: TMdfeSefazPAASignature): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'SignatureValue', Self.stringToJsonValue(Source.SignatureValue));
+    Json.ObjAddProp(Result, 'RSAKeyValue', Self.TMdfeSefazRSAKeyValueTypeToJsonValue(Source.RSAKeyValue));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TMdfeSefazPAASignatureToJson(Source: TMdfeSefazPAASignature): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TMdfeSefazPAASignatureToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TMdfeSefazPAASignatureFromJsonValue(Source: TJSONValue): TMdfeSefazPAASignature;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TMdfeSefazPAASignature.Create;
+  try
+    if Json.ObjContains(Source, 'SignatureValue', JValue) then
+      Result.SignatureValue := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'RSAKeyValue', JValue) then
+      Result.RSAKeyValue := Self.TMdfeSefazRSAKeyValueTypeFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TMdfeSefazPAASignatureFromJson(Source: string): TMdfeSefazPAASignature;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TMdfeSefazPAASignatureFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TMdfeSefazInfPAAToJsonValue(Source: TMdfeSefazInfPAA): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'CNPJPAA', Self.stringToJsonValue(Source.CNPJPAA));
+    Json.ObjAddProp(Result, 'PAASignature', Self.TMdfeSefazPAASignatureToJsonValue(Source.PAASignature));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TMdfeSefazInfPAAToJson(Source: TMdfeSefazInfPAA): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TMdfeSefazInfPAAToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TMdfeSefazInfPAAFromJsonValue(Source: TJSONValue): TMdfeSefazInfPAA;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TMdfeSefazInfPAA.Create;
+  try
+    if Json.ObjContains(Source, 'CNPJPAA', JValue) then
+      Result.CNPJPAA := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'PAASignature', JValue) then
+      Result.PAASignature := Self.TMdfeSefazPAASignatureFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TMdfeSefazInfPAAFromJson(Source: string): TMdfeSefazInfPAA;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TMdfeSefazInfPAAFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
 function TJsonConverter.TMdfeSefazInfMDFeToJsonValue(Source: TMdfeSefazInfMDFe): TJSONValue;
 begin
   if not Assigned(Source) then
@@ -24730,6 +24930,8 @@ begin
       Json.ObjAddProp(Result, 'infRespTec', Self.TMdfeSefazRespTecToJsonValue(Source.infRespTec));
     if Assigned(Source.infSolicNFF) then
       Json.ObjAddProp(Result, 'infSolicNFF', Self.TMdfeSefazInfSolicNFFToJsonValue(Source.infSolicNFF));
+    if Assigned(Source.infPAA) then
+      Json.ObjAddProp(Result, 'infPAA', Self.TMdfeSefazInfPAAToJsonValue(Source.infPAA));
   except
     Result.Free;
     raise;
@@ -24787,6 +24989,8 @@ begin
       Result.infRespTec := Self.TMdfeSefazRespTecFromJsonValue(JValue);
     if Json.ObjContains(Source, 'infSolicNFF', JValue) then
       Result.infSolicNFF := Self.TMdfeSefazInfSolicNFFFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'infPAA', JValue) then
+      Result.infPAA := Self.TMdfeSefazInfPAAFromJsonValue(JValue);
   except
     Result.Free;
     raise;
@@ -28773,6 +28977,8 @@ begin
   try
     Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
     Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    if Source.qBCMonoHasValue then
+      Json.ObjAddProp(Result, 'qBCMono', Self.DoubleToJsonValue(Source.qBCMono));
     Json.ObjAddProp(Result, 'adRemICMS', Self.DoubleToJsonValue(Source.adRemICMS));
     Json.ObjAddProp(Result, 'vICMSMono', Self.DoubleToJsonValue(Source.vICMSMono));
   except
@@ -28808,6 +29014,8 @@ begin
       Result.orig := Self.IntegerFromJsonValue(JValue);
     if Json.ObjContains(Source, 'CST', JValue) then
       Result.CST := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'qBCMono', JValue) then
+      Result.qBCMono := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'adRemICMS', JValue) then
       Result.adRemICMS := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'vICMSMono', JValue) then
@@ -28967,10 +29175,18 @@ begin
   try
     Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
     Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    if Source.qBCMonoHasValue then
+      Json.ObjAddProp(Result, 'qBCMono', Self.DoubleToJsonValue(Source.qBCMono));
     Json.ObjAddProp(Result, 'adRemICMS', Self.DoubleToJsonValue(Source.adRemICMS));
     Json.ObjAddProp(Result, 'vICMSMono', Self.DoubleToJsonValue(Source.vICMSMono));
+    if Source.qBCMonoRetenHasValue then
+      Json.ObjAddProp(Result, 'qBCMonoReten', Self.DoubleToJsonValue(Source.qBCMonoReten));
     Json.ObjAddProp(Result, 'adRemICMSReten', Self.DoubleToJsonValue(Source.adRemICMSReten));
     Json.ObjAddProp(Result, 'vICMSMonoReten', Self.DoubleToJsonValue(Source.vICMSMonoReten));
+    if Source.pRedAdRemHasValue then
+      Json.ObjAddProp(Result, 'pRedAdRem', Self.DoubleToJsonValue(Source.pRedAdRem));
+    if Source.motRedAdRemHasValue then
+      Json.ObjAddProp(Result, 'motRedAdRem', Self.IntegerToJsonValue(Source.motRedAdRem));
   except
     Result.Free;
     raise;
@@ -29004,14 +29220,22 @@ begin
       Result.orig := Self.IntegerFromJsonValue(JValue);
     if Json.ObjContains(Source, 'CST', JValue) then
       Result.CST := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'qBCMono', JValue) then
+      Result.qBCMono := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'adRemICMS', JValue) then
       Result.adRemICMS := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'vICMSMono', JValue) then
       Result.vICMSMono := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'qBCMonoReten', JValue) then
+      Result.qBCMonoReten := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'adRemICMSReten', JValue) then
       Result.adRemICMSReten := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'vICMSMonoReten', JValue) then
       Result.vICMSMonoReten := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'pRedAdRem', JValue) then
+      Result.pRedAdRem := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'motRedAdRem', JValue) then
+      Result.motRedAdRem := Self.IntegerFromJsonValue(JValue);
   except
     Result.Free;
     raise;
@@ -29428,8 +29652,22 @@ begin
   try
     Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
     Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
-    Json.ObjAddProp(Result, 'adRemICMSDif', Self.DoubleToJsonValue(Source.adRemICMSDif));
-    Json.ObjAddProp(Result, 'vICMSMonoDif', Self.DoubleToJsonValue(Source.vICMSMonoDif));
+    if Source.qBCMonoHasValue then
+      Json.ObjAddProp(Result, 'qBCMono', Self.DoubleToJsonValue(Source.qBCMono));
+    if Source.adRemICMSHasValue then
+      Json.ObjAddProp(Result, 'adRemICMS', Self.DoubleToJsonValue(Source.adRemICMS));
+    if Source.vICMSMonoOpHasValue then
+      Json.ObjAddProp(Result, 'vICMSMonoOp', Self.DoubleToJsonValue(Source.vICMSMonoOp));
+    if Source.pDifHasValue then
+      Json.ObjAddProp(Result, 'pDif', Self.DoubleToJsonValue(Source.pDif));
+    if Source.vICMSMonoDifHasValue then
+      Json.ObjAddProp(Result, 'vICMSMonoDif', Self.DoubleToJsonValue(Source.vICMSMonoDif));
+    if Source.vICMSMonoHasValue then
+      Json.ObjAddProp(Result, 'vICMSMono', Self.DoubleToJsonValue(Source.vICMSMono));
+    if Source.qBCMonoDifHasValue then
+      Json.ObjAddProp(Result, 'qBCMonoDif', Self.DoubleToJsonValue(Source.qBCMonoDif));
+    if Source.adRemICMSDifHasValue then
+      Json.ObjAddProp(Result, 'adRemICMSDif', Self.DoubleToJsonValue(Source.adRemICMSDif));
   except
     Result.Free;
     raise;
@@ -29463,10 +29701,22 @@ begin
       Result.orig := Self.IntegerFromJsonValue(JValue);
     if Json.ObjContains(Source, 'CST', JValue) then
       Result.CST := Self.stringFromJsonValue(JValue);
-    if Json.ObjContains(Source, 'adRemICMSDif', JValue) then
-      Result.adRemICMSDif := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'qBCMono', JValue) then
+      Result.qBCMono := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'adRemICMS', JValue) then
+      Result.adRemICMS := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'vICMSMonoOp', JValue) then
+      Result.vICMSMonoOp := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'pDif', JValue) then
+      Result.pDif := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'vICMSMonoDif', JValue) then
       Result.vICMSMonoDif := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'vICMSMono', JValue) then
+      Result.vICMSMono := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'qBCMonoDif', JValue) then
+      Result.qBCMonoDif := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'adRemICMSDif', JValue) then
+      Result.adRemICMSDif := Self.DoubleFromJsonValue(JValue);
   except
     Result.Free;
     raise;
@@ -29602,6 +29852,8 @@ begin
   try
     Json.ObjAddProp(Result, 'orig', Self.IntegerToJsonValue(Source.orig));
     Json.ObjAddProp(Result, 'CST', Self.stringToJsonValue(Source.CST));
+    if Source.qBCMonoRetHasValue then
+      Json.ObjAddProp(Result, 'qBCMonoRet', Self.DoubleToJsonValue(Source.qBCMonoRet));
     Json.ObjAddProp(Result, 'adRemICMSRet', Self.DoubleToJsonValue(Source.adRemICMSRet));
     Json.ObjAddProp(Result, 'vICMSMonoRet', Self.DoubleToJsonValue(Source.vICMSMonoRet));
   except
@@ -29637,6 +29889,8 @@ begin
       Result.orig := Self.IntegerFromJsonValue(JValue);
     if Json.ObjContains(Source, 'CST', JValue) then
       Result.CST := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'qBCMonoRet', JValue) then
+      Result.qBCMonoRet := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'adRemICMSRet', JValue) then
       Result.adRemICMSRet := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'vICMSMonoRet', JValue) then
@@ -32766,10 +33020,16 @@ begin
     Json.ObjAddProp(Result, 'vST', Self.DoubleToJsonValue(Source.vST));
     Json.ObjAddProp(Result, 'vFCPST', Self.DoubleToJsonValue(Source.vFCPST));
     Json.ObjAddProp(Result, 'vFCPSTRet', Self.DoubleToJsonValue(Source.vFCPSTRet));
+    if Source.qBCMonoHasValue then
+      Json.ObjAddProp(Result, 'qBCMono', Self.DoubleToJsonValue(Source.qBCMono));
     if Source.vICMSMonoHasValue then
       Json.ObjAddProp(Result, 'vICMSMono', Self.DoubleToJsonValue(Source.vICMSMono));
+    if Source.qBCMonoRetenHasValue then
+      Json.ObjAddProp(Result, 'qBCMonoReten', Self.DoubleToJsonValue(Source.qBCMonoReten));
     if Source.vICMSMonoRetenHasValue then
       Json.ObjAddProp(Result, 'vICMSMonoReten', Self.DoubleToJsonValue(Source.vICMSMonoReten));
+    if Source.qBCMonoRetHasValue then
+      Json.ObjAddProp(Result, 'qBCMonoRet', Self.DoubleToJsonValue(Source.qBCMonoRet));
     if Source.vICMSMonoRetHasValue then
       Json.ObjAddProp(Result, 'vICMSMonoRet', Self.DoubleToJsonValue(Source.vICMSMonoRet));
     Json.ObjAddProp(Result, 'vProd', Self.DoubleToJsonValue(Source.vProd));
@@ -32836,10 +33096,16 @@ begin
       Result.vFCPST := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'vFCPSTRet', JValue) then
       Result.vFCPSTRet := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'qBCMono', JValue) then
+      Result.qBCMono := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'vICMSMono', JValue) then
       Result.vICMSMono := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'qBCMonoReten', JValue) then
+      Result.qBCMonoReten := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'vICMSMonoReten', JValue) then
       Result.vICMSMonoReten := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'qBCMonoRet', JValue) then
+      Result.qBCMonoRet := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'vICMSMonoRet', JValue) then
       Result.vICMSMonoRet := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'vProd', JValue) then
