@@ -329,9 +329,6 @@ type
   TMdfeSefazInfAdic = class;
   TMdfeSefazRespTec = class;
   TMdfeSefazInfSolicNFF = class;
-  TMdfeSefazRSAKeyValueType = class;
-  TMdfeSefazPAASignature = class;
-  TMdfeSefazInfPAA = class;
   TMdfeSefazInfMDFe = class;
   TMdfeSefazInfMDFeSupl = class;
   TMdfePedidoEmissao = class;
@@ -10493,61 +10490,6 @@ type
   end;
   
   /// <summary>
-  /// Chave Publica no padrão XML RSA Key.
-  /// </summary>
-  TMdfeSefazRSAKeyValueType = class
-  private
-    FModulus: string;
-    FModulusHasValue: Boolean;
-    FExponent: string;
-    FExponentHasValue: Boolean;
-    procedure SetModulus(const Value: string);
-    procedure SetExponent(const Value: string);
-  public
-    property Modulus: string read FModulus write SetModulus;
-    property ModulusHasValue: Boolean read FModulusHasValue write FModulusHasValue;
-    property Exponent: string read FExponent write SetExponent;
-    property ExponentHasValue: Boolean read FExponentHasValue write FExponentHasValue;
-  end;
-  
-  /// <summary>
-  /// Assinatura RSA do Emitente para DFe gerados por PAA.
-  /// </summary>
-  TMdfeSefazPAASignature = class
-  private
-    FSignatureValue: string;
-    FRSAKeyValue: TMdfeSefazRSAKeyValueType;
-    procedure SetRSAKeyValue(const Value: TMdfeSefazRSAKeyValueType);
-  public
-    constructor Create;
-    destructor Destroy; override;
-    /// <summary>
-    /// Assinatura digital padrão RSA.
-    /// Converter o atributo Id do DFe para array de bytes e assinar com a chave privada do RSA com algoritmo SHA1 gerando um valor no formato base64.
-    /// </summary>
-    property SignatureValue: string read FSignatureValue write FSignatureValue;
-    property RSAKeyValue: TMdfeSefazRSAKeyValueType read FRSAKeyValue write SetRSAKeyValue;
-  end;
-  
-  /// <summary>
-  /// Grupo de Informação do Provedor de Assinatura e Autorização.
-  /// </summary>
-  TMdfeSefazInfPAA = class
-  private
-    FCNPJPAA: string;
-    FPAASignature: TMdfeSefazPAASignature;
-    procedure SetPAASignature(const Value: TMdfeSefazPAASignature);
-  public
-    constructor Create;
-    destructor Destroy; override;
-    /// <summary>
-    /// CNPJ do Provedor de Assinatura e Autorização.
-    /// </summary>
-    property CNPJPAA: string read FCNPJPAA write FCNPJPAA;
-    property PAASignature: TMdfeSefazPAASignature read FPAASignature write SetPAASignature;
-  end;
-  
-  /// <summary>
   /// Informações do MDF-e.
   /// </summary>
   TMdfeSefazInfMDFe = class
@@ -10567,7 +10509,6 @@ type
     FinfAdic: TMdfeSefazInfAdic;
     FinfRespTec: TMdfeSefazRespTec;
     FinfSolicNFF: TMdfeSefazInfSolicNFF;
-    FinfPAA: TMdfeSefazInfPAA;
     procedure SetId(const Value: string);
     procedure Setide(const Value: TMdfeSefazIde);
     procedure Setemit(const Value: TMdfeSefazEmit);
@@ -10581,7 +10522,6 @@ type
     procedure SetinfAdic(const Value: TMdfeSefazInfAdic);
     procedure SetinfRespTec(const Value: TMdfeSefazRespTec);
     procedure SetinfSolicNFF(const Value: TMdfeSefazInfSolicNFF);
-    procedure SetinfPAA(const Value: TMdfeSefazInfPAA);
   public
     constructor Create;
     destructor Destroy; override;
@@ -10608,7 +10548,6 @@ type
     property infAdic: TMdfeSefazInfAdic read FinfAdic write SetinfAdic;
     property infRespTec: TMdfeSefazRespTec read FinfRespTec write SetinfRespTec;
     property infSolicNFF: TMdfeSefazInfSolicNFF read FinfSolicNFF write SetinfSolicNFF;
-    property infPAA: TMdfeSefazInfPAA read FinfPAA write SetinfPAA;
   end;
   
   /// <summary>
@@ -25455,66 +25394,6 @@ begin
   FhashCSRTHasValue := True;
 end;
 
-{ TMdfeSefazRSAKeyValueType }
-
-procedure TMdfeSefazRSAKeyValueType.SetModulus(const Value: string);
-begin
-  FModulus := Value;
-  FModulusHasValue := True;
-end;
-
-procedure TMdfeSefazRSAKeyValueType.SetExponent(const Value: string);
-begin
-  FExponent := Value;
-  FExponentHasValue := True;
-end;
-
-{ TMdfeSefazPAASignature }
-
-constructor TMdfeSefazPAASignature.Create;
-begin
-  inherited;
-  FRSAKeyValue := TMdfeSefazRSAKeyValueType.Create;
-end;
-
-destructor TMdfeSefazPAASignature.Destroy;
-begin
-  FRSAKeyValue.Free;
-  inherited;
-end;
-
-procedure TMdfeSefazPAASignature.SetRSAKeyValue(const Value: TMdfeSefazRSAKeyValueType);
-begin
-  if Value <> FRSAKeyValue then
-  begin
-    FRSAKeyValue.Free;
-    FRSAKeyValue := Value;
-  end;
-end;
-
-{ TMdfeSefazInfPAA }
-
-constructor TMdfeSefazInfPAA.Create;
-begin
-  inherited;
-  FPAASignature := TMdfeSefazPAASignature.Create;
-end;
-
-destructor TMdfeSefazInfPAA.Destroy;
-begin
-  FPAASignature.Free;
-  inherited;
-end;
-
-procedure TMdfeSefazInfPAA.SetPAASignature(const Value: TMdfeSefazPAASignature);
-begin
-  if Value <> FPAASignature then
-  begin
-    FPAASignature.Free;
-    FPAASignature := Value;
-  end;
-end;
-
 { TMdfeSefazInfMDFe }
 
 constructor TMdfeSefazInfMDFe.Create;
@@ -25529,7 +25408,6 @@ end;
 
 destructor TMdfeSefazInfMDFe.Destroy;
 begin
-  FinfPAA.Free;
   FinfSolicNFF.Free;
   FinfRespTec.Free;
   FinfAdic.Free;
@@ -25656,15 +25534,6 @@ begin
   begin
     FinfSolicNFF.Free;
     FinfSolicNFF := Value;
-  end;
-end;
-
-procedure TMdfeSefazInfMDFe.SetinfPAA(const Value: TMdfeSefazInfPAA);
-begin
-  if Value <> FinfPAA then
-  begin
-    FinfPAA.Free;
-    FinfPAA := Value;
   end;
 end;
 

@@ -1291,18 +1291,6 @@ type
     function TMdfeSefazInfSolicNFFToJson(Source: TMdfeSefazInfSolicNFF): string;
     function TMdfeSefazInfSolicNFFFromJsonValue(Source: TJSONValue): TMdfeSefazInfSolicNFF;
     function TMdfeSefazInfSolicNFFFromJson(Source: string): TMdfeSefazInfSolicNFF;
-    function TMdfeSefazRSAKeyValueTypeToJsonValue(Source: TMdfeSefazRSAKeyValueType): TJSONValue;
-    function TMdfeSefazRSAKeyValueTypeToJson(Source: TMdfeSefazRSAKeyValueType): string;
-    function TMdfeSefazRSAKeyValueTypeFromJsonValue(Source: TJSONValue): TMdfeSefazRSAKeyValueType;
-    function TMdfeSefazRSAKeyValueTypeFromJson(Source: string): TMdfeSefazRSAKeyValueType;
-    function TMdfeSefazPAASignatureToJsonValue(Source: TMdfeSefazPAASignature): TJSONValue;
-    function TMdfeSefazPAASignatureToJson(Source: TMdfeSefazPAASignature): string;
-    function TMdfeSefazPAASignatureFromJsonValue(Source: TJSONValue): TMdfeSefazPAASignature;
-    function TMdfeSefazPAASignatureFromJson(Source: string): TMdfeSefazPAASignature;
-    function TMdfeSefazInfPAAToJsonValue(Source: TMdfeSefazInfPAA): TJSONValue;
-    function TMdfeSefazInfPAAToJson(Source: TMdfeSefazInfPAA): string;
-    function TMdfeSefazInfPAAFromJsonValue(Source: TJSONValue): TMdfeSefazInfPAA;
-    function TMdfeSefazInfPAAFromJson(Source: string): TMdfeSefazInfPAA;
     function TMdfeSefazInfMDFeToJsonValue(Source: TMdfeSefazInfMDFe): TJSONValue;
     function TMdfeSefazInfMDFeToJson(Source: TMdfeSefazInfMDFe): string;
     function TMdfeSefazInfMDFeFromJsonValue(Source: TJSONValue): TMdfeSefazInfMDFe;
@@ -24711,194 +24699,6 @@ begin
   end;
 end;
 
-function TJsonConverter.TMdfeSefazRSAKeyValueTypeToJsonValue(Source: TMdfeSefazRSAKeyValueType): TJSONValue;
-begin
-  if not Assigned(Source) then
-  begin
-    Result := Json.CreateNull;
-    Exit;
-  end;
-  Result := Json.CreateObject;
-  try
-    if Source.ModulusHasValue then
-      Json.ObjAddProp(Result, 'Modulus', Self.stringToJsonValue(Source.Modulus));
-    if Source.ExponentHasValue then
-      Json.ObjAddProp(Result, 'Exponent', Self.stringToJsonValue(Source.Exponent));
-  except
-    Result.Free;
-    raise;
-  end;
-end;
-
-function TJsonConverter.TMdfeSefazRSAKeyValueTypeToJson(Source: TMdfeSefazRSAKeyValueType): string;
-var
-  JValue: TJSONValue;
-begin
-  JValue := TMdfeSefazRSAKeyValueTypeToJsonValue(Source);
-  try
-    Result := JsonValueToJson(JValue);
-  finally
-    JValue.Free;
-  end;
-end;
-
-function TJsonConverter.TMdfeSefazRSAKeyValueTypeFromJsonValue(Source: TJSONValue): TMdfeSefazRSAKeyValueType;
-var
-  JValue: TJSONValue;
-begin
-  if not Json.IsObject(Source) then
-  begin
-    Result := nil;
-    Exit;
-  end;
-  Result := TMdfeSefazRSAKeyValueType.Create;
-  try
-    if Json.ObjContains(Source, 'Modulus', JValue) then
-      Result.Modulus := Self.stringFromJsonValue(JValue);
-    if Json.ObjContains(Source, 'Exponent', JValue) then
-      Result.Exponent := Self.stringFromJsonValue(JValue);
-  except
-    Result.Free;
-    raise;
-  end;
-end;
-
-function TJsonConverter.TMdfeSefazRSAKeyValueTypeFromJson(Source: string): TMdfeSefazRSAKeyValueType;
-var
-  JValue: TJSONValue;
-begin
-  JValue := JsonToJsonValue(Source);
-  try
-    Result := TMdfeSefazRSAKeyValueTypeFromJsonValue(JValue);
-  finally
-    JValue.Free;
-  end;
-end;
-
-function TJsonConverter.TMdfeSefazPAASignatureToJsonValue(Source: TMdfeSefazPAASignature): TJSONValue;
-begin
-  if not Assigned(Source) then
-  begin
-    Result := Json.CreateNull;
-    Exit;
-  end;
-  Result := Json.CreateObject;
-  try
-    Json.ObjAddProp(Result, 'SignatureValue', Self.stringToJsonValue(Source.SignatureValue));
-    Json.ObjAddProp(Result, 'RSAKeyValue', Self.TMdfeSefazRSAKeyValueTypeToJsonValue(Source.RSAKeyValue));
-  except
-    Result.Free;
-    raise;
-  end;
-end;
-
-function TJsonConverter.TMdfeSefazPAASignatureToJson(Source: TMdfeSefazPAASignature): string;
-var
-  JValue: TJSONValue;
-begin
-  JValue := TMdfeSefazPAASignatureToJsonValue(Source);
-  try
-    Result := JsonValueToJson(JValue);
-  finally
-    JValue.Free;
-  end;
-end;
-
-function TJsonConverter.TMdfeSefazPAASignatureFromJsonValue(Source: TJSONValue): TMdfeSefazPAASignature;
-var
-  JValue: TJSONValue;
-begin
-  if not Json.IsObject(Source) then
-  begin
-    Result := nil;
-    Exit;
-  end;
-  Result := TMdfeSefazPAASignature.Create;
-  try
-    if Json.ObjContains(Source, 'SignatureValue', JValue) then
-      Result.SignatureValue := Self.stringFromJsonValue(JValue);
-    if Json.ObjContains(Source, 'RSAKeyValue', JValue) then
-      Result.RSAKeyValue := Self.TMdfeSefazRSAKeyValueTypeFromJsonValue(JValue);
-  except
-    Result.Free;
-    raise;
-  end;
-end;
-
-function TJsonConverter.TMdfeSefazPAASignatureFromJson(Source: string): TMdfeSefazPAASignature;
-var
-  JValue: TJSONValue;
-begin
-  JValue := JsonToJsonValue(Source);
-  try
-    Result := TMdfeSefazPAASignatureFromJsonValue(JValue);
-  finally
-    JValue.Free;
-  end;
-end;
-
-function TJsonConverter.TMdfeSefazInfPAAToJsonValue(Source: TMdfeSefazInfPAA): TJSONValue;
-begin
-  if not Assigned(Source) then
-  begin
-    Result := Json.CreateNull;
-    Exit;
-  end;
-  Result := Json.CreateObject;
-  try
-    Json.ObjAddProp(Result, 'CNPJPAA', Self.stringToJsonValue(Source.CNPJPAA));
-    Json.ObjAddProp(Result, 'PAASignature', Self.TMdfeSefazPAASignatureToJsonValue(Source.PAASignature));
-  except
-    Result.Free;
-    raise;
-  end;
-end;
-
-function TJsonConverter.TMdfeSefazInfPAAToJson(Source: TMdfeSefazInfPAA): string;
-var
-  JValue: TJSONValue;
-begin
-  JValue := TMdfeSefazInfPAAToJsonValue(Source);
-  try
-    Result := JsonValueToJson(JValue);
-  finally
-    JValue.Free;
-  end;
-end;
-
-function TJsonConverter.TMdfeSefazInfPAAFromJsonValue(Source: TJSONValue): TMdfeSefazInfPAA;
-var
-  JValue: TJSONValue;
-begin
-  if not Json.IsObject(Source) then
-  begin
-    Result := nil;
-    Exit;
-  end;
-  Result := TMdfeSefazInfPAA.Create;
-  try
-    if Json.ObjContains(Source, 'CNPJPAA', JValue) then
-      Result.CNPJPAA := Self.stringFromJsonValue(JValue);
-    if Json.ObjContains(Source, 'PAASignature', JValue) then
-      Result.PAASignature := Self.TMdfeSefazPAASignatureFromJsonValue(JValue);
-  except
-    Result.Free;
-    raise;
-  end;
-end;
-
-function TJsonConverter.TMdfeSefazInfPAAFromJson(Source: string): TMdfeSefazInfPAA;
-var
-  JValue: TJSONValue;
-begin
-  JValue := JsonToJsonValue(Source);
-  try
-    Result := TMdfeSefazInfPAAFromJsonValue(JValue);
-  finally
-    JValue.Free;
-  end;
-end;
-
 function TJsonConverter.TMdfeSefazInfMDFeToJsonValue(Source: TMdfeSefazInfMDFe): TJSONValue;
 begin
   if not Assigned(Source) then
@@ -24930,8 +24730,6 @@ begin
       Json.ObjAddProp(Result, 'infRespTec', Self.TMdfeSefazRespTecToJsonValue(Source.infRespTec));
     if Assigned(Source.infSolicNFF) then
       Json.ObjAddProp(Result, 'infSolicNFF', Self.TMdfeSefazInfSolicNFFToJsonValue(Source.infSolicNFF));
-    if Assigned(Source.infPAA) then
-      Json.ObjAddProp(Result, 'infPAA', Self.TMdfeSefazInfPAAToJsonValue(Source.infPAA));
   except
     Result.Free;
     raise;
@@ -24989,8 +24787,6 @@ begin
       Result.infRespTec := Self.TMdfeSefazRespTecFromJsonValue(JValue);
     if Json.ObjContains(Source, 'infSolicNFF', JValue) then
       Result.infSolicNFF := Self.TMdfeSefazInfSolicNFFFromJsonValue(JValue);
-    if Json.ObjContains(Source, 'infPAA', JValue) then
-      Result.infPAA := Self.TMdfeSefazInfPAAFromJsonValue(JValue);
   except
     Result.Free;
     raise;
