@@ -19,24 +19,22 @@ object fmDetalhesNfse: TfmDetalhesNfse
   object PageControl1: TPageControl
     Left = 6
     Top = 8
-    Width = 546
+    Width = 534
     Height = 326
     ActivePage = tsDadosGerais
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitWidth = 532
-    ExplicitHeight = 325
     object tsDadosGerais: TTabSheet
       Caption = 'Dados gerais'
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 538
+        Width = 526
         Height = 296
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 524
+        ExplicitWidth = 522
         ExplicitHeight = 295
         object lbId: TLabel
           Left = 6
@@ -220,18 +218,52 @@ object fmDetalhesNfse: TfmDetalhesNfse
       object memoMensagens: TMemo
         Left = 0
         Top = 0
-        Width = 538
+        Width = 526
         Height = 296
         Align = alClient
         ReadOnly = True
         ScrollBars = ssBoth
         TabOrder = 0
-        ExplicitWidth = 528
+      end
+    end
+    object tsXml: TTabSheet
+      Caption = 'XML'
+      ImageIndex = 2
+      DesignSize = (
+        526
+        296)
+      object memXml: TMemo
+        Left = 3
+        Top = 34
+        Width = 520
+        Height = 259
+        Anchors = [akLeft, akTop, akRight, akBottom]
+        ReadOnly = True
+        ScrollBars = ssVertical
+        TabOrder = 0
+      end
+      object btBaixarXml: TButton
+        Left = 3
+        Top = 3
+        Width = 86
+        Height = 25
+        Caption = 'Baixar XML'
+        TabOrder = 1
+        OnClick = btBaixarXmlClick
+      end
+      object btBaixarXmlDps: TButton
+        Left = 95
+        Top = 3
+        Width = 118
+        Height = 25
+        Caption = 'Baixar XML do DPS'
+        TabOrder = 2
+        OnClick = btBaixarXmlDpsClick
       end
     end
   end
   object btOk: TButton
-    Left = 475
+    Left = 463
     Top = 340
     Width = 75
     Height = 25
@@ -239,7 +271,7 @@ object fmDetalhesNfse: TfmDetalhesNfse
     Caption = 'Ok'
     TabOrder = 1
     OnClick = btOkClick
-    ExplicitLeft = 461
+    ExplicitLeft = 459
     ExplicitTop = 339
   end
 end

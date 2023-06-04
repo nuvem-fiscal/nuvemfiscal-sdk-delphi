@@ -356,7 +356,7 @@ var
 begin
   if NfceSelecionada = '' then Exit;
 
-  Pdf := Client.Nfce.BaixarPdfNfce(NfceSelecionada);
+  Pdf := Client.Nfce.BaixarPdfNfce(NfceSelecionada, False, False);
   TFile.WriteAllBytes('danfce.pdf', Pdf);
   ShellExecute(Application.Handle, 'open', PChar('danfce.pdf'), nil, nil, SW_SHOW);
 end;
@@ -529,7 +529,7 @@ var
 begin
   Nfse := Client.Nfse.ConsultarNfse(NfseSelecionada);
   try
-    TfmDetalhesNfse.Visualizar(Nfse);
+    TfmDetalhesNfse.Visualizar(Nfse, Client.Nfse);
   finally
     Nfse.Free;
   end;

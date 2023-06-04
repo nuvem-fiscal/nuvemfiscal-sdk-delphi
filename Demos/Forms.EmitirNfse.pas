@@ -32,6 +32,14 @@ type
     edServicoValorUnitario: TEdit;
     tsLog: TTabSheet;
     memoLog: TMemo;
+    Label1: TLabel;
+    edTomadorCodigoMunicipio: TEdit;
+    Label3: TLabel;
+    edTomadorCep: TEdit;
+    Label4: TLabel;
+    edServicoCodigoTributacaoMunicipal: TEdit;
+    Label6: TLabel;
+    edServicoCnae: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure btOkClick(Sender: TObject);
   private
@@ -115,11 +123,17 @@ begin
       else if Length(edTomadorCpfCnpj.Text) = 11 then
         InfDPS.toma.CPF := edTomadorCpfCnpj.Text;
       InfDPS.toma.xNome := edTomadorNomeRazaoSocial.Text;
+      InfDPS.toma.&end := TEndereco.Create;
+      InfDPS.toma.&end.endNac := TEnderNac.Create;
+      InfDPS.toma.&end.endNac.cMun := edTomadorCodigoMunicipio.Text;
+      InfDPS.toma.&end.endNac.CEP := edTomadorCep.Text;
     end;
 
     InfDPS.serv := TServ.Create;
     InfDPS.serv.cServ := TCServ.Create;
     InfDPS.serv.cServ.cTribNac := edServicoItemListaServico.Text;
+    InfDPS.serv.cServ.cTribMun := edServicoCodigoTributacaoMunicipal.Text;
+    InfDPS.serv.cServ.CNAE := edServicoCnae.Text;
     InfDPS.serv.cServ.xDescServ := edServicoDiscriminacao.Text;
 
     InfDPS.valores := TInfoValores.Create;

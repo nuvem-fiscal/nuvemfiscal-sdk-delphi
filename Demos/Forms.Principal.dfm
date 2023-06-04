@@ -106,7 +106,7 @@ object fmMain: TfmMain
     Top = 104
     Width = 830
     Height = 458
-    ActivePage = tsNfce
+    ActivePage = tsNfse
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 5
     ExplicitWidth = 826
@@ -308,6 +308,8 @@ object fmMain: TfmMain
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitLeft = 683
+        ExplicitHeight = 427
         DesignSize = (
           135
           428)
@@ -350,6 +352,8 @@ object fmMain: TfmMain
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
+        ExplicitWidth = 683
+        ExplicitHeight = 427
         object lvNfses: TListView
           Left = 0
           Top = 41
@@ -380,6 +384,8 @@ object fmMain: TfmMain
           TabOrder = 0
           ViewStyle = vsReport
           OnDblClick = lvNfsesDblClick
+          ExplicitWidth = 683
+          ExplicitHeight = 386
         end
         object Panel5: TPanel
           Left = 0
@@ -389,6 +395,7 @@ object fmMain: TfmMain
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
+          ExplicitWidth = 683
           object Label7: TLabel
             Left = 8
             Top = 13
@@ -437,8 +444,6 @@ object fmMain: TfmMain
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitLeft = 683
-        ExplicitHeight = 427
         DesignSize = (
           135
           428)
@@ -501,8 +506,6 @@ object fmMain: TfmMain
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 683
-        ExplicitHeight = 427
         object lvNfces: TListView
           Left = 0
           Top = 41
@@ -542,8 +545,6 @@ object fmMain: TfmMain
           TabOrder = 0
           ViewStyle = vsReport
           OnDblClick = lvNfcesDblClick
-          ExplicitWidth = 683
-          ExplicitHeight = 386
         end
         object Panel8: TPanel
           Left = 0
@@ -553,7 +554,6 @@ object fmMain: TfmMain
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitWidth = 683
           object Label8: TLabel
             Left = 8
             Top = 13

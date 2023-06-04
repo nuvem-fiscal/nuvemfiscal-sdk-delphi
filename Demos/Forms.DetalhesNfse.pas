@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls,
-  NuvemFiscalDTOs;
+
+  OpenApiRest, NuvemFiscalClient, NuvemFiscalDTOs;
 
 type
   TfmDetalhesNfse = class(TForm)
@@ -38,18 +39,43 @@ type
     edCancelamentoDataHora: TEdit;
     Label48: TLabel;
     memoCancelamentoMensagens: TMemo;
+    tsXml: TTabSheet;
+    memXml: TMemo;
+    btBaixarXml: TButton;
+    btBaixarXmlDps: TButton;
+    procedure btBaixarXmlClick(Sender: TObject);
+    procedure btBaixarXmlDpsClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btOkClick(Sender: TObject);
   private
     FNfse: TNfse;
+    FService: INfseService;
   public
-    class procedure Visualizar(ANfse: TNfse);
+    class procedure Visualizar(ANfse: TNfse; AService: INfseService);
     procedure SetNfse(Nfse: TNfse);
   end;
 
 implementation
 
 {$R *.dfm}
+
+procedure TfmDetalhesNfse.btBaixarXmlClick(Sender: TObject);
+var
+  Xml: string;
+begin
+  memXml.Clear;
+  Xml := TEncoding.UTF8.GetString(FService.BaixarXmlNfse(FNfse.id));
+  memXml.Lines.Add(Xml);
+end;
+
+procedure TfmDetalhesNfse.btBaixarXmlDpsClick(Sender: TObject);
+var
+  Xml: string;
+begin
+  memXml.Clear;
+  Xml := TEncoding.UTF8.GetString(FService.BaixarXmlDps(FNfse.id));
+  memXml.Lines.Add(Xml);
+end;
 
 { TfmDetalhesNfse }
 
@@ -63,13 +89,14 @@ begin
   ModalResult := mrOk;
 end;
 
-class procedure TfmDetalhesNfse.Visualizar(ANfse: TNfse);
+class procedure TfmDetalhesNfse.Visualizar(ANfse: TNfse; AService: INfseService);
 var
   Form: TfmDetalhesNfse;
 begin
   Form := TfmDetalhesNfse.Create(nil);
   try
     Form.SetNfse(ANfse);
+    Form.FService := AService;
     Form.ShowModal;
   finally
     Form.Free;
