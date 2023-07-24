@@ -490,6 +490,12 @@ type
   TCnpjSituacaoEspecial = class;
   TCnpjOpcaoSimples = class;
   TCnpjOpcaoSimei = class;
+  TCnpjIdentificadorSocio = class;
+  TCnpjQualificacaoSocio = class;
+  TCnpjRepresentanteLegal = class;
+  TCnpjFaixaEtaria = class;
+  TCnpjSocio = class;
+  TCnpjSocioList = class;
   TCnpjEmpresa = class;
   TCnpjEmpresaList = class;
   TCnpjListagem = class;
@@ -18207,6 +18213,161 @@ type
     property data_exclusaoHasValue: Boolean read Fdata_exclusaoHasValue write Fdata_exclusaoHasValue;
   end;
   
+  /// <summary>
+  /// Identificador de sócio.
+  /// </summary>
+  TCnpjIdentificadorSocio = class
+  private
+    Fcodigo: string;
+    FcodigoHasValue: Boolean;
+    Fdescricao: string;
+    FdescricaoHasValue: Boolean;
+    procedure Setcodigo(const Value: string);
+    procedure Setdescricao(const Value: string);
+  public
+    /// <summary>
+    /// Código do identificador do sócio.
+    /// </summary>
+    property codigo: string read Fcodigo write Setcodigo;
+    property codigoHasValue: Boolean read FcodigoHasValue write FcodigoHasValue;
+    /// <summary>
+    /// Descrição do identificador do sócio.
+    /// </summary>
+    property descricao: string read Fdescricao write Setdescricao;
+    property descricaoHasValue: Boolean read FdescricaoHasValue write FdescricaoHasValue;
+  end;
+  
+  /// <summary>
+  /// Qualificação.
+  /// </summary>
+  TCnpjQualificacaoSocio = class
+  private
+    Fcodigo: string;
+    FcodigoHasValue: Boolean;
+    Fdescricao: string;
+    FdescricaoHasValue: Boolean;
+    procedure Setcodigo(const Value: string);
+    procedure Setdescricao(const Value: string);
+  public
+    /// <summary>
+    /// Código da qualificação do sócio.
+    /// </summary>
+    property codigo: string read Fcodigo write Setcodigo;
+    property codigoHasValue: Boolean read FcodigoHasValue write FcodigoHasValue;
+    /// <summary>
+    /// Nome da qualificação do sócio.
+    /// </summary>
+    property descricao: string read Fdescricao write Setdescricao;
+    property descricaoHasValue: Boolean read FdescricaoHasValue write FdescricaoHasValue;
+  end;
+  
+  /// <summary>
+  /// Representante legal.
+  /// </summary>
+  TCnpjRepresentanteLegal = class
+  private
+    Fcpf: string;
+    FcpfHasValue: Boolean;
+    Fnome: string;
+    FnomeHasValue: Boolean;
+    Fqualificacao: TCnpjQualificacaoSocio;
+    procedure Setcpf(const Value: string);
+    procedure Setnome(const Value: string);
+    procedure Setqualificacao(const Value: TCnpjQualificacaoSocio);
+  public
+    destructor Destroy; override;
+    /// <summary>
+    /// Número do cpf do representante legal.
+    /// </summary>
+    property cpf: string read Fcpf write Setcpf;
+    property cpfHasValue: Boolean read FcpfHasValue write FcpfHasValue;
+    /// <summary>
+    /// Nome do representante legal.
+    /// </summary>
+    property nome: string read Fnome write Setnome;
+    property nomeHasValue: Boolean read FnomeHasValue write FnomeHasValue;
+    /// <summary>
+    /// Qualificação do representante legal.
+    /// </summary>
+    property qualificacao: TCnpjQualificacaoSocio read Fqualificacao write Setqualificacao;
+  end;
+  
+  /// <summary>
+  /// Faixa etária.
+  /// </summary>
+  TCnpjFaixaEtaria = class
+  private
+    Fcodigo: string;
+    FcodigoHasValue: Boolean;
+    Fdescricao: string;
+    FdescricaoHasValue: Boolean;
+    procedure Setcodigo(const Value: string);
+    procedure Setdescricao(const Value: string);
+  public
+    /// <summary>
+    /// Código correspondente à faixa etária do sócio.
+    /// </summary>
+    property codigo: string read Fcodigo write Setcodigo;
+    property codigoHasValue: Boolean read FcodigoHasValue write FcodigoHasValue;
+    /// <summary>
+    /// Descrição correspondente à faixa etária do sócio.
+    /// </summary>
+    property descricao: string read Fdescricao write Setdescricao;
+    property descricaoHasValue: Boolean read FdescricaoHasValue write FdescricaoHasValue;
+  end;
+  
+  /// <summary>
+  /// Quadro Societário.
+  /// </summary>
+  TCnpjSocio = class
+  private
+    Fidentificador_socio: TCnpjIdentificadorSocio;
+    Fnome: string;
+    FnomeHasValue: Boolean;
+    Fcpf_cnpj: string;
+    Fcpf_cnpjHasValue: Boolean;
+    Fqualificacao: TCnpjQualificacaoSocio;
+    Fdata_entrada_sociedade: TDate;
+    Fdata_entrada_sociedadeHasValue: Boolean;
+    Fpais: TCnpjPais;
+    Frepresentante_legal: TCnpjRepresentanteLegal;
+    Ffaixa_etaria: TCnpjFaixaEtaria;
+    procedure Setidentificador_socio(const Value: TCnpjIdentificadorSocio);
+    procedure Setnome(const Value: string);
+    procedure Setcpf_cnpj(const Value: string);
+    procedure Setqualificacao(const Value: TCnpjQualificacaoSocio);
+    procedure Setdata_entrada_sociedade(const Value: TDate);
+    procedure Setpais(const Value: TCnpjPais);
+    procedure Setrepresentante_legal(const Value: TCnpjRepresentanteLegal);
+    procedure Setfaixa_etaria(const Value: TCnpjFaixaEtaria);
+  public
+    destructor Destroy; override;
+    property identificador_socio: TCnpjIdentificadorSocio read Fidentificador_socio write Setidentificador_socio;
+    /// <summary>
+    /// Nome do sócio pessoa física ou a razão social e/ou nome empresarial da
+    /// pessoa jurídica e/ou nome do sócio/razão social do sócio estrangeiro.
+    /// </summary>
+    property nome: string read Fnome write Setnome;
+    property nomeHasValue: Boolean read FnomeHasValue write FnomeHasValue;
+    /// <summary>
+    /// CPF ou CNPJ do sócio (sócio estrangeiro não tem esta informação).
+    /// </summary>
+    property cpf_cnpj: string read Fcpf_cnpj write Setcpf_cnpj;
+    property cpf_cnpjHasValue: Boolean read Fcpf_cnpjHasValue write Fcpf_cnpjHasValue;
+    property qualificacao: TCnpjQualificacaoSocio read Fqualificacao write Setqualificacao;
+    /// <summary>
+    /// Data de entrada na sociedade.
+    /// </summary>
+    property data_entrada_sociedade: TDate read Fdata_entrada_sociedade write Setdata_entrada_sociedade;
+    property data_entrada_sociedadeHasValue: Boolean read Fdata_entrada_sociedadeHasValue write Fdata_entrada_sociedadeHasValue;
+    property pais: TCnpjPais read Fpais write Setpais;
+    property representante_legal: TCnpjRepresentanteLegal read Frepresentante_legal write Setrepresentante_legal;
+    property faixa_etaria: TCnpjFaixaEtaria read Ffaixa_etaria write Setfaixa_etaria;
+  end;
+  
+  TCnpjSocioList = class(TObjectList<TCnpjSocio>)
+  end;
+  
   TCnpjEmpresa = class
   private
     Fcnpj: string;
@@ -18239,6 +18400,7 @@ type
     Fsituacao_especial: TCnpjSituacaoEspecial;
     Fsimples: TCnpjOpcaoSimples;
     Fsimei: TCnpjOpcaoSimei;
+    Fsocios: TCnpjSocioList;
     procedure Setcnpj(const Value: string);
     procedure Setrazao_social(const Value: string);
     procedure Setnome_fantasia(const Value: string);
@@ -18260,6 +18422,7 @@ type
     procedure Setsituacao_especial(const Value: TCnpjSituacaoEspecial);
     procedure Setsimples(const Value: TCnpjOpcaoSimples);
     procedure Setsimei(const Value: TCnpjOpcaoSimei);
+    procedure Setsocios(const Value: TCnpjSocioList);
   public
     destructor Destroy; override;
     /// <summary>
@@ -18323,6 +18486,7 @@ type
     property situacao_especial: TCnpjSituacaoEspecial read Fsituacao_especial write Setsituacao_especial;
     property simples: TCnpjOpcaoSimples read Fsimples write Setsimples;
     property simei: TCnpjOpcaoSimei read Fsimei write Setsimei;
+    property socios: TCnpjSocioList read Fsocios write Setsocios;
   end;
   
   TCnpjEmpresaList = class(TObjectList<TCnpjEmpresa>)
@@ -30063,10 +30227,157 @@ begin
   Fdata_exclusaoHasValue := True;
 end;
 
+{ TCnpjIdentificadorSocio }
+
+procedure TCnpjIdentificadorSocio.Setcodigo(const Value: string);
+begin
+  Fcodigo := Value;
+  FcodigoHasValue := True;
+end;
+
+procedure TCnpjIdentificadorSocio.Setdescricao(const Value: string);
+begin
+  Fdescricao := Value;
+  FdescricaoHasValue := True;
+end;
+
+{ TCnpjQualificacaoSocio }
+
+procedure TCnpjQualificacaoSocio.Setcodigo(const Value: string);
+begin
+  Fcodigo := Value;
+  FcodigoHasValue := True;
+end;
+
+procedure TCnpjQualificacaoSocio.Setdescricao(const Value: string);
+begin
+  Fdescricao := Value;
+  FdescricaoHasValue := True;
+end;
+
+{ TCnpjRepresentanteLegal }
+
+destructor TCnpjRepresentanteLegal.Destroy;
+begin
+  Fqualificacao.Free;
+  inherited;
+end;
+
+procedure TCnpjRepresentanteLegal.Setcpf(const Value: string);
+begin
+  Fcpf := Value;
+  FcpfHasValue := True;
+end;
+
+procedure TCnpjRepresentanteLegal.Setnome(const Value: string);
+begin
+  Fnome := Value;
+  FnomeHasValue := True;
+end;
+
+procedure TCnpjRepresentanteLegal.Setqualificacao(const Value: TCnpjQualificacaoSocio);
+begin
+  if Value <> Fqualificacao then
+  begin
+    Fqualificacao.Free;
+    Fqualificacao := Value;
+  end;
+end;
+
+{ TCnpjFaixaEtaria }
+
+procedure TCnpjFaixaEtaria.Setcodigo(const Value: string);
+begin
+  Fcodigo := Value;
+  FcodigoHasValue := True;
+end;
+
+procedure TCnpjFaixaEtaria.Setdescricao(const Value: string);
+begin
+  Fdescricao := Value;
+  FdescricaoHasValue := True;
+end;
+
+{ TCnpjSocio }
+
+destructor TCnpjSocio.Destroy;
+begin
+  Ffaixa_etaria.Free;
+  Frepresentante_legal.Free;
+  Fpais.Free;
+  Fqualificacao.Free;
+  Fidentificador_socio.Free;
+  inherited;
+end;
+
+procedure TCnpjSocio.Setidentificador_socio(const Value: TCnpjIdentificadorSocio);
+begin
+  if Value <> Fidentificador_socio then
+  begin
+    Fidentificador_socio.Free;
+    Fidentificador_socio := Value;
+  end;
+end;
+
+procedure TCnpjSocio.Setnome(const Value: string);
+begin
+  Fnome := Value;
+  FnomeHasValue := True;
+end;
+
+procedure TCnpjSocio.Setcpf_cnpj(const Value: string);
+begin
+  Fcpf_cnpj := Value;
+  Fcpf_cnpjHasValue := True;
+end;
+
+procedure TCnpjSocio.Setqualificacao(const Value: TCnpjQualificacaoSocio);
+begin
+  if Value <> Fqualificacao then
+  begin
+    Fqualificacao.Free;
+    Fqualificacao := Value;
+  end;
+end;
+
+procedure TCnpjSocio.Setdata_entrada_sociedade(const Value: TDate);
+begin
+  Fdata_entrada_sociedade := Value;
+  Fdata_entrada_sociedadeHasValue := True;
+end;
+
+procedure TCnpjSocio.Setpais(const Value: TCnpjPais);
+begin
+  if Value <> Fpais then
+  begin
+    Fpais.Free;
+    Fpais := Value;
+  end;
+end;
+
+procedure TCnpjSocio.Setrepresentante_legal(const Value: TCnpjRepresentanteLegal);
+begin
+  if Value <> Frepresentante_legal then
+  begin
+    Frepresentante_legal.Free;
+    Frepresentante_legal := Value;
+  end;
+end;
+
+procedure TCnpjSocio.Setfaixa_etaria(const Value: TCnpjFaixaEtaria);
+begin
+  if Value <> Ffaixa_etaria then
+  begin
+    Ffaixa_etaria.Free;
+    Ffaixa_etaria := Value;
+  end;
+end;
+
 { TCnpjEmpresa }
 
 destructor TCnpjEmpresa.Destroy;
 begin
+  Fsocios.Free;
   Fsimei.Free;
   Fsimples.Free;
   Fsituacao_especial.Free;
@@ -30241,6 +30552,15 @@ begin
   begin
     Fsimei.Free;
     Fsimei := Value;
+  end;
+end;
+
+procedure TCnpjEmpresa.Setsocios(const Value: TCnpjSocioList);
+begin
+  if Value <> Fsocios then
+  begin
+    Fsocios.Free;
+    Fsocios := Value;
   end;
 end;
 

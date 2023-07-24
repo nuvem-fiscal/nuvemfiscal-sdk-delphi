@@ -536,10 +536,18 @@ type
     /// <summary>
     /// Consultar empresa
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function ConsultarEmpresa(CpfCnpj: string): TEmpresa;
     /// <summary>
     /// Alterar empresa
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     /// <remarks>
     /// Altera o cadastro de uma empresa (emitente/prestador) que esteja associada a sua conta.
     /// Nesse método, por tratar-se de um PUT, caso algum campo não seja informado, o valor dele será apagado.
@@ -548,14 +556,26 @@ type
     /// <summary>
     /// Deletar empresa
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     procedure ExcluirEmpresa(CpfCnpj: string);
     /// <summary>
     /// Consultar certificado
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function ConsultarCertificadoEmpresa(CpfCnpj: string): TEmpresaCertificado;
     /// <summary>
     /// Cadastrar certificado
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     /// <remarks>
     /// Cadastre ou atualize um certificado digital e vincule a sua empresa, para que possa iniciar a emissão de notas.
     /// * No parâmetro `certificado`, envie o binário do certificado digital (.pfx ou .p12) codificado em **base64**.
@@ -564,46 +584,125 @@ type
     /// <summary>
     /// Deletar certificado
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     procedure ExcluirCertificadoEmpresa(CpfCnpj: string);
     /// <summary>
     /// Consultar configuração de CT-e
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function ConsultarConfigCte(CpfCnpj: string): TEmpresaConfigCte;
     /// <summary>
     /// Alterar configuração de CT-e
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function AlterarConfigCte(Body: TEmpresaConfigCte; CpfCnpj: string): TEmpresaConfigCte;
+    /// <summary>
+    /// Baixar logotipo
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function BaixarLogotipoEmpresa(CpfCnpj: string): TBytes;
+    /// <summary>
+    /// Enviar logotipo
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <remarks>
+    /// Cadastre ou atualize um logotipo e vincule a sua empresa.
+    /// 
+    /// **Restrições:**
+    /// * Tipos de mídia (MIME) suportados: `image/png` e `image/jpeg`
+    /// * Tamanho máximo do arquivo: 200 KB
+    /// 
+    /// **Cenários de uso:**
+    /// * Quero que minhas notas sejam impressas com esse logotipo.
+    /// * Quero trocar o logotipo utilizado em minhas impressões.
+    /// </remarks>
+    procedure EnviarLogotipoEmpresa(Input: TBytes; CpfCnpj: string);
+    /// <summary>
+    /// Deletar logotipo
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    procedure ExcluirLogotipoEmpresa(CpfCnpj: string);
     /// <summary>
     /// Consultar configuração de MDF-e
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function ConsultarConfigMdfe(CpfCnpj: string): TEmpresaConfigMdfe;
     /// <summary>
     /// Alterar configuração de MDF-e
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function AlterarConfigMdfe(Body: TEmpresaConfigMdfe; CpfCnpj: string): TEmpresaConfigMdfe;
     /// <summary>
     /// Consultar configuração de NFC-e
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function ConsultarConfigNfce(CpfCnpj: string): TEmpresaConfigNfce;
     /// <summary>
     /// Alterar configuração de NFC-e
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function AlterarConfigNfce(Body: TEmpresaConfigNfce; CpfCnpj: string): TEmpresaConfigNfce;
     /// <summary>
     /// Consultar configuração de NF-e
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function ConsultarConfigNfe(CpfCnpj: string): TEmpresaConfigNfe;
     /// <summary>
     /// Alterar configuração de NF-e
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function AlterarConfigNfe(Body: TEmpresaConfigNfe; CpfCnpj: string): TEmpresaConfigNfe;
     /// <summary>
     /// Consultar configuração de NFS-e
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function ConsultarConfigNfse(CpfCnpj: string): TEmpresaConfigNfse;
     /// <summary>
     /// Alterar configuração de NFS-e
     /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function AlterarConfigNfse(Body: TEmpresaConfigNfse; CpfCnpj: string): TEmpresaConfigNfse;
   end;
   
@@ -624,21 +723,100 @@ type
     /// </param>
     function ListarEmpresas(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string): TEmpresaListagem;
     function CriarEmpresa(Body: TEmpresa): TEmpresa;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function ConsultarEmpresa(CpfCnpj: string): TEmpresa;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function AtualizarEmpresa(Body: TEmpresa; CpfCnpj: string): TEmpresa;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     procedure ExcluirEmpresa(CpfCnpj: string);
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function ConsultarCertificadoEmpresa(CpfCnpj: string): TEmpresaCertificado;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function CadastrarCertificadoEmpresa(Body: TEmpresaPedidoCadastroCertificado; CpfCnpj: string): TEmpresaCertificado;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     procedure ExcluirCertificadoEmpresa(CpfCnpj: string);
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function ConsultarConfigCte(CpfCnpj: string): TEmpresaConfigCte;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function AlterarConfigCte(Body: TEmpresaConfigCte; CpfCnpj: string): TEmpresaConfigCte;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function BaixarLogotipoEmpresa(CpfCnpj: string): TBytes;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    procedure EnviarLogotipoEmpresa(Input: TBytes; CpfCnpj: string);
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    procedure ExcluirLogotipoEmpresa(CpfCnpj: string);
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function ConsultarConfigMdfe(CpfCnpj: string): TEmpresaConfigMdfe;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function AlterarConfigMdfe(Body: TEmpresaConfigMdfe; CpfCnpj: string): TEmpresaConfigMdfe;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function ConsultarConfigNfce(CpfCnpj: string): TEmpresaConfigNfce;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function AlterarConfigNfce(Body: TEmpresaConfigNfce; CpfCnpj: string): TEmpresaConfigNfce;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function ConsultarConfigNfe(CpfCnpj: string): TEmpresaConfigNfe;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function AlterarConfigNfe(Body: TEmpresaConfigNfe; CpfCnpj: string): TEmpresaConfigNfe;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function ConsultarConfigNfse(CpfCnpj: string): TEmpresaConfigNfse;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function AlterarConfigNfse(Body: TEmpresaConfigNfse; CpfCnpj: string): TEmpresaConfigNfse;
   end;
   
@@ -1232,13 +1410,30 @@ type
     /// <param name="Id">
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    /// <param name="MensagemRodape">
+    /// Imprime mensagem no rodapé do documento.
+    /// 
+    /// O caractere `|` (pipe) poderá ser utilizado para definir a quantidade e o alinhamento das mensagens.
+    /// 
+    /// **Exemplos de Uso:**
+    /// * `"esquerda"`
+    /// * `"esquerda|centro"`
+    /// * `"esquerda|centro|direita"`
+    /// * `"|centro"`, `"|centro|"`
+    /// * `"|centro|direita"`
+    /// * `"||direita"`
+    /// * `"esquerda||direita"`
+    /// </param>
     /// <param name="Resumido">
     /// Poderá ser impresso apenas o DANFE NFC-e resumido ou ecológico, sem o detalhamento dos itens da venda, desde que a Unidade Federada permita esta opção em sua legislação e o consumidor assim o solicite.
     /// </param>
     /// <param name="QrcodeLateral">
     /// Imprime o QRCode na lateral do DANFE NFC-e.
     /// </param>
-    function BaixarPdfNfce(Id: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
+    function BaixarPdfNfce(Id: string; Logotipo: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
     /// <summary>
     /// Sincroniza dados na NFC-e a partir da SEFAZ
     /// </summary>
@@ -1430,13 +1625,30 @@ type
     /// <param name="Id">
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    /// <param name="MensagemRodape">
+    /// Imprime mensagem no rodapé do documento.
+    /// 
+    /// O caractere `|` (pipe) poderá ser utilizado para definir a quantidade e o alinhamento das mensagens.
+    /// 
+    /// **Exemplos de Uso:**
+    /// * `"esquerda"`
+    /// * `"esquerda|centro"`
+    /// * `"esquerda|centro|direita"`
+    /// * `"|centro"`, `"|centro|"`
+    /// * `"|centro|direita"`
+    /// * `"||direita"`
+    /// * `"esquerda||direita"`
+    /// </param>
     /// <param name="Resumido">
     /// Poderá ser impresso apenas o DANFE NFC-e resumido ou ecológico, sem o detalhamento dos itens da venda, desde que a Unidade Federada permita esta opção em sua legislação e o consumidor assim o solicite.
     /// </param>
     /// <param name="QrcodeLateral">
     /// Imprime o QRCode na lateral do DANFE NFC-e.
     /// </param>
-    function BaixarPdfNfce(Id: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
+    function BaixarPdfNfce(Id: string; Logotipo: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
     /// <param name="Id">
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -1694,7 +1906,24 @@ type
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
-    function BaixarPdfNfe(Id: string): TBytes;
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    /// <param name="MensagemRodape">
+    /// Imprime mensagem no rodapé do documento.
+    /// 
+    /// O caractere `|` (pipe) poderá ser utilizado para definir a quantidade e o alinhamento das mensagens.
+    /// 
+    /// **Exemplos de Uso:**
+    /// * `"esquerda"`
+    /// * `"esquerda|centro"`
+    /// * `"esquerda|centro|direita"`
+    /// * `"|centro"`, `"|centro|"`
+    /// * `"|centro|direita"`
+    /// * `"||direita"`
+    /// * `"esquerda||direita"`
+    /// </param>
+    function BaixarPdfNfe(Id: string; Logotipo: Boolean; MensagemRodape: string): TBytes;
     /// <summary>
     /// Sincroniza dados na NF-e a partir da SEFAZ
     /// </summary>
@@ -1874,7 +2103,24 @@ type
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
-    function BaixarPdfNfe(Id: string): TBytes;
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    /// <param name="MensagemRodape">
+    /// Imprime mensagem no rodapé do documento.
+    /// 
+    /// O caractere `|` (pipe) poderá ser utilizado para definir a quantidade e o alinhamento das mensagens.
+    /// 
+    /// **Exemplos de Uso:**
+    /// * `"esquerda"`
+    /// * `"esquerda|centro"`
+    /// * `"esquerda|centro|direita"`
+    /// * `"|centro"`, `"|centro|"`
+    /// * `"|centro|direita"`
+    /// * `"||direita"`
+    /// * `"esquerda||direita"`
+    /// </param>
+    function BaixarPdfNfe(Id: string; Logotipo: Boolean; MensagemRodape: string): TBytes;
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -2733,6 +2979,41 @@ begin
   Result := Converter.TEmpresaConfigCteFromJson(Response.ContentAsString);
 end;
 
+function TEmpresaService.BaixarLogotipoEmpresa(CpfCnpj: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/logotipo', 'GET');
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+procedure TEmpresaService.EnviarLogotipoEmpresa(Input: TBytes; CpfCnpj: string);
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/logotipo', 'PUT');
+  raise Exception.Create('Form param ''Input'' not supported');
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Response := Request.Execute;
+  CheckError(Response);
+end;
+
+procedure TEmpresaService.ExcluirLogotipoEmpresa(CpfCnpj: string);
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/logotipo', 'DELETE');
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Response := Request.Execute;
+  CheckError(Response);
+end;
+
 function TEmpresaService.ConsultarConfigMdfe(CpfCnpj: string): TEmpresaConfigMdfe;
 var
   Request: IRestRequest;
@@ -3425,13 +3706,15 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TNfceService.BaixarPdfNfce(Id: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
+function TNfceService.BaixarPdfNfce(Id: string; Logotipo: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
   Request := CreateRequest('/nfce/{id}/pdf', 'GET');
   Request.AddUrlParam('id', Id);
+  Request.AddQueryParam('logotipo', BoolToParam(Logotipo));
+  Request.AddQueryParam('mensagem_rodape', MensagemRodape);
   Request.AddQueryParam('resumido', BoolToParam(Resumido));
   Request.AddQueryParam('qrcode_lateral', BoolToParam(QrcodeLateral));
   Response := Request.Execute;
@@ -3803,13 +4086,15 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TNfeService.BaixarPdfNfe(Id: string): TBytes;
+function TNfeService.BaixarPdfNfe(Id: string; Logotipo: Boolean; MensagemRodape: string): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
   Request := CreateRequest('/nfe/{id}/pdf', 'GET');
   Request.AddUrlParam('id', Id);
+  Request.AddQueryParam('logotipo', BoolToParam(Logotipo));
+  Request.AddQueryParam('mensagem_rodape', MensagemRodape);
   Response := Request.Execute;
   CheckError(Response);
   Result := Response.ContentAsBytes;
