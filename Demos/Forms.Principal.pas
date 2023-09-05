@@ -356,7 +356,9 @@ var
 begin
   if NfceSelecionada = '' then Exit;
 
-  Pdf := Client.Nfce.BaixarPdfNfce(NfceSelecionada, False, False);
+  Pdf := Client.Nfce.BaixarPdfNfce(NfceSelecionada, False,
+    Format('Impresso em %s||Nuvem Fiscal', [DateTimeToStr(Now)]),
+    False, False);
   TFile.WriteAllBytes('danfce.pdf', Pdf);
   ShellExecute(Application.Handle, 'open', PChar('danfce.pdf'), nil, nil, SW_SHOW);
 end;
