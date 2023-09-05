@@ -454,7 +454,8 @@ var
   Nota: TDfe;
   Item: TListItem;
 begin
-  Notas := Client.Nfce.ListarNfce(30, 0, False, edNfceCnpj.Text, '', AmbienteNfce, '');
+  Notas := Client.Nfce.ListarNfce(30, 0, False, edNfceCnpj.Text, '',
+    AmbienteNfce, '', '');
   try
     lvNfces.Clear;
     for Nota in Notas.data do
@@ -482,7 +483,8 @@ var
   Nota: TNfse;
   Item: TListItem;
 begin
-  Notas := Client.Nfse.ListarNfse(30, 0, False, edNfseCnpj.Text, '', AmbienteNfse, '');
+  Notas := Client.Nfse.ListarNfse(30, 0, False, edNfseCnpj.Text, '',
+    AmbienteNfse, '', '');
   try
     lvNfses.Clear;
     for Nota in Notas.data do
