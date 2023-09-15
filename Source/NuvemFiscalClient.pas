@@ -208,70 +208,6 @@ type
     /// </param>
     function BaixarXmlEventoCte(Id: string): TBytes;
     /// <summary>
-    /// Inutilizar uma sequência de numeração de CT-e
-    /// </summary>
-    function InutilizarNumeracaoCte(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
-    /// <summary>
-    /// Consultar a inutilização de sequência de numeração
-    /// </summary>
-    /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
-    /// </param>
-    function ConsultarInutilizacaoCte(Id: string): TDfeInutilizacao;
-    /// <summary>
-    /// Baixar PDF da inutilização
-    /// </summary>
-    /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
-    /// </param>
-    function BaixarPdfInutilizacaoCte(Id: string): TBytes;
-    /// <summary>
-    /// Baixar XML da inutilização
-    /// </summary>
-    /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
-    /// </param>
-    function BaixarXmlInutilizacaoCte(Id: string): TBytes;
-    /// <summary>
-    /// Listar lotes de CT-e
-    /// </summary>
-    /// <param name="Top">
-    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// </param>
-    /// <param name="Skip">
-    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
-    /// </param>
-    /// <param name="Inlinecount">
-    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
-    /// </param>
-    /// <param name="CpfCnpj">
-    /// Filtrar pelo CPF ou CNPJ do emitente.
-    /// Utilize o valor sem máscara.
-    /// </param>
-    /// <param name="Ambiente">
-    /// Identificação do Ambiente.
-    /// 
-    /// Valores aceitos: homologacao, producao
-    /// </param>
-    /// <remarks>
-    /// Retorna a lista dos lotes de acordo com os critérios de busca utilizados. Os lotes são retornados ordenados pela data da criação, com os mais recentes aparecendo primeiro.
-    /// </remarks>
-    function ListarLotesCte(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
-    /// <summary>
-    /// Emitir lote de CT-e
-    /// </summary>
-    function EmitirLoteCte(Body: TCtePedidoEmissaoLote): TDfeLote;
-    /// <summary>
-    /// Consultar lote de CT-e
-    /// </summary>
-    /// <param name="Id">
-    /// ID único do lote gerado pela Nuvem Fiscal.
-    /// </param>
-    /// <remarks>
-    /// Consulta os detalhes de um lote já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de lotes e a Nuvem Fiscal irá retornar as informações do lote correspondente.
-    /// </remarks>
-    function ConsultarLoteCte(Id: string): TDfeLote;
-    /// <summary>
     /// Consulta do Status do Serviço na SEFAZ Autorizadora
     /// </summary>
     /// <param name="CpfCnpj">
@@ -413,43 +349,6 @@ type
     /// ID único do evento gerado pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlEventoCte(Id: string): TBytes;
-    function InutilizarNumeracaoCte(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
-    /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
-    /// </param>
-    function ConsultarInutilizacaoCte(Id: string): TDfeInutilizacao;
-    /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
-    /// </param>
-    function BaixarPdfInutilizacaoCte(Id: string): TBytes;
-    /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
-    /// </param>
-    function BaixarXmlInutilizacaoCte(Id: string): TBytes;
-    /// <param name="Top">
-    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
-    /// </param>
-    /// <param name="Skip">
-    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
-    /// </param>
-    /// <param name="Inlinecount">
-    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
-    /// </param>
-    /// <param name="CpfCnpj">
-    /// Filtrar pelo CPF ou CNPJ do emitente.
-    /// Utilize o valor sem máscara.
-    /// </param>
-    /// <param name="Ambiente">
-    /// Identificação do Ambiente.
-    /// 
-    /// Valores aceitos: homologacao, producao
-    /// </param>
-    function ListarLotesCte(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
-    function EmitirLoteCte(Body: TCtePedidoEmissaoLote): TDfeLote;
-    /// <param name="Id">
-    /// ID único do lote gerado pela Nuvem Fiscal.
-    /// </param>
-    function ConsultarLoteCte(Id: string): TDfeLote;
     /// <param name="CpfCnpj">
     /// CPF/CNPJ do emitente.
     /// Utilize o valor sem máscara.
@@ -1923,7 +1822,10 @@ type
     /// * `"||direita"`
     /// * `"esquerda||direita"`
     /// </param>
-    function BaixarPdfNfe(Id: string; Logotipo: Boolean; MensagemRodape: string): TBytes;
+    /// <param name="Canhoto">
+    /// Imprime o documento com o bloco de canhoto.
+    /// </param>
+    function BaixarPdfNfe(Id: string; Logotipo: Boolean; MensagemRodape: string; Canhoto: Boolean): TBytes;
     /// <summary>
     /// Sincroniza dados na NF-e a partir da SEFAZ
     /// </summary>
@@ -2120,7 +2022,10 @@ type
     /// * `"||direita"`
     /// * `"esquerda||direita"`
     /// </param>
-    function BaixarPdfNfe(Id: string; Logotipo: Boolean; MensagemRodape: string): TBytes;
+    /// <param name="Canhoto">
+    /// Imprime o documento com o bloco de canhoto.
+    /// </param>
+    function BaixarPdfNfe(Id: string; Logotipo: Boolean; MensagemRodape: string; Canhoto: Boolean): TBytes;
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -2260,7 +2165,26 @@ type
     /// <param name="Id">
     /// ID único da NFS-e gerado pela Nuvem Fiscal.
     /// </param>
-    function BaixarPdfNfse(Id: string): TBytes;
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    /// <param name="MensagemRodape">
+    /// Imprime mensagem no rodapé do documento.
+    /// 
+    /// O caractere `|` (pipe) poderá ser utilizado para definir a quantidade e o alinhamento das mensagens.
+    /// 
+    /// **Exemplos de Uso:**
+    /// * `"esquerda"`
+    /// * `"esquerda|centro"`
+    /// * `"esquerda|centro|direita"`
+    /// * `"|centro"`, `"|centro|"`
+    /// * `"|centro|direita"`
+    /// * `"||direita"`
+    /// * `"esquerda||direita"`
+    /// 
+    /// Default: `""`
+    /// </param>
+    function BaixarPdfNfse(Id: string; Logotipo: Boolean; MensagemRodape: string): TBytes;
     /// <summary>
     /// Sincroniza dados na NFS-e a partir da Prefeitura
     /// </summary>
@@ -2365,7 +2289,26 @@ type
     /// <param name="Id">
     /// ID único da NFS-e gerado pela Nuvem Fiscal.
     /// </param>
-    function BaixarPdfNfse(Id: string): TBytes;
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    /// <param name="MensagemRodape">
+    /// Imprime mensagem no rodapé do documento.
+    /// 
+    /// O caractere `|` (pipe) poderá ser utilizado para definir a quantidade e o alinhamento das mensagens.
+    /// 
+    /// **Exemplos de Uso:**
+    /// * `"esquerda"`
+    /// * `"esquerda|centro"`
+    /// * `"esquerda|centro|direita"`
+    /// * `"|centro"`, `"|centro|"`
+    /// * `"|centro|direita"`
+    /// * `"||direita"`
+    /// * `"esquerda||direita"`
+    /// 
+    /// Default: `""`
+    /// </param>
+    function BaixarPdfNfse(Id: string; Logotipo: Boolean; MensagemRodape: string): TBytes;
     /// <param name="Id">
     /// ID único da NFS-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -2589,102 +2532,6 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Response.ContentAsBytes;
-end;
-
-function TCteService.InutilizarNumeracaoCte(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
-var
-  Request: IRestRequest;
-  Response: IRestResponse;
-begin
-  Request := CreateRequest('/cte/inutilizacoes', 'POST');
-  Request.AddBody(Converter.TDfePedidoInutilizacaoToJson(Body));
-  Request.AddHeader('Content-Type', 'application/json');
-  Request.AddHeader('Accept', 'application/json');
-  Response := Request.Execute;
-  CheckError(Response);
-  Result := Converter.TDfeInutilizacaoFromJson(Response.ContentAsString);
-end;
-
-function TCteService.ConsultarInutilizacaoCte(Id: string): TDfeInutilizacao;
-var
-  Request: IRestRequest;
-  Response: IRestResponse;
-begin
-  Request := CreateRequest('/cte/inutilizacoes/{id}', 'GET');
-  Request.AddUrlParam('id', Id);
-  Request.AddHeader('Accept', 'application/json');
-  Response := Request.Execute;
-  CheckError(Response);
-  Result := Converter.TDfeInutilizacaoFromJson(Response.ContentAsString);
-end;
-
-function TCteService.BaixarPdfInutilizacaoCte(Id: string): TBytes;
-var
-  Request: IRestRequest;
-  Response: IRestResponse;
-begin
-  Request := CreateRequest('/cte/inutilizacoes/{id}/pdf', 'GET');
-  Request.AddUrlParam('id', Id);
-  Response := Request.Execute;
-  CheckError(Response);
-  Result := Response.ContentAsBytes;
-end;
-
-function TCteService.BaixarXmlInutilizacaoCte(Id: string): TBytes;
-var
-  Request: IRestRequest;
-  Response: IRestResponse;
-begin
-  Request := CreateRequest('/cte/inutilizacoes/{id}/xml', 'GET');
-  Request.AddUrlParam('id', Id);
-  Response := Request.Execute;
-  CheckError(Response);
-  Result := Response.ContentAsBytes;
-end;
-
-function TCteService.ListarLotesCte(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
-var
-  Request: IRestRequest;
-  Response: IRestResponse;
-begin
-  Request := CreateRequest('/cte/lotes', 'GET');
-  Request.AddQueryParam('$top', IntToStr(Top));
-  Request.AddQueryParam('$skip', IntToStr(Skip));
-  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
-  Request.AddQueryParam('cpf_cnpj', CpfCnpj);
-  Request.AddQueryParam('referencia', Referencia);
-  Request.AddQueryParam('ambiente', Ambiente);
-  Request.AddHeader('Accept', 'application/json');
-  Response := Request.Execute;
-  CheckError(Response);
-  Result := Converter.TDfeLoteListagemFromJson(Response.ContentAsString);
-end;
-
-function TCteService.EmitirLoteCte(Body: TCtePedidoEmissaoLote): TDfeLote;
-var
-  Request: IRestRequest;
-  Response: IRestResponse;
-begin
-  Request := CreateRequest('/cte/lotes', 'POST');
-  Request.AddBody(Converter.TCtePedidoEmissaoLoteToJson(Body));
-  Request.AddHeader('Content-Type', 'application/json');
-  Request.AddHeader('Accept', 'application/json');
-  Response := Request.Execute;
-  CheckError(Response);
-  Result := Converter.TDfeLoteFromJson(Response.ContentAsString);
-end;
-
-function TCteService.ConsultarLoteCte(Id: string): TDfeLote;
-var
-  Request: IRestRequest;
-  Response: IRestResponse;
-begin
-  Request := CreateRequest('/cte/lotes/{id}', 'GET');
-  Request.AddUrlParam('id', Id);
-  Request.AddHeader('Accept', 'application/json');
-  Response := Request.Execute;
-  CheckError(Response);
-  Result := Converter.TDfeLoteFromJson(Response.ContentAsString);
 end;
 
 function TCteService.ConsultarStatusSefazCte(CpfCnpj: string): TDfeSefazStatus;
@@ -4086,7 +3933,7 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TNfeService.BaixarPdfNfe(Id: string; Logotipo: Boolean; MensagemRodape: string): TBytes;
+function TNfeService.BaixarPdfNfe(Id: string; Logotipo: Boolean; MensagemRodape: string; Canhoto: Boolean): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -4095,6 +3942,7 @@ begin
   Request.AddUrlParam('id', Id);
   Request.AddQueryParam('logotipo', BoolToParam(Logotipo));
   Request.AddQueryParam('mensagem_rodape', MensagemRodape);
+  Request.AddQueryParam('canhoto', BoolToParam(Canhoto));
   Response := Request.Execute;
   CheckError(Response);
   Result := Response.ContentAsBytes;
@@ -4299,13 +4147,15 @@ begin
   Result := Converter.TNfseCancelamentoFromJson(Response.ContentAsString);
 end;
 
-function TNfseService.BaixarPdfNfse(Id: string): TBytes;
+function TNfseService.BaixarPdfNfse(Id: string; Logotipo: Boolean; MensagemRodape: string): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
   Request := CreateRequest('/nfse/{id}/pdf', 'GET');
   Request.AddUrlParam('id', Id);
+  Request.AddQueryParam('logotipo', BoolToParam(Logotipo));
+  Request.AddQueryParam('mensagem_rodape', MensagemRodape);
   Response := Request.Execute;
   CheckError(Response);
   Result := Response.ContentAsBytes;
