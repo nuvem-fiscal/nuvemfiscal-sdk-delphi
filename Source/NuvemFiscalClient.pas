@@ -419,7 +419,8 @@ type
     /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ da empresa.
-    /// Utilize o valor sem máscara.
+    /// 
+    /// *Utilize o valor sem máscara*.
     /// </param>
     /// <remarks>
     /// Retorna a lista das empresas associadas à sua conta. As empresas são retornadas ordenadas pela data da criação, com as mais recentes aparecendo primeiro.
@@ -618,7 +619,8 @@ type
     /// </param>
     /// <param name="CpfCnpj">
     /// Filtrar pelo CPF ou CNPJ da empresa.
-    /// Utilize o valor sem máscara.
+    /// 
+    /// *Utilize o valor sem máscara*.
     /// </param>
     function ListarEmpresas(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string): TEmpresaListagem;
     function CriarEmpresa(Body: TEmpresa): TEmpresa;
@@ -2136,6 +2138,13 @@ type
     /// </remarks>
     function ConsultarLoteNfse(Id: string): TRpsLote;
     /// <summary>
+    /// Baixar XML do evento de cancelamento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCancelamentoNfse(Id: string): TBytes;
+    /// <summary>
     /// Consultar NFS-e
     /// </summary>
     /// <param name="Id">
@@ -2274,6 +2283,10 @@ type
     /// ID único do lote gerado pela Nuvem Fiscal.
     /// </param>
     function ConsultarLoteNfse(Id: string): TRpsLote;
+    /// <param name="Id">
+    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCancelamentoNfse(Id: string): TBytes;
     /// <param name="Id">
     /// ID único da NFS-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -4104,6 +4117,18 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Converter.TRpsLoteFromJson(Response.ContentAsString);
+end;
+
+function TNfseService.BaixarXmlCancelamentoNfse(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfse/{Id}/cancelamento/xml', 'GET');
+  Request.AddUrlParam('Id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
 end;
 
 function TNfseService.ConsultarNfse(Id: string): TNfse;

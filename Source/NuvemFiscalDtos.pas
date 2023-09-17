@@ -563,7 +563,8 @@ type
     property paisHasValue: Boolean read FpaisHasValue write FpaisHasValue;
     /// <summary>
     /// CEP.
-    /// Utilize o valor sem máscara.
+    /// 
+    /// *Utilize o valor sem máscara*.
     /// </summary>
     property cep: string read Fcep write Fcep;
   end;
@@ -598,20 +599,21 @@ type
     destructor Destroy; override;
     /// <summary>
     /// CPF ou CNPJ da empresa.
-    /// Utilize o valor sem máscara.
+    /// 
+    /// *Utilize o valor sem máscara*.
     /// </summary>
     property cpf_cnpj: string read Fcpf_cnpj write Fcpf_cnpj;
     /// <summary>
     /// Data/hora em que o objeto foi criado na Nuvem Fiscal. Representado no formato <a href="https://en.wikipedia.org/wiki/ISO_8601" target="blank">`ISO 8601`</a>.
     /// 
-    /// A Nuvem Fiscal gerencia esse campo automaticamente. Caso algum valor seja enviado, ele será ignorado.
+    /// *A Nuvem Fiscal gerencia esse campo automaticamente. Caso algum valor seja enviado, ele será ignorado*.
     /// </summary>
     property created_at: TDateTime read Fcreated_at write Setcreated_at;
     property created_atHasValue: Boolean read Fcreated_atHasValue write Fcreated_atHasValue;
     /// <summary>
     /// Data e hora que o objeto foi alterado pela última vez na Nuvem Fiscal. Representado no formato <a href="https://en.wikipedia.org/wiki/ISO_8601" target="blank">`ISO 8601`</a>.
     /// 
-    /// A Nuvem Fiscal gerencia esse campo automaticamente. Caso algum valor seja enviado, ele será ignorado.
+    /// *A Nuvem Fiscal gerencia esse campo automaticamente. Caso algum valor seja enviado, ele será ignorado*.
     /// </summary>
     property updated_at: TDateTime read Fupdated_at write Setupdated_at;
     property updated_atHasValue: Boolean read Fupdated_atHasValue write Fupdated_atHasValue;
@@ -6960,6 +6962,8 @@ type
     /// <summary>
     /// Identificador da tag a ser assinada.
     /// Informar a chave de acesso do CT-e e precedida do literal "CTe".
+    /// 
+    /// *Geramos automaticamente quando nenhum valor é informado.*
     /// </summary>
     property Id: string read FId write SetId;
     property IdHasValue: Boolean read FIdHasValue write FIdHasValue;
@@ -10134,6 +10138,8 @@ type
     /// <summary>
     /// Identificador da tag a ser assinada.
     /// Informar a chave de acesso do MDF-e e precedida do literal "MDFe".
+    /// 
+    /// *Geramos automaticamente quando nenhum valor é informado.*
     /// </summary>
     property Id: string read FId write SetId;
     property IdHasValue: Boolean read FIdHasValue write FIdHasValue;
@@ -17221,6 +17227,8 @@ type
     property versao: string read Fversao write Fversao;
     /// <summary>
     /// PL_005d - 11/08/09 - validação do Id.
+    /// 
+    /// *Geramos automaticamente quando nenhum valor é informado.*
     /// </summary>
     property Id: string read FId write SetId;
     property IdHasValue: Boolean read FIdHasValue write FIdHasValue;
