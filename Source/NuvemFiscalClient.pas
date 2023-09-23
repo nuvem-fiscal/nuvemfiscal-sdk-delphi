@@ -297,12 +297,41 @@ type
     /// </param>
     function BaixarPdfCte(Id: string): TBytes;
     /// <summary>
+    /// Sincroniza dados no CT-e a partir da SEFAZ
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Realiza a sincronização dos dados a partir da consulta da situação atual da CT-e na Base de Dados do Portal da Secretaria de Fazenda Estadual.
+    /// 
+    /// **Cenários de uso**:
+    /// * Sincronizar um CT-e que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizado na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
+    /// * Sincronizar um CT-e que se encontra com o status `autorizado`na Nuvem Fiscal, mas está cancelado na SEFAZ.
+    /// * Sincronizar todos os eventos de Cancelamento e Carta de Correção de um CT-e que porventura não tenham sido feitos a partir da Nuvem Fiscal.
+    /// </remarks>
+    function SincronizarCte(Id: string): TDfeSincronizacao;
+    /// <summary>
     /// Baixar XML do CT-e processado
     /// </summary>
     /// <param name="Id">
     /// ID único do CT-e gerado pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlCte(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML do CT-e
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da CT-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCteConhecimento(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML do Protocolo da SEFAZ
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da CT-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCteProtocolo(Id: string): TBytes;
   end;
   
   TCteService = class(TRestService, ICteService)
@@ -397,7 +426,19 @@ type
     /// <param name="Id">
     /// ID único do CT-e gerado pela Nuvem Fiscal.
     /// </param>
+    function SincronizarCte(Id: string): TDfeSincronizacao;
+    /// <param name="Id">
+    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// </param>
     function BaixarXmlCte(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da CT-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCteConhecimento(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da CT-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCteProtocolo(Id: string): TBytes;
   end;
   
   /// <summary>
@@ -826,6 +867,14 @@ type
     /// </remarks>
     function ConsultarLoteMdfe(Id: string): TDfeLote;
     /// <summary>
+    /// Consulta MDF-e não encerrados
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF/CNPJ do emitente.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function ConsultarMdfeNaoEncerrados(CpfCnpj: string): TMdfeNaoEncerrados;
+    /// <summary>
     /// Consulta do Status do Serviço na SEFAZ Autorizadora
     /// </summary>
     /// <param name="CpfCnpj">
@@ -929,12 +978,41 @@ type
     /// </param>
     function BaixarPdfMdfe(Id: string): TBytes;
     /// <summary>
+    /// Sincroniza dados no MDF-e a partir da SEFAZ
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Realiza a sincronização dos dados a partir da consulta da situação atual da MDF-e na Base de Dados do Portal da Secretaria de Fazenda Estadual.
+    /// 
+    /// **Cenários de uso**:
+    /// * Sincronizar um manifesto que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizado na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
+    /// * Sincronizar um manifesto que se encontra com o status `autorizado`na Nuvem Fiscal, mas está cancelado ou encerrado na SEFAZ.
+    /// * Sincronizar todos os eventos de Cancelamento, Encerramento, Inclusão de condutor e Inclusão de DF-e de um manifesto que porventura não tenham sido feitos a partir da Nuvem Fiscal.
+    /// </remarks>
+    function SincronizarMdfe(Id: string): TDfeSincronizacao;
+    /// <summary>
     /// Baixar XML do MDF-e processado
     /// </summary>
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlMdfe(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML do MDF-e
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da MDF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlMdfeManifesto(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML do Protocolo da SEFAZ
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da MDF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlMdfeProtocolo(Id: string): TBytes;
   end;
   
   TMdfeService = class(TRestService, IMdfeService)
@@ -1009,6 +1087,11 @@ type
     /// CPF/CNPJ do emitente.
     /// Utilize o valor sem máscara.
     /// </param>
+    function ConsultarMdfeNaoEncerrados(CpfCnpj: string): TMdfeNaoEncerrados;
+    /// <param name="CpfCnpj">
+    /// CPF/CNPJ do emitente.
+    /// Utilize o valor sem máscara.
+    /// </param>
     function ConsultarStatusSefazMdfe(CpfCnpj: string): TDfeSefazStatus;
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
@@ -1064,7 +1147,19 @@ type
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
+    function SincronizarMdfe(Id: string): TDfeSincronizacao;
+    /// <param name="Id">
+    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// </param>
     function BaixarXmlMdfe(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da MDF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlMdfeManifesto(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da MDF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlMdfeProtocolo(Id: string): TBytes;
   end;
   
   /// <summary>
@@ -2689,12 +2784,49 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
+function TCteService.SincronizarCte(Id: string): TDfeSincronizacao;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cte/{id}/sincronizar', 'POST');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeSincronizacaoFromJson(Response.ContentAsString);
+end;
+
 function TCteService.BaixarXmlCte(Id: string): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
   Request := CreateRequest('/cte/{id}/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TCteService.BaixarXmlCteConhecimento(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cte/{id}/xml/conhecimento', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TCteService.BaixarXmlCteProtocolo(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cte/{id}/xml/protocolo', 'GET');
   Request.AddUrlParam('id', Id);
   Response := Request.Execute;
   CheckError(Response);
@@ -3104,6 +3236,19 @@ begin
   Result := Converter.TDfeLoteFromJson(Response.ContentAsString);
 end;
 
+function TMdfeService.ConsultarMdfeNaoEncerrados(CpfCnpj: string): TMdfeNaoEncerrados;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/mdfe/nao-encerrados', 'GET');
+  Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TMdfeNaoEncerradosFromJson(Response.ContentAsString);
+end;
+
 function TMdfeService.ConsultarStatusSefazMdfe(CpfCnpj: string): TDfeSefazStatus;
 var
   Request: IRestRequest;
@@ -3276,12 +3421,49 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
+function TMdfeService.SincronizarMdfe(Id: string): TDfeSincronizacao;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/mdfe/{id}/sincronizar', 'POST');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeSincronizacaoFromJson(Response.ContentAsString);
+end;
+
 function TMdfeService.BaixarXmlMdfe(Id: string): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
   Request := CreateRequest('/mdfe/{id}/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TMdfeService.BaixarXmlMdfeManifesto(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/mdfe/{id}/xml/manifesto', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TMdfeService.BaixarXmlMdfeProtocolo(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/mdfe/{id}/xml/protocolo', 'GET');
   Request.AddUrlParam('id', Id);
   Response := Request.Execute;
   CheckError(Response);

@@ -229,6 +229,10 @@ type
   TCtePedidoCartaCorrecao = class;
   TCteCartaCorrecao = class;
   TDfeEvento = class;
+  TDfeSincronizacao = class;
+  TMdfeNaoEncerrado = class;
+  TMdfeNaoEncerradoList = class;
+  TMdfeNaoEncerrados = class;
   TMdfeSefazInfMunCarrega = class;
   TMdfeSefazInfMunCarregaList = class;
   TMdfeSefazInfPercurso = class;
@@ -470,7 +474,6 @@ type
   TDfeInutilizacao = class;
   TDfeEventoList = class;
   TDfeEventoListagem = class;
-  TDfeSincronizacao = class;
   TCnpjNaturezaJuridica = class;
   TCnpjPorteEmpresa = class;
   TCnpjSituacaoCadastral = class;
@@ -7674,6 +7677,117 @@ type
     property mensagemHasValue: Boolean read FmensagemHasValue write FmensagemHasValue;
     property tipo_evento: string read Ftipo_evento write Settipo_evento;
     property tipo_eventoHasValue: Boolean read Ftipo_eventoHasValue write Ftipo_eventoHasValue;
+  end;
+  
+  TDfeSincronizacao = class
+  private
+    Fstatus: string;
+    FstatusHasValue: Boolean;
+    Fcodigo_status: Integer;
+    Fcodigo_statusHasValue: Boolean;
+    Fmotivo_status: string;
+    Fmotivo_statusHasValue: Boolean;
+    Fdata_recebimento: TDateTime;
+    Fdata_recebimentoHasValue: Boolean;
+    Fchave: string;
+    FchaveHasValue: Boolean;
+    procedure Setstatus(const Value: string);
+    procedure Setcodigo_status(const Value: Integer);
+    procedure Setmotivo_status(const Value: string);
+    procedure Setdata_recebimento(const Value: TDateTime);
+    procedure Setchave(const Value: string);
+  public
+    /// <summary>
+    /// Situação atual da sincronização.
+    /// </summary>
+    property status: string read Fstatus write Setstatus;
+    property statusHasValue: Boolean read FstatusHasValue write FstatusHasValue;
+    /// <summary>
+    /// Código da situação atual do DF-e.
+    /// </summary>
+    property codigo_status: Integer read Fcodigo_status write Setcodigo_status;
+    property codigo_statusHasValue: Boolean read Fcodigo_statusHasValue write Fcodigo_statusHasValue;
+    /// <summary>
+    /// Descrição literal da situação atual do DF-e.
+    /// </summary>
+    property motivo_status: string read Fmotivo_status write Setmotivo_status;
+    property motivo_statusHasValue: Boolean read Fmotivo_statusHasValue write Fmotivo_statusHasValue;
+    /// <summary>
+    /// Data e hora de processamento.
+    /// </summary>
+    property data_recebimento: TDateTime read Fdata_recebimento write Setdata_recebimento;
+    property data_recebimentoHasValue: Boolean read Fdata_recebimentoHasValue write Fdata_recebimentoHasValue;
+    /// <summary>
+    /// Chave de Acesso do DF-e consultado.
+    /// </summary>
+    property chave: string read Fchave write Setchave;
+    property chaveHasValue: Boolean read FchaveHasValue write FchaveHasValue;
+  end;
+  
+  TMdfeNaoEncerrado = class
+  private
+    FchMDFe: string;
+    FnProt: string;
+  public
+    /// <summary>
+    /// Chaves de acesso do MDF-e não encerrado.
+    /// </summary>
+    property chMDFe: string read FchMDFe write FchMDFe;
+    /// <summary>
+    /// Número do Protocolo de autorização do MDF-e não encerrado.
+    /// </summary>
+    property nProt: string read FnProt write FnProt;
+  end;
+  
+  TMdfeNaoEncerradoList = class(TObjectList<TMdfeNaoEncerrado>)
+  end;
+  
+  TMdfeNaoEncerrados = class
+  private
+    FtpAmb: Integer;
+    FtpAmbHasValue: Boolean;
+    FverAplic: string;
+    FverAplicHasValue: Boolean;
+    FcStat: Integer;
+    FxMotivo: string;
+    FxMotivoHasValue: Boolean;
+    FcUF: Integer;
+    FcUFHasValue: Boolean;
+    FinfMDFe: TMdfeNaoEncerradoList;
+    procedure SettpAmb(const Value: Integer);
+    procedure SetverAplic(const Value: string);
+    procedure SetxMotivo(const Value: string);
+    procedure SetcUF(const Value: Integer);
+    procedure SetinfMDFe(const Value: TMdfeNaoEncerradoList);
+  public
+    destructor Destroy; override;
+    /// <summary>
+    /// Identificação do Ambiente:
+    /// * 1 - Produção
+    /// * 2 - Homologação
+    /// </summary>
+    property tpAmb: Integer read FtpAmb write SettpAmb;
+    property tpAmbHasValue: Boolean read FtpAmbHasValue write FtpAmbHasValue;
+    /// <summary>
+    /// Versão do Aplicativo que processou o MDF-e.
+    /// </summary>
+    property verAplic: string read FverAplic write SetverAplic;
+    property verAplicHasValue: Boolean read FverAplicHasValue write FverAplicHasValue;
+    /// <summary>
+    /// Código do status da mensagem enviada.
+    /// </summary>
+    property cStat: Integer read FcStat write FcStat;
+    /// <summary>
+    /// Descrição literal do status do serviço solicitado.
+    /// </summary>
+    property xMotivo: string read FxMotivo write SetxMotivo;
+    property xMotivoHasValue: Boolean read FxMotivoHasValue write FxMotivoHasValue;
+    /// <summary>
+    /// código da UF de atendimento.
+    /// </summary>
+    property cUF: Integer read FcUF write SetcUF;
+    property cUFHasValue: Boolean read FcUFHasValue write FcUFHasValue;
+    property infMDFe: TMdfeNaoEncerradoList read FinfMDFe write SetinfMDFe;
   end;
   
   /// <summary>
@@ -17687,51 +17801,6 @@ type
     property data: TDfeEventoList read Fdata write Setdata;
   end;
   
-  TDfeSincronizacao = class
-  private
-    Fstatus: string;
-    FstatusHasValue: Boolean;
-    Fcodigo_status: Integer;
-    Fcodigo_statusHasValue: Boolean;
-    Fmotivo_status: string;
-    Fmotivo_statusHasValue: Boolean;
-    Fdata_recebimento: TDateTime;
-    Fdata_recebimentoHasValue: Boolean;
-    Fchave: string;
-    FchaveHasValue: Boolean;
-    procedure Setstatus(const Value: string);
-    procedure Setcodigo_status(const Value: Integer);
-    procedure Setmotivo_status(const Value: string);
-    procedure Setdata_recebimento(const Value: TDateTime);
-    procedure Setchave(const Value: string);
-  public
-    /// <summary>
-    /// Situação atual da sincronização.
-    /// </summary>
-    property status: string read Fstatus write Setstatus;
-    property statusHasValue: Boolean read FstatusHasValue write FstatusHasValue;
-    /// <summary>
-    /// Código da situação atual do DF-e.
-    /// </summary>
-    property codigo_status: Integer read Fcodigo_status write Setcodigo_status;
-    property codigo_statusHasValue: Boolean read Fcodigo_statusHasValue write Fcodigo_statusHasValue;
-    /// <summary>
-    /// Descrição literal da situação atual do DF-e.
-    /// </summary>
-    property motivo_status: string read Fmotivo_status write Setmotivo_status;
-    property motivo_statusHasValue: Boolean read Fmotivo_statusHasValue write Fmotivo_statusHasValue;
-    /// <summary>
-    /// Data e hora de processamento.
-    /// </summary>
-    property data_recebimento: TDateTime read Fdata_recebimento write Setdata_recebimento;
-    property data_recebimentoHasValue: Boolean read Fdata_recebimentoHasValue write Fdata_recebimentoHasValue;
-    /// <summary>
-    /// Chave de Acesso do DF-e consultado.
-    /// </summary>
-    property chave: string read Fchave write Setchave;
-    property chaveHasValue: Boolean read FchaveHasValue write FchaveHasValue;
-  end;
-  
   /// <summary>
   /// Natureza jurídica.
   /// </summary>
@@ -23720,6 +23789,79 @@ procedure TDfeEvento.Settipo_evento(const Value: string);
 begin
   Ftipo_evento := Value;
   Ftipo_eventoHasValue := True;
+end;
+
+{ TDfeSincronizacao }
+
+procedure TDfeSincronizacao.Setstatus(const Value: string);
+begin
+  Fstatus := Value;
+  FstatusHasValue := True;
+end;
+
+procedure TDfeSincronizacao.Setcodigo_status(const Value: Integer);
+begin
+  Fcodigo_status := Value;
+  Fcodigo_statusHasValue := True;
+end;
+
+procedure TDfeSincronizacao.Setmotivo_status(const Value: string);
+begin
+  Fmotivo_status := Value;
+  Fmotivo_statusHasValue := True;
+end;
+
+procedure TDfeSincronizacao.Setdata_recebimento(const Value: TDateTime);
+begin
+  Fdata_recebimento := Value;
+  Fdata_recebimentoHasValue := True;
+end;
+
+procedure TDfeSincronizacao.Setchave(const Value: string);
+begin
+  Fchave := Value;
+  FchaveHasValue := True;
+end;
+
+{ TMdfeNaoEncerrados }
+
+destructor TMdfeNaoEncerrados.Destroy;
+begin
+  FinfMDFe.Free;
+  inherited;
+end;
+
+procedure TMdfeNaoEncerrados.SettpAmb(const Value: Integer);
+begin
+  FtpAmb := Value;
+  FtpAmbHasValue := True;
+end;
+
+procedure TMdfeNaoEncerrados.SetverAplic(const Value: string);
+begin
+  FverAplic := Value;
+  FverAplicHasValue := True;
+end;
+
+procedure TMdfeNaoEncerrados.SetxMotivo(const Value: string);
+begin
+  FxMotivo := Value;
+  FxMotivoHasValue := True;
+end;
+
+procedure TMdfeNaoEncerrados.SetcUF(const Value: Integer);
+begin
+  FcUF := Value;
+  FcUFHasValue := True;
+end;
+
+procedure TMdfeNaoEncerrados.SetinfMDFe(const Value: TMdfeNaoEncerradoList);
+begin
+  if Value <> FinfMDFe then
+  begin
+    FinfMDFe.Free;
+    FinfMDFe := Value;
+  end;
 end;
 
 { TMdfeSefazIde }
@@ -29764,38 +29906,6 @@ begin
     Fdata.Free;
     Fdata := Value;
   end;
-end;
-
-{ TDfeSincronizacao }
-
-procedure TDfeSincronizacao.Setstatus(const Value: string);
-begin
-  Fstatus := Value;
-  FstatusHasValue := True;
-end;
-
-procedure TDfeSincronizacao.Setcodigo_status(const Value: Integer);
-begin
-  Fcodigo_status := Value;
-  Fcodigo_statusHasValue := True;
-end;
-
-procedure TDfeSincronizacao.Setmotivo_status(const Value: string);
-begin
-  Fmotivo_status := Value;
-  Fmotivo_statusHasValue := True;
-end;
-
-procedure TDfeSincronizacao.Setdata_recebimento(const Value: TDateTime);
-begin
-  Fdata_recebimento := Value;
-  Fdata_recebimentoHasValue := True;
-end;
-
-procedure TDfeSincronizacao.Setchave(const Value: string);
-begin
-  Fchave := Value;
-  FchaveHasValue := True;
 end;
 
 { TCnpjNaturezaJuridica }

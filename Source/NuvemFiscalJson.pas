@@ -891,6 +891,22 @@ type
     function TDfeEventoToJson(Source: TDfeEvento): string;
     function TDfeEventoFromJsonValue(Source: TJSONValue): TDfeEvento;
     function TDfeEventoFromJson(Source: string): TDfeEvento;
+    function TDfeSincronizacaoToJsonValue(Source: TDfeSincronizacao): TJSONValue;
+    function TDfeSincronizacaoToJson(Source: TDfeSincronizacao): string;
+    function TDfeSincronizacaoFromJsonValue(Source: TJSONValue): TDfeSincronizacao;
+    function TDfeSincronizacaoFromJson(Source: string): TDfeSincronizacao;
+    function TMdfeNaoEncerradoToJsonValue(Source: TMdfeNaoEncerrado): TJSONValue;
+    function TMdfeNaoEncerradoToJson(Source: TMdfeNaoEncerrado): string;
+    function TMdfeNaoEncerradoFromJsonValue(Source: TJSONValue): TMdfeNaoEncerrado;
+    function TMdfeNaoEncerradoFromJson(Source: string): TMdfeNaoEncerrado;
+    function TMdfeNaoEncerradoListToJsonValue(Source: TMdfeNaoEncerradoList): TJSONValue;
+    function TMdfeNaoEncerradoListToJson(Source: TMdfeNaoEncerradoList): string;
+    function TMdfeNaoEncerradoListFromJsonValue(Source: TJSONValue): TMdfeNaoEncerradoList;
+    function TMdfeNaoEncerradoListFromJson(Source: string): TMdfeNaoEncerradoList;
+    function TMdfeNaoEncerradosToJsonValue(Source: TMdfeNaoEncerrados): TJSONValue;
+    function TMdfeNaoEncerradosToJson(Source: TMdfeNaoEncerrados): string;
+    function TMdfeNaoEncerradosFromJsonValue(Source: TJSONValue): TMdfeNaoEncerrados;
+    function TMdfeNaoEncerradosFromJson(Source: string): TMdfeNaoEncerrados;
     function TMdfeSefazInfMunCarregaToJsonValue(Source: TMdfeSefazInfMunCarrega): TJSONValue;
     function TMdfeSefazInfMunCarregaToJson(Source: TMdfeSefazInfMunCarrega): string;
     function TMdfeSefazInfMunCarregaFromJsonValue(Source: TJSONValue): TMdfeSefazInfMunCarrega;
@@ -1855,10 +1871,6 @@ type
     function TDfeEventoListagemToJson(Source: TDfeEventoListagem): string;
     function TDfeEventoListagemFromJsonValue(Source: TJSONValue): TDfeEventoListagem;
     function TDfeEventoListagemFromJson(Source: string): TDfeEventoListagem;
-    function TDfeSincronizacaoToJsonValue(Source: TDfeSincronizacao): TJSONValue;
-    function TDfeSincronizacaoToJson(Source: TDfeSincronizacao): string;
-    function TDfeSincronizacaoFromJsonValue(Source: TJSONValue): TDfeSincronizacao;
-    function TDfeSincronizacaoFromJson(Source: string): TDfeSincronizacao;
     function TCnpjNaturezaJuridicaToJsonValue(Source: TCnpjNaturezaJuridica): TJSONValue;
     function TCnpjNaturezaJuridicaToJson(Source: TCnpjNaturezaJuridica): string;
     function TCnpjNaturezaJuridicaFromJsonValue(Source: TJSONValue): TCnpjNaturezaJuridica;
@@ -17720,6 +17732,285 @@ begin
   JValue := JsonToJsonValue(Source);
   try
     Result := TDfeEventoFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDfeSincronizacaoToJsonValue(Source: TDfeSincronizacao): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    if Source.statusHasValue then
+      Json.ObjAddProp(Result, 'status', Self.stringToJsonValue(Source.status));
+    if Source.codigo_statusHasValue then
+      Json.ObjAddProp(Result, 'codigo_status', Self.IntegerToJsonValue(Source.codigo_status));
+    if Source.motivo_statusHasValue then
+      Json.ObjAddProp(Result, 'motivo_status', Self.stringToJsonValue(Source.motivo_status));
+    if Source.data_recebimentoHasValue then
+      Json.ObjAddProp(Result, 'data_recebimento', Self.TDateTimeToJsonValue(Source.data_recebimento));
+    if Source.chaveHasValue then
+      Json.ObjAddProp(Result, 'chave', Self.stringToJsonValue(Source.chave));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDfeSincronizacaoToJson(Source: TDfeSincronizacao): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDfeSincronizacaoToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDfeSincronizacaoFromJsonValue(Source: TJSONValue): TDfeSincronizacao;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDfeSincronizacao.Create;
+  try
+    if Json.ObjContains(Source, 'status', JValue) then
+      Result.status := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'codigo_status', JValue) then
+      Result.codigo_status := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'motivo_status', JValue) then
+      Result.motivo_status := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'data_recebimento', JValue) then
+      Result.data_recebimento := Self.TDateTimeFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'chave', JValue) then
+      Result.chave := Self.stringFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDfeSincronizacaoFromJson(Source: string): TDfeSincronizacao;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDfeSincronizacaoFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TMdfeNaoEncerradoToJsonValue(Source: TMdfeNaoEncerrado): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'chMDFe', Self.stringToJsonValue(Source.chMDFe));
+    Json.ObjAddProp(Result, 'nProt', Self.stringToJsonValue(Source.nProt));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TMdfeNaoEncerradoToJson(Source: TMdfeNaoEncerrado): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TMdfeNaoEncerradoToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TMdfeNaoEncerradoFromJsonValue(Source: TJSONValue): TMdfeNaoEncerrado;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TMdfeNaoEncerrado.Create;
+  try
+    if Json.ObjContains(Source, 'chMDFe', JValue) then
+      Result.chMDFe := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'nProt', JValue) then
+      Result.nProt := Self.stringFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TMdfeNaoEncerradoFromJson(Source: string): TMdfeNaoEncerrado;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TMdfeNaoEncerradoFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TMdfeNaoEncerradoListToJsonValue(Source: TMdfeNaoEncerradoList): TJSONValue;
+var
+  Index: Integer;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateArray;
+  try
+    for Index := 0 to Source.Count - 1 do
+      Json.ArrayAdd(Result, Self.TMdfeNaoEncerradoToJsonValue(Source[Index]));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TMdfeNaoEncerradoListToJson(Source: TMdfeNaoEncerradoList): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TMdfeNaoEncerradoListToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TMdfeNaoEncerradoListFromJsonValue(Source: TJSONValue): TMdfeNaoEncerradoList;
+var
+  Index: Integer;
+begin
+  if not Json.IsArray(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TMdfeNaoEncerradoList.Create;
+  try
+    for Index := 0 to Json.ArrayLength(Source) - 1 do
+      Result.Add(Self.TMdfeNaoEncerradoFromJsonValue(Json.ArrayGet(Source, Index)));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TMdfeNaoEncerradoListFromJson(Source: string): TMdfeNaoEncerradoList;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TMdfeNaoEncerradoListFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TMdfeNaoEncerradosToJsonValue(Source: TMdfeNaoEncerrados): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    if Source.tpAmbHasValue then
+      Json.ObjAddProp(Result, 'tpAmb', Self.IntegerToJsonValue(Source.tpAmb));
+    if Source.verAplicHasValue then
+      Json.ObjAddProp(Result, 'verAplic', Self.stringToJsonValue(Source.verAplic));
+    Json.ObjAddProp(Result, 'cStat', Self.IntegerToJsonValue(Source.cStat));
+    if Source.xMotivoHasValue then
+      Json.ObjAddProp(Result, 'xMotivo', Self.stringToJsonValue(Source.xMotivo));
+    if Source.cUFHasValue then
+      Json.ObjAddProp(Result, 'cUF', Self.IntegerToJsonValue(Source.cUF));
+    if Assigned(Source.infMDFe) then
+      Json.ObjAddProp(Result, 'infMDFe', Self.TMdfeNaoEncerradoListToJsonValue(Source.infMDFe));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TMdfeNaoEncerradosToJson(Source: TMdfeNaoEncerrados): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TMdfeNaoEncerradosToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TMdfeNaoEncerradosFromJsonValue(Source: TJSONValue): TMdfeNaoEncerrados;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TMdfeNaoEncerrados.Create;
+  try
+    if Json.ObjContains(Source, 'tpAmb', JValue) then
+      Result.tpAmb := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'verAplic', JValue) then
+      Result.verAplic := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cStat', JValue) then
+      Result.cStat := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'xMotivo', JValue) then
+      Result.xMotivo := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cUF', JValue) then
+      Result.cUF := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'infMDFe', JValue) then
+      Result.infMDFe := Self.TMdfeNaoEncerradoListFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TMdfeNaoEncerradosFromJson(Source: string): TMdfeNaoEncerrados;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TMdfeNaoEncerradosFromJsonValue(JValue);
   finally
     JValue.Free;
   end;
@@ -35971,82 +36262,6 @@ begin
   JValue := JsonToJsonValue(Source);
   try
     Result := TDfeEventoListagemFromJsonValue(JValue);
-  finally
-    JValue.Free;
-  end;
-end;
-
-function TJsonConverter.TDfeSincronizacaoToJsonValue(Source: TDfeSincronizacao): TJSONValue;
-begin
-  if not Assigned(Source) then
-  begin
-    Result := Json.CreateNull;
-    Exit;
-  end;
-  Result := Json.CreateObject;
-  try
-    if Source.statusHasValue then
-      Json.ObjAddProp(Result, 'status', Self.stringToJsonValue(Source.status));
-    if Source.codigo_statusHasValue then
-      Json.ObjAddProp(Result, 'codigo_status', Self.IntegerToJsonValue(Source.codigo_status));
-    if Source.motivo_statusHasValue then
-      Json.ObjAddProp(Result, 'motivo_status', Self.stringToJsonValue(Source.motivo_status));
-    if Source.data_recebimentoHasValue then
-      Json.ObjAddProp(Result, 'data_recebimento', Self.TDateTimeToJsonValue(Source.data_recebimento));
-    if Source.chaveHasValue then
-      Json.ObjAddProp(Result, 'chave', Self.stringToJsonValue(Source.chave));
-  except
-    Result.Free;
-    raise;
-  end;
-end;
-
-function TJsonConverter.TDfeSincronizacaoToJson(Source: TDfeSincronizacao): string;
-var
-  JValue: TJSONValue;
-begin
-  JValue := TDfeSincronizacaoToJsonValue(Source);
-  try
-    Result := JsonValueToJson(JValue);
-  finally
-    JValue.Free;
-  end;
-end;
-
-function TJsonConverter.TDfeSincronizacaoFromJsonValue(Source: TJSONValue): TDfeSincronizacao;
-var
-  JValue: TJSONValue;
-begin
-  if not Json.IsObject(Source) then
-  begin
-    Result := nil;
-    Exit;
-  end;
-  Result := TDfeSincronizacao.Create;
-  try
-    if Json.ObjContains(Source, 'status', JValue) then
-      Result.status := Self.stringFromJsonValue(JValue);
-    if Json.ObjContains(Source, 'codigo_status', JValue) then
-      Result.codigo_status := Self.IntegerFromJsonValue(JValue);
-    if Json.ObjContains(Source, 'motivo_status', JValue) then
-      Result.motivo_status := Self.stringFromJsonValue(JValue);
-    if Json.ObjContains(Source, 'data_recebimento', JValue) then
-      Result.data_recebimento := Self.TDateTimeFromJsonValue(JValue);
-    if Json.ObjContains(Source, 'chave', JValue) then
-      Result.chave := Self.stringFromJsonValue(JValue);
-  except
-    Result.Free;
-    raise;
-  end;
-end;
-
-function TJsonConverter.TDfeSincronizacaoFromJson(Source: string): TDfeSincronizacao;
-var
-  JValue: TJSONValue;
-begin
-  JValue := JsonToJsonValue(Source);
-  try
-    Result := TDfeSincronizacaoFromJsonValue(JValue);
   finally
     JValue.Free;
   end;
