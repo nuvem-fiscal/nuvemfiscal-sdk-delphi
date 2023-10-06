@@ -214,12 +214,23 @@ type
     /// CPF/CNPJ do emitente.
     /// Utilize o valor sem máscara.
     /// </param>
+    /// <param name="Autorizador">
+    /// Ambiente Autorizador.
+    /// 
+    /// Autorizadores disponíveis:
+    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
+    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
+    /// * MDF-e: `SVRS`;
+    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// 
+    /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
+    /// </param>
     /// <remarks>
     /// Consulta do status do serviço prestado pelo Portal da Secretaria de Fazenda Estadual.
     /// 
     /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 3.0.0a, item 4.6.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
     /// </remarks>
-    function ConsultarStatusSefazCte(CpfCnpj: string): TDfeSefazStatus;
+    function ConsultarStatusSefazCte(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <summary>
     /// Consultar CT-e
     /// </summary>
@@ -382,7 +393,18 @@ type
     /// CPF/CNPJ do emitente.
     /// Utilize o valor sem máscara.
     /// </param>
-    function ConsultarStatusSefazCte(CpfCnpj: string): TDfeSefazStatus;
+    /// <param name="Autorizador">
+    /// Ambiente Autorizador.
+    /// 
+    /// Autorizadores disponíveis:
+    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
+    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
+    /// * MDF-e: `SVRS`;
+    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// 
+    /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
+    /// </param>
+    function ConsultarStatusSefazCte(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <param name="Id">
     /// ID único do CT-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -881,12 +903,23 @@ type
     /// CPF/CNPJ do emitente.
     /// Utilize o valor sem máscara.
     /// </param>
+    /// <param name="Autorizador">
+    /// Ambiente Autorizador.
+    /// 
+    /// Autorizadores disponíveis:
+    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
+    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
+    /// * MDF-e: `SVRS`;
+    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// 
+    /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
+    /// </param>
     /// <remarks>
     /// Consulta do status do serviço prestado pelo Portal da Secretaria de Fazenda Estadual.
     /// 
     /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 3.0.0a, item 4.6.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
     /// </remarks>
-    function ConsultarStatusSefazMdfe(CpfCnpj: string): TDfeSefazStatus;
+    function ConsultarStatusSefazMdfe(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <summary>
     /// Consultar manifesto
     /// </summary>
@@ -1092,7 +1125,18 @@ type
     /// CPF/CNPJ do emitente.
     /// Utilize o valor sem máscara.
     /// </param>
-    function ConsultarStatusSefazMdfe(CpfCnpj: string): TDfeSefazStatus;
+    /// <param name="Autorizador">
+    /// Ambiente Autorizador.
+    /// 
+    /// Autorizadores disponíveis:
+    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
+    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
+    /// * MDF-e: `SVRS`;
+    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// 
+    /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
+    /// </param>
+    function ConsultarStatusSefazMdfe(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -1311,18 +1355,70 @@ type
     /// </remarks>
     function ConsultarLoteNfce(Id: string): TDfeLote;
     /// <summary>
+    /// Prévia do PDF do DANFCE
+    /// </summary>
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    /// <param name="MensagemRodape">
+    /// Imprime mensagem no rodapé do documento.
+    /// 
+    /// O caractere `|` (pipe) poderá ser utilizado para definir a quantidade e o alinhamento das mensagens.
+    /// 
+    /// **Exemplos de Uso:**
+    /// * `"esquerda"`
+    /// * `"esquerda|centro"`
+    /// * `"esquerda|centro|direita"`
+    /// * `"|centro"`, `"|centro|"`
+    /// * `"|centro|direita"`
+    /// * `"||direita"`
+    /// * `"esquerda||direita"`
+    /// </param>
+    /// <param name="Resumido">
+    /// Poderá ser impresso apenas o DANFE NFC-e resumido ou ecológico, sem o detalhamento dos itens da venda, desde que a Unidade Federada permita esta opção em sua legislação e o consumidor assim o solicite.
+    /// </param>
+    /// <param name="QrcodeLateral">
+    /// Imprime o QRCode na lateral do DANFE NFC-e.
+    /// </param>
+    /// <remarks>
+    /// Através desse endpoint, é possível enviar os dados de uma NFC-e e gerar uma prévia do DANFCE.
+    /// 
+    /// Os dados de entrada são os mesmos do endpoint de emissão de NFC-e (`POST /nfce`).
+    /// </remarks>
+    function BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
+    /// <summary>
+    /// Prévia do XML da NFC-e
+    /// </summary>
+    /// <remarks>
+    /// Através desse endpoint, é possível enviar os dados de uma NFC-e e gerar uma prévia do XML, sem a assinatura digital.
+    /// 
+    /// Os dados de entrada são os mesmos do endpoint de emissão de NFC-e (`POST /nfce`).
+    /// </remarks>
+    function BaixarPreviaXmlNfce(Body: TNfePedidoEmissao): TBytes;
+    /// <summary>
     /// Consulta do Status do Serviço na SEFAZ Autorizadora
     /// </summary>
     /// <param name="CpfCnpj">
     /// CPF/CNPJ do emitente.
     /// Utilize o valor sem máscara.
     /// </param>
+    /// <param name="Autorizador">
+    /// Ambiente Autorizador.
+    /// 
+    /// Autorizadores disponíveis:
+    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
+    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
+    /// * MDF-e: `SVRS`;
+    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// 
+    /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
+    /// </param>
     /// <remarks>
     /// Consulta do status do serviço prestado pelo Portal da Secretaria de Fazenda Estadual.
     /// 
     /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 7.0, item 5.5.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
     /// </remarks>
-    function ConsultarStatusSefazNfce(CpfCnpj: string): TDfeSefazStatus;
+    function ConsultarStatusSefazNfce(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <summary>
     /// Consultar NFC-e
     /// </summary>
@@ -1562,11 +1658,47 @@ type
     /// ID único do lote gerado pela Nuvem Fiscal.
     /// </param>
     function ConsultarLoteNfce(Id: string): TDfeLote;
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    /// <param name="MensagemRodape">
+    /// Imprime mensagem no rodapé do documento.
+    /// 
+    /// O caractere `|` (pipe) poderá ser utilizado para definir a quantidade e o alinhamento das mensagens.
+    /// 
+    /// **Exemplos de Uso:**
+    /// * `"esquerda"`
+    /// * `"esquerda|centro"`
+    /// * `"esquerda|centro|direita"`
+    /// * `"|centro"`, `"|centro|"`
+    /// * `"|centro|direita"`
+    /// * `"||direita"`
+    /// * `"esquerda||direita"`
+    /// </param>
+    /// <param name="Resumido">
+    /// Poderá ser impresso apenas o DANFE NFC-e resumido ou ecológico, sem o detalhamento dos itens da venda, desde que a Unidade Federada permita esta opção em sua legislação e o consumidor assim o solicite.
+    /// </param>
+    /// <param name="QrcodeLateral">
+    /// Imprime o QRCode na lateral do DANFE NFC-e.
+    /// </param>
+    function BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
+    function BaixarPreviaXmlNfce(Body: TNfePedidoEmissao): TBytes;
     /// <param name="CpfCnpj">
     /// CPF/CNPJ do emitente.
     /// Utilize o valor sem máscara.
     /// </param>
-    function ConsultarStatusSefazNfce(CpfCnpj: string): TDfeSefazStatus;
+    /// <param name="Autorizador">
+    /// Ambiente Autorizador.
+    /// 
+    /// Autorizadores disponíveis:
+    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
+    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
+    /// * MDF-e: `SVRS`;
+    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// 
+    /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
+    /// </param>
+    function ConsultarStatusSefazNfce(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <param name="Id">
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -1812,18 +1944,67 @@ type
     /// </remarks>
     function ConsultarLoteNfe(Id: string): TDfeLote;
     /// <summary>
+    /// Prévia do PDF do DANFE
+    /// </summary>
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    /// <param name="MensagemRodape">
+    /// Imprime mensagem no rodapé do documento.
+    /// 
+    /// O caractere `|` (pipe) poderá ser utilizado para definir a quantidade e o alinhamento das mensagens.
+    /// 
+    /// **Exemplos de Uso:**
+    /// * `"esquerda"`
+    /// * `"esquerda|centro"`
+    /// * `"esquerda|centro|direita"`
+    /// * `"|centro"`, `"|centro|"`
+    /// * `"|centro|direita"`
+    /// * `"||direita"`
+    /// * `"esquerda||direita"`
+    /// </param>
+    /// <param name="Canhoto">
+    /// Imprime o documento com o bloco de canhoto.
+    /// </param>
+    /// <remarks>
+    /// Através desse endpoint, é possível enviar os dados de uma NF-e e gerar uma prévia do DANFE.
+    /// 
+    /// Os dados de entrada são os mesmos do endpoint de emissão de NF-e (`POST /nfe`).
+    /// </remarks>
+    function BaixarPreviaPdfNfe(Body: TNfePedidoEmissao; Logotipo: Boolean; MensagemRodape: string; Canhoto: Boolean): TBytes;
+    /// <summary>
+    /// Prévia do XML da NF-e
+    /// </summary>
+    /// <remarks>
+    /// Através desse endpoint, é possível enviar os dados de uma NF-e e gerar uma prévia do XML, sem a assinatura digital.
+    /// 
+    /// Os dados de entrada são os mesmos do endpoint de emissão de NF-e (`POST /nfe`).
+    /// </remarks>
+    function BaixarPreviaXmlNfe(Body: TNfePedidoEmissao): TBytes;
+    /// <summary>
     /// Consulta do Status do Serviço na SEFAZ Autorizadora
     /// </summary>
     /// <param name="CpfCnpj">
     /// CPF/CNPJ do emitente.
     /// Utilize o valor sem máscara.
     /// </param>
+    /// <param name="Autorizador">
+    /// Ambiente Autorizador.
+    /// 
+    /// Autorizadores disponíveis:
+    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
+    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
+    /// * MDF-e: `SVRS`;
+    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// 
+    /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
+    /// </param>
     /// <remarks>
     /// Consulta do status do serviço prestado pelo Portal da Secretaria de Fazenda Estadual.
     /// 
     /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 7.0, item 5.5.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
     /// </remarks>
-    function ConsultarStatusSefazNfe(CpfCnpj: string): TDfeSefazStatus;
+    function ConsultarStatusSefazNfe(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <summary>
     /// Consultar NF-e
     /// </summary>
@@ -2055,11 +2236,44 @@ type
     /// ID único do lote gerado pela Nuvem Fiscal.
     /// </param>
     function ConsultarLoteNfe(Id: string): TDfeLote;
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    /// <param name="MensagemRodape">
+    /// Imprime mensagem no rodapé do documento.
+    /// 
+    /// O caractere `|` (pipe) poderá ser utilizado para definir a quantidade e o alinhamento das mensagens.
+    /// 
+    /// **Exemplos de Uso:**
+    /// * `"esquerda"`
+    /// * `"esquerda|centro"`
+    /// * `"esquerda|centro|direita"`
+    /// * `"|centro"`, `"|centro|"`
+    /// * `"|centro|direita"`
+    /// * `"||direita"`
+    /// * `"esquerda||direita"`
+    /// </param>
+    /// <param name="Canhoto">
+    /// Imprime o documento com o bloco de canhoto.
+    /// </param>
+    function BaixarPreviaPdfNfe(Body: TNfePedidoEmissao; Logotipo: Boolean; MensagemRodape: string; Canhoto: Boolean): TBytes;
+    function BaixarPreviaXmlNfe(Body: TNfePedidoEmissao): TBytes;
     /// <param name="CpfCnpj">
     /// CPF/CNPJ do emitente.
     /// Utilize o valor sem máscara.
     /// </param>
-    function ConsultarStatusSefazNfe(CpfCnpj: string): TDfeSefazStatus;
+    /// <param name="Autorizador">
+    /// Ambiente Autorizador.
+    /// 
+    /// Autorizadores disponíveis:
+    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
+    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
+    /// * MDF-e: `SVRS`;
+    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// 
+    /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
+    /// </param>
+    function ConsultarStatusSefazNfe(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -2642,13 +2856,14 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TCteService.ConsultarStatusSefazCte(CpfCnpj: string): TDfeSefazStatus;
+function TCteService.ConsultarStatusSefazCte(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
 var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
   Request := CreateRequest('/cte/sefaz/status', 'GET');
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('autorizador', Autorizador);
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
@@ -3249,13 +3464,14 @@ begin
   Result := Converter.TMdfeNaoEncerradosFromJson(Response.ContentAsString);
 end;
 
-function TMdfeService.ConsultarStatusSefazMdfe(CpfCnpj: string): TDfeSefazStatus;
+function TMdfeService.ConsultarStatusSefazMdfe(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
 var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
   Request := CreateRequest('/mdfe/sefaz/status', 'GET');
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('autorizador', Autorizador);
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
@@ -3655,13 +3871,44 @@ begin
   Result := Converter.TDfeLoteFromJson(Response.ContentAsString);
 end;
 
-function TNfceService.ConsultarStatusSefazNfce(CpfCnpj: string): TDfeSefazStatus;
+function TNfceService.BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfce/previa/pdf', 'POST');
+  Request.AddBody(Converter.TNfePedidoEmissaoToJson(Body));
+  Request.AddQueryParam('logotipo', BoolToParam(Logotipo));
+  Request.AddQueryParam('mensagem_rodape', MensagemRodape);
+  Request.AddQueryParam('resumido', BoolToParam(Resumido));
+  Request.AddQueryParam('qrcode_lateral', BoolToParam(QrcodeLateral));
+  Request.AddHeader('Content-Type', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TNfceService.BaixarPreviaXmlNfce(Body: TNfePedidoEmissao): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfce/previa/xml', 'POST');
+  Request.AddBody(Converter.TNfePedidoEmissaoToJson(Body));
+  Request.AddHeader('Content-Type', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TNfceService.ConsultarStatusSefazNfce(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
 var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
   Request := CreateRequest('/nfce/sefaz/status', 'GET');
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('autorizador', Autorizador);
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
@@ -3998,13 +4245,43 @@ begin
   Result := Converter.TDfeLoteFromJson(Response.ContentAsString);
 end;
 
-function TNfeService.ConsultarStatusSefazNfe(CpfCnpj: string): TDfeSefazStatus;
+function TNfeService.BaixarPreviaPdfNfe(Body: TNfePedidoEmissao; Logotipo: Boolean; MensagemRodape: string; Canhoto: Boolean): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfe/previa/pdf', 'POST');
+  Request.AddBody(Converter.TNfePedidoEmissaoToJson(Body));
+  Request.AddQueryParam('logotipo', BoolToParam(Logotipo));
+  Request.AddQueryParam('mensagem_rodape', MensagemRodape);
+  Request.AddQueryParam('canhoto', BoolToParam(Canhoto));
+  Request.AddHeader('Content-Type', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TNfeService.BaixarPreviaXmlNfe(Body: TNfePedidoEmissao): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfe/previa/xml', 'POST');
+  Request.AddBody(Converter.TNfePedidoEmissaoToJson(Body));
+  Request.AddHeader('Content-Type', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TNfeService.ConsultarStatusSefazNfe(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
 var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
   Request := CreateRequest('/nfe/sefaz/status', 'GET');
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('autorizador', Autorizador);
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
