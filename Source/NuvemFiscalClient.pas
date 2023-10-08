@@ -306,7 +306,10 @@ type
     /// <param name="Id">
     /// ID único do CT-e gerado pela Nuvem Fiscal.
     /// </param>
-    function BaixarPdfCte(Id: string): TBytes;
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    function BaixarPdfCte(Id: string; Logotipo: Boolean): TBytes;
     /// <summary>
     /// Sincroniza dados no CT-e a partir da SEFAZ
     /// </summary>
@@ -444,7 +447,10 @@ type
     /// <param name="Id">
     /// ID único do CT-e gerado pela Nuvem Fiscal.
     /// </param>
-    function BaixarPdfCte(Id: string): TBytes;
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    function BaixarPdfCte(Id: string; Logotipo: Boolean): TBytes;
     /// <param name="Id">
     /// ID único do CT-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -1009,7 +1015,10 @@ type
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
-    function BaixarPdfMdfe(Id: string): TBytes;
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    function BaixarPdfMdfe(Id: string; Logotipo: Boolean): TBytes;
     /// <summary>
     /// Sincroniza dados no MDF-e a partir da SEFAZ
     /// </summary>
@@ -1187,7 +1196,10 @@ type
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
-    function BaixarPdfMdfe(Id: string): TBytes;
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    function BaixarPdfMdfe(Id: string; Logotipo: Boolean): TBytes;
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -2987,13 +2999,14 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TCteService.BaixarPdfCte(Id: string): TBytes;
+function TCteService.BaixarPdfCte(Id: string; Logotipo: Boolean): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
   Request := CreateRequest('/cte/{id}/pdf', 'GET');
   Request.AddUrlParam('id', Id);
+  Request.AddQueryParam('logotipo', BoolToParam(Logotipo));
   Response := Request.Execute;
   CheckError(Response);
   Result := Response.ContentAsBytes;
@@ -3625,13 +3638,14 @@ begin
   Result := Converter.TMdfeInclusaoDfeFromJson(Response.ContentAsString);
 end;
 
-function TMdfeService.BaixarPdfMdfe(Id: string): TBytes;
+function TMdfeService.BaixarPdfMdfe(Id: string; Logotipo: Boolean): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
 begin
   Request := CreateRequest('/mdfe/{id}/pdf', 'GET');
   Request.AddUrlParam('id', Id);
+  Request.AddQueryParam('logotipo', BoolToParam(Logotipo));
   Response := Request.Execute;
   CheckError(Response);
   Result := Response.ContentAsBytes;
