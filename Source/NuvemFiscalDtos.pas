@@ -3019,6 +3019,8 @@ type
     FtpImunidadeHasValue: Boolean;
     FpAliq: Double;
     FpAliqHasValue: Boolean;
+    FvISSQN: Double;
+    FvISSQNHasValue: Boolean;
     FtpRetISSQN: Integer;
     FtpRetISSQNHasValue: Boolean;
     procedure SetcLocIncid(const Value: string);
@@ -3027,6 +3029,7 @@ type
     procedure SetexigSusp(const Value: TExigSuspensa);
     procedure SettpImunidade(const Value: Integer);
     procedure SetpAliq(const Value: Double);
+    procedure SetvISSQN(const Value: Double);
     procedure SettpRetISSQN(const Value: Integer);
   public
     destructor Destroy; override;
@@ -3069,6 +3072,15 @@ type
     /// </summary>
     property pAliq: Double read FpAliq write SetpAliq;
     property pAliqHasValue: Boolean read FpAliqHasValue write FpAliqHasValue;
+    /// <summary>
+    /// Valor do ISSQN (R$).
+    /// 
+    /// Caso você não informe esse campo, vamos calcular automaticamente.
+    /// 
+    /// Para emissões pelo Sistema Nacional NFS-e, essa propriedade é ignorada e o valor do ISSQN é determinado automaticamente pela SEFIN nacional.
+    /// </summary>
+    property vISSQN: Double read FvISSQN write SetvISSQN;
+    property vISSQNHasValue: Boolean read FvISSQNHasValue write FvISSQNHasValue;
     /// <summary>
     /// Tipo de retencao do ISSQN:
     /// * 1 - Não Retido
@@ -20495,6 +20507,12 @@ procedure TTribMunicipal.SetpAliq(const Value: Double);
 begin
   FpAliq := Value;
   FpAliqHasValue := True;
+end;
+
+procedure TTribMunicipal.SetvISSQN(const Value: Double);
+begin
+  FvISSQN := Value;
+  FvISSQNHasValue := True;
 end;
 
 procedure TTribMunicipal.SettpRetISSQN(const Value: Integer);

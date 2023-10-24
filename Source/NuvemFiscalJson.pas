@@ -6912,6 +6912,8 @@ begin
       Json.ObjAddProp(Result, 'tpImunidade', Self.IntegerToJsonValue(Source.tpImunidade));
     if Source.pAliqHasValue then
       Json.ObjAddProp(Result, 'pAliq', Self.DoubleToJsonValue(Source.pAliq));
+    if Source.vISSQNHasValue then
+      Json.ObjAddProp(Result, 'vISSQN', Self.DoubleToJsonValue(Source.vISSQN));
     if Source.tpRetISSQNHasValue then
       Json.ObjAddProp(Result, 'tpRetISSQN', Self.IntegerToJsonValue(Source.tpRetISSQN));
   except
@@ -6957,6 +6959,8 @@ begin
       Result.tpImunidade := Self.IntegerFromJsonValue(JValue);
     if Json.ObjContains(Source, 'pAliq', JValue) then
       Result.pAliq := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'vISSQN', JValue) then
+      Result.vISSQN := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'tpRetISSQN', JValue) then
       Result.tpRetISSQN := Self.IntegerFromJsonValue(JValue);
   except

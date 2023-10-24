@@ -331,6 +331,11 @@ type
     /// <param name="Id">
     /// ID único do CT-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o XML do conhecimento enviado para a SEFAZ, complementado com a informação do protocolo de autorização de uso (TAG raiz `cteProc`).
+    /// 
+    /// O XML só estará disponível nesse endpoint caso o conhecimento tenha sido autorizado pela SEFAZ. Para obter o XML nos demais casos, utilize o endpoint `GET /cte/{id}/xml/conhecimento`.
+    /// </remarks>
     function BaixarXmlCte(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do CT-e
@@ -338,6 +343,11 @@ type
     /// <param name="Id">
     /// ID único da CT-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o XML do conhecimento enviado para a SEFAZ.
+    /// 
+    /// O XML estará disponível nesse endpoint mesmo em casos que o conhecimento tenha sido rejeitado.
+    /// </remarks>
     function BaixarXmlCteConhecimento(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do Protocolo da SEFAZ
@@ -1040,6 +1050,11 @@ type
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o XML do manifesto enviado para a SEFAZ, complementado com a informação do protocolo de autorização ou denegação de uso (TAG raiz `mdfeProc`).
+    /// 
+    /// O XML só estará disponível nesse endpoint caso o manifesto tenha sido autorizado ou denegado pela SEFAZ. Para obter o XML nos demais casos, utilize o endpoint `GET /mdfe/{id}/xml/manifesto`.
+    /// </remarks>
     function BaixarXmlMdfe(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do MDF-e
@@ -1047,6 +1062,11 @@ type
     /// <param name="Id">
     /// ID único da MDF-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o XML do manifesto enviado para a SEFAZ.
+    /// 
+    /// O XML estará disponível nesse endpoint mesmo em casos que o manifesto tenha sido rejeitado.
+    /// </remarks>
     function BaixarXmlMdfeManifesto(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do Protocolo da SEFAZ
@@ -1559,6 +1579,11 @@ type
     /// <param name="Id">
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o XML da nota enviado para a SEFAZ, complementado com a informação do protocolo de autorização ou denegação de uso (TAG raiz `nfeProc`).
+    /// 
+    /// O XML só estará disponível nesse endpoint caso a nota tenha sido autorizada ou denegada pela SEFAZ. Para obter o XML nos demais casos, utilize o endpoint `GET /nfce/{id}/xml/nota`.
+    /// </remarks>
     function BaixarXmlNfce(Id: string): TBytes;
     /// <summary>
     /// Baixar XML da NFC-e
@@ -1566,6 +1591,11 @@ type
     /// <param name="Id">
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o XML da nota enviado para a SEFAZ.
+    /// 
+    /// O XML estará disponível nesse endpoint mesmo em casos que a nota tenha sido rejeitada.
+    /// </remarks>
     function BaixarXmlNfceNota(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do Protocolo da SEFAZ
@@ -2137,6 +2167,11 @@ type
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o XML da nota enviado para a SEFAZ, complementado com a informação do protocolo de autorização ou denegação de uso (TAG raiz `nfeProc`).
+    /// 
+    /// O XML só estará disponível nesse endpoint caso a nota tenha sido autorizada ou denegada pela SEFAZ. Para obter o XML nos demais casos, utilize o endpoint `GET /nfe/{id}/xml/nota`.
+    /// </remarks>
     function BaixarXmlNfe(Id: string): TBytes;
     /// <summary>
     /// Baixar XML da NF-e
@@ -2144,6 +2179,11 @@ type
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o XML da nota enviado para a SEFAZ.
+    /// 
+    /// O XML estará disponível nesse endpoint mesmo em casos que a nota tenha sido rejeitada.
+    /// </remarks>
     function BaixarXmlNfeNota(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do Protocolo da SEFAZ
