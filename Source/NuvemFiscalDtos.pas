@@ -3017,20 +3017,26 @@ type
     FexigSusp: TExigSuspensa;
     FtpImunidade: Integer;
     FtpImunidadeHasValue: Boolean;
+    FvBC: Double;
+    FvBCHasValue: Boolean;
     FpAliq: Double;
     FpAliqHasValue: Boolean;
     FvISSQN: Double;
     FvISSQNHasValue: Boolean;
     FtpRetISSQN: Integer;
     FtpRetISSQNHasValue: Boolean;
+    FvLiq: Double;
+    FvLiqHasValue: Boolean;
     procedure SetcLocIncid(const Value: string);
     procedure SetcPaisResult(const Value: string);
     procedure SetBM(const Value: TBeneficioMunicipal);
     procedure SetexigSusp(const Value: TExigSuspensa);
     procedure SettpImunidade(const Value: Integer);
+    procedure SetvBC(const Value: Double);
     procedure SetpAliq(const Value: Double);
     procedure SetvISSQN(const Value: Double);
     procedure SettpRetISSQN(const Value: Integer);
+    procedure SetvLiq(const Value: Double);
   public
     destructor Destroy; override;
     /// <summary>
@@ -3066,18 +3072,29 @@ type
     property tpImunidade: Integer read FtpImunidade write SettpImunidade;
     property tpImunidadeHasValue: Boolean read FtpImunidadeHasValue write FtpImunidadeHasValue;
     /// <summary>
+    /// Valor da Base de Cálculo do ISSQN (R$).
+    /// 
+    /// Caso você não informe esse campo, vamos calculá-lo automaticamente.
+    /// 
+    /// **Atenção**: Para emissões pelo Sistema Nacional NFS-e, esse campo é ignorado e o valor é determinado automaticamente pela SEFIN nacional.
+    /// </summary>
+    property vBC: Double read FvBC write SetvBC;
+    property vBCHasValue: Boolean read FvBCHasValue write FvBCHasValue;
+    /// <summary>
     /// Valor da alíquota (%%) do serviço prestado relativo ao município sujeito ativo (município de incidência) do ISSQN.
-    /// Se o município de incidência pertence ao Sistema Nacional NFS-e a alíquota estará parametrizada e, portanto, será fornecida pelo sistema.
-    /// Se o município de incidência não pertence ao Sistema Nacional NFS-e a alíquota não estará parametrizada e, por isso, deverá ser fornecida pelo emitente.
+    /// 
+    /// **Observações**:
+    /// * Se o município de incidência pertence ao Sistema Nacional NFS-e a alíquota estará parametrizada e, portanto, será fornecida pelo sistema.
+    /// * Se o município de incidência não pertence ao Sistema Nacional NFS-e a alíquota não estará parametrizada e, por isso, deverá ser fornecida pelo emitente.
     /// </summary>
     property pAliq: Double read FpAliq write SetpAliq;
     property pAliqHasValue: Boolean read FpAliqHasValue write FpAliqHasValue;
     /// <summary>
     /// Valor do ISSQN (R$).
     /// 
-    /// Caso você não informe esse campo, vamos calcular automaticamente.
+    /// Caso você não informe esse campo, vamos calculá-lo automaticamente.
     /// 
-    /// Para emissões pelo Sistema Nacional NFS-e, essa propriedade é ignorada e o valor do ISSQN é determinado automaticamente pela SEFIN nacional.
+    /// **Atenção**: Para emissões pelo Sistema Nacional NFS-e, esse campo é ignorado e o valor é determinado automaticamente pela SEFIN nacional.
     /// </summary>
     property vISSQN: Double read FvISSQN write SetvISSQN;
     property vISSQNHasValue: Boolean read FvISSQNHasValue write FvISSQNHasValue;
@@ -3089,6 +3106,15 @@ type
     /// </summary>
     property tpRetISSQN: Integer read FtpRetISSQN write SettpRetISSQN;
     property tpRetISSQNHasValue: Boolean read FtpRetISSQNHasValue write FtpRetISSQNHasValue;
+    /// <summary>
+    /// Valor Líquido (R$).
+    /// 
+    /// Caso você não informe esse campo, vamos calculá-lo automaticamente.
+    /// 
+    /// **Atenção**: Para emissões pelo Sistema Nacional NFS-e, esse campo é ignorado e o valor é determinado automaticamente pela SEFIN nacional.
+    /// </summary>
+    property vLiq: Double read FvLiq write SetvLiq;
+    property vLiqHasValue: Boolean read FvLiqHasValue write FvLiqHasValue;
   end;
   
   /// <summary>
@@ -20503,6 +20529,12 @@ begin
   FtpImunidadeHasValue := True;
 end;
 
+procedure TTribMunicipal.SetvBC(const Value: Double);
+begin
+  FvBC := Value;
+  FvBCHasValue := True;
+end;
+
 procedure TTribMunicipal.SetpAliq(const Value: Double);
 begin
   FpAliq := Value;
@@ -20519,6 +20551,12 @@ procedure TTribMunicipal.SettpRetISSQN(const Value: Integer);
 begin
   FtpRetISSQN := Value;
   FtpRetISSQNHasValue := True;
+end;
+
+procedure TTribMunicipal.SetvLiq(const Value: Double);
+begin
+  FvLiq := Value;
+  FvLiqHasValue := True;
 end;
 
 { TTribOutrosPisCofins }

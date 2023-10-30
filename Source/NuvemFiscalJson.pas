@@ -6910,12 +6910,16 @@ begin
       Json.ObjAddProp(Result, 'exigSusp', Self.TExigSuspensaToJsonValue(Source.exigSusp));
     if Source.tpImunidadeHasValue then
       Json.ObjAddProp(Result, 'tpImunidade', Self.IntegerToJsonValue(Source.tpImunidade));
+    if Source.vBCHasValue then
+      Json.ObjAddProp(Result, 'vBC', Self.DoubleToJsonValue(Source.vBC));
     if Source.pAliqHasValue then
       Json.ObjAddProp(Result, 'pAliq', Self.DoubleToJsonValue(Source.pAliq));
     if Source.vISSQNHasValue then
       Json.ObjAddProp(Result, 'vISSQN', Self.DoubleToJsonValue(Source.vISSQN));
     if Source.tpRetISSQNHasValue then
       Json.ObjAddProp(Result, 'tpRetISSQN', Self.IntegerToJsonValue(Source.tpRetISSQN));
+    if Source.vLiqHasValue then
+      Json.ObjAddProp(Result, 'vLiq', Self.DoubleToJsonValue(Source.vLiq));
   except
     Result.Free;
     raise;
@@ -6957,12 +6961,16 @@ begin
       Result.exigSusp := Self.TExigSuspensaFromJsonValue(JValue);
     if Json.ObjContains(Source, 'tpImunidade', JValue) then
       Result.tpImunidade := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'vBC', JValue) then
+      Result.vBC := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'pAliq', JValue) then
       Result.pAliq := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'vISSQN', JValue) then
       Result.vISSQN := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'tpRetISSQN', JValue) then
       Result.tpRetISSQN := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'vLiq', JValue) then
+      Result.vLiq := Self.DoubleFromJsonValue(JValue);
   except
     Result.Free;
     raise;
