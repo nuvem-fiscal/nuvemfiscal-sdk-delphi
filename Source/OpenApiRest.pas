@@ -1,5 +1,9 @@
 unit OpenApiRest;
 
+{$IF CompilerVersion < 29}
+  {$DEFINE USEINDY}
+{$IFEND}
+
 interface
 
 uses
@@ -105,7 +109,7 @@ type
     FConverter: TCustomJsonConverter;
     function SanitizedBaseUrl: string;
   protected
-    procedure CheckError(Response: IRestResponse);
+    procedure CheckError(Response: IRestResponse); virtual;
     function CreateConverter: TCustomJsonConverter; virtual;
     function Converter: TCustomJsonConverter;
   public
@@ -214,7 +218,11 @@ uses
 {$IFDEF FPC}
   OpenApiFpc,
 {$ELSE}
-  OpenApiHttp,
+  {$IFDEF USEINDY}
+    OpenApiIndy,
+  {$ELSE}
+    OpenApiHttp,
+  {$ENDIF}
 {$ENDIF}
   OpenApiUtils;
 
