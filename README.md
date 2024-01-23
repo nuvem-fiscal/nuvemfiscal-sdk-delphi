@@ -86,3 +86,33 @@ Visite os links da Nuvem Fiscal para saber mais:
 * [Site da Nuvem Fiscal](https://www.nuvemfiscal.com.br/)
 * [Documentação completa](https://dev.nuvemfiscal.com.br/docs/)
 * [Referência da API](https://dev.nuvemfiscal.com.br/docs/api)
+
+### Usar Indy como alternativa
+
+Internamente, o SDK para Delphi utiliza a classe `THTTPClient` para executar as requisições à API. É a opção recomendada, mais moderna e segura. Porém, essa opção está disponível apenas a partir do Delphi XE8. Ainda, justamente por utilizar recursos mais modernos dos sistemas operacioais, em alguns casos pode não funcionar adequadamente em versões antigas do Windows.
+
+Nesses casos (versões antigas do Delphi ou do Windows), pode ser necessário alterar o SDK para utilizar a biblioteca Indy para fazer as requisições. Para isso, basta utilizar o código abaixo para alterar as configurações do SDK. O exemplo abaixo é executado em um data module qualquer `TDMPrincipal`, mas você pode utilizar em qualquer form ou data module de sua aplicação que seja criado no início da aplicação.
+
+```delphi
+uses
+  OpenApiRest, OpenApiIndy, IdSSLOpenSSL;
+
+procedure TDMPrincipal.DataModuleCreate(Sender: TObject);
+begin
+  DefaultRequestFactory := TIndyRestRequestFactory.Create;
+  (DefaultRequestFactory as TIndyRestRequestFactory).OnClientCreated := IndyClientCreated;
+end;
+
+procedure TDMPrincipal.IndyClientCreated(Client: TIdHTTP);
+var
+  Handler : TIdSSLIOHandlerSocketOpenSSL;
+begin
+  Handler := TIdSSLIOHandlerSocketOpenSSL.Create;
+  Handler.SSLOptions.SSLVersions := [sslvTLSv1_2];
+  Client.IOHandler := Handler;
+  Client.ManagedIOHandler := True;
+  Client.HandleRedirects := True;
+end;
+```
+
+Ainda, é preciso usar as DLLs do OpenSSL. É recomendado usar as versões que são oficialmente suportadas pelo Indy, você pode baixar as DLLs diretamente a partir do repositório do Indy, aqui: https://github.com/IndySockets/OpenSSL-Binaries/blob/master/openssl-1.0.2u-i386-win32.zip
