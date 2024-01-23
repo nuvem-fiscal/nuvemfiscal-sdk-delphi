@@ -98,9 +98,12 @@ uses
   OpenApiRest, OpenApiIndy, IdSSLOpenSSL;
 
 procedure TDMPrincipal.DataModuleCreate(Sender: TObject);
+var
+  Factory: TIndyRestRequestFactory;
 begin
-  DefaultRequestFactory := TIndyRestRequestFactory.Create;
-  (DefaultRequestFactory as TIndyRestRequestFactory).OnClientCreated := IndyClientCreated;
+  Factory := TIndyRestRequestFactory.Create;
+  Factory.OnClientCreated := IndyClientCreated;
+  DefaultRequestFactory := Factory;
 end;
 
 procedure TDMPrincipal.IndyClientCreated(Client: TIdHTTP);
