@@ -217,11 +217,7 @@ type
     /// <param name="Autorizador">
     /// Ambiente Autorizador.
     /// 
-    /// Autorizadores disponíveis:
-    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
-    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
-    /// * MDF-e: `SVRS`;
-    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// Autorizadores disponíveis: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
     /// 
     /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
     /// </param>
@@ -409,11 +405,7 @@ type
     /// <param name="Autorizador">
     /// Ambiente Autorizador.
     /// 
-    /// Autorizadores disponíveis:
-    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
-    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
-    /// * MDF-e: `SVRS`;
-    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// Autorizadores disponíveis: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
     /// 
     /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
     /// </param>
@@ -922,11 +914,7 @@ type
     /// <param name="Autorizador">
     /// Ambiente Autorizador.
     /// 
-    /// Autorizadores disponíveis:
-    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
-    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
-    /// * MDF-e: `SVRS`;
-    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// Autorizadores disponíveis: `SVRS`.
     /// 
     /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
     /// </param>
@@ -1157,11 +1145,7 @@ type
     /// <param name="Autorizador">
     /// Ambiente Autorizador.
     /// 
-    /// Autorizadores disponíveis:
-    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
-    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
-    /// * MDF-e: `SVRS`;
-    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// Autorizadores disponíveis: `SVRS`.
     /// 
     /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
     /// </param>
@@ -1437,11 +1421,7 @@ type
     /// <param name="Autorizador">
     /// Ambiente Autorizador.
     /// 
-    /// Autorizadores disponíveis:
-    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
-    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
-    /// * MDF-e: `SVRS`;
-    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// Autorizadores disponíveis: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`.
     /// 
     /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
     /// </param>
@@ -1732,11 +1712,7 @@ type
     /// <param name="Autorizador">
     /// Ambiente Autorizador.
     /// 
-    /// Autorizadores disponíveis:
-    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
-    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
-    /// * MDF-e: `SVRS`;
-    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// Autorizadores disponíveis: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`.
     /// 
     /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
     /// </param>
@@ -2033,11 +2009,7 @@ type
     /// <param name="Autorizador">
     /// Ambiente Autorizador.
     /// 
-    /// Autorizadores disponíveis:
-    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
-    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
-    /// * MDF-e: `SVRS`;
-    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// Autorizadores disponíveis: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`.
     /// 
     /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
     /// </param>
@@ -2317,11 +2289,7 @@ type
     /// <param name="Autorizador">
     /// Ambiente Autorizador.
     /// 
-    /// Autorizadores disponíveis:
-    /// * NF-e: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`;
-    /// * NFC-e: `AM`, `BA`, `CE`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVRS`;
-    /// * MDF-e: `SVRS`;
-    /// * CT-e: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// Autorizadores disponíveis: `AM`, `BA`, `GO`, `MG`, `MS`, `MT`, `PE`, `PR`, `RS`, `SP`, `SVAN`, `SVRS`, `SVCAN`, `SVCRS`, `AN`.
     /// 
     /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
     /// </param>
@@ -2451,6 +2419,23 @@ type
     /// Emitir NFS-e
     /// </summary>
     function EmitirNfse(Body: TNfsePedidoEmissao): TNfse;
+    /// <summary>
+    /// Cidades atendidas
+    /// </summary>
+    /// <remarks>
+    /// Fornece uma relação completa de todos os municípios atendidos pela Nuvem Fiscal.
+    /// </remarks>
+    function CidadesAtendidas: TNfseCidadesAtendidas;
+    /// <summary>
+    /// Consultar metadados
+    /// </summary>
+    /// <param name="CodigoIbge">
+    /// Código IBGE do município.
+    /// </param>
+    /// <remarks>
+    /// Consulta a disponibilidade de emissão e alguns metadados de um município.
+    /// </remarks>
+    function ConsultarMetadados(CodigoIbge: string): TNfseCidadeMetadados;
     /// <summary>
     /// Emitir NFS-e
     /// </summary>
@@ -2618,6 +2603,11 @@ type
     /// </param>
     function ListarNfse(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string; Serie: string): TNfseListagem;
     function EmitirNfse(Body: TNfsePedidoEmissao): TNfse;
+    function CidadesAtendidas: TNfseCidadesAtendidas;
+    /// <param name="CodigoIbge">
+    /// Código IBGE do município.
+    /// </param>
+    function ConsultarMetadados(CodigoIbge: string): TNfseCidadeMetadados;
     function EmitirNfseDps(Body: TNfseDpsPedidoEmissao): TNfse;
     function EmitirLoteNfseDps(Body: TNfseLoteDpsPedidoEmissao): TRpsLote;
     /// <param name="Top">
@@ -4557,6 +4547,31 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Converter.TNfseFromJson(Response.ContentAsString);
+end;
+
+function TNfseService.CidadesAtendidas: TNfseCidadesAtendidas;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfse/cidades', 'GET');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TNfseCidadesAtendidasFromJson(Response.ContentAsString);
+end;
+
+function TNfseService.ConsultarMetadados(CodigoIbge: string): TNfseCidadeMetadados;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfse/cidades/{codigo_ibge}', 'GET');
+  Request.AddUrlParam('codigo_ibge', CodigoIbge);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TNfseCidadeMetadadosFromJson(Response.ContentAsString);
 end;
 
 function TNfseService.EmitirNfseDps(Body: TNfseDpsPedidoEmissao): TNfse;

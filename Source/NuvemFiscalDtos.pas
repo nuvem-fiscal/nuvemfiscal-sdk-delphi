@@ -24,6 +24,9 @@ type
   TEmpresaConfigNfse = class;
   TEmpresaConfigMdfe = class;
   TEmpresaConfigCte = class;
+  stringList = class;
+  TNfseCidadesAtendidas = class;
+  TNfseCidadeMetadados = class;
   TRpsIdentificacaoPrestador = class;
   TRpsDadosTomadorEndereco = class;
   TRpsDadosTomador = class;
@@ -167,7 +170,6 @@ type
   TCteSefazOcc = class;
   TCteSefazOccList = class;
   TCteSefazRodo = class;
-  stringList = class;
   TCteSefazNatCarga = class;
   TCteSefazTarifa = class;
   TCteSefazInfTotAP = class;
@@ -965,6 +967,79 @@ type
     /// Indica se a empresa irá emitir em produção ou homologação.
     /// </summary>
     property ambiente: string read Fambiente write Fambiente;
+  end;
+  
+  stringList = class(TList<string>)
+  end;
+  
+  TNfseCidadesAtendidas = class
+  private
+    F_count: Integer;
+    F_countHasValue: Boolean;
+    Fdata: stringList;
+    procedure Set_count(const Value: Integer);
+    procedure Setdata(const Value: stringList);
+  public
+    destructor Destroy; override;
+    /// <summary>
+    /// Quantidade de cidades atendidas pela Nuvem Fiscal.
+    /// </summary>
+    property _count: Integer read F_count write Set_count;
+    property _countHasValue: Boolean read F_countHasValue write F_countHasValue;
+    /// <summary>
+    /// Lista com os códigos IBGE das cidades atendidas pela Nuvem Fiscal.
+    /// </summary>
+    property data: stringList read Fdata write Setdata;
+  end;
+  
+  TNfseCidadeMetadados = class
+  private
+    Fcodigo_ibge: string;
+    Fcodigo_ibgeHasValue: Boolean;
+    Fuf: string;
+    FufHasValue: Boolean;
+    Fmunicipio: string;
+    FmunicipioHasValue: Boolean;
+    Fprovedor: string;
+    FprovedorHasValue: Boolean;
+    Fambientes: stringList;
+    Fcredenciais: stringList;
+    procedure Setcodigo_ibge(const Value: string);
+    procedure Setuf(const Value: string);
+    procedure Setmunicipio(const Value: string);
+    procedure Setprovedor(const Value: string);
+    procedure Setambientes(const Value: stringList);
+    procedure Setcredenciais(const Value: stringList);
+  public
+    destructor Destroy; override;
+    /// <summary>
+    /// Código IBGE do município.
+    /// </summary>
+    property codigo_ibge: string read Fcodigo_ibge write Setcodigo_ibge;
+    property codigo_ibgeHasValue: Boolean read Fcodigo_ibgeHasValue write Fcodigo_ibgeHasValue;
+    /// <summary>
+    /// UF do município.
+    /// </summary>
+    property uf: string read Fuf write Setuf;
+    property ufHasValue: Boolean read FufHasValue write FufHasValue;
+    /// <summary>
+    /// Nome do município.
+    /// </summary>
+    property municipio: string read Fmunicipio write Setmunicipio;
+    property municipioHasValue: Boolean read FmunicipioHasValue write FmunicipioHasValue;
+    /// <summary>
+    /// Provedor do município.
+    /// </summary>
+    property provedor: string read Fprovedor write Setprovedor;
+    property provedorHasValue: Boolean read FprovedorHasValue write FprovedorHasValue;
+    /// <summary>
+    /// Ambientes disponíveis no provedor.
+    /// </summary>
+    property ambientes: stringList read Fambientes write Setambientes;
+    /// <summary>
+    /// Credenciais requeridas para autenticação no provedor.
+    /// </summary>
+    property credenciais: stringList read Fcredenciais write Setcredenciais;
   end;
   
   TRpsIdentificacaoPrestador = class
@@ -2486,20 +2561,38 @@ type
   /// </summary>
   TAtvEvento = class
   private
+    FxNome: string;
+    FxNomeHasValue: Boolean;
     Fdesc: string;
+    FdescHasValue: Boolean;
     FdtIni: TDate;
     FdtFim: TDate;
+    FidAtvEvt: string;
+    FidAtvEvtHasValue: Boolean;
     Fid: string;
     FidHasValue: Boolean;
     Fend: TEnderecoSimples;
+    procedure SetxNome(const Value: string);
+    procedure Setdesc(const Value: string);
+    procedure SetidAtvEvt(const Value: string);
     procedure Setid(const Value: string);
     procedure Setend(const Value: TEnderecoSimples);
   public
     destructor Destroy; override;
     /// <summary>
-    /// Descrição do evento Artístico, Cultural, Esportivo, etc.
+    /// Nome do evento Artístico, Cultural, Esportivo, etc.
     /// </summary>
-    property desc: string read Fdesc write Fdesc;
+    property xNome: string read FxNome write SetxNome;
+    property xNomeHasValue: Boolean read FxNomeHasValue write FxNomeHasValue;
+    /// <summary>
+    /// `Deprecated`
+    /// 
+    /// **Propriedade depreciada**.
+    /// 
+    /// *Utilize `xNome`*.
+    /// </summary>
+    property desc: string read Fdesc write Setdesc;
+    property descHasValue: Boolean read FdescHasValue write FdescHasValue;
     /// <summary>
     /// Data de início da atividade de evento. Ano, Mês e Dia (AAAA-MM-DD).
     /// </summary>
@@ -2510,6 +2603,15 @@ type
     property dtFim: TDate read FdtFim write FdtFim;
     /// <summary>
     /// Identificação da Atividade de Evento (código identificador de evento determinado pela Administração Tributária Municipal).
+    /// </summary>
+    property idAtvEvt: string read FidAtvEvt write SetidAtvEvt;
+    property idAtvEvtHasValue: Boolean read FidAtvEvtHasValue write FidAtvEvtHasValue;
+    /// <summary>
+    /// `Deprecated`
+    /// 
+    /// **Propriedade depreciada**.
+    /// 
+    /// *Utilize `idAtvEvt`*.
     /// </summary>
     property id: string read Fid write Setid;
     property idHasValue: Boolean read FidHasValue write FidHasValue;
@@ -3042,9 +3144,9 @@ type
     /// <summary>
     /// Tributação do ISSQN sobre o serviço prestado:
     /// * 1 - Operação tributável
-    /// * 2 - Exportação de serviço
-    /// * 3 - Não Incidência
-    /// * 4 - Imunidade
+    /// * 2 - Imunidade
+    /// * 3 - Exportação de serviço
+    /// * 4 - Não Incidência
     /// </summary>
     property tribISSQN: Integer read FtribISSQN write FtribISSQN;
     /// <summary>
@@ -3565,13 +3667,17 @@ type
   private
     Fstatus: string;
     FstatusHasValue: Boolean;
+    Fmensagens: TNfseMensagemRetornoList;
     procedure Setstatus(const Value: string);
+    procedure Setmensagens(const Value: TNfseMensagemRetornoList);
   public
+    destructor Destroy; override;
     /// <summary>
     /// Situação atual da sincronização.
     /// </summary>
     property status: string read Fstatus write Setstatus;
     property statusHasValue: Boolean read FstatusHasValue write FstatusHasValue;
+    property mensagens: TNfseMensagemRetornoList read Fmensagens write Setmensagens;
   end;
   
   TContaCota = class
@@ -4978,6 +5084,12 @@ type
     FvBC: Double;
     FpICMS: Double;
     FvICMS: Double;
+    FvICMSDeson: Double;
+    FvICMSDesonHasValue: Boolean;
+    FcBenef: string;
+    FcBenefHasValue: Boolean;
+    procedure SetvICMSDeson(const Value: Double);
+    procedure SetcBenef(const Value: string);
   public
     /// <summary>
     /// Classificação Tributária do serviço.
@@ -5000,6 +5112,17 @@ type
     /// Valor do ICMS.
     /// </summary>
     property vICMS: Double read FvICMS write FvICMS;
+    /// <summary>
+    /// Valor do ICMS de desoneração.
+    /// </summary>
+    property vICMSDeson: Double read FvICMSDeson write SetvICMSDeson;
+    property vICMSDesonHasValue: Boolean read FvICMSDesonHasValue write FvICMSDesonHasValue;
+    /// <summary>
+    /// Código de Benefício Fiscal na UF.
+    /// Código de Benefício Fiscal utilizado pela UF.
+    /// </summary>
+    property cBenef: string read FcBenef write SetcBenef;
+    property cBenefHasValue: Boolean read FcBenefHasValue write FcBenefHasValue;
   end;
   
   /// <summary>
@@ -5008,6 +5131,12 @@ type
   TCteSefazICMS45 = class
   private
     FCST: string;
+    FvICMSDeson: Double;
+    FvICMSDesonHasValue: Boolean;
+    FcBenef: string;
+    FcBenefHasValue: Boolean;
+    procedure SetvICMSDeson(const Value: Double);
+    procedure SetcBenef(const Value: string);
   public
     /// <summary>
     /// Classificação Tributária do Serviço.
@@ -5017,6 +5146,17 @@ type
     /// * 51 - ICMS diferido
     /// </summary>
     property CST: string read FCST write FCST;
+    /// <summary>
+    /// Valor do ICMS de desoneração.
+    /// </summary>
+    property vICMSDeson: Double read FvICMSDeson write SetvICMSDeson;
+    property vICMSDesonHasValue: Boolean read FvICMSDesonHasValue write FvICMSDesonHasValue;
+    /// <summary>
+    /// Código de Benefício Fiscal na UF.
+    /// Código de Benefício Fiscal utilizado pela UF.
+    /// </summary>
+    property cBenef: string read FcBenef write SetcBenef;
+    property cBenefHasValue: Boolean read FcBenefHasValue write FcBenefHasValue;
   end;
   
   /// <summary>
@@ -5030,7 +5170,13 @@ type
     FpICMSSTRet: Double;
     FvCred: Double;
     FvCredHasValue: Boolean;
+    FvICMSDeson: Double;
+    FvICMSDesonHasValue: Boolean;
+    FcBenef: string;
+    FcBenefHasValue: Boolean;
     procedure SetvCred(const Value: Double);
+    procedure SetvICMSDeson(const Value: Double);
+    procedure SetcBenef(const Value: string);
   public
     /// <summary>
     /// Classificação Tributária do Serviço.
@@ -5058,6 +5204,17 @@ type
     /// </summary>
     property vCred: Double read FvCred write SetvCred;
     property vCredHasValue: Boolean read FvCredHasValue write FvCredHasValue;
+    /// <summary>
+    /// Valor do ICMS de desoneração.
+    /// </summary>
+    property vICMSDeson: Double read FvICMSDeson write SetvICMSDeson;
+    property vICMSDesonHasValue: Boolean read FvICMSDesonHasValue write FvICMSDesonHasValue;
+    /// <summary>
+    /// Código de Benefício Fiscal na UF.
+    /// Código de Benefício Fiscal utilizado pela UF.
+    /// </summary>
+    property cBenef: string read FcBenef write SetcBenef;
+    property cBenefHasValue: Boolean read FcBenefHasValue write FcBenefHasValue;
   end;
   
   /// <summary>
@@ -5073,8 +5230,14 @@ type
     FvICMS: Double;
     FvCred: Double;
     FvCredHasValue: Boolean;
+    FvICMSDeson: Double;
+    FvICMSDesonHasValue: Boolean;
+    FcBenef: string;
+    FcBenefHasValue: Boolean;
     procedure SetpRedBC(const Value: Double);
     procedure SetvCred(const Value: Double);
+    procedure SetvICMSDeson(const Value: Double);
+    procedure SetcBenef(const Value: string);
   public
     /// <summary>
     /// Classificação Tributária do Serviço.
@@ -5103,6 +5266,17 @@ type
     /// </summary>
     property vCred: Double read FvCred write SetvCred;
     property vCredHasValue: Boolean read FvCredHasValue write FvCredHasValue;
+    /// <summary>
+    /// Valor do ICMS de desoneração.
+    /// </summary>
+    property vICMSDeson: Double read FvICMSDeson write SetvICMSDeson;
+    property vICMSDesonHasValue: Boolean read FvICMSDesonHasValue write FvICMSDesonHasValue;
+    /// <summary>
+    /// Código de Benefício Fiscal na UF.
+    /// Código de Benefício Fiscal utilizado pela UF.
+    /// </summary>
+    property cBenef: string read FcBenef write SetcBenef;
+    property cBenefHasValue: Boolean read FcBenefHasValue write FcBenefHasValue;
   end;
   
   /// <summary>
@@ -5116,7 +5290,13 @@ type
     FvBCOutraUF: Double;
     FpICMSOutraUF: Double;
     FvICMSOutraUF: Double;
+    FvICMSDeson: Double;
+    FvICMSDesonHasValue: Boolean;
+    FcBenef: string;
+    FcBenefHasValue: Boolean;
     procedure SetpRedBCOutraUF(const Value: Double);
+    procedure SetvICMSDeson(const Value: Double);
+    procedure SetcBenef(const Value: string);
   public
     /// <summary>
     /// Classificação Tributária do Serviço.
@@ -5140,6 +5320,17 @@ type
     /// Valor do ICMS devido outra UF.
     /// </summary>
     property vICMSOutraUF: Double read FvICMSOutraUF write FvICMSOutraUF;
+    /// <summary>
+    /// Valor do ICMS de desoneração.
+    /// </summary>
+    property vICMSDeson: Double read FvICMSDeson write SetvICMSDeson;
+    property vICMSDesonHasValue: Boolean read FvICMSDesonHasValue write FvICMSDesonHasValue;
+    /// <summary>
+    /// Código de Benefício Fiscal na UF.
+    /// Código de Benefício Fiscal utilizado pela UF.
+    /// </summary>
+    property cBenef: string read FcBenef write SetcBenef;
+    property cBenefHasValue: Boolean read FcBenefHasValue write FcBenefHasValue;
   end;
   
   /// <summary>
@@ -5965,9 +6156,6 @@ type
     /// </summary>
     property RNTRC: string read FRNTRC write FRNTRC;
     property occ: TCteSefazOccList read Focc write Setocc;
-  end;
-  
-  stringList = class(TList<string>)
   end;
   
   /// <summary>
@@ -18887,6 +19075,80 @@ begin
   FCRTHasValue := True;
 end;
 
+{ TNfseCidadesAtendidas }
+
+destructor TNfseCidadesAtendidas.Destroy;
+begin
+  Fdata.Free;
+  inherited;
+end;
+
+procedure TNfseCidadesAtendidas.Set_count(const Value: Integer);
+begin
+  F_count := Value;
+  F_countHasValue := True;
+end;
+
+procedure TNfseCidadesAtendidas.Setdata(const Value: stringList);
+begin
+  if Value <> Fdata then
+  begin
+    Fdata.Free;
+    Fdata := Value;
+  end;
+end;
+
+{ TNfseCidadeMetadados }
+
+destructor TNfseCidadeMetadados.Destroy;
+begin
+  Fcredenciais.Free;
+  Fambientes.Free;
+  inherited;
+end;
+
+procedure TNfseCidadeMetadados.Setcodigo_ibge(const Value: string);
+begin
+  Fcodigo_ibge := Value;
+  Fcodigo_ibgeHasValue := True;
+end;
+
+procedure TNfseCidadeMetadados.Setuf(const Value: string);
+begin
+  Fuf := Value;
+  FufHasValue := True;
+end;
+
+procedure TNfseCidadeMetadados.Setmunicipio(const Value: string);
+begin
+  Fmunicipio := Value;
+  FmunicipioHasValue := True;
+end;
+
+procedure TNfseCidadeMetadados.Setprovedor(const Value: string);
+begin
+  Fprovedor := Value;
+  FprovedorHasValue := True;
+end;
+
+procedure TNfseCidadeMetadados.Setambientes(const Value: stringList);
+begin
+  if Value <> Fambientes then
+  begin
+    Fambientes.Free;
+    Fambientes := Value;
+  end;
+end;
+
+procedure TNfseCidadeMetadados.Setcredenciais(const Value: stringList);
+begin
+  if Value <> Fcredenciais then
+  begin
+    Fcredenciais.Free;
+    Fcredenciais := Value;
+  end;
+end;
+
 { TRpsDadosTomadorEndereco }
 
 procedure TRpsDadosTomadorEndereco.Setlogradouro(const Value: string);
@@ -20136,6 +20398,24 @@ begin
   inherited;
 end;
 
+procedure TAtvEvento.SetxNome(const Value: string);
+begin
+  FxNome := Value;
+  FxNomeHasValue := True;
+end;
+
+procedure TAtvEvento.Setdesc(const Value: string);
+begin
+  Fdesc := Value;
+  FdescHasValue := True;
+end;
+
+procedure TAtvEvento.SetidAtvEvt(const Value: string);
+begin
+  FidAtvEvt := Value;
+  FidAtvEvtHasValue := True;
+end;
+
 procedure TAtvEvento.Setid(const Value: string);
 begin
   Fid := Value;
@@ -21012,10 +21292,25 @@ end;
 
 { TNfseSincronizacao }
 
+destructor TNfseSincronizacao.Destroy;
+begin
+  Fmensagens.Free;
+  inherited;
+end;
+
 procedure TNfseSincronizacao.Setstatus(const Value: string);
 begin
   Fstatus := Value;
   FstatusHasValue := True;
+end;
+
+procedure TNfseSincronizacao.Setmensagens(const Value: TNfseMensagemRetornoList);
+begin
+  if Value <> Fmensagens then
+  begin
+    Fmensagens.Free;
+    Fmensagens := Value;
+  end;
 end;
 
 { TContaCota }
@@ -21814,12 +22109,52 @@ begin
   end;
 end;
 
+{ TCteSefazICMS20 }
+
+procedure TCteSefazICMS20.SetvICMSDeson(const Value: Double);
+begin
+  FvICMSDeson := Value;
+  FvICMSDesonHasValue := True;
+end;
+
+procedure TCteSefazICMS20.SetcBenef(const Value: string);
+begin
+  FcBenef := Value;
+  FcBenefHasValue := True;
+end;
+
+{ TCteSefazICMS45 }
+
+procedure TCteSefazICMS45.SetvICMSDeson(const Value: Double);
+begin
+  FvICMSDeson := Value;
+  FvICMSDesonHasValue := True;
+end;
+
+procedure TCteSefazICMS45.SetcBenef(const Value: string);
+begin
+  FcBenef := Value;
+  FcBenefHasValue := True;
+end;
+
 { TCteSefazICMS60 }
 
 procedure TCteSefazICMS60.SetvCred(const Value: Double);
 begin
   FvCred := Value;
   FvCredHasValue := True;
+end;
+
+procedure TCteSefazICMS60.SetvICMSDeson(const Value: Double);
+begin
+  FvICMSDeson := Value;
+  FvICMSDesonHasValue := True;
+end;
+
+procedure TCteSefazICMS60.SetcBenef(const Value: string);
+begin
+  FcBenef := Value;
+  FcBenefHasValue := True;
 end;
 
 { TCteSefazICMS90 }
@@ -21836,12 +22171,36 @@ begin
   FvCredHasValue := True;
 end;
 
+procedure TCteSefazICMS90.SetvICMSDeson(const Value: Double);
+begin
+  FvICMSDeson := Value;
+  FvICMSDesonHasValue := True;
+end;
+
+procedure TCteSefazICMS90.SetcBenef(const Value: string);
+begin
+  FcBenef := Value;
+  FcBenefHasValue := True;
+end;
+
 { TCteSefazICMSOutraUF }
 
 procedure TCteSefazICMSOutraUF.SetpRedBCOutraUF(const Value: Double);
 begin
   FpRedBCOutraUF := Value;
   FpRedBCOutraUFHasValue := True;
+end;
+
+procedure TCteSefazICMSOutraUF.SetvICMSDeson(const Value: Double);
+begin
+  FvICMSDeson := Value;
+  FvICMSDesonHasValue := True;
+end;
+
+procedure TCteSefazICMSOutraUF.SetcBenef(const Value: string);
+begin
+  FcBenef := Value;
+  FcBenefHasValue := True;
 end;
 
 { TCteSefazImp }
