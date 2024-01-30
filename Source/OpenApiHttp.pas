@@ -11,12 +11,10 @@ type
   THttpRestRequest = class(TRestRequest)
   strict private
     FOnClientCreated: TClientCreatedEvent;
-  protected
-    procedure DoRedirect(const Sender: TObject; const ARequest: IHTTPRequest; const AResponse: IHTTPResponse;
-      ARedirections: Integer; var AAllow: Boolean);
+  strict protected
+    function InternalExecute: IRestResponse; override;
   public
     constructor Create(AOnClientCreated: TClientCreatedEvent);
-    function Execute: IRestResponse; override;
   end;
 
   THttpRestResponse = class(TInterfacedObject, IRestResponse)
@@ -60,13 +58,7 @@ begin
   FOnClientCreated := AOnClientCreated;
 end;
 
-procedure THttpRestRequest.DoRedirect(const Sender: TObject; const ARequest: IHTTPRequest; const AResponse: IHTTPResponse;
-  ARedirections: Integer; var AAllow: Boolean);
-begin
-  ARequest.RemoveHeader('Authorization');
-end;
-
-function THttpRestRequest.Execute: IRestResponse;
+function THttpRestRequest.InternalExecute: IRestResponse;
 var
   Request: IHttpRequest;
   Response: IHttpResponse;
@@ -77,7 +69,7 @@ var
 begin
   Client := THttpClient.Create;
   try
-    Client.OnRedirect := DoRedirect;
+    Client.HandleRedirects := False;
     Request := Client.GetRequest(Self.Method, BuildUrl);
     if Body <> '' then
       SourceStream := TStringStream.Create(Body, TEncoding.UTF8, False)

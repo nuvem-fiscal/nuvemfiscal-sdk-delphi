@@ -19,10 +19,9 @@ type
   strict private
     FOnClientCreated: TClientCreatedEvent;
   protected
-    procedure DoRedirect(Sender: TObject; var dest: string; var NumRedirect: Integer; var Handled: boolean; var VMethod: TIdHTTPMethod);
+    function InternalExecute: IRestResponse; override;
   public
     constructor Create(AOnClientCreated: TClientCreatedEvent);
-    function Execute: IRestResponse; override;
   end;
 
   TIndyRestResponse = class(TInterfacedObject, IRestResponse)
@@ -65,22 +64,7 @@ begin
   FOnClientCreated := AOnClientCreated;
 end;
 
-procedure TIndyRestRequest.DoRedirect(Sender: TObject; var dest: string; var NumRedirect: Integer; var Handled: boolean;
-  var VMethod: TIdHTTPMethod);
-var
-  Headers: TIdHeaderList;
-  I: Integer;
-begin
-  Headers := TIndyHttp(Sender).Request.CustomHeaders;
-  for I := 0 to Headers.Count - 1 do
-    if SameText(Headers.Names[I], 'Authorization') then
-    begin
-      Headers.Delete(I);
-      Break;
-    end;
-end;
-
-function TIndyRestRequest.Execute: IRestResponse;
+function TIndyRestRequest.InternalExecute: IRestResponse;
 var
   Client: TIndyHTTP;
   I: Integer;
@@ -89,8 +73,7 @@ var
 begin
   Client := TIndyHTTP.Create;
   try
-    Client.HandleRedirects := True;
-    Client.OnRedirect := DoRedirect;
+    Client.HandleRedirects := False;
     Client.HTTPOptions := Client.HTTPOptions + [hoNoProtocolErrorException, hoWantProtocolErrorContent];
     RequestBody := nil;
     if Body <> '' then

@@ -1,4 +1,4 @@
-unit NuvemFiscalClient;
+﻿unit NuvemFiscalClient;
 
 interface
 
