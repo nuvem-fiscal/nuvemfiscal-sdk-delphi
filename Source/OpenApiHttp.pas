@@ -22,6 +22,7 @@ type
     FClient: THttpClient;
     FResponse: IHttpResponse;
     FContent: TStream;
+    FWrapped: TStream;
     FBytes: TBytes;
     FBytesLoaded: Boolean;
   public
@@ -111,11 +112,16 @@ begin
 
   FContent.Position := 0;
   if SameText(FResponse.ContentEncoding, 'deflate') then
-    FContent := TZDecompressionStream.Create(FContent, 15, True)
+  begin
+    FWrapped := FContent;
+    FContent := TZDecompressionStream.Create(FWrapped, 15)
+  end
   else
   if SameText(FResponse.ContentEncoding, 'gzip') then
-    FContent := TZDecompressionStream.Create(FContent, 31, True);
-
+  begin
+    FWrapped := FContent;
+    FContent := TZDecompressionStream.Create(FWrapped, 31);
+  end;
   SetLength(FBytes, 0);
   TotalRead := 0;
   repeat
@@ -159,6 +165,7 @@ destructor THttpRestResponse.Destroy;
 begin
   FClient.Free;
   FContent.Free;
+  FWrapped.Free;
   inherited;
 end;
 

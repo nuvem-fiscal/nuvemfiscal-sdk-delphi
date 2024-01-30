@@ -28,6 +28,7 @@ type
   strict private
     FClient: TIndyHTTP;
     FContent: TStream;
+    FWrapped: TStream;
     FBytesLoaded: Boolean;
     FBytes: TBytes;
   public
@@ -74,7 +75,10 @@ begin
   Client := TIndyHTTP.Create;
   try
     Client.HandleRedirects := False;
-    Client.HTTPOptions := Client.HTTPOptions + [hoNoProtocolErrorException, hoWantProtocolErrorContent];
+    Client.HTTPOptions := Client.HTTPOptions + [hoNoProtocolErrorException];
+{$IF CompilerVersion >= 31}
+    Client.HTTPOptions := Client.HTTPOptions + [hoWantProtocolErrorContent];
+{$IFEND}
     RequestBody := nil;
     if Body <> '' then
       RequestBody := TStringStream.Create(Body, TEncoding.UTF8, False);
@@ -113,6 +117,7 @@ destructor TIndyRestResponse.Destroy;
 begin
   FClient.Free;
   FContent.Free;
+  FWrapped.Free;
   inherited;
 end;
 
@@ -137,10 +142,16 @@ begin
 
   FContent.Position := 0;
   if SameText(FClient.Response.ContentEncoding, 'deflate') then
-    FContent := TZDecompressionStream.Create(FContent, 15, True)
+  begin
+    FWrapped := FContent;
+    FContent := TZDecompressionStream.Create(FWrapped, 15)
+  end
   else
   if SameText(FClient.Response.ContentEncoding, 'gzip') then
-    FContent := TZDecompressionStream.Create(FContent, 31, True);
+  begin
+    FWrapped := FContent;
+    FContent := TZDecompressionStream.Create(FWrapped, 31);
+  end;
 
   SetLength(FBytes, 0);
   TotalRead := 0;
