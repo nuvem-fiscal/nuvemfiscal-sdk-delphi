@@ -114,7 +114,6 @@ begin
   Handler.SSLOptions.SSLVersions := [sslvTLSv1_2];
   Client.IOHandler := Handler;
   Client.ManagedIOHandler := True;
-  Client.HandleRedirects := True;
 end;
 ```
 
