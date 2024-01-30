@@ -1,8 +1,10 @@
 unit OpenApiRest;
 
-{$IF CompilerVersion < 29}
-  {$DEFINE USEINDY}
-{$IFEND}
+{$IFNDEF FPC}
+  {$IF CompilerVersion < 29}
+    {$DEFINE USEINDY}
+  {$IFEND}
+{$ENDIF}
 
 interface
 
