@@ -1,4 +1,4 @@
-﻿unit NuvemFiscalClient;
+unit NuvemFiscalClient;
 
 interface
 
@@ -18,6 +18,7 @@ type
   TEmpresaService = class;
   TMdfeService = class;
   TNfceService = class;
+  TNfcomService = class;
   TNfeService = class;
   TNfseService = class;
   TNuvemFiscalConfig = class;
@@ -644,6 +645,22 @@ type
     /// </param>
     function AlterarConfigNfce(Body: TEmpresaConfigNfce; CpfCnpj: string): TEmpresaConfigNfce;
     /// <summary>
+    /// Consultar configuração de NFCom
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function ConsultarConfigNfcom(CpfCnpj: string): TEmpresaConfigNfcom;
+    /// <summary>
+    /// Alterar configuração de NFCom
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function AlterarConfigNfcom(Body: TEmpresaConfigNfcom; CpfCnpj: string): TEmpresaConfigNfcom;
+    /// <summary>
     /// Consultar configuração de NF-e
     /// </summary>
     /// <param name="CpfCnpj">
@@ -770,6 +787,16 @@ type
     /// Utilize o valor sem máscara.
     /// </param>
     function AlterarConfigNfce(Body: TEmpresaConfigNfce; CpfCnpj: string): TEmpresaConfigNfce;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function ConsultarConfigNfcom(CpfCnpj: string): TEmpresaConfigNfcom;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function AlterarConfigNfcom(Body: TEmpresaConfigNfcom; CpfCnpj: string): TEmpresaConfigNfcom;
     /// <param name="CpfCnpj">
     /// CPF ou CNPJ da empresa.
     /// Utilize o valor sem máscara.
@@ -1814,6 +1841,208 @@ type
   end;
   
   /// <summary>
+  /// Nota Fiscal Fatura de Serviço de Comunicação Eletrônica.
+  /// </summary>
+  INfcomService = interface(IInvokable)
+    ['{FD6CD587-3899-4D78-A077-1A56C1505AD8}']
+    /// <summary>
+    /// Listar NFCom
+    /// </summary>
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Referencia">
+    /// Seu identificador único para o documento.
+    /// </param>
+    /// <param name="Ambiente">
+    /// Identificação do Ambiente.
+    /// 
+    /// Valores aceitos: homologacao, producao
+    /// </param>
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
+    /// <param name="Serie">
+    /// Série do DF-e.
+    /// </param>
+    /// <remarks>
+    /// Retorna a lista de NFCom de acordo com os critérios de busca utilizados. As NFCom são retornadas ordenadas pela data da criação, com as mais recentes aparecendo primeiro.
+    /// </remarks>
+    function ListarNfcom(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string; Serie: string): TDfeListagem;
+    /// <summary>
+    /// Emitir NFCom
+    /// </summary>
+    function EmitirNfcom(Body: TNfcomPedidoEmissao): TDfe;
+    /// <summary>
+    /// Consulta do Status do Serviço na SEFAZ Autorizadora
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF/CNPJ do emitente.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Autorizador">
+    /// Ambiente Autorizador.
+    /// 
+    /// Autorizadores disponíveis: `SVRS`.
+    /// 
+    /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
+    /// </param>
+    /// <remarks>
+    /// Consulta do status do serviço prestado pelo Portal da Secretaria de Fazenda Estadual.
+    /// 
+    /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ.
+    /// </remarks>
+    function ConsultarStatusSefazNfcom(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
+    /// <summary>
+    /// Consultar NFCom
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Consulta os detalhes de uma NFCom já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de NFCom e a Nuvem Fiscal irá retornar as informações da NFCom correspondente.
+    /// </remarks>
+    function ConsultarNfcom(Id: string): TDfe;
+    /// <summary>
+    /// Consultar o cancelamento da NFCom
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarCancelamentoNfcom(Id: string): TDfeCancelamento;
+    /// <summary>
+    /// Cancelar uma NFCom autorizada
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// </param>
+    function CancelarNfcom(Body: TNfcomPedidoCancelamento; Id: string): TDfeCancelamento;
+    /// <summary>
+    /// Baixar XML do cancelamento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCancelamentoNfcom(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML da NFCom processada
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o XML da nota enviada para a SEFAZ, complementado com a informação do protocolo de autorização de uso (TAG raiz `nfcomProc`).
+    /// 
+    /// O XML só estará disponível nesse endpoint caso a nota tenha sido autorizada pela SEFAZ. Para obter o XML nos demais casos, utilize o endpoint `GET /nfcom/{id}/xml/nota`.
+    /// </remarks>
+    function BaixarXmlNfcom(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML da NFCom
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o XML da nota enviada para a SEFAZ.
+    /// 
+    /// O XML estará disponível nesse endpoint mesmo em casos que a nota tenha sido rejeitada.
+    /// </remarks>
+    function BaixarXmlNfcomNota(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML do Protocolo da SEFAZ
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlNfcomProtocolo(Id: string): TBytes;
+  end;
+  
+  TNfcomService = class(TRestService, INfcomService)
+  public
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Referencia">
+    /// Seu identificador único para o documento.
+    /// </param>
+    /// <param name="Ambiente">
+    /// Identificação do Ambiente.
+    /// 
+    /// Valores aceitos: homologacao, producao
+    /// </param>
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
+    /// <param name="Serie">
+    /// Série do DF-e.
+    /// </param>
+    function ListarNfcom(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string; Serie: string): TDfeListagem;
+    function EmitirNfcom(Body: TNfcomPedidoEmissao): TDfe;
+    /// <param name="CpfCnpj">
+    /// CPF/CNPJ do emitente.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Autorizador">
+    /// Ambiente Autorizador.
+    /// 
+    /// Autorizadores disponíveis: `SVRS`.
+    /// 
+    /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
+    /// </param>
+    function ConsultarStatusSefazNfcom(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
+    /// <param name="Id">
+    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarNfcom(Id: string): TDfe;
+    /// <param name="Id">
+    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarCancelamentoNfcom(Id: string): TDfeCancelamento;
+    /// <param name="Id">
+    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// </param>
+    function CancelarNfcom(Body: TNfcomPedidoCancelamento; Id: string): TDfeCancelamento;
+    /// <param name="Id">
+    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCancelamentoNfcom(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlNfcom(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlNfcomNota(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlNfcomProtocolo(Id: string): TBytes;
+  end;
+  
+  /// <summary>
   /// Nota Fiscal Eletrônica.
   /// </summary>
   INfeService = interface(IInvokable)
@@ -2713,6 +2942,10 @@ type
     /// </summary>
     function Nfce: INfceService;
     /// <summary>
+    /// Nota Fiscal Fatura de Serviço de Comunicação Eletrônica.
+    /// </summary>
+    function Nfcom: INfcomService;
+    /// <summary>
     /// Nota Fiscal Eletrônica.
     /// </summary>
     function Nfe: INfeService;
@@ -2731,6 +2964,7 @@ type
     function Empresa: IEmpresaService;
     function Mdfe: IMdfeService;
     function Nfce: INfceService;
+    function Nfcom: INfcomService;
     function Nfe: INfeService;
     function Nfse: INfseService;
     constructor Create;
@@ -3318,6 +3552,34 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Converter.TEmpresaConfigNfceFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.ConsultarConfigNfcom(CpfCnpj: string): TEmpresaConfigNfcom;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/nfcom', 'GET');
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigNfcomFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.AlterarConfigNfcom(Body: TEmpresaConfigNfcom; CpfCnpj: string): TEmpresaConfigNfcom;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/nfcom', 'PUT');
+  Request.AddBody(Converter.TEmpresaConfigNfcomToJson(Body));
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigNfcomFromJson(Response.ContentAsString);
 end;
 
 function TEmpresaService.ConsultarConfigNfe(CpfCnpj: string): TEmpresaConfigNfe;
@@ -4104,6 +4366,145 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
+{ TNfcomService }
+
+function TNfcomService.ListarNfcom(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string; Serie: string): TDfeListagem;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfcom', 'GET');
+  Request.AddQueryParam('$top', IntToStr(Top));
+  Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
+  Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('referencia', Referencia);
+  Request.AddQueryParam('ambiente', Ambiente);
+  Request.AddQueryParam('chave', Chave);
+  Request.AddQueryParam('serie', Serie);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeListagemFromJson(Response.ContentAsString);
+end;
+
+function TNfcomService.EmitirNfcom(Body: TNfcomPedidoEmissao): TDfe;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfcom', 'POST');
+  Request.AddBody(Converter.TNfcomPedidoEmissaoToJson(Body));
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeFromJson(Response.ContentAsString);
+end;
+
+function TNfcomService.ConsultarStatusSefazNfcom(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfcom/sefaz/status', 'GET');
+  Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('autorizador', Autorizador);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeSefazStatusFromJson(Response.ContentAsString);
+end;
+
+function TNfcomService.ConsultarNfcom(Id: string): TDfe;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfcom/{id}', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeFromJson(Response.ContentAsString);
+end;
+
+function TNfcomService.ConsultarCancelamentoNfcom(Id: string): TDfeCancelamento;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfcom/{id}/cancelamento', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeCancelamentoFromJson(Response.ContentAsString);
+end;
+
+function TNfcomService.CancelarNfcom(Body: TNfcomPedidoCancelamento; Id: string): TDfeCancelamento;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfcom/{id}/cancelamento', 'POST');
+  Request.AddBody(Converter.TNfcomPedidoCancelamentoToJson(Body));
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeCancelamentoFromJson(Response.ContentAsString);
+end;
+
+function TNfcomService.BaixarXmlCancelamentoNfcom(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfcom/{id}/cancelamento/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TNfcomService.BaixarXmlNfcom(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfcom/{id}/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TNfcomService.BaixarXmlNfcomNota(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfcom/{id}/xml/nota', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TNfcomService.BaixarXmlNfcomProtocolo(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfcom/{id}/xml/protocolo', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
 { TNfeService }
 
 function TNfeService.ListarNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string; Serie: string): TDfeListagem;
@@ -4796,6 +5197,11 @@ end;
 function TNuvemFiscalClient.Nfce: INfceService;
 begin
   Result := TNfceService.Create(Config);
+end;
+
+function TNuvemFiscalClient.Nfcom: INfcomService;
+begin
+  Result := TNfcomService.Create(Config);
 end;
 
 function TNuvemFiscalClient.Nfe: INfeService;
