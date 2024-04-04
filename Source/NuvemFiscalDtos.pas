@@ -402,6 +402,8 @@ type
   TNfeSefazLocal = class;
   TNfeSefazAutXML = class;
   TNfeSefazAutXMLList = class;
+  TNfeSefazGCred = class;
+  TNfeSefazGCredList = class;
   TNfeSefazAdi = class;
   TNfeSefazAdiList = class;
   TNfeSefazDI = class;
@@ -2373,6 +2375,8 @@ type
     property CNAEHasValue: Boolean read FCNAEHasValue write FCNAEHasValue;
     /// <summary>
     /// Descrição completa do serviço prestado.
+    /// 
+    /// Os caracteres acentuados poderão ser alterados para caracteres sem acentuação.
     /// </summary>
     property xDescServ: string read FxDescServ write FxDescServ;
     /// <summary>
@@ -14253,6 +14257,32 @@ type
   end;
   
   /// <summary>
+  /// Grupo de informações sobre o CréditoPresumido.
+  /// </summary>
+  TNfeSefazGCred = class
+  private
+    FcCredPresumido: string;
+    FpCredPresumido: Double;
+    FvCredPresumido: Double;
+  public
+    /// <summary>
+    /// Código de Benefício Fiscal de Crédito Presumido na UF aplicado ao item.
+    /// </summary>
+    property cCredPresumido: string read FcCredPresumido write FcCredPresumido;
+    /// <summary>
+    /// Percentual do Crédito Presumido.
+    /// </summary>
+    property pCredPresumido: Double read FpCredPresumido write FpCredPresumido;
+    /// <summary>
+    /// Valor do Crédito Presumido.
+    /// </summary>
+    property vCredPresumido: Double read FvCredPresumido write FvCredPresumido;
+  end;
+  
+  TNfeSefazGCredList = class(TObjectList<TNfeSefazGCred>)
+  end;
+  
+  /// <summary>
   /// Adições (NT 2011/004).
   /// </summary>
   TNfeSefazAdi = class
@@ -14275,7 +14305,7 @@ type
     property nAdicao: Integer read FnAdicao write SetnAdicao;
     property nAdicaoHasValue: Boolean read FnAdicaoHasValue write FnAdicaoHasValue;
     /// <summary>
-    /// Número seqüencial do item dentro da Adição.
+    /// Número seqüencial do item.
     /// </summary>
     property nSeqAdic: Integer read FnSeqAdic write FnSeqAdic;
     /// <summary>
@@ -14283,7 +14313,7 @@ type
     /// </summary>
     property cFabricante: string read FcFabricante write FcFabricante;
     /// <summary>
-    /// Valor do desconto do item da DI - adição.
+    /// Valor do desconto do item.
     /// </summary>
     property vDescDI: Double read FvDescDI write SetvDescDI;
     property vDescDIHasValue: Boolean read FvDescDIHasValue write FvDescDIHasValue;
@@ -14314,19 +14344,22 @@ type
     FtpIntermedio: Integer;
     FCNPJ: string;
     FCNPJHasValue: Boolean;
+    FCPF: string;
+    FCPFHasValue: Boolean;
     FUFTerceiro: string;
     FUFTerceiroHasValue: Boolean;
     FcExportador: string;
     Fadi: TNfeSefazAdiList;
     procedure SetvAFRMM(const Value: Double);
     procedure SetCNPJ(const Value: string);
+    procedure SetCPF(const Value: string);
     procedure SetUFTerceiro(const Value: string);
     procedure Setadi(const Value: TNfeSefazAdiList);
   public
     constructor Create;
     destructor Destroy; override;
     /// <summary>
-    /// Numero do Documento de Importação DI/DSI/DA/DRI-E (DI/DSI/DA/DRI-E) (NT2011/004).
+    /// Número do Documento de Importação (DI, DSI, DIRE, DUImp) (NT2011/004).
     /// </summary>
     property nDI: string read FnDI write FnDI;
     /// <summary>
@@ -14346,7 +14379,7 @@ type
     /// </summary>
     property dDesemb: TDate read FdDesemb write FdDesemb;
     /// <summary>
-    /// Via de transporte internacional informada na DI
+    /// Via de transporte internacional informada na DI ou na Declaração Única de Importação (DUImp):
     /// * 1 - Maritima
     /// * 2 - Fluvial
     /// * 3 - Lacustre
@@ -14379,6 +14412,11 @@ type
     /// </summary>
     property CNPJ: string read FCNPJ write SetCNPJ;
     property CNPJHasValue: Boolean read FCNPJHasValue write FCNPJHasValue;
+    /// <summary>
+    /// CPF do adquirente ou do encomendante.
+    /// </summary>
+    property CPF: string read FCPF write SetCPF;
+    property CPFHasValue: Boolean read FCPFHasValue write FCPFHasValue;
     /// <summary>
     /// Sigla da UF do adquirente ou do encomendante.
     /// </summary>
@@ -14928,6 +14966,7 @@ type
     FCNPJFabHasValue: Boolean;
     FcBenef: string;
     FcBenefHasValue: Boolean;
+    FgCred: TNfeSefazGCredList;
     FEXTIPI: string;
     FEXTIPIHasValue: Boolean;
     FCFOP: string;
@@ -14973,6 +15012,7 @@ type
     procedure SetindEscala(const Value: string);
     procedure SetCNPJFab(const Value: string);
     procedure SetcBenef(const Value: string);
+    procedure SetgCred(const Value: TNfeSefazGCredList);
     procedure SetEXTIPI(const Value: string);
     procedure SetcBarraTrib(const Value: string);
     procedure SetvFrete(const Value: Double);
@@ -15034,6 +15074,7 @@ type
     property CNPJFabHasValue: Boolean read FCNPJFabHasValue write FCNPJFabHasValue;
     property cBenef: string read FcBenef write SetcBenef;
     property cBenefHasValue: Boolean read FcBenefHasValue write FcBenefHasValue;
+    property gCred: TNfeSefazGCredList read FgCred write SetgCred;
     /// <summary>
     /// Código EX TIPI (3 posições).
     /// </summary>
@@ -15518,11 +15559,14 @@ type
     FvICMSDesonHasValue: Boolean;
     FmotDesICMS: Integer;
     FmotDesICMSHasValue: Boolean;
+    FindDeduzDeson: Integer;
+    FindDeduzDesonHasValue: Boolean;
     procedure SetvBCFCP(const Value: Double);
     procedure SetpFCP(const Value: Double);
     procedure SetvFCP(const Value: Double);
     procedure SetvICMSDeson(const Value: Double);
     procedure SetmotDesICMS(const Value: Integer);
+    procedure SetindDeduzDeson(const Value: Integer);
   public
     /// <summary>
     /// Origem da mercadoria:
@@ -15593,6 +15637,13 @@ type
     /// </summary>
     property motDesICMS: Integer read FmotDesICMS write SetmotDesICMS;
     property motDesICMSHasValue: Boolean read FmotDesICMSHasValue write FmotDesICMSHasValue;
+    /// <summary>
+    /// Indica se o valor do ICMS desonerado (vICMSDeson) deduz do valor do item (vProd):
+    /// * 0 - Valor do ICMS desonerado (vICMSDeson) não deduz do valor do item (vProd) / total da NF-e
+    /// * 1 - Valor do ICMS desonerado (vICMSDeson) deduz do valor do item (vProd) / total da NF-e
+    /// </summary>
+    property indDeduzDeson: Integer read FindDeduzDeson write SetindDeduzDeson;
+    property indDeduzDesonHasValue: Boolean read FindDeduzDesonHasValue write FindDeduzDesonHasValue;
   end;
   
   /// <summary>
@@ -15621,6 +15672,8 @@ type
     FvICMSDesonHasValue: Boolean;
     FmotDesICMS: Integer;
     FmotDesICMSHasValue: Boolean;
+    FindDeduzDeson: Integer;
+    FindDeduzDesonHasValue: Boolean;
     procedure SetpMVAST(const Value: Double);
     procedure SetpRedBCST(const Value: Double);
     procedure SetvBCFCPST(const Value: Double);
@@ -15628,6 +15681,7 @@ type
     procedure SetvFCPST(const Value: Double);
     procedure SetvICMSDeson(const Value: Double);
     procedure SetmotDesICMS(const Value: Integer);
+    procedure SetindDeduzDeson(const Value: Integer);
   public
     /// <summary>
     /// Origem da mercadoria:
@@ -15707,6 +15761,13 @@ type
     /// </summary>
     property motDesICMS: Integer read FmotDesICMS write SetmotDesICMS;
     property motDesICMSHasValue: Boolean read FmotDesICMSHasValue write FmotDesICMSHasValue;
+    /// <summary>
+    /// Indica se o valor do ICMS desonerado (vICMSDeson) deduz do valor do item (vProd):
+    /// * 0 - Valor do ICMS desonerado (vICMSDeson) não deduz do valor do item (vProd) / total da NF-e
+    /// * 1 - Valor do ICMS desonerado (vICMSDeson) deduz do valor do item (vProd) / total da NF-e
+    /// </summary>
+    property indDeduzDeson: Integer read FindDeduzDeson write SetindDeduzDeson;
+    property indDeduzDesonHasValue: Boolean read FindDeduzDesonHasValue write FindDeduzDesonHasValue;
   end;
   
   /// <summary>
@@ -15723,8 +15784,11 @@ type
     FvICMSDesonHasValue: Boolean;
     FmotDesICMS: Integer;
     FmotDesICMSHasValue: Boolean;
+    FindDeduzDeson: Integer;
+    FindDeduzDesonHasValue: Boolean;
     procedure SetvICMSDeson(const Value: Double);
     procedure SetmotDesICMS(const Value: Integer);
+    procedure SetindDeduzDeson(const Value: Integer);
   public
     /// <summary>
     /// Origem da mercadoria:
@@ -15770,12 +15834,17 @@ type
     /// </summary>
     property motDesICMS: Integer read FmotDesICMS write SetmotDesICMS;
     property motDesICMSHasValue: Boolean read FmotDesICMSHasValue write FmotDesICMSHasValue;
+    /// <summary>
+    /// Indica se o valor do ICMS desonerado (vICMSDeson) deduz do valor do item (vProd):
+    /// * 0 - Valor do ICMS desonerado (vICMSDeson) não deduz do valor do item (vProd) / total da NF-e
+    /// * 1 - Valor do ICMS desonerado (vICMSDeson) deduz do valor do item (vProd) / total da NF-e
+    /// </summary>
+    property indDeduzDeson: Integer read FindDeduzDeson write SetindDeduzDeson;
+    property indDeduzDesonHasValue: Boolean read FindDeduzDesonHasValue write FindDeduzDesonHasValue;
   end;
   
   /// <summary>
-  /// Tributção pelo ICMS
-  /// * 51 - Diferimento
-  /// A exigência do preenchimento das informações do ICMS diferido fica à critério de cada UF.
+  /// Tributção pelo ICMS 51 - Diferimento. A exigência do preenchimento das informações do ICMS diferido fica à critério de cada UF.
   /// </summary>
   TNfeSefazICMS51 = class
   private
@@ -15785,6 +15854,8 @@ type
     FmodBCHasValue: Boolean;
     FpRedBC: Double;
     FpRedBCHasValue: Boolean;
+    FcBenefRBC: string;
+    FcBenefRBCHasValue: Boolean;
     FvBC: Double;
     FvBCHasValue: Boolean;
     FpICMS: Double;
@@ -15811,6 +15882,7 @@ type
     FvFCPEfetHasValue: Boolean;
     procedure SetmodBC(const Value: Integer);
     procedure SetpRedBC(const Value: Double);
+    procedure SetcBenefRBC(const Value: string);
     procedure SetvBC(const Value: Double);
     procedure SetpICMS(const Value: Double);
     procedure SetvICMSOp(const Value: Double);
@@ -15856,6 +15928,11 @@ type
     /// </summary>
     property pRedBC: Double read FpRedBC write SetpRedBC;
     property pRedBCHasValue: Boolean read FpRedBCHasValue write FpRedBCHasValue;
+    /// <summary>
+    /// Código de Benefício Fiscal na UF aplicado ao item quando houver RBC.
+    /// </summary>
+    property cBenefRBC: string read FcBenefRBC write SetcBenefRBC;
+    property cBenefRBCHasValue: Boolean read FcBenefRBCHasValue write FcBenefRBCHasValue;
     /// <summary>
     /// Valor da BC do ICMS.
     /// </summary>
@@ -16212,6 +16289,8 @@ type
     FvICMSDesonHasValue: Boolean;
     FmotDesICMS: Integer;
     FmotDesICMSHasValue: Boolean;
+    FindDeduzDeson: Integer;
+    FindDeduzDesonHasValue: Boolean;
     FvICMSSTDeson: Double;
     FvICMSSTDesonHasValue: Boolean;
     FmotDesICMSST: Integer;
@@ -16226,6 +16305,7 @@ type
     procedure SetvFCPST(const Value: Double);
     procedure SetvICMSDeson(const Value: Double);
     procedure SetmotDesICMS(const Value: Integer);
+    procedure SetindDeduzDeson(const Value: Integer);
     procedure SetvICMSSTDeson(const Value: Double);
     procedure SetmotDesICMSST(const Value: Integer);
   public
@@ -16347,6 +16427,13 @@ type
     property motDesICMS: Integer read FmotDesICMS write SetmotDesICMS;
     property motDesICMSHasValue: Boolean read FmotDesICMSHasValue write FmotDesICMSHasValue;
     /// <summary>
+    /// Indica se o valor do ICMS desonerado (vICMSDeson) deduz do valor do item (vProd):
+    /// * 0 - Valor do ICMS desonerado (vICMSDeson) não deduz do valor do item (vProd) / total da NF-e
+    /// * 1 - Valor do ICMS desonerado (vICMSDeson) deduz do valor do item (vProd) / total da NF-e
+    /// </summary>
+    property indDeduzDeson: Integer read FindDeduzDeson write SetindDeduzDeson;
+    property indDeduzDesonHasValue: Boolean read FindDeduzDesonHasValue write FindDeduzDesonHasValue;
+    /// <summary>
     /// Valor do ICMS-ST desonerado.
     /// </summary>
     property vICMSSTDeson: Double read FvICMSSTDeson write SetvICMSSTDeson;
@@ -16406,6 +16493,8 @@ type
     FvICMSDesonHasValue: Boolean;
     FmotDesICMS: Integer;
     FmotDesICMSHasValue: Boolean;
+    FindDeduzDeson: Integer;
+    FindDeduzDesonHasValue: Boolean;
     FvICMSSTDeson: Double;
     FvICMSSTDesonHasValue: Boolean;
     FmotDesICMSST: Integer;
@@ -16429,6 +16518,7 @@ type
     procedure SetvFCPST(const Value: Double);
     procedure SetvICMSDeson(const Value: Double);
     procedure SetmotDesICMS(const Value: Integer);
+    procedure SetindDeduzDeson(const Value: Integer);
     procedure SetvICMSSTDeson(const Value: Double);
     procedure SetmotDesICMSST(const Value: Integer);
   public
@@ -16558,6 +16648,13 @@ type
     /// </summary>
     property motDesICMS: Integer read FmotDesICMS write SetmotDesICMS;
     property motDesICMSHasValue: Boolean read FmotDesICMSHasValue write FmotDesICMSHasValue;
+    /// <summary>
+    /// Indica se o valor do ICMS desonerado (vICMSDeson) deduz do valor do item (vProd):
+    /// * 0 - Valor do ICMS desonerado (vICMSDeson) não deduz do valor do item (vProd) / total da NF-e
+    /// * 1 - Valor do ICMS desonerado (vICMSDeson) deduz do valor do item (vProd) / total da NF-e
+    /// </summary>
+    property indDeduzDeson: Integer read FindDeduzDeson write SetindDeduzDeson;
+    property indDeduzDesonHasValue: Boolean read FindDeduzDesonHasValue write FindDeduzDesonHasValue;
     /// <summary>
     /// Valor do ICMS-ST desonerado.
     /// </summary>
@@ -19131,7 +19228,7 @@ type
   end;
   
   /// <summary>
-  /// Grupo de Cartões.
+  /// Grupo de Cartões, PIX, Boletos e outros Pagamentos Eletrônicos.
   /// </summary>
   TNfeSefazCard = class
   private
@@ -19142,14 +19239,20 @@ type
     FtBandHasValue: Boolean;
     FcAut: string;
     FcAutHasValue: Boolean;
+    FCNPJReceb: string;
+    FCNPJRecebHasValue: Boolean;
+    FidTermPag: string;
+    FidTermPagHasValue: Boolean;
     procedure SetCNPJ(const Value: string);
     procedure SettBand(const Value: string);
     procedure SetcAut(const Value: string);
+    procedure SetCNPJReceb(const Value: string);
+    procedure SetidTermPag(const Value: string);
   public
     /// <summary>
-    /// Tipo de Integração do processo de pagamento com o sistema de automação da empresa/
-    /// * 1 - Pagamento integrado com o sistema de automação da empresa Ex. equipamento TEF , Comercio Eletronico
-    /// * 2 - Pagamento não integrado com o sistema de automação da empresa Ex: equipamento POS
+    /// Tipo de Integração do processo de pagamento com o sistema de automação da empresa:
+    /// * 1 - Pagamento integrado com o sistema de automação da empresa (Ex.: equipamento TEF, Comércio Eletrônico, POS Integrado)
+    /// * 2 - Pagamento não integrado com o sistema de automação da empresa (Ex.: equipamento POS Simples)
     /// </summary>
     property tpIntegra: Integer read FtpIntegra write FtpIntegra;
     /// <summary>
@@ -19163,10 +19266,20 @@ type
     property tBand: string read FtBand write SettBand;
     property tBandHasValue: Boolean read FtBandHasValue write FtBandHasValue;
     /// <summary>
-    /// Número de autorização da operação cartão de crédito/débito.
+    /// Número de autorização da operação com cartões, PIX, boletos e outros pagamentos eletrônicos.
     /// </summary>
     property cAut: string read FcAut write SetcAut;
     property cAutHasValue: Boolean read FcAutHasValue write FcAutHasValue;
+    /// <summary>
+    /// CNPJ do beneficiário do pagamento.
+    /// </summary>
+    property CNPJReceb: string read FCNPJReceb write SetCNPJReceb;
+    property CNPJRecebHasValue: Boolean read FCNPJRecebHasValue write FCNPJRecebHasValue;
+    /// <summary>
+    /// Identificador do terminal de pagamento.
+    /// </summary>
+    property idTermPag: string read FidTermPag write SetidTermPag;
+    property idTermPagHasValue: Boolean read FidTermPagHasValue write FidTermPagHasValue;
   end;
   
   /// <summary>
@@ -19180,9 +19293,18 @@ type
     FxPag: string;
     FxPagHasValue: Boolean;
     FvPag: Double;
+    FdPag: TDate;
+    FdPagHasValue: Boolean;
+    FCNPJPag: string;
+    FCNPJPagHasValue: Boolean;
+    FUFPag: string;
+    FUFPagHasValue: Boolean;
     Fcard: TNfeSefazCard;
     procedure SetindPag(const Value: Integer);
     procedure SetxPag(const Value: string);
+    procedure SetdPag(const Value: TDate);
+    procedure SetCNPJPag(const Value: string);
+    procedure SetUFPag(const Value: string);
     procedure Setcard(const Value: TNfeSefazCard);
   public
     destructor Destroy; override;
@@ -19205,6 +19327,21 @@ type
     /// Valor do Pagamento. Esta tag poderá ser omitida quando a tag tPag=90 (Sem Pagamento), caso contrário deverá ser preenchida.
     /// </summary>
     property vPag: Double read FvPag write FvPag;
+    /// <summary>
+    /// Data do Pagamento.
+    /// </summary>
+    property dPag: TDate read FdPag write SetdPag;
+    property dPagHasValue: Boolean read FdPagHasValue write FdPagHasValue;
+    /// <summary>
+    /// CNPJ transacional do pagamento - Preencher informando o CNPJ do estabelecimento onde o pagamento foi processado/transacionado/recebido quando a emissão do documento fiscal ocorrer em estabelecimento distinto.
+    /// </summary>
+    property CNPJPag: string read FCNPJPag write SetCNPJPag;
+    property CNPJPagHasValue: Boolean read FCNPJPagHasValue write FCNPJPagHasValue;
+    /// <summary>
+    /// UF do CNPJ do estabelecimento onde o pagamento foi processado/transacionado/recebido.
+    /// </summary>
+    property UFPag: string read FUFPag write SetUFPag;
+    property UFPagHasValue: Boolean read FUFPagHasValue write FUFPagHasValue;
     property card: TNfeSefazCard read Fcard write Setcard;
   end;
   
@@ -19318,6 +19455,7 @@ type
     /// * 1 - Justiça Federal
     /// * 2 - Justiça Estadual
     /// * 3 - Secex/RFB
+    /// * 4 - CONFAZ
     /// * 9 - Outros
     /// </summary>
     property indProc: Integer read FindProc write FindProc;
@@ -19328,6 +19466,8 @@ type
     /// * 08 - Termo de Acordo
     /// * 10 - Regime Especial
     /// * 12 - Autorização específica
+    /// * 14 - Ajuste SINIEF
+    /// * 15 - Convênio ICMS
     /// </summary>
     property tpAto: string read FtpAto write SettpAto;
     property tpAtoHasValue: Boolean read FtpAtoHasValue write FtpAtoHasValue;
@@ -30171,6 +30311,12 @@ begin
   FCNPJHasValue := True;
 end;
 
+procedure TNfeSefazDI.SetCPF(const Value: string);
+begin
+  FCPF := Value;
+  FCPFHasValue := True;
+end;
+
 procedure TNfeSefazDI.SetUFTerceiro(const Value: string);
 begin
   FUFTerceiro := Value;
@@ -30325,6 +30471,7 @@ begin
   Frastro.Free;
   FdetExport.Free;
   FDI.Free;
+  FgCred.Free;
   FNVE.Free;
   inherited;
 end;
@@ -30366,6 +30513,15 @@ procedure TNfeSefazProd.SetcBenef(const Value: string);
 begin
   FcBenef := Value;
   FcBenefHasValue := True;
+end;
+
+procedure TNfeSefazProd.SetgCred(const Value: TNfeSefazGCredList);
+begin
+  if Value <> FgCred then
+  begin
+    FgCred.Free;
+    FgCred := Value;
+  end;
 end;
 
 procedure TNfeSefazProd.SetEXTIPI(const Value: string);
@@ -30651,6 +30807,12 @@ begin
   FmotDesICMSHasValue := True;
 end;
 
+procedure TNfeSefazICMS20.SetindDeduzDeson(const Value: Integer);
+begin
+  FindDeduzDeson := Value;
+  FindDeduzDesonHasValue := True;
+end;
+
 { TNfeSefazICMS30 }
 
 procedure TNfeSefazICMS30.SetpMVAST(const Value: Double);
@@ -30695,6 +30857,12 @@ begin
   FmotDesICMSHasValue := True;
 end;
 
+procedure TNfeSefazICMS30.SetindDeduzDeson(const Value: Integer);
+begin
+  FindDeduzDeson := Value;
+  FindDeduzDesonHasValue := True;
+end;
+
 { TNfeSefazICMS40 }
 
 procedure TNfeSefazICMS40.SetvICMSDeson(const Value: Double);
@@ -30709,6 +30877,12 @@ begin
   FmotDesICMSHasValue := True;
 end;
 
+procedure TNfeSefazICMS40.SetindDeduzDeson(const Value: Integer);
+begin
+  FindDeduzDeson := Value;
+  FindDeduzDesonHasValue := True;
+end;
+
 { TNfeSefazICMS51 }
 
 procedure TNfeSefazICMS51.SetmodBC(const Value: Integer);
@@ -30721,6 +30895,12 @@ procedure TNfeSefazICMS51.SetpRedBC(const Value: Double);
 begin
   FpRedBC := Value;
   FpRedBCHasValue := True;
+end;
+
+procedure TNfeSefazICMS51.SetcBenefRBC(const Value: string);
+begin
+  FcBenefRBC := Value;
+  FcBenefRBCHasValue := True;
 end;
 
 procedure TNfeSefazICMS51.SetvBC(const Value: Double);
@@ -30983,6 +31163,12 @@ begin
   FmotDesICMSHasValue := True;
 end;
 
+procedure TNfeSefazICMS70.SetindDeduzDeson(const Value: Integer);
+begin
+  FindDeduzDeson := Value;
+  FindDeduzDesonHasValue := True;
+end;
+
 procedure TNfeSefazICMS70.SetvICMSSTDeson(const Value: Double);
 begin
   FvICMSSTDeson := Value;
@@ -31109,6 +31295,12 @@ procedure TNfeSefazICMS90.SetmotDesICMS(const Value: Integer);
 begin
   FmotDesICMS := Value;
   FmotDesICMSHasValue := True;
+end;
+
+procedure TNfeSefazICMS90.SetindDeduzDeson(const Value: Integer);
+begin
+  FindDeduzDeson := Value;
+  FindDeduzDesonHasValue := True;
 end;
 
 procedure TNfeSefazICMS90.SetvICMSSTDeson(const Value: Double);
@@ -32746,6 +32938,18 @@ begin
   FcAutHasValue := True;
 end;
 
+procedure TNfeSefazCard.SetCNPJReceb(const Value: string);
+begin
+  FCNPJReceb := Value;
+  FCNPJRecebHasValue := True;
+end;
+
+procedure TNfeSefazCard.SetidTermPag(const Value: string);
+begin
+  FidTermPag := Value;
+  FidTermPagHasValue := True;
+end;
+
 { TNfeSefazDetPag }
 
 destructor TNfeSefazDetPag.Destroy;
@@ -32764,6 +32968,24 @@ procedure TNfeSefazDetPag.SetxPag(const Value: string);
 begin
   FxPag := Value;
   FxPagHasValue := True;
+end;
+
+procedure TNfeSefazDetPag.SetdPag(const Value: TDate);
+begin
+  FdPag := Value;
+  FdPagHasValue := True;
+end;
+
+procedure TNfeSefazDetPag.SetCNPJPag(const Value: string);
+begin
+  FCNPJPag := Value;
+  FCNPJPagHasValue := True;
+end;
+
+procedure TNfeSefazDetPag.SetUFPag(const Value: string);
+begin
+  FUFPag := Value;
+  FUFPagHasValue := True;
 end;
 
 procedure TNfeSefazDetPag.Setcard(const Value: TNfeSefazCard);
