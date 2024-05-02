@@ -1403,6 +1403,9 @@ type
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
     /// </param>
+    /// <param name="NomeFantasia">
+    /// Exibe o nome fantasia do emitente, desde que esteja presente no XML da nota.
+    /// </param>
     /// <param name="MensagemRodape">
     /// Imprime mensagem no rodapé do documento.
     /// 
@@ -1422,13 +1425,20 @@ type
     /// </param>
     /// <param name="QrcodeLateral">
     /// Imprime o QRCode na lateral do DANFE NFC-e.
+    /// 
+    /// *Disponível apenas para DANFE com 80 milímetros de largura*.
+    /// </param>
+    /// <param name="Largura">
+    /// Largura do DANFE NFC-e (em milímetros).
     /// </param>
     /// <remarks>
     /// Através desse endpoint, é possível enviar os dados de uma NFC-e e gerar uma prévia do DANFCE.
     /// 
     /// Os dados de entrada são os mesmos do endpoint de emissão de NFC-e (`POST /nfce`).
+    /// 
+    /// **Atenção**: O DANFE gerado por este endpoint é apenas para fins de visualização e não possui valor fiscal. Para a emissão de uma NF-e com valor fiscal, utilize o processo de emissão padrão descrito na documentação.
     /// </remarks>
-    function BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
+    function BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer): TBytes;
     /// <summary>
     /// Prévia do XML da NFC-e
     /// </summary>
@@ -1436,6 +1446,8 @@ type
     /// Através desse endpoint, é possível enviar os dados de uma NFC-e e gerar uma prévia do XML, sem a assinatura digital.
     /// 
     /// Os dados de entrada são os mesmos do endpoint de emissão de NFC-e (`POST /nfce`).
+    /// 
+    /// **Atenção**: O XML gerado por este endpoint é apenas para fins de visualização e não possui valor fiscal. Para a emissão de uma NF-e com valor fiscal, utilize o processo de emissão padrão descrito na documentação.
     /// </remarks>
     function BaixarPreviaXmlNfce(Body: TNfePedidoEmissao): TBytes;
     /// <summary>
@@ -1544,6 +1556,9 @@ type
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
     /// </param>
+    /// <param name="NomeFantasia">
+    /// Exibe o nome fantasia do emitente, desde que esteja presente no XML da nota.
+    /// </param>
     /// <param name="MensagemRodape">
     /// Imprime mensagem no rodapé do documento.
     /// 
@@ -1563,8 +1578,13 @@ type
     /// </param>
     /// <param name="QrcodeLateral">
     /// Imprime o QRCode na lateral do DANFE NFC-e.
+    /// 
+    /// *Disponível apenas para DANFE com 80 milímetros de largura*.
     /// </param>
-    function BaixarPdfNfce(Id: string; Logotipo: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
+    /// <param name="Largura">
+    /// Largura do DANFE NFC-e (em milímetros).
+    /// </param>
+    function BaixarPdfNfce(Id: string; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer): TBytes;
     /// <summary>
     /// Sincroniza dados na NFC-e a partir da SEFAZ
     /// </summary>
@@ -1710,6 +1730,9 @@ type
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
     /// </param>
+    /// <param name="NomeFantasia">
+    /// Exibe o nome fantasia do emitente, desde que esteja presente no XML da nota.
+    /// </param>
     /// <param name="MensagemRodape">
     /// Imprime mensagem no rodapé do documento.
     /// 
@@ -1729,8 +1752,13 @@ type
     /// </param>
     /// <param name="QrcodeLateral">
     /// Imprime o QRCode na lateral do DANFE NFC-e.
+    /// 
+    /// *Disponível apenas para DANFE com 80 milímetros de largura*.
     /// </param>
-    function BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
+    /// <param name="Largura">
+    /// Largura do DANFE NFC-e (em milímetros).
+    /// </param>
+    function BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer): TBytes;
     function BaixarPreviaXmlNfce(Body: TNfePedidoEmissao): TBytes;
     /// <param name="CpfCnpj">
     /// CPF/CNPJ do emitente.
@@ -1801,6 +1829,9 @@ type
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
     /// </param>
+    /// <param name="NomeFantasia">
+    /// Exibe o nome fantasia do emitente, desde que esteja presente no XML da nota.
+    /// </param>
     /// <param name="MensagemRodape">
     /// Imprime mensagem no rodapé do documento.
     /// 
@@ -1820,8 +1851,13 @@ type
     /// </param>
     /// <param name="QrcodeLateral">
     /// Imprime o QRCode na lateral do DANFE NFC-e.
+    /// 
+    /// *Disponível apenas para DANFE com 80 milímetros de largura*.
     /// </param>
-    function BaixarPdfNfce(Id: string; Logotipo: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
+    /// <param name="Largura">
+    /// Largura do DANFE NFC-e (em milímetros).
+    /// </param>
+    function BaixarPdfNfce(Id: string; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer): TBytes;
     /// <param name="Id">
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -2196,6 +2232,19 @@ type
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
     /// </param>
+    /// <param name="NomeFantasia">
+    /// Exibe o nome fantasia do emitente, desde que esteja presente no XML da nota.
+    /// </param>
+    /// <param name="Formato">
+    /// Formato de impressão do DANFE.
+    /// 
+    /// Valores disponíveis:
+    /// - `padrao`: será utilizado o formato definido no XML da NF-e (tag "tpImp");
+    /// - `retrato`: tamanho A4 em modo retrato;
+    /// - `paisagem`: tamanho A4 em modo paisagem;
+    /// - `simplificado`: formato simplificado utilizado nas operações realizadas fora do estabelecimento (Anexo II do MOC, item 3.11);
+    /// - `etiqueta`: formato simplificado utilizado nas operações em comércio eletrônico (Anexo II do MOC, item 3.12 e NT 2020.004).
+    /// </param>
     /// <param name="MensagemRodape">
     /// Imprime mensagem no rodapé do documento.
     /// 
@@ -2217,8 +2266,10 @@ type
     /// Através desse endpoint, é possível enviar os dados de uma NF-e e gerar uma prévia do DANFE.
     /// 
     /// Os dados de entrada são os mesmos do endpoint de emissão de NF-e (`POST /nfe`).
+    /// 
+    /// **Atenção**: O DANFE gerado por este endpoint é apenas para fins de visualização e não possui valor fiscal. Para a emissão de uma NF-e com valor fiscal, utilize o processo de emissão padrão descrito na documentação.
     /// </remarks>
-    function BaixarPreviaPdfNfe(Body: TNfePedidoEmissao; Logotipo: Boolean; MensagemRodape: string; Canhoto: Boolean): TBytes;
+    function BaixarPreviaPdfNfe(Body: TNfePedidoEmissao; Logotipo: Boolean; NomeFantasia: Boolean; Formato: string; MensagemRodape: string; Canhoto: Boolean): TBytes;
     /// <summary>
     /// Prévia do XML da NF-e
     /// </summary>
@@ -2226,6 +2277,8 @@ type
     /// Através desse endpoint, é possível enviar os dados de uma NF-e e gerar uma prévia do XML, sem a assinatura digital.
     /// 
     /// Os dados de entrada são os mesmos do endpoint de emissão de NF-e (`POST /nfe`).
+    /// 
+    /// **Atenção**: O XML gerado por este endpoint é apenas para fins de visualização e não possui valor fiscal. Para a emissão de uma NF-e com valor fiscal, utilize o processo de emissão padrão descrito na documentação.
     /// </remarks>
     function BaixarPreviaXmlNfe(Body: TNfePedidoEmissao): TBytes;
     /// <summary>
@@ -2329,6 +2382,19 @@ type
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
     /// </param>
+    /// <param name="NomeFantasia">
+    /// Exibe o nome fantasia do emitente, desde que esteja presente no XML da nota.
+    /// </param>
+    /// <param name="Formato">
+    /// Formato de impressão do DANFE.
+    /// 
+    /// Valores disponíveis:
+    /// - `padrao`: será utilizado o formato definido no XML da NF-e (tag "tpImp");
+    /// - `retrato`: tamanho A4 em modo retrato;
+    /// - `paisagem`: tamanho A4 em modo paisagem;
+    /// - `simplificado`: formato simplificado utilizado nas operações realizadas fora do estabelecimento (Anexo II do MOC, item 3.11);
+    /// - `etiqueta`: formato simplificado utilizado nas operações em comércio eletrônico (Anexo II do MOC, item 3.12 e NT 2020.004).
+    /// </param>
     /// <param name="MensagemRodape">
     /// Imprime mensagem no rodapé do documento.
     /// 
@@ -2346,7 +2412,7 @@ type
     /// <param name="Canhoto">
     /// Imprime o documento com o bloco de canhoto.
     /// </param>
-    function BaixarPdfNfe(Id: string; Logotipo: Boolean; MensagemRodape: string; Canhoto: Boolean): TBytes;
+    function BaixarPdfNfe(Id: string; Logotipo: Boolean; NomeFantasia: Boolean; Formato: string; MensagemRodape: string; Canhoto: Boolean): TBytes;
     /// <summary>
     /// Sincroniza dados na NF-e a partir da SEFAZ
     /// </summary>
@@ -2492,6 +2558,19 @@ type
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
     /// </param>
+    /// <param name="NomeFantasia">
+    /// Exibe o nome fantasia do emitente, desde que esteja presente no XML da nota.
+    /// </param>
+    /// <param name="Formato">
+    /// Formato de impressão do DANFE.
+    /// 
+    /// Valores disponíveis:
+    /// - `padrao`: será utilizado o formato definido no XML da NF-e (tag "tpImp");
+    /// - `retrato`: tamanho A4 em modo retrato;
+    /// - `paisagem`: tamanho A4 em modo paisagem;
+    /// - `simplificado`: formato simplificado utilizado nas operações realizadas fora do estabelecimento (Anexo II do MOC, item 3.11);
+    /// - `etiqueta`: formato simplificado utilizado nas operações em comércio eletrônico (Anexo II do MOC, item 3.12 e NT 2020.004).
+    /// </param>
     /// <param name="MensagemRodape">
     /// Imprime mensagem no rodapé do documento.
     /// 
@@ -2509,7 +2588,7 @@ type
     /// <param name="Canhoto">
     /// Imprime o documento com o bloco de canhoto.
     /// </param>
-    function BaixarPreviaPdfNfe(Body: TNfePedidoEmissao; Logotipo: Boolean; MensagemRodape: string; Canhoto: Boolean): TBytes;
+    function BaixarPreviaPdfNfe(Body: TNfePedidoEmissao; Logotipo: Boolean; NomeFantasia: Boolean; Formato: string; MensagemRodape: string; Canhoto: Boolean): TBytes;
     function BaixarPreviaXmlNfe(Body: TNfePedidoEmissao): TBytes;
     /// <param name="CpfCnpj">
     /// CPF/CNPJ do emitente.
@@ -2568,6 +2647,19 @@ type
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
     /// </param>
+    /// <param name="NomeFantasia">
+    /// Exibe o nome fantasia do emitente, desde que esteja presente no XML da nota.
+    /// </param>
+    /// <param name="Formato">
+    /// Formato de impressão do DANFE.
+    /// 
+    /// Valores disponíveis:
+    /// - `padrao`: será utilizado o formato definido no XML da NF-e (tag "tpImp");
+    /// - `retrato`: tamanho A4 em modo retrato;
+    /// - `paisagem`: tamanho A4 em modo paisagem;
+    /// - `simplificado`: formato simplificado utilizado nas operações realizadas fora do estabelecimento (Anexo II do MOC, item 3.11);
+    /// - `etiqueta`: formato simplificado utilizado nas operações em comércio eletrônico (Anexo II do MOC, item 3.12 e NT 2020.004).
+    /// </param>
     /// <param name="MensagemRodape">
     /// Imprime mensagem no rodapé do documento.
     /// 
@@ -2585,7 +2677,7 @@ type
     /// <param name="Canhoto">
     /// Imprime o documento com o bloco de canhoto.
     /// </param>
-    function BaixarPdfNfe(Id: string; Logotipo: Boolean; MensagemRodape: string; Canhoto: Boolean): TBytes;
+    function BaixarPdfNfe(Id: string; Logotipo: Boolean; NomeFantasia: Boolean; Formato: string; MensagemRodape: string; Canhoto: Boolean): TBytes;
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -4177,7 +4269,7 @@ begin
   Result := Converter.TDfeLoteFromJson(Response.ContentAsString);
 end;
 
-function TNfceService.BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
+function TNfceService.BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -4185,9 +4277,11 @@ begin
   Request := CreateRequest('/nfce/previa/pdf', 'POST');
   Request.AddBody(Converter.TNfePedidoEmissaoToJson(Body));
   Request.AddQueryParam('logotipo', BoolToParam(Logotipo));
+  Request.AddQueryParam('nome_fantasia', BoolToParam(NomeFantasia));
   Request.AddQueryParam('mensagem_rodape', MensagemRodape);
   Request.AddQueryParam('resumido', BoolToParam(Resumido));
   Request.AddQueryParam('qrcode_lateral', BoolToParam(QrcodeLateral));
+  Request.AddQueryParam('largura', IntToStr(Largura));
   Request.AddHeader('Content-Type', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
@@ -4301,7 +4395,7 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TNfceService.BaixarPdfNfce(Id: string; Logotipo: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean): TBytes;
+function TNfceService.BaixarPdfNfce(Id: string; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -4309,9 +4403,11 @@ begin
   Request := CreateRequest('/nfce/{id}/pdf', 'GET');
   Request.AddUrlParam('id', Id);
   Request.AddQueryParam('logotipo', BoolToParam(Logotipo));
+  Request.AddQueryParam('nome_fantasia', BoolToParam(NomeFantasia));
   Request.AddQueryParam('mensagem_rodape', MensagemRodape);
   Request.AddQueryParam('resumido', BoolToParam(Resumido));
   Request.AddQueryParam('qrcode_lateral', BoolToParam(QrcodeLateral));
+  Request.AddQueryParam('largura', IntToStr(Largura));
   Response := Request.Execute;
   CheckError(Response);
   Result := Response.ContentAsBytes;
@@ -4690,7 +4786,7 @@ begin
   Result := Converter.TDfeLoteFromJson(Response.ContentAsString);
 end;
 
-function TNfeService.BaixarPreviaPdfNfe(Body: TNfePedidoEmissao; Logotipo: Boolean; MensagemRodape: string; Canhoto: Boolean): TBytes;
+function TNfeService.BaixarPreviaPdfNfe(Body: TNfePedidoEmissao; Logotipo: Boolean; NomeFantasia: Boolean; Formato: string; MensagemRodape: string; Canhoto: Boolean): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -4698,6 +4794,8 @@ begin
   Request := CreateRequest('/nfe/previa/pdf', 'POST');
   Request.AddBody(Converter.TNfePedidoEmissaoToJson(Body));
   Request.AddQueryParam('logotipo', BoolToParam(Logotipo));
+  Request.AddQueryParam('nome_fantasia', BoolToParam(NomeFantasia));
+  Request.AddQueryParam('formato', Formato);
   Request.AddQueryParam('mensagem_rodape', MensagemRodape);
   Request.AddQueryParam('canhoto', BoolToParam(Canhoto));
   Request.AddHeader('Content-Type', 'application/json');
@@ -4850,7 +4948,7 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TNfeService.BaixarPdfNfe(Id: string; Logotipo: Boolean; MensagemRodape: string; Canhoto: Boolean): TBytes;
+function TNfeService.BaixarPdfNfe(Id: string; Logotipo: Boolean; NomeFantasia: Boolean; Formato: string; MensagemRodape: string; Canhoto: Boolean): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -4858,6 +4956,8 @@ begin
   Request := CreateRequest('/nfe/{id}/pdf', 'GET');
   Request.AddUrlParam('id', Id);
   Request.AddQueryParam('logotipo', BoolToParam(Logotipo));
+  Request.AddQueryParam('nome_fantasia', BoolToParam(NomeFantasia));
+  Request.AddQueryParam('formato', Formato);
   Request.AddQueryParam('mensagem_rodape', MensagemRodape);
   Request.AddQueryParam('canhoto', BoolToParam(Canhoto));
   Response := Request.Execute;
