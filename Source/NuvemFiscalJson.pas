@@ -12289,6 +12289,8 @@ begin
       Json.ObjAddProp(Result, 'serie', Self.IntegerToJsonValue(Source.serie));
     if Source.numeroHasValue then
       Json.ObjAddProp(Result, 'numero', Self.IntegerToJsonValue(Source.numero));
+    if Source.tipo_emissaoHasValue then
+      Json.ObjAddProp(Result, 'tipo_emissao', Self.IntegerToJsonValue(Source.tipo_emissao));
     if Source.valor_totalHasValue then
       Json.ObjAddProp(Result, 'valor_total', Self.DoubleToJsonValue(Source.valor_total));
     if Source.chaveHasValue then
@@ -12342,6 +12344,8 @@ begin
       Result.serie := Self.IntegerFromJsonValue(JValue);
     if Json.ObjContains(Source, 'numero', JValue) then
       Result.numero := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'tipo_emissao', JValue) then
+      Result.tipo_emissao := Self.IntegerFromJsonValue(JValue);
     if Json.ObjContains(Source, 'valor_total', JValue) then
       Result.valor_total := Self.DoubleFromJsonValue(JValue);
     if Json.ObjContains(Source, 'chave', JValue) then

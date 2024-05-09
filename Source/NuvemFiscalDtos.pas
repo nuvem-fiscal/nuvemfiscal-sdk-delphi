@@ -5958,6 +5958,8 @@ type
     FserieHasValue: Boolean;
     Fnumero: Integer;
     FnumeroHasValue: Boolean;
+    Ftipo_emissao: Integer;
+    Ftipo_emissaoHasValue: Boolean;
     Fvalor_total: Double;
     Fvalor_totalHasValue: Boolean;
     Fchave: string;
@@ -5972,6 +5974,7 @@ type
     procedure Setmodelo(const Value: Integer);
     procedure Setserie(const Value: Integer);
     procedure Setnumero(const Value: Integer);
+    procedure Settipo_emissao(const Value: Integer);
     procedure Setvalor_total(const Value: Double);
     procedure Setchave(const Value: string);
     procedure Setautorizacao(const Value: TDfeAutorizacao);
@@ -6011,6 +6014,8 @@ type
     property serieHasValue: Boolean read FserieHasValue write FserieHasValue;
     property numero: Integer read Fnumero write Setnumero;
     property numeroHasValue: Boolean read FnumeroHasValue write FnumeroHasValue;
+    property tipo_emissao: Integer read Ftipo_emissao write Settipo_emissao;
+    property tipo_emissaoHasValue: Boolean read Ftipo_emissaoHasValue write Ftipo_emissaoHasValue;
     property valor_total: Double read Fvalor_total write Setvalor_total;
     property valor_totalHasValue: Boolean read Fvalor_totalHasValue write Fvalor_totalHasValue;
     /// <summary>
@@ -24872,6 +24877,12 @@ procedure TDfe.Setnumero(const Value: Integer);
 begin
   Fnumero := Value;
   FnumeroHasValue := True;
+end;
+
+procedure TDfe.Settipo_emissao(const Value: Integer);
+begin
+  Ftipo_emissao := Value;
+  Ftipo_emissaoHasValue := True;
 end;
 
 procedure TDfe.Setvalor_total(const Value: Double);
