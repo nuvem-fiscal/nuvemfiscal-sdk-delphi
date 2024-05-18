@@ -1431,6 +1431,37 @@ type
     /// <param name="Largura">
     /// Largura do DANFE NFC-e (em milímetros).
     /// </param>
+    /// <param name="Margem">
+    /// Define as margens do DANFE NFC-e (em milímetros).
+    /// 
+    /// Essa propriedade pode ser especificada usando um, dois, três ou quatro valores (separados por vírgulas). Cada valor deve ser um número entre `0` e `9`.
+    /// * Quando **um** valor é especificado, a mesma margem é aplicada para **todos os quatro lados**.
+    /// * Quando **dois** valores são especificados, a primeira margem é aplicada aos **lados esquerdo e direito**, e a segunda aos **lados superior e inferior**.
+    /// * Quando **três** valores são especificados, a primeira margem é aplicada ao **lado esquerdo**, a segunda aos **lados superior e inferior**, e a terceira ao **lado direito**.
+    /// * Quando **quatro** valores são especificados, as margens são aplicadas aos lados **esquerdo**, **superior**, **direito** e **inferior**, nesta ordem (sentido horário).
+    /// 
+    /// **Exemplos de uso**:
+    /// * `margem=1`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 1mm
+    ///   - Margem direita: 1mm
+    ///   - Margem inferior: 1mm
+    /// * `margem=1,2`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 2mm
+    ///   - Margem direita: 1mm
+    ///   - Margem inferior: 2mm
+    /// * `margem=1,2,3`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 2mm
+    ///   - Margem direita: 3mm
+    ///   - Margem inferior: 2mm
+    /// * `margem=1,2,3,4`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 2mm
+    ///   - Margem direita: 3mm
+    ///   - Margem inferior: 4mm
+    /// </param>
     /// <remarks>
     /// Através desse endpoint, é possível enviar os dados de uma NFC-e e gerar uma prévia do DANFCE.
     /// 
@@ -1438,7 +1469,7 @@ type
     /// 
     /// **Atenção**: O DANFE gerado por este endpoint é apenas para fins de visualização e não possui valor fiscal. Para a emissão de uma NF-e com valor fiscal, utilize o processo de emissão padrão descrito na documentação.
     /// </remarks>
-    function BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer): TBytes;
+    function BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer; Margem: string): TBytes;
     /// <summary>
     /// Prévia do XML da NFC-e
     /// </summary>
@@ -1584,7 +1615,38 @@ type
     /// <param name="Largura">
     /// Largura do DANFE NFC-e (em milímetros).
     /// </param>
-    function BaixarPdfNfce(Id: string; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer): TBytes;
+    /// <param name="Margem">
+    /// Define as margens do DANFE NFC-e (em milímetros).
+    /// 
+    /// Essa propriedade pode ser especificada usando um, dois, três ou quatro valores (separados por vírgulas). Cada valor deve ser um número entre `0` e `9`.
+    /// * Quando **um** valor é especificado, a mesma margem é aplicada para **todos os quatro lados**.
+    /// * Quando **dois** valores são especificados, a primeira margem é aplicada aos **lados esquerdo e direito**, e a segunda aos **lados superior e inferior**.
+    /// * Quando **três** valores são especificados, a primeira margem é aplicada ao **lado esquerdo**, a segunda aos **lados superior e inferior**, e a terceira ao **lado direito**.
+    /// * Quando **quatro** valores são especificados, as margens são aplicadas aos lados **esquerdo**, **superior**, **direito** e **inferior**, nesta ordem (sentido horário).
+    /// 
+    /// **Exemplos de uso**:
+    /// * `margem=1`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 1mm
+    ///   - Margem direita: 1mm
+    ///   - Margem inferior: 1mm
+    /// * `margem=1,2`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 2mm
+    ///   - Margem direita: 1mm
+    ///   - Margem inferior: 2mm
+    /// * `margem=1,2,3`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 2mm
+    ///   - Margem direita: 3mm
+    ///   - Margem inferior: 2mm
+    /// * `margem=1,2,3,4`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 2mm
+    ///   - Margem direita: 3mm
+    ///   - Margem inferior: 4mm
+    /// </param>
+    function BaixarPdfNfce(Id: string; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer; Margem: string): TBytes;
     /// <summary>
     /// Sincroniza dados na NFC-e a partir da SEFAZ
     /// </summary>
@@ -1758,7 +1820,38 @@ type
     /// <param name="Largura">
     /// Largura do DANFE NFC-e (em milímetros).
     /// </param>
-    function BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer): TBytes;
+    /// <param name="Margem">
+    /// Define as margens do DANFE NFC-e (em milímetros).
+    /// 
+    /// Essa propriedade pode ser especificada usando um, dois, três ou quatro valores (separados por vírgulas). Cada valor deve ser um número entre `0` e `9`.
+    /// * Quando **um** valor é especificado, a mesma margem é aplicada para **todos os quatro lados**.
+    /// * Quando **dois** valores são especificados, a primeira margem é aplicada aos **lados esquerdo e direito**, e a segunda aos **lados superior e inferior**.
+    /// * Quando **três** valores são especificados, a primeira margem é aplicada ao **lado esquerdo**, a segunda aos **lados superior e inferior**, e a terceira ao **lado direito**.
+    /// * Quando **quatro** valores são especificados, as margens são aplicadas aos lados **esquerdo**, **superior**, **direito** e **inferior**, nesta ordem (sentido horário).
+    /// 
+    /// **Exemplos de uso**:
+    /// * `margem=1`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 1mm
+    ///   - Margem direita: 1mm
+    ///   - Margem inferior: 1mm
+    /// * `margem=1,2`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 2mm
+    ///   - Margem direita: 1mm
+    ///   - Margem inferior: 2mm
+    /// * `margem=1,2,3`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 2mm
+    ///   - Margem direita: 3mm
+    ///   - Margem inferior: 2mm
+    /// * `margem=1,2,3,4`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 2mm
+    ///   - Margem direita: 3mm
+    ///   - Margem inferior: 4mm
+    /// </param>
+    function BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer; Margem: string): TBytes;
     function BaixarPreviaXmlNfce(Body: TNfePedidoEmissao): TBytes;
     /// <param name="CpfCnpj">
     /// CPF/CNPJ do emitente.
@@ -1857,7 +1950,38 @@ type
     /// <param name="Largura">
     /// Largura do DANFE NFC-e (em milímetros).
     /// </param>
-    function BaixarPdfNfce(Id: string; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer): TBytes;
+    /// <param name="Margem">
+    /// Define as margens do DANFE NFC-e (em milímetros).
+    /// 
+    /// Essa propriedade pode ser especificada usando um, dois, três ou quatro valores (separados por vírgulas). Cada valor deve ser um número entre `0` e `9`.
+    /// * Quando **um** valor é especificado, a mesma margem é aplicada para **todos os quatro lados**.
+    /// * Quando **dois** valores são especificados, a primeira margem é aplicada aos **lados esquerdo e direito**, e a segunda aos **lados superior e inferior**.
+    /// * Quando **três** valores são especificados, a primeira margem é aplicada ao **lado esquerdo**, a segunda aos **lados superior e inferior**, e a terceira ao **lado direito**.
+    /// * Quando **quatro** valores são especificados, as margens são aplicadas aos lados **esquerdo**, **superior**, **direito** e **inferior**, nesta ordem (sentido horário).
+    /// 
+    /// **Exemplos de uso**:
+    /// * `margem=1`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 1mm
+    ///   - Margem direita: 1mm
+    ///   - Margem inferior: 1mm
+    /// * `margem=1,2`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 2mm
+    ///   - Margem direita: 1mm
+    ///   - Margem inferior: 2mm
+    /// * `margem=1,2,3`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 2mm
+    ///   - Margem direita: 3mm
+    ///   - Margem inferior: 2mm
+    /// * `margem=1,2,3,4`
+    ///   - Margem esquerda: 1mm
+    ///   - Margem superior: 2mm
+    ///   - Margem direita: 3mm
+    ///   - Margem inferior: 4mm
+    /// </param>
+    function BaixarPdfNfce(Id: string; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer; Margem: string): TBytes;
     /// <param name="Id">
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -4269,7 +4393,7 @@ begin
   Result := Converter.TDfeLoteFromJson(Response.ContentAsString);
 end;
 
-function TNfceService.BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer): TBytes;
+function TNfceService.BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer; Margem: string): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -4282,6 +4406,7 @@ begin
   Request.AddQueryParam('resumido', BoolToParam(Resumido));
   Request.AddQueryParam('qrcode_lateral', BoolToParam(QrcodeLateral));
   Request.AddQueryParam('largura', IntToStr(Largura));
+  Request.AddQueryParam('margem', Margem);
   Request.AddHeader('Content-Type', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
@@ -4395,7 +4520,7 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
-function TNfceService.BaixarPdfNfce(Id: string; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer): TBytes;
+function TNfceService.BaixarPdfNfce(Id: string; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer; Margem: string): TBytes;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -4408,6 +4533,7 @@ begin
   Request.AddQueryParam('resumido', BoolToParam(Resumido));
   Request.AddQueryParam('qrcode_lateral', BoolToParam(QrcodeLateral));
   Request.AddQueryParam('largura', IntToStr(Largura));
+  Request.AddQueryParam('margem', Margem);
   Response := Request.Execute;
   CheckError(Response);
   Result := Response.ContentAsBytes;
