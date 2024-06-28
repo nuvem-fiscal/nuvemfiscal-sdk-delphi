@@ -9,6 +9,17 @@ uses
   SysUtils;
 
 type
+  TDistribuicaoNfeDocumento = class;
+  TDistribuicaoNfeDocumentoList = class;
+  TDistribuicaoNfe = class;
+  TDistribuicaoNfeList = class;
+  TDistribuicaoNfeListagem = class;
+  TDistribuicaoNfePedido = class;
+  TDistribuicaoNfeDocumentoListagem = class;
+  TDistribuicaoNfeEvento = class;
+  TDistribuicaoNfeEventoList = class;
+  TManifestacaoNfeListagem = class;
+  TDistribuicaoNfePedidoManifestacao = class;
   TEmpresaEndereco = class;
   TEmpresa = class;
   TEmpresaList = class;
@@ -25,6 +36,7 @@ type
   TEmpresaConfigMdfe = class;
   TEmpresaConfigCte = class;
   TEmpresaConfigNfcom = class;
+  TEmpresaConfigDistribuicaoNfe = class;
   stringList = class;
   TNfseCidadesAtendidas = class;
   TNfseCidadeMetadados = class;
@@ -107,6 +119,7 @@ type
   TNfcomSefazAssinante = class;
   TNfcomSefazGNF = class;
   TNfcomSefazGSub = class;
+  TNfcomSefazGCofatGNF = class;
   TNfcomSefazGCofat = class;
   TNfcomSefazProd = class;
   TNfcomSefazICMS00 = class;
@@ -388,6 +401,10 @@ type
   TMdfeDocumentoVinculadoList = class;
   TMdfePedidoInclusaoDfe = class;
   TMdfeInclusaoDfe = class;
+  TDfeContribuinteEndereco = class;
+  TDfeContribuinteInfCad = class;
+  TDfeContribuinteInfCadList = class;
+  TDfeContribuinteInfCons = class;
   TNfeSefazRefNF = class;
   TNfeSefazRefNFP = class;
   TNfeSefazRefECF = class;
@@ -548,6 +565,528 @@ type
   TCnpjEmpresaList = class;
   TCnpjListagem = class;
   TCepEndereco = class;
+  
+  TDistribuicaoNfeDocumento = class
+  private
+    Fid: string;
+    Fcreated_at: TDateTime;
+    Fcreated_atHasValue: Boolean;
+    Fnsu: Integer;
+    FnsuHasValue: Boolean;
+    Fschema: string;
+    Ftipo_documento: string;
+    Ftipo_documentoHasValue: Boolean;
+    Fchave_acesso: string;
+    Fchave_acessoHasValue: Boolean;
+    Fresumo: Boolean;
+    FresumoHasValue: Boolean;
+    Ftipo_evento: string;
+    Ftipo_eventoHasValue: Boolean;
+    Fnumero_sequencial: Integer;
+    Fnumero_sequencialHasValue: Boolean;
+    Fdata_evento: TDateTime;
+    Fdata_eventoHasValue: Boolean;
+    Fdata_recebimento: TDateTime;
+    Fdata_recebimentoHasValue: Boolean;
+    Fnumero_protocolo: string;
+    Fnumero_protocoloHasValue: Boolean;
+    Ftipo_nfe: Integer;
+    Ftipo_nfeHasValue: Boolean;
+    Fvalor_nfe: Double;
+    Fvalor_nfeHasValue: Boolean;
+    Fdigest_value: string;
+    Fdigest_valueHasValue: Boolean;
+    Femitente_cpf_cnpj: string;
+    Femitente_cpf_cnpjHasValue: Boolean;
+    Femitente_nome_razao_social: string;
+    Femitente_nome_razao_socialHasValue: Boolean;
+    Femitente_inscricao_estadual: string;
+    Femitente_inscricao_estadualHasValue: Boolean;
+    procedure Setcreated_at(const Value: TDateTime);
+    procedure Setnsu(const Value: Integer);
+    procedure Settipo_documento(const Value: string);
+    procedure Setchave_acesso(const Value: string);
+    procedure Setresumo(const Value: Boolean);
+    procedure Settipo_evento(const Value: string);
+    procedure Setnumero_sequencial(const Value: Integer);
+    procedure Setdata_evento(const Value: TDateTime);
+    procedure Setdata_recebimento(const Value: TDateTime);
+    procedure Setnumero_protocolo(const Value: string);
+    procedure Settipo_nfe(const Value: Integer);
+    procedure Setvalor_nfe(const Value: Double);
+    procedure Setdigest_value(const Value: string);
+    procedure Setemitente_cpf_cnpj(const Value: string);
+    procedure Setemitente_nome_razao_social(const Value: string);
+    procedure Setemitente_inscricao_estadual(const Value: string);
+  public
+    /// <summary>
+    /// ID único gerado pela Nuvem Fiscal para identificar o documento.
+    /// </summary>
+    property id: string read Fid write Fid;
+    /// <summary>
+    /// Data/hora em que o documento foi criado na Nuvem Fiscal. Representado no formato <a href="https://en.wikipedia.org/wiki/ISO_8601" target="blank">`ISO 8601`</a>.
+    /// </summary>
+    property created_at: TDateTime read Fcreated_at write Setcreated_at;
+    property created_atHasValue: Boolean read Fcreated_atHasValue write Fcreated_atHasValue;
+    /// <summary>
+    /// NSU do documento fiscal.
+    /// </summary>
+    property nsu: Integer read Fnsu write Setnsu;
+    property nsuHasValue: Boolean read FnsuHasValue write FnsuHasValue;
+    /// <summary>
+    /// Identificação do Schema XML que será utilizado para validar o XML existente no conteúdo da tag docZip. Vai identificar o tipo do documento e sua versão. Exemplos: resNFe_v1.00.xsd, procNFe_v3.10.xsd, resEvento_1.00.xsd, procEventoNFe_v1.00.xsd.
+    /// </summary>
+    property schema: string read Fschema write Fschema;
+    /// <summary>
+    /// Tipo do documento de interesse da pessoa ou empresa.
+    /// </summary>
+    property tipo_documento: string read Ftipo_documento write Settipo_documento;
+    property tipo_documentoHasValue: Boolean read Ftipo_documentoHasValue write Ftipo_documentoHasValue;
+    /// <summary>
+    /// Chave de Acesso da NF-e.
+    /// </summary>
+    property chave_acesso: string read Fchave_acesso write Setchave_acesso;
+    property chave_acessoHasValue: Boolean read Fchave_acessoHasValue write Fchave_acessoHasValue;
+    /// <summary>
+    /// Indica se o documento distribuído está em sua forma resumida.
+    /// </summary>
+    property resumo: Boolean read Fresumo write Setresumo;
+    property resumoHasValue: Boolean read FresumoHasValue write FresumoHasValue;
+    /// <summary>
+    /// Tipo do evento.
+    /// </summary>
+    property tipo_evento: string read Ftipo_evento write Settipo_evento;
+    property tipo_eventoHasValue: Boolean read Ftipo_eventoHasValue write Ftipo_eventoHasValue;
+    /// <summary>
+    /// Número sequencial do evento para o mesmo tipo de evento.
+    /// </summary>
+    property numero_sequencial: Integer read Fnumero_sequencial write Setnumero_sequencial;
+    property numero_sequencialHasValue: Boolean read Fnumero_sequencialHasValue write Fnumero_sequencialHasValue;
+    /// <summary>
+    /// Data e hora do evento.
+    /// </summary>
+    property data_evento: TDateTime read Fdata_evento write Setdata_evento;
+    property data_eventoHasValue: Boolean read Fdata_eventoHasValue write Fdata_eventoHasValue;
+    /// <summary>
+    /// Data e hora de autorização do evento.
+    /// </summary>
+    property data_recebimento: TDateTime read Fdata_recebimento write Setdata_recebimento;
+    property data_recebimentoHasValue: Boolean read Fdata_recebimentoHasValue write Fdata_recebimentoHasValue;
+    /// <summary>
+    /// Número do protocolo de autorização.
+    /// </summary>
+    property numero_protocolo: string read Fnumero_protocolo write Setnumero_protocolo;
+    property numero_protocoloHasValue: Boolean read Fnumero_protocoloHasValue write Fnumero_protocoloHasValue;
+    /// <summary>
+    /// Tipo da NF-e (0 - entrada; 1 - saída).
+    /// </summary>
+    property tipo_nfe: Integer read Ftipo_nfe write Settipo_nfe;
+    property tipo_nfeHasValue: Boolean read Ftipo_nfeHasValue write Ftipo_nfeHasValue;
+    /// <summary>
+    /// Valor total da NF-e.
+    /// </summary>
+    property valor_nfe: Double read Fvalor_nfe write Setvalor_nfe;
+    property valor_nfeHasValue: Boolean read Fvalor_nfeHasValue write Fvalor_nfeHasValue;
+    /// <summary>
+    /// Digest Value da NF-e processada. Utilizado para conferir a integridade da NF-e original.
+    /// </summary>
+    property digest_value: string read Fdigest_value write Setdigest_value;
+    property digest_valueHasValue: Boolean read Fdigest_valueHasValue write Fdigest_valueHasValue;
+    /// <summary>
+    /// CPF/CNPJ do emitente.
+    /// </summary>
+    property emitente_cpf_cnpj: string read Femitente_cpf_cnpj write Setemitente_cpf_cnpj;
+    property emitente_cpf_cnpjHasValue: Boolean read Femitente_cpf_cnpjHasValue write Femitente_cpf_cnpjHasValue;
+    /// <summary>
+    /// Nome ou Razão Social do emitente.
+    /// </summary>
+    property emitente_nome_razao_social: string read Femitente_nome_razao_social write Setemitente_nome_razao_social;
+    property emitente_nome_razao_socialHasValue: Boolean read Femitente_nome_razao_socialHasValue write Femitente_nome_razao_socialHasValue;
+    /// <summary>
+    /// Inscrição Estadual do emitente.
+    /// </summary>
+    property emitente_inscricao_estadual: string read Femitente_inscricao_estadual write Setemitente_inscricao_estadual;
+    property emitente_inscricao_estadualHasValue: Boolean read Femitente_inscricao_estadualHasValue write Femitente_inscricao_estadualHasValue;
+  end;
+  
+  TDistribuicaoNfeDocumentoList = class(TObjectList<TDistribuicaoNfeDocumento>)
+  end;
+  
+  TDistribuicaoNfe = class
+  private
+    Fid: string;
+    Fcreated_at: TDateTime;
+    Fcreated_atHasValue: Boolean;
+    Fstatus: string;
+    Fambiente: string;
+    Fuf_autor: string;
+    Fuf_autorHasValue: Boolean;
+    Ftipo_consulta: string;
+    Fdist_nsu: Integer;
+    Fdist_nsuHasValue: Boolean;
+    Fcons_nsu: Integer;
+    Fcons_nsuHasValue: Boolean;
+    Fcons_chave: string;
+    Fcons_chaveHasValue: Boolean;
+    Fcodigo_status: Integer;
+    Fmotivo_status: string;
+    Fmotivo_statusHasValue: Boolean;
+    Fdata_hora_resposta: TDateTime;
+    Fultimo_nsu: Integer;
+    Fmax_nsu: Integer;
+    Fdocumentos: TDistribuicaoNfeDocumentoList;
+    procedure Setcreated_at(const Value: TDateTime);
+    procedure Setuf_autor(const Value: string);
+    procedure Setdist_nsu(const Value: Integer);
+    procedure Setcons_nsu(const Value: Integer);
+    procedure Setcons_chave(const Value: string);
+    procedure Setmotivo_status(const Value: string);
+    procedure Setdocumentos(const Value: TDistribuicaoNfeDocumentoList);
+  public
+    destructor Destroy; override;
+    /// <summary>
+    /// ID único gerado pela Nuvem Fiscal para o pedido de distribuição.
+    /// </summary>
+    property id: string read Fid write Fid;
+    /// <summary>
+    /// Data/hora em que o pedido foi criado na Nuvem Fiscal. Representado no formato <a href="https://en.wikipedia.org/wiki/ISO_8601" target="blank">`ISO 8601`</a>.
+    /// </summary>
+    property created_at: TDateTime read Fcreated_at write Setcreated_at;
+    property created_atHasValue: Boolean read Fcreated_atHasValue write Fcreated_atHasValue;
+    /// <summary>
+    /// Indica o status da distribuição.
+    /// </summary>
+    property status: string read Fstatus write Fstatus;
+    /// <summary>
+    /// Identificação do Ambiente.
+    /// </summary>
+    property ambiente: string read Fambiente write Fambiente;
+    /// <summary>
+    /// Sigla da UF do autor.
+    /// </summary>
+    property uf_autor: string read Fuf_autor write Setuf_autor;
+    property uf_autorHasValue: Boolean read Fuf_autorHasValue write Fuf_autorHasValue;
+    property tipo_consulta: string read Ftipo_consulta write Ftipo_consulta;
+    /// <summary>
+    /// Distribuição de conjunto de DF-e a partir do NSU informado.
+    /// 
+    /// *Obrigatório quando `tipo_consulta` for `distNSU`.*
+    /// </summary>
+    property dist_nsu: Integer read Fdist_nsu write Setdist_nsu;
+    property dist_nsuHasValue: Boolean read Fdist_nsuHasValue write Fdist_nsuHasValue;
+    /// <summary>
+    /// Consulta DF-e vinculado ao NSU informado.
+    /// 
+    /// *Obrigatório quando `tipo_consulta` for `consNSU`.*
+    /// </summary>
+    property cons_nsu: Integer read Fcons_nsu write Setcons_nsu;
+    property cons_nsuHasValue: Boolean read Fcons_nsuHasValue write Fcons_nsuHasValue;
+    /// <summary>
+    /// Consulta de NF-e por chave de acesso informada.
+    /// 
+    /// *Obrigatório quando `tipo_consulta` for `consChNFe`.*
+    /// </summary>
+    property cons_chave: string read Fcons_chave write Setcons_chave;
+    property cons_chaveHasValue: Boolean read Fcons_chaveHasValue write Fcons_chaveHasValue;
+    /// <summary>
+    /// Código do status de processamento da requisição.
+    /// </summary>
+    property codigo_status: Integer read Fcodigo_status write Fcodigo_status;
+    /// <summary>
+    /// Descrição do status de processamento da requisição.
+    /// </summary>
+    property motivo_status: string read Fmotivo_status write Setmotivo_status;
+    property motivo_statusHasValue: Boolean read Fmotivo_statusHasValue write Fmotivo_statusHasValue;
+    /// <summary>
+    /// Data e Hora de processamento da requisição.
+    /// </summary>
+    property data_hora_resposta: TDateTime read Fdata_hora_resposta write Fdata_hora_resposta;
+    /// <summary>
+    /// Último NSU pesquisado no Ambiente Nacional. Se for o caso, o solicitante pode continuar a consulta a partir deste NSU para obter novos resultados.
+    /// </summary>
+    property ultimo_nsu: Integer read Fultimo_nsu write Fultimo_nsu;
+    /// <summary>
+    /// Maior NSU existente no Ambiente Nacional para o CNPJ/CPF informado.
+    /// </summary>
+    property max_nsu: Integer read Fmax_nsu write Fmax_nsu;
+    /// <summary>
+    /// Conjunto de informações resumidas e documentos fiscais eletrônicos de interesse da pessoa ou empresa.
+    /// </summary>
+    property documentos: TDistribuicaoNfeDocumentoList read Fdocumentos write Setdocumentos;
+  end;
+  
+  TDistribuicaoNfeList = class(TObjectList<TDistribuicaoNfe>)
+  end;
+  
+  TDistribuicaoNfeListagem = class
+  private
+    F_count: Integer;
+    F_countHasValue: Boolean;
+    Fdata: TDistribuicaoNfeList;
+    procedure Set_count(const Value: Integer);
+    procedure Setdata(const Value: TDistribuicaoNfeList);
+  public
+    destructor Destroy; override;
+    property _count: Integer read F_count write Set_count;
+    property _countHasValue: Boolean read F_countHasValue write F_countHasValue;
+    property data: TDistribuicaoNfeList read Fdata write Setdata;
+  end;
+  
+  TDistribuicaoNfePedido = class
+  private
+    Fcpf_cnpj: string;
+    Fambiente: string;
+    Fuf_autor: string;
+    Fuf_autorHasValue: Boolean;
+    Ftipo_consulta: string;
+    Fdist_nsu: Integer;
+    Fdist_nsuHasValue: Boolean;
+    Fcons_nsu: Integer;
+    Fcons_nsuHasValue: Boolean;
+    Fcons_chave: string;
+    Fcons_chaveHasValue: Boolean;
+    procedure Setuf_autor(const Value: string);
+    procedure Setdist_nsu(const Value: Integer);
+    procedure Setcons_nsu(const Value: Integer);
+    procedure Setcons_chave(const Value: string);
+  public
+    /// <summary>
+    /// CPF ou CNPJ da empresa.
+    /// 
+    /// *Utilize o valor sem máscara*.
+    /// </summary>
+    property cpf_cnpj: string read Fcpf_cnpj write Fcpf_cnpj;
+    /// <summary>
+    /// Identificação do Ambiente.
+    /// </summary>
+    property ambiente: string read Fambiente write Fambiente;
+    /// <summary>
+    /// Sigla da UF do autor.
+    /// </summary>
+    property uf_autor: string read Fuf_autor write Setuf_autor;
+    property uf_autorHasValue: Boolean read Fuf_autorHasValue write Fuf_autorHasValue;
+    /// <summary>
+    /// Tipo de consulta.
+    /// 
+    /// Valores possíveis:
+    /// * `dist-nsu` - Consulta pelo último NSU recebido.
+    /// * `cons-nsu` - Consulta por um NSU específico.
+    /// * `cons-chave` - Consulta pela chave de acesso da NF-e.
+    /// </summary>
+    property tipo_consulta: string read Ftipo_consulta write Ftipo_consulta;
+    /// <summary>
+    /// Distribuição de conjunto de DF-e a partir do NSU informado.
+    /// 
+    /// *Obrigatório quando "tipo_consulta" for "dist-nsu".*
+    /// </summary>
+    property dist_nsu: Integer read Fdist_nsu write Setdist_nsu;
+    property dist_nsuHasValue: Boolean read Fdist_nsuHasValue write Fdist_nsuHasValue;
+    /// <summary>
+    /// Consulta DF-e vinculado ao NSU informado.
+    /// 
+    /// *Obrigatório quando "tipo_consulta" for "cons-nsu".*
+    /// </summary>
+    property cons_nsu: Integer read Fcons_nsu write Setcons_nsu;
+    property cons_nsuHasValue: Boolean read Fcons_nsuHasValue write Fcons_nsuHasValue;
+    /// <summary>
+    /// Consulta de NF-e por chave de acesso informada.
+    /// 
+    /// *Obrigatório quando "tipo_consulta" for "cons-chave".*
+    /// </summary>
+    property cons_chave: string read Fcons_chave write Setcons_chave;
+    property cons_chaveHasValue: Boolean read Fcons_chaveHasValue write Fcons_chaveHasValue;
+  end;
+  
+  TDistribuicaoNfeDocumentoListagem = class
+  private
+    F_count: Integer;
+    F_countHasValue: Boolean;
+    Fdata: TDistribuicaoNfeDocumentoList;
+    procedure Set_count(const Value: Integer);
+    procedure Setdata(const Value: TDistribuicaoNfeDocumentoList);
+  public
+    destructor Destroy; override;
+    property _count: Integer read F_count write Set_count;
+    property _countHasValue: Boolean read F_countHasValue write F_countHasValue;
+    property data: TDistribuicaoNfeDocumentoList read Fdata write Setdata;
+  end;
+  
+  TDistribuicaoNfeEvento = class
+  private
+    Fid: string;
+    FidHasValue: Boolean;
+    Fcreated_at: TDateTime;
+    Fcreated_atHasValue: Boolean;
+    Fambiente: string;
+    FambienteHasValue: Boolean;
+    Fstatus: string;
+    FstatusHasValue: Boolean;
+    Fcpf_cnpj_autor: string;
+    Fcpf_cnpj_autorHasValue: Boolean;
+    Fchave_acesso: string;
+    Fchave_acessoHasValue: Boolean;
+    Ftipo_evento: string;
+    Ftipo_eventoHasValue: Boolean;
+    Fdata_evento: TDateTime;
+    Fdata_eventoHasValue: Boolean;
+    Fnumero_sequencial: Integer;
+    Fnumero_sequencialHasValue: Boolean;
+    Fjustificativa: string;
+    FjustificativaHasValue: Boolean;
+    Fdata_registro: TDateTime;
+    Fdata_registroHasValue: Boolean;
+    Fcodigo_status: Integer;
+    Fcodigo_statusHasValue: Boolean;
+    Fmotivo_status: string;
+    Fmotivo_statusHasValue: Boolean;
+    Fnumero_protocolo: string;
+    Fnumero_protocoloHasValue: Boolean;
+    procedure Setid(const Value: string);
+    procedure Setcreated_at(const Value: TDateTime);
+    procedure Setambiente(const Value: string);
+    procedure Setstatus(const Value: string);
+    procedure Setcpf_cnpj_autor(const Value: string);
+    procedure Setchave_acesso(const Value: string);
+    procedure Settipo_evento(const Value: string);
+    procedure Setdata_evento(const Value: TDateTime);
+    procedure Setnumero_sequencial(const Value: Integer);
+    procedure Setjustificativa(const Value: string);
+    procedure Setdata_registro(const Value: TDateTime);
+    procedure Setcodigo_status(const Value: Integer);
+    procedure Setmotivo_status(const Value: string);
+    procedure Setnumero_protocolo(const Value: string);
+  public
+    /// <summary>
+    /// ID único gerado pela Nuvem Fiscal para este evento.
+    /// </summary>
+    property id: string read Fid write Setid;
+    property idHasValue: Boolean read FidHasValue write FidHasValue;
+    /// <summary>
+    /// Data/hora em que o evento foi criado na Nuvem Fiscal. Representado no formato <a href="https://en.wikipedia.org/wiki/ISO_8601" target="blank">`ISO 8601`</a>.
+    /// </summary>
+    property created_at: TDateTime read Fcreated_at write Setcreated_at;
+    property created_atHasValue: Boolean read Fcreated_atHasValue write Fcreated_atHasValue;
+    /// <summary>
+    /// Identificação do ambiente.
+    /// </summary>
+    property ambiente: string read Fambiente write Setambiente;
+    property ambienteHasValue: Boolean read FambienteHasValue write FambienteHasValue;
+    /// <summary>
+    /// Status do Evento.
+    /// </summary>
+    property status: string read Fstatus write Setstatus;
+    property statusHasValue: Boolean read FstatusHasValue write FstatusHasValue;
+    /// <summary>
+    /// CPF/CNPJ do autor do evento.
+    /// </summary>
+    property cpf_cnpj_autor: string read Fcpf_cnpj_autor write Setcpf_cnpj_autor;
+    property cpf_cnpj_autorHasValue: Boolean read Fcpf_cnpj_autorHasValue write Fcpf_cnpj_autorHasValue;
+    /// <summary>
+    /// Chave de Acesso do documento vinculado ao evento.
+    /// </summary>
+    property chave_acesso: string read Fchave_acesso write Setchave_acesso;
+    property chave_acessoHasValue: Boolean read Fchave_acessoHasValue write Fchave_acessoHasValue;
+    /// <summary>
+    /// Tipo do evento vinculado.
+    /// </summary>
+    property tipo_evento: string read Ftipo_evento write Settipo_evento;
+    property tipo_eventoHasValue: Boolean read Ftipo_eventoHasValue write Ftipo_eventoHasValue;
+    /// <summary>
+    /// Data e hora do Evento.
+    /// </summary>
+    property data_evento: TDateTime read Fdata_evento write Setdata_evento;
+    property data_eventoHasValue: Boolean read Fdata_eventoHasValue write Fdata_eventoHasValue;
+    /// <summary>
+    /// Sequencial do evento para o mesmo tipo de evento.
+    /// </summary>
+    property numero_sequencial: Integer read Fnumero_sequencial write Setnumero_sequencial;
+    property numero_sequencialHasValue: Boolean read Fnumero_sequencialHasValue write Fnumero_sequencialHasValue;
+    /// <summary>
+    /// Justificativa para o desconhecimento ou não-realização da operação.
+    /// </summary>
+    property justificativa: string read Fjustificativa write Setjustificativa;
+    property justificativaHasValue: Boolean read FjustificativaHasValue write FjustificativaHasValue;
+    /// <summary>
+    /// Data e hora do registro do evento pela SEFAZ.
+    /// </summary>
+    property data_registro: TDateTime read Fdata_registro write Setdata_registro;
+    property data_registroHasValue: Boolean read Fdata_registroHasValue write Fdata_registroHasValue;
+    /// <summary>
+    /// Código do status de registro do evento.
+    /// </summary>
+    property codigo_status: Integer read Fcodigo_status write Setcodigo_status;
+    property codigo_statusHasValue: Boolean read Fcodigo_statusHasValue write Fcodigo_statusHasValue;
+    /// <summary>
+    /// Descrição literal do status do registro do evento.
+    /// </summary>
+    property motivo_status: string read Fmotivo_status write Setmotivo_status;
+    property motivo_statusHasValue: Boolean read Fmotivo_statusHasValue write Fmotivo_statusHasValue;
+    /// <summary>
+    /// Número do Protocolo de registro do evento.
+    /// </summary>
+    property numero_protocolo: string read Fnumero_protocolo write Setnumero_protocolo;
+    property numero_protocoloHasValue: Boolean read Fnumero_protocoloHasValue write Fnumero_protocoloHasValue;
+  end;
+  
+  TDistribuicaoNfeEventoList = class(TObjectList<TDistribuicaoNfeEvento>)
+  end;
+  
+  TManifestacaoNfeListagem = class
+  private
+    F_count: Integer;
+    F_countHasValue: Boolean;
+    Fdata: TDistribuicaoNfeEventoList;
+    procedure Set_count(const Value: Integer);
+    procedure Setdata(const Value: TDistribuicaoNfeEventoList);
+  public
+    destructor Destroy; override;
+    property _count: Integer read F_count write Set_count;
+    property _countHasValue: Boolean read F_countHasValue write F_countHasValue;
+    property data: TDistribuicaoNfeEventoList read Fdata write Setdata;
+  end;
+  
+  TDistribuicaoNfePedidoManifestacao = class
+  private
+    Fcpf_cnpj: string;
+    Fambiente: string;
+    Fchave_acesso: string;
+    Ftipo_evento: string;
+    Fjustificativa: string;
+    FjustificativaHasValue: Boolean;
+    procedure Setjustificativa(const Value: string);
+  public
+    /// <summary>
+    /// CPF ou CNPJ do autor do evento.
+    /// 
+    /// *Utilize o valor sem máscara*.
+    /// </summary>
+    property cpf_cnpj: string read Fcpf_cnpj write Fcpf_cnpj;
+    /// <summary>
+    /// Identificação do Ambiente.
+    /// </summary>
+    property ambiente: string read Fambiente write Fambiente;
+    /// <summary>
+    /// Chave de Acesso da NF-e.
+    /// </summary>
+    property chave_acesso: string read Fchave_acesso write Fchave_acesso;
+    /// <summary>
+    /// Tipo do evento de manifestação do destinatário.
+    /// 
+    /// Valores disponíveis:
+    /// * `210200` - Confirmação da operação;
+    /// * `210210` - Ciência da operação;
+    /// * `210220` - Desconhecimento da operação;
+    /// * `210240` - Operação não realizada.
+    /// </summary>
+    property tipo_evento: string read Ftipo_evento write Ftipo_evento;
+    /// <summary>
+    /// Justificativa para o desconhecimento ou não-realização da operação.
+    /// 
+    /// **Nota**: Campo obrigatório para o evento `210240` (operação não realizada).
+    /// </summary>
+    property justificativa: string read Fjustificativa write Setjustificativa;
+    property justificativaHasValue: Boolean read FjustificativaHasValue write FjustificativaHasValue;
+  end;
   
   /// <summary>
   /// Endereço da empresa.
@@ -789,7 +1328,8 @@ type
     /// Este campo será preenchido com:
     /// * 1 – Simples Nacional;
     /// * 2 – Simples Nacional – excesso de sublimite de receita bruta;
-    /// * 3 – Regime Normal.
+    /// * 3 – Regime Normal;
+    /// * 4 - Simples Nacional - Microempreendedor individual (MEI).
     /// </summary>
     property CRT: Integer read FCRT write SetCRT;
     property CRTHasValue: Boolean read FCRTHasValue write FCRTHasValue;
@@ -830,7 +1370,8 @@ type
     /// Este campo será preenchido com:
     /// * 1 – Simples Nacional;
     /// * 2 – Simples Nacional – excesso de sublimite de receita bruta;
-    /// * 3 – Regime Normal.
+    /// * 3 – Regime Normal;
+    /// * 4 - Simples Nacional - Microempreendedor individual (MEI).
     /// </summary>
     property CRT: Integer read FCRT write SetCRT;
     property CRTHasValue: Boolean read FCRTHasValue write FCRTHasValue;
@@ -1032,6 +1573,16 @@ type
     /// </summary>
     property CRT: Integer read FCRT write SetCRT;
     property CRTHasValue: Boolean read FCRTHasValue write FCRTHasValue;
+    /// <summary>
+    /// Indica se a empresa irá emitir em produção ou homologação.
+    /// </summary>
+    property ambiente: string read Fambiente write Fambiente;
+  end;
+  
+  TEmpresaConfigDistribuicaoNfe = class
+  private
+    Fambiente: string;
+  public
     /// <summary>
     /// Indica se a empresa irá emitir em produção ou homologação.
     /// </summary>
@@ -2097,7 +2648,7 @@ type
   end;
   
   /// <summary>
-  /// Dados de endereço.
+  /// Dados de endereço do prestador.
   /// </summary>
   TEndereco = class
   private
@@ -4481,16 +5032,67 @@ type
   end;
   
   /// <summary>
+  /// Informação da NF modelo 21/22 referenciada.
+  /// </summary>
+  TNfcomSefazGCofatGNF = class
+  private
+    FCNPJ: string;
+    Fmod: Integer;
+    Fserie: string;
+    FnNF: Integer;
+    FCompetEmis: string;
+    Fhash115: string;
+    Fhash115HasValue: Boolean;
+    procedure Sethash115(const Value: string);
+  public
+    /// <summary>
+    /// CNPJ do Emitente.
+    /// Informar o CNPJ do emitente do Documento Fiscal.
+    /// </summary>
+    property CNPJ: string read FCNPJ write FCNPJ;
+    /// <summary>
+    /// Modelo do documento.
+    /// 21 ou 22.
+    /// </summary>
+    property &mod: Integer read Fmod write Fmod;
+    /// <summary>
+    /// Serie do documento fiscal.
+    /// </summary>
+    property serie: string read Fserie write Fserie;
+    /// <summary>
+    /// Número do documento fiscal.
+    /// </summary>
+    property nNF: Integer read FnNF write FnNF;
+    /// <summary>
+    /// Ano e mês da emissão da NF (AAAAMM).
+    /// </summary>
+    property CompetEmis: string read FCompetEmis write FCompetEmis;
+    /// <summary>
+    /// Hash do registro no arquivo do convênio 115.
+    /// Campo poderá ser exigido a critério da UF - campo 36 do arquivo MESTRE DE DOCUMENTO FISCAL (Anexo Único, item 5 do Conv. 115/03).
+    /// </summary>
+    property hash115: string read Fhash115 write Sethash115;
+    property hash115HasValue: Boolean read Fhash115HasValue write Fhash115HasValue;
+  end;
+  
+  /// <summary>
   /// Grupo de Informações do Cofaturamento.
   /// </summary>
   TNfcomSefazGCofat = class
   private
     FchNFComLocal: string;
+    FchNFComLocalHasValue: Boolean;
+    FgNF: TNfcomSefazGCofatGNF;
+    procedure SetchNFComLocal(const Value: string);
+    procedure SetgNF(const Value: TNfcomSefazGCofatGNF);
   public
+    destructor Destroy; override;
     /// <summary>
     /// Chave de acesso da NFCom emitida pela Operadora Local.
     /// </summary>
-    property chNFComLocal: string read FchNFComLocal write FchNFComLocal;
+    property chNFComLocal: string read FchNFComLocal write SetchNFComLocal;
+    property chNFComLocalHasValue: Boolean read FchNFComLocalHasValue write FchNFComLocalHasValue;
+    property gNF: TNfcomSefazGCofatGNF read FgNF write SetgNF;
   end;
   
   /// <summary>
@@ -5312,6 +5914,8 @@ type
     FchNFComAntHasValue: Boolean;
     FnItemAnt: string;
     FnItemAntHasValue: Boolean;
+    FindNFComAntPapelFatCentral: Integer;
+    FindNFComAntPapelFatCentralHasValue: Boolean;
     Fprod: TNfcomSefazProd;
     Fimposto: TNfcomSefazImposto;
     FgProcRef: TNfcomSefazGProcRef;
@@ -5320,6 +5924,7 @@ type
     FinfAdProdHasValue: Boolean;
     procedure SetchNFComAnt(const Value: string);
     procedure SetnItemAnt(const Value: string);
+    procedure SetindNFComAntPapelFatCentral(const Value: Integer);
     procedure Setprod(const Value: TNfcomSefazProd);
     procedure Setimposto(const Value: TNfcomSefazImposto);
     procedure SetgProcRef(const Value: TNfcomSefazGProcRef);
@@ -5346,6 +5951,12 @@ type
     /// </summary>
     property nItemAnt: string read FnItemAnt write SetnItemAnt;
     property nItemAntHasValue: Boolean read FnItemAntHasValue write FnItemAntHasValue;
+    /// <summary>
+    /// Indicador de Nota anterior em papel no faturamento centralizado.
+    /// Informa que a NFCom Anterior de Faturamento centralizado não é eletrônica.
+    /// </summary>
+    property indNFComAntPapelFatCentral: Integer read FindNFComAntPapelFatCentral write SetindNFComAntPapelFatCentral;
+    property indNFComAntPapelFatCentralHasValue: Boolean read FindNFComAntPapelFatCentralHasValue write FindNFComAntPapelFatCentralHasValue;
     property prod: TNfcomSefazProd read Fprod write Setprod;
     property imposto: TNfcomSefazImposto read Fimposto write Setimposto;
     property gProcRef: TNfcomSefazGProcRef read FgProcRef write SetgProcRef;
@@ -8582,6 +9193,9 @@ type
   TCteSefazOccList = class(TObjectList<TCteSefazOcc>)
   end;
   
+  /// <summary>
+  /// Informações do modal Rodoviário.
+  /// </summary>
   TCteSefazRodo = class
   private
     FRNTRC: string;
@@ -8726,6 +9340,9 @@ type
   TCteSefazPeriList = class(TObjectList<TCteSefazPeri>)
   end;
   
+  /// <summary>
+  /// Informações do modal Aéreo.
+  /// </summary>
   TCteSefazAereo = class
   private
     FnMinu: Integer;
@@ -8913,6 +9530,9 @@ type
     property ferroEnv: TCteSefazFerroEnvList read FferroEnv write SetferroEnv;
   end;
   
+  /// <summary>
+  /// Informações do modal Ferroviário.
+  /// </summary>
   TCteSefazFerrov = class
   private
     FtpTraf: Integer;
@@ -9062,6 +9682,9 @@ type
   TCteSefazDetContList = class(TObjectList<TCteSefazDetCont>)
   end;
   
+  /// <summary>
+  /// Informações do modal Aquaviário.
+  /// </summary>
   TCteSefazAquav = class
   private
     FvPrest: Double;
@@ -9119,6 +9742,9 @@ type
     property tpNavHasValue: Boolean read FtpNavHasValue write FtpNavHasValue;
   end;
   
+  /// <summary>
+  /// Informações do modal Dutoviário.
+  /// </summary>
   TCteSefazDuto = class
   private
     FvTar: Double;
@@ -9186,6 +9812,9 @@ type
     property nAver: string read FnAver write FnAver;
   end;
   
+  /// <summary>
+  /// Informações do Multimodal.
+  /// </summary>
   TCteSefazMultimodal = class
   private
     FCOTM: string;
@@ -10480,6 +11109,9 @@ type
     property enderEmit: TMdfeSefazEndeEmi read FenderEmit write SetenderEmit;
   end;
   
+  /// <summary>
+  /// Informações do modal Aéreo.
+  /// </summary>
   TMdfeSefazAereo = class
   private
     Fnac: string;
@@ -11287,6 +11919,9 @@ type
   TMdfeSefazLacRodoList = class(TObjectList<TMdfeSefazLacRodo>)
   end;
   
+  /// <summary>
+  /// Informações do modal Rodoviário.
+  /// </summary>
   TMdfeSefazRodo = class
   private
     FinfANTT: TMdfeSefazInfANTT;
@@ -11426,6 +12061,9 @@ type
   TMdfeSefazInfUnidTranspVaziaList = class(TObjectList<TMdfeSefazInfUnidTranspVazia>)
   end;
   
+  /// <summary>
+  /// Informações do modal Aquaviário.
+  /// </summary>
   TMdfeSefazAquav = class
   private
     Firin: string;
@@ -11595,6 +12233,9 @@ type
   TMdfeSefazVagList = class(TObjectList<TMdfeSefazVag>)
   end;
   
+  /// <summary>
+  /// Informações do modal Ferroviário.
+  /// </summary>
   TMdfeSefazFerrov = class
   private
     Ftrem: TMdfeSefazTrem;
@@ -13287,6 +13928,284 @@ type
   end;
   
   /// <summary>
+  /// Dados do endereço.
+  /// </summary>
+  TDfeContribuinteEndereco = class
+  private
+    Flogradouro: string;
+    Fnumero: string;
+    Fcomplemento: string;
+    FcomplementoHasValue: Boolean;
+    Fbairro: string;
+    Fcodigo_municipio: string;
+    Fnome_municipio: string;
+    Fuf: string;
+    Fcep: string;
+    FcepHasValue: Boolean;
+    Fcodigo_pais: string;
+    Fcodigo_paisHasValue: Boolean;
+    Fpais: string;
+    FpaisHasValue: Boolean;
+    Ffone: string;
+    FfoneHasValue: Boolean;
+    procedure Setcomplemento(const Value: string);
+    procedure Setcep(const Value: string);
+    procedure Setcodigo_pais(const Value: string);
+    procedure Setpais(const Value: string);
+    procedure Setfone(const Value: string);
+  public
+    /// <summary>
+    /// Logradouro.
+    /// </summary>
+    property logradouro: string read Flogradouro write Flogradouro;
+    /// <summary>
+    /// Número.
+    /// </summary>
+    property numero: string read Fnumero write Fnumero;
+    /// <summary>
+    /// Complemento.
+    /// </summary>
+    property complemento: string read Fcomplemento write Setcomplemento;
+    property complementoHasValue: Boolean read FcomplementoHasValue write FcomplementoHasValue;
+    /// <summary>
+    /// Bairro.
+    /// </summary>
+    property bairro: string read Fbairro write Fbairro;
+    /// <summary>
+    /// Código do município (utilizar a tabela do IBGE), informar 9999999 para operações com o exterior.
+    /// </summary>
+    property codigo_municipio: string read Fcodigo_municipio write Fcodigo_municipio;
+    /// <summary>
+    /// Nome do município, informar EXTERIOR para operações com o exterior.
+    /// </summary>
+    property nome_municipio: string read Fnome_municipio write Fnome_municipio;
+    /// <summary>
+    /// Sigla da UF, informar EX para operações com o exterior.
+    /// </summary>
+    property uf: string read Fuf write Fuf;
+    /// <summary>
+    /// CEP.
+    /// </summary>
+    property cep: string read Fcep write Setcep;
+    property cepHasValue: Boolean read FcepHasValue write FcepHasValue;
+    /// <summary>
+    /// Código de Pais.
+    /// </summary>
+    property codigo_pais: string read Fcodigo_pais write Setcodigo_pais;
+    property codigo_paisHasValue: Boolean read Fcodigo_paisHasValue write Fcodigo_paisHasValue;
+    /// <summary>
+    /// Nome do país.
+    /// </summary>
+    property pais: string read Fpais write Setpais;
+    property paisHasValue: Boolean read FpaisHasValue write FpaisHasValue;
+    /// <summary>
+    /// Telefone, preencher com Código DDD + número do telefone , nas operações com exterior é permtido informar o código do país + código da localidade + número do telefone.
+    /// </summary>
+    property fone: string read Ffone write Setfone;
+    property foneHasValue: Boolean read FfoneHasValue write FfoneHasValue;
+  end;
+  
+  /// <summary>
+  /// Informações cadastrais do contribuinte consultado.
+  /// </summary>
+  TDfeContribuinteInfCad = class
+  private
+    Fie: string;
+    Fcnpj: string;
+    FcnpjHasValue: Boolean;
+    Fcpf: string;
+    FcpfHasValue: Boolean;
+    Fuf: string;
+    Fsituacao_cadastral: Integer;
+    Findicador_nfe: Integer;
+    Findicador_cte: Integer;
+    Fnome_razao_social: string;
+    Fnome_fantasia: string;
+    Fnome_fantasiaHasValue: Boolean;
+    Fregime_apuracao_icms: string;
+    Fregime_apuracao_icmsHasValue: Boolean;
+    Fcnae: string;
+    FcnaeHasValue: Boolean;
+    Fdata_inicio_atividade: TDate;
+    Fdata_inicio_atividadeHasValue: Boolean;
+    Fdata_situacao_cadastral: TDate;
+    Fdata_situacao_cadastralHasValue: Boolean;
+    Fdata_fim_atividade: TDate;
+    Fdata_fim_atividadeHasValue: Boolean;
+    Fie_unica: string;
+    Fie_unicaHasValue: Boolean;
+    Fie_atual: string;
+    Fie_atualHasValue: Boolean;
+    Fendereco: TDfeContribuinteEndereco;
+    procedure Setcnpj(const Value: string);
+    procedure Setcpf(const Value: string);
+    procedure Setnome_fantasia(const Value: string);
+    procedure Setregime_apuracao_icms(const Value: string);
+    procedure Setcnae(const Value: string);
+    procedure Setdata_inicio_atividade(const Value: TDate);
+    procedure Setdata_situacao_cadastral(const Value: TDate);
+    procedure Setdata_fim_atividade(const Value: TDate);
+    procedure Setie_unica(const Value: string);
+    procedure Setie_atual(const Value: string);
+    procedure Setendereco(const Value: TDfeContribuinteEndereco);
+  public
+    destructor Destroy; override;
+    /// <summary>
+    /// Número da Inscrição Estadual do contribuinte.
+    /// </summary>
+    property ie: string read Fie write Fie;
+    /// <summary>
+    /// Número do CNPJ  do contribuinte.
+    /// </summary>
+    property cnpj: string read Fcnpj write Setcnpj;
+    property cnpjHasValue: Boolean read FcnpjHasValue write FcnpjHasValue;
+    /// <summary>
+    /// Número do CPF do contribuinte.
+    /// </summary>
+    property cpf: string read Fcpf write Setcpf;
+    property cpfHasValue: Boolean read FcpfHasValue write FcpfHasValue;
+    /// <summary>
+    /// Sigla da UF de localização do contribuinte. Em algumas situações, a UF de localização pode ser diferente da UF consultada. Ex. IE de Substituto Tributário.
+    /// </summary>
+    property uf: string read Fuf write Fuf;
+    /// <summary>
+    /// Situação cadastral do contribuinte:
+    /// * 0 - não habilitado
+    /// * 1 - habilitado
+    /// </summary>
+    property situacao_cadastral: Integer read Fsituacao_cadastral write Fsituacao_cadastral;
+    /// <summary>
+    /// Indicador de contribuinte credenciado a emitir NF-e.
+    /// * 0 - Não credenciado para emissão da NF-e
+    /// * 1 - Credenciado
+    /// * 2 - Credenciado com obrigatoriedade para todas operações
+    /// * 3 - Credenciado com obrigatoriedade parcial
+    /// * 4 - a SEFAZ não fornece a informação
+    /// Este indicador significa apenas que o contribuinte é credenciado para emitir NF-e na SEFAZ consultada.
+    /// </summary>
+    property indicador_nfe: Integer read Findicador_nfe write Findicador_nfe;
+    /// <summary>
+    /// Indicador de contribuinte credenciado a emitir CT-e.
+    /// * 0 - Não credenciado para emissão da CT-e
+    /// * 1 - Credenciado
+    /// * 2 - Credenciado com obrigatoriedade para todas operações
+    /// * 3 - Credenciado com obrigatoriedade parcial
+    /// * 4 - a SEFAZ não fornece a informação
+    /// Este indicador significa apenas que o contribuinte é credenciado para emitir CT-e na SEFAZ consultada.
+    /// </summary>
+    property indicador_cte: Integer read Findicador_cte write Findicador_cte;
+    /// <summary>
+    /// Razão Social ou nome do contribuinte.
+    /// </summary>
+    property nome_razao_social: string read Fnome_razao_social write Fnome_razao_social;
+    /// <summary>
+    /// Razão Social ou nome do contribuinte.
+    /// </summary>
+    property nome_fantasia: string read Fnome_fantasia write Setnome_fantasia;
+    property nome_fantasiaHasValue: Boolean read Fnome_fantasiaHasValue write Fnome_fantasiaHasValue;
+    /// <summary>
+    /// Regime de Apuração do ICMS.
+    /// </summary>
+    property regime_apuracao_icms: string read Fregime_apuracao_icms write Setregime_apuracao_icms;
+    property regime_apuracao_icmsHasValue: Boolean read Fregime_apuracao_icmsHasValue write Fregime_apuracao_icmsHasValue;
+    /// <summary>
+    /// CNAE Fiscal do contribuinte.
+    /// </summary>
+    property cnae: string read Fcnae write Setcnae;
+    property cnaeHasValue: Boolean read FcnaeHasValue write FcnaeHasValue;
+    /// <summary>
+    /// Data de início de atividades do contribuinte.
+    /// </summary>
+    property data_inicio_atividade: TDate read Fdata_inicio_atividade write Setdata_inicio_atividade;
+    property data_inicio_atividadeHasValue: Boolean read Fdata_inicio_atividadeHasValue write Fdata_inicio_atividadeHasValue;
+    /// <summary>
+    /// Data da última modificação da situação cadastral do contribuinte.
+    /// </summary>
+    property data_situacao_cadastral: TDate read Fdata_situacao_cadastral write Setdata_situacao_cadastral;
+    property data_situacao_cadastralHasValue: Boolean read Fdata_situacao_cadastralHasValue write Fdata_situacao_cadastralHasValue;
+    /// <summary>
+    /// Data de ocorrência da baixa do contribuinte.
+    /// </summary>
+    property data_fim_atividade: TDate read Fdata_fim_atividade write Setdata_fim_atividade;
+    property data_fim_atividadeHasValue: Boolean read Fdata_fim_atividadeHasValue write Fdata_fim_atividadeHasValue;
+    /// <summary>
+    /// Inscrição Estadual Única.
+    /// </summary>
+    property ie_unica: string read Fie_unica write Setie_unica;
+    property ie_unicaHasValue: Boolean read Fie_unicaHasValue write Fie_unicaHasValue;
+    /// <summary>
+    /// Inscrição Estadual atual.
+    /// </summary>
+    property ie_atual: string read Fie_atual write Setie_atual;
+    property ie_atualHasValue: Boolean read Fie_atualHasValue write Fie_atualHasValue;
+    property endereco: TDfeContribuinteEndereco read Fendereco write Setendereco;
+  end;
+  
+  TDfeContribuinteInfCadList = class(TObjectList<TDfeContribuinteInfCad>)
+  end;
+  
+  /// <summary>
+  /// Dados do Resultado do Dados do Pedido de Consulta de cadastro de contribuintes.
+  /// </summary>
+  TDfeContribuinteInfCons = class
+  private
+    Fcodigo_status: Integer;
+    Fmotivo_status: string;
+    Fuf: string;
+    Fie: string;
+    FieHasValue: Boolean;
+    Fcnpj: string;
+    FcnpjHasValue: Boolean;
+    Fcpf: string;
+    FcpfHasValue: Boolean;
+    Fdata_consulta: TDateTime;
+    Fuf_atendimento: Integer;
+    Finformacoes_cadastrais: TDfeContribuinteInfCadList;
+    procedure Setie(const Value: string);
+    procedure Setcnpj(const Value: string);
+    procedure Setcpf(const Value: string);
+    procedure Setinformacoes_cadastrais(const Value: TDfeContribuinteInfCadList);
+  public
+    destructor Destroy; override;
+    /// <summary>
+    /// Código do status da mensagem enviada.
+    /// </summary>
+    property codigo_status: Integer read Fcodigo_status write Fcodigo_status;
+    /// <summary>
+    /// Descrição literal do status do serviço solicitado.
+    /// </summary>
+    property motivo_status: string read Fmotivo_status write Fmotivo_status;
+    /// <summary>
+    /// sigla da UF consultada, utilizar SU para SUFRAMA.
+    /// </summary>
+    property uf: string read Fuf write Fuf;
+    /// <summary>
+    /// Inscrição Estadual do contribuinte.
+    /// </summary>
+    property ie: string read Fie write Setie;
+    property ieHasValue: Boolean read FieHasValue write FieHasValue;
+    /// <summary>
+    /// CNPJ do contribuinte.
+    /// </summary>
+    property cnpj: string read Fcnpj write Setcnpj;
+    property cnpjHasValue: Boolean read FcnpjHasValue write FcnpjHasValue;
+    /// <summary>
+    /// CPF do contribuinte.
+    /// </summary>
+    property cpf: string read Fcpf write Setcpf;
+    property cpfHasValue: Boolean read FcpfHasValue write FcpfHasValue;
+    /// <summary>
+    /// Data da Consulta.
+    /// </summary>
+    property data_consulta: TDateTime read Fdata_consulta write Fdata_consulta;
+    /// <summary>
+    /// código da UF de atendimento.
+    /// </summary>
+    property uf_atendimento: Integer read Fuf_atendimento write Fuf_atendimento;
+    property informacoes_cadastrais: TDfeContribuinteInfCadList read Finformacoes_cadastrais write Setinformacoes_cadastrais;
+  end;
+  
+  /// <summary>
   /// Dados da NF modelo 1/1A referenciada ou NF modelo 2 referenciada.
   /// </summary>
   TNfeSefazRefNF = class
@@ -13868,6 +14787,7 @@ type
     /// * 1 - Simples Nacional
     /// * 2 - Simples Nacional - excesso de sublimite de receita bruta
     /// * 3 - Regime Normal
+    /// * 4 - Simples Nacional - Microempreendedor individual - MEI
     /// 
     /// *Caso não seja informado, será utilizado o do cadastro da empresa.*
     /// </summary>
@@ -14117,7 +15037,7 @@ type
   end;
   
   /// <summary>
-  /// Identificação do Local de Entrega (informar apenas quando for diferente do endereço do destinatário).
+  /// Identificação do local de retirada/entrega (informar apenas quando for diferente do endereço do remetente/destinatário)
   /// </summary>
   TNfeSefazLocal = class
   private
@@ -15915,8 +16835,7 @@ type
     /// </summary>
     property orig: Integer read Forig write Forig;
     /// <summary>
-    /// Tributção pelo ICMS
-    /// * 20 - Com redução de base de cálculo
+    /// Tributação pelo ICMS 51 - Tributação com Diferimento.
     /// </summary>
     property CST: string read FCST write FCST;
     /// <summary>
@@ -17317,7 +18236,7 @@ type
   end;
   
   /// <summary>
-  /// Tributação do ICMS pelo SIMPLES NACIONAL, CRT=1 - Simples Nacional e CSOSN=900 (v2.0).
+  /// Tributação do ICMS pelo SIMPLES NACIONAL, CRT=1 - Simples Nacional, CRT=4 - MEI e CSOSN=900 (v2.0).
   /// </summary>
   TNfeSefazICMSSN900 = class
   private
@@ -18987,7 +19906,7 @@ type
   end;
   
   /// <summary>
-  /// Dados do reboque/Dolly (v2.0).
+  /// Dados do veículo.
   /// </summary>
   TNfeSefazVeiculo = class
   private
@@ -20999,6 +21918,346 @@ type
   end;
   
 implementation
+
+{ TDistribuicaoNfeDocumento }
+
+procedure TDistribuicaoNfeDocumento.Setcreated_at(const Value: TDateTime);
+begin
+  Fcreated_at := Value;
+  Fcreated_atHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumento.Setnsu(const Value: Integer);
+begin
+  Fnsu := Value;
+  FnsuHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumento.Settipo_documento(const Value: string);
+begin
+  Ftipo_documento := Value;
+  Ftipo_documentoHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumento.Setchave_acesso(const Value: string);
+begin
+  Fchave_acesso := Value;
+  Fchave_acessoHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumento.Setresumo(const Value: Boolean);
+begin
+  Fresumo := Value;
+  FresumoHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumento.Settipo_evento(const Value: string);
+begin
+  Ftipo_evento := Value;
+  Ftipo_eventoHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumento.Setnumero_sequencial(const Value: Integer);
+begin
+  Fnumero_sequencial := Value;
+  Fnumero_sequencialHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumento.Setdata_evento(const Value: TDateTime);
+begin
+  Fdata_evento := Value;
+  Fdata_eventoHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumento.Setdata_recebimento(const Value: TDateTime);
+begin
+  Fdata_recebimento := Value;
+  Fdata_recebimentoHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumento.Setnumero_protocolo(const Value: string);
+begin
+  Fnumero_protocolo := Value;
+  Fnumero_protocoloHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumento.Settipo_nfe(const Value: Integer);
+begin
+  Ftipo_nfe := Value;
+  Ftipo_nfeHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumento.Setvalor_nfe(const Value: Double);
+begin
+  Fvalor_nfe := Value;
+  Fvalor_nfeHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumento.Setdigest_value(const Value: string);
+begin
+  Fdigest_value := Value;
+  Fdigest_valueHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumento.Setemitente_cpf_cnpj(const Value: string);
+begin
+  Femitente_cpf_cnpj := Value;
+  Femitente_cpf_cnpjHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumento.Setemitente_nome_razao_social(const Value: string);
+begin
+  Femitente_nome_razao_social := Value;
+  Femitente_nome_razao_socialHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumento.Setemitente_inscricao_estadual(const Value: string);
+begin
+  Femitente_inscricao_estadual := Value;
+  Femitente_inscricao_estadualHasValue := True;
+end;
+
+{ TDistribuicaoNfe }
+
+destructor TDistribuicaoNfe.Destroy;
+begin
+  Fdocumentos.Free;
+  inherited;
+end;
+
+procedure TDistribuicaoNfe.Setcreated_at(const Value: TDateTime);
+begin
+  Fcreated_at := Value;
+  Fcreated_atHasValue := True;
+end;
+
+procedure TDistribuicaoNfe.Setuf_autor(const Value: string);
+begin
+  Fuf_autor := Value;
+  Fuf_autorHasValue := True;
+end;
+
+procedure TDistribuicaoNfe.Setdist_nsu(const Value: Integer);
+begin
+  Fdist_nsu := Value;
+  Fdist_nsuHasValue := True;
+end;
+
+procedure TDistribuicaoNfe.Setcons_nsu(const Value: Integer);
+begin
+  Fcons_nsu := Value;
+  Fcons_nsuHasValue := True;
+end;
+
+procedure TDistribuicaoNfe.Setcons_chave(const Value: string);
+begin
+  Fcons_chave := Value;
+  Fcons_chaveHasValue := True;
+end;
+
+procedure TDistribuicaoNfe.Setmotivo_status(const Value: string);
+begin
+  Fmotivo_status := Value;
+  Fmotivo_statusHasValue := True;
+end;
+
+procedure TDistribuicaoNfe.Setdocumentos(const Value: TDistribuicaoNfeDocumentoList);
+begin
+  if Value <> Fdocumentos then
+  begin
+    Fdocumentos.Free;
+    Fdocumentos := Value;
+  end;
+end;
+
+{ TDistribuicaoNfeListagem }
+
+destructor TDistribuicaoNfeListagem.Destroy;
+begin
+  Fdata.Free;
+  inherited;
+end;
+
+procedure TDistribuicaoNfeListagem.Set_count(const Value: Integer);
+begin
+  F_count := Value;
+  F_countHasValue := True;
+end;
+
+procedure TDistribuicaoNfeListagem.Setdata(const Value: TDistribuicaoNfeList);
+begin
+  if Value <> Fdata then
+  begin
+    Fdata.Free;
+    Fdata := Value;
+  end;
+end;
+
+{ TDistribuicaoNfePedido }
+
+procedure TDistribuicaoNfePedido.Setuf_autor(const Value: string);
+begin
+  Fuf_autor := Value;
+  Fuf_autorHasValue := True;
+end;
+
+procedure TDistribuicaoNfePedido.Setdist_nsu(const Value: Integer);
+begin
+  Fdist_nsu := Value;
+  Fdist_nsuHasValue := True;
+end;
+
+procedure TDistribuicaoNfePedido.Setcons_nsu(const Value: Integer);
+begin
+  Fcons_nsu := Value;
+  Fcons_nsuHasValue := True;
+end;
+
+procedure TDistribuicaoNfePedido.Setcons_chave(const Value: string);
+begin
+  Fcons_chave := Value;
+  Fcons_chaveHasValue := True;
+end;
+
+{ TDistribuicaoNfeDocumentoListagem }
+
+destructor TDistribuicaoNfeDocumentoListagem.Destroy;
+begin
+  Fdata.Free;
+  inherited;
+end;
+
+procedure TDistribuicaoNfeDocumentoListagem.Set_count(const Value: Integer);
+begin
+  F_count := Value;
+  F_countHasValue := True;
+end;
+
+procedure TDistribuicaoNfeDocumentoListagem.Setdata(const Value: TDistribuicaoNfeDocumentoList);
+begin
+  if Value <> Fdata then
+  begin
+    Fdata.Free;
+    Fdata := Value;
+  end;
+end;
+
+{ TDistribuicaoNfeEvento }
+
+procedure TDistribuicaoNfeEvento.Setid(const Value: string);
+begin
+  Fid := Value;
+  FidHasValue := True;
+end;
+
+procedure TDistribuicaoNfeEvento.Setcreated_at(const Value: TDateTime);
+begin
+  Fcreated_at := Value;
+  Fcreated_atHasValue := True;
+end;
+
+procedure TDistribuicaoNfeEvento.Setambiente(const Value: string);
+begin
+  Fambiente := Value;
+  FambienteHasValue := True;
+end;
+
+procedure TDistribuicaoNfeEvento.Setstatus(const Value: string);
+begin
+  Fstatus := Value;
+  FstatusHasValue := True;
+end;
+
+procedure TDistribuicaoNfeEvento.Setcpf_cnpj_autor(const Value: string);
+begin
+  Fcpf_cnpj_autor := Value;
+  Fcpf_cnpj_autorHasValue := True;
+end;
+
+procedure TDistribuicaoNfeEvento.Setchave_acesso(const Value: string);
+begin
+  Fchave_acesso := Value;
+  Fchave_acessoHasValue := True;
+end;
+
+procedure TDistribuicaoNfeEvento.Settipo_evento(const Value: string);
+begin
+  Ftipo_evento := Value;
+  Ftipo_eventoHasValue := True;
+end;
+
+procedure TDistribuicaoNfeEvento.Setdata_evento(const Value: TDateTime);
+begin
+  Fdata_evento := Value;
+  Fdata_eventoHasValue := True;
+end;
+
+procedure TDistribuicaoNfeEvento.Setnumero_sequencial(const Value: Integer);
+begin
+  Fnumero_sequencial := Value;
+  Fnumero_sequencialHasValue := True;
+end;
+
+procedure TDistribuicaoNfeEvento.Setjustificativa(const Value: string);
+begin
+  Fjustificativa := Value;
+  FjustificativaHasValue := True;
+end;
+
+procedure TDistribuicaoNfeEvento.Setdata_registro(const Value: TDateTime);
+begin
+  Fdata_registro := Value;
+  Fdata_registroHasValue := True;
+end;
+
+procedure TDistribuicaoNfeEvento.Setcodigo_status(const Value: Integer);
+begin
+  Fcodigo_status := Value;
+  Fcodigo_statusHasValue := True;
+end;
+
+procedure TDistribuicaoNfeEvento.Setmotivo_status(const Value: string);
+begin
+  Fmotivo_status := Value;
+  Fmotivo_statusHasValue := True;
+end;
+
+procedure TDistribuicaoNfeEvento.Setnumero_protocolo(const Value: string);
+begin
+  Fnumero_protocolo := Value;
+  Fnumero_protocoloHasValue := True;
+end;
+
+{ TManifestacaoNfeListagem }
+
+destructor TManifestacaoNfeListagem.Destroy;
+begin
+  Fdata.Free;
+  inherited;
+end;
+
+procedure TManifestacaoNfeListagem.Set_count(const Value: Integer);
+begin
+  F_count := Value;
+  F_countHasValue := True;
+end;
+
+procedure TManifestacaoNfeListagem.Setdata(const Value: TDistribuicaoNfeEventoList);
+begin
+  if Value <> Fdata then
+  begin
+    Fdata.Free;
+    Fdata := Value;
+  end;
+end;
+
+{ TDistribuicaoNfePedidoManifestacao }
+
+procedure TDistribuicaoNfePedidoManifestacao.Setjustificativa(const Value: string);
+begin
+  Fjustificativa := Value;
+  FjustificativaHasValue := True;
+end;
 
 { TEmpresaEndereco }
 
@@ -23907,6 +25166,37 @@ begin
   end;
 end;
 
+{ TNfcomSefazGCofatGNF }
+
+procedure TNfcomSefazGCofatGNF.Sethash115(const Value: string);
+begin
+  Fhash115 := Value;
+  Fhash115HasValue := True;
+end;
+
+{ TNfcomSefazGCofat }
+
+destructor TNfcomSefazGCofat.Destroy;
+begin
+  FgNF.Free;
+  inherited;
+end;
+
+procedure TNfcomSefazGCofat.SetchNFComLocal(const Value: string);
+begin
+  FchNFComLocal := Value;
+  FchNFComLocalHasValue := True;
+end;
+
+procedure TNfcomSefazGCofat.SetgNF(const Value: TNfcomSefazGCofatGNF);
+begin
+  if Value <> FgNF then
+  begin
+    FgNF.Free;
+    FgNF := Value;
+  end;
+end;
+
 { TNfcomSefazProd }
 
 procedure TNfcomSefazProd.SetCFOP(const Value: string);
@@ -24329,6 +25619,12 @@ procedure TNfcomSefazDet.SetnItemAnt(const Value: string);
 begin
   FnItemAnt := Value;
   FnItemAntHasValue := True;
+end;
+
+procedure TNfcomSefazDet.SetindNFComAntPapelFatCentral(const Value: Integer);
+begin
+  FindNFComAntPapelFatCentral := Value;
+  FindNFComAntPapelFatCentralHasValue := True;
 end;
 
 procedure TNfcomSefazDet.Setprod(const Value: TNfcomSefazProd);
@@ -29796,6 +31092,150 @@ procedure TMdfeInclusaoDfe.Settipo_evento(const Value: string);
 begin
   Ftipo_evento := Value;
   Ftipo_eventoHasValue := True;
+end;
+
+{ TDfeContribuinteEndereco }
+
+procedure TDfeContribuinteEndereco.Setcomplemento(const Value: string);
+begin
+  Fcomplemento := Value;
+  FcomplementoHasValue := True;
+end;
+
+procedure TDfeContribuinteEndereco.Setcep(const Value: string);
+begin
+  Fcep := Value;
+  FcepHasValue := True;
+end;
+
+procedure TDfeContribuinteEndereco.Setcodigo_pais(const Value: string);
+begin
+  Fcodigo_pais := Value;
+  Fcodigo_paisHasValue := True;
+end;
+
+procedure TDfeContribuinteEndereco.Setpais(const Value: string);
+begin
+  Fpais := Value;
+  FpaisHasValue := True;
+end;
+
+procedure TDfeContribuinteEndereco.Setfone(const Value: string);
+begin
+  Ffone := Value;
+  FfoneHasValue := True;
+end;
+
+{ TDfeContribuinteInfCad }
+
+destructor TDfeContribuinteInfCad.Destroy;
+begin
+  Fendereco.Free;
+  inherited;
+end;
+
+procedure TDfeContribuinteInfCad.Setcnpj(const Value: string);
+begin
+  Fcnpj := Value;
+  FcnpjHasValue := True;
+end;
+
+procedure TDfeContribuinteInfCad.Setcpf(const Value: string);
+begin
+  Fcpf := Value;
+  FcpfHasValue := True;
+end;
+
+procedure TDfeContribuinteInfCad.Setnome_fantasia(const Value: string);
+begin
+  Fnome_fantasia := Value;
+  Fnome_fantasiaHasValue := True;
+end;
+
+procedure TDfeContribuinteInfCad.Setregime_apuracao_icms(const Value: string);
+begin
+  Fregime_apuracao_icms := Value;
+  Fregime_apuracao_icmsHasValue := True;
+end;
+
+procedure TDfeContribuinteInfCad.Setcnae(const Value: string);
+begin
+  Fcnae := Value;
+  FcnaeHasValue := True;
+end;
+
+procedure TDfeContribuinteInfCad.Setdata_inicio_atividade(const Value: TDate);
+begin
+  Fdata_inicio_atividade := Value;
+  Fdata_inicio_atividadeHasValue := True;
+end;
+
+procedure TDfeContribuinteInfCad.Setdata_situacao_cadastral(const Value: TDate);
+begin
+  Fdata_situacao_cadastral := Value;
+  Fdata_situacao_cadastralHasValue := True;
+end;
+
+procedure TDfeContribuinteInfCad.Setdata_fim_atividade(const Value: TDate);
+begin
+  Fdata_fim_atividade := Value;
+  Fdata_fim_atividadeHasValue := True;
+end;
+
+procedure TDfeContribuinteInfCad.Setie_unica(const Value: string);
+begin
+  Fie_unica := Value;
+  Fie_unicaHasValue := True;
+end;
+
+procedure TDfeContribuinteInfCad.Setie_atual(const Value: string);
+begin
+  Fie_atual := Value;
+  Fie_atualHasValue := True;
+end;
+
+procedure TDfeContribuinteInfCad.Setendereco(const Value: TDfeContribuinteEndereco);
+begin
+  if Value <> Fendereco then
+  begin
+    Fendereco.Free;
+    Fendereco := Value;
+  end;
+end;
+
+{ TDfeContribuinteInfCons }
+
+destructor TDfeContribuinteInfCons.Destroy;
+begin
+  Finformacoes_cadastrais.Free;
+  inherited;
+end;
+
+procedure TDfeContribuinteInfCons.Setie(const Value: string);
+begin
+  Fie := Value;
+  FieHasValue := True;
+end;
+
+procedure TDfeContribuinteInfCons.Setcnpj(const Value: string);
+begin
+  Fcnpj := Value;
+  FcnpjHasValue := True;
+end;
+
+procedure TDfeContribuinteInfCons.Setcpf(const Value: string);
+begin
+  Fcpf := Value;
+  FcpfHasValue := True;
+end;
+
+procedure TDfeContribuinteInfCons.Setinformacoes_cadastrais(const Value: TDfeContribuinteInfCadList);
+begin
+  if Value <> Finformacoes_cadastrais then
+  begin
+    Finformacoes_cadastrais.Free;
+    Finformacoes_cadastrais := Value;
+  end;
 end;
 
 { TNfeSefazRefNFP }

@@ -11,6 +11,50 @@ type
   
   TJsonConverter = class(TCustomJsonConverter)
   public
+    function TDistribuicaoNfeDocumentoToJsonValue(Source: TDistribuicaoNfeDocumento): TJSONValue;
+    function TDistribuicaoNfeDocumentoToJson(Source: TDistribuicaoNfeDocumento): string;
+    function TDistribuicaoNfeDocumentoFromJsonValue(Source: TJSONValue): TDistribuicaoNfeDocumento;
+    function TDistribuicaoNfeDocumentoFromJson(Source: string): TDistribuicaoNfeDocumento;
+    function TDistribuicaoNfeDocumentoListToJsonValue(Source: TDistribuicaoNfeDocumentoList): TJSONValue;
+    function TDistribuicaoNfeDocumentoListToJson(Source: TDistribuicaoNfeDocumentoList): string;
+    function TDistribuicaoNfeDocumentoListFromJsonValue(Source: TJSONValue): TDistribuicaoNfeDocumentoList;
+    function TDistribuicaoNfeDocumentoListFromJson(Source: string): TDistribuicaoNfeDocumentoList;
+    function TDistribuicaoNfeToJsonValue(Source: TDistribuicaoNfe): TJSONValue;
+    function TDistribuicaoNfeToJson(Source: TDistribuicaoNfe): string;
+    function TDistribuicaoNfeFromJsonValue(Source: TJSONValue): TDistribuicaoNfe;
+    function TDistribuicaoNfeFromJson(Source: string): TDistribuicaoNfe;
+    function TDistribuicaoNfeListToJsonValue(Source: TDistribuicaoNfeList): TJSONValue;
+    function TDistribuicaoNfeListToJson(Source: TDistribuicaoNfeList): string;
+    function TDistribuicaoNfeListFromJsonValue(Source: TJSONValue): TDistribuicaoNfeList;
+    function TDistribuicaoNfeListFromJson(Source: string): TDistribuicaoNfeList;
+    function TDistribuicaoNfeListagemToJsonValue(Source: TDistribuicaoNfeListagem): TJSONValue;
+    function TDistribuicaoNfeListagemToJson(Source: TDistribuicaoNfeListagem): string;
+    function TDistribuicaoNfeListagemFromJsonValue(Source: TJSONValue): TDistribuicaoNfeListagem;
+    function TDistribuicaoNfeListagemFromJson(Source: string): TDistribuicaoNfeListagem;
+    function TDistribuicaoNfePedidoToJsonValue(Source: TDistribuicaoNfePedido): TJSONValue;
+    function TDistribuicaoNfePedidoToJson(Source: TDistribuicaoNfePedido): string;
+    function TDistribuicaoNfePedidoFromJsonValue(Source: TJSONValue): TDistribuicaoNfePedido;
+    function TDistribuicaoNfePedidoFromJson(Source: string): TDistribuicaoNfePedido;
+    function TDistribuicaoNfeDocumentoListagemToJsonValue(Source: TDistribuicaoNfeDocumentoListagem): TJSONValue;
+    function TDistribuicaoNfeDocumentoListagemToJson(Source: TDistribuicaoNfeDocumentoListagem): string;
+    function TDistribuicaoNfeDocumentoListagemFromJsonValue(Source: TJSONValue): TDistribuicaoNfeDocumentoListagem;
+    function TDistribuicaoNfeDocumentoListagemFromJson(Source: string): TDistribuicaoNfeDocumentoListagem;
+    function TDistribuicaoNfeEventoToJsonValue(Source: TDistribuicaoNfeEvento): TJSONValue;
+    function TDistribuicaoNfeEventoToJson(Source: TDistribuicaoNfeEvento): string;
+    function TDistribuicaoNfeEventoFromJsonValue(Source: TJSONValue): TDistribuicaoNfeEvento;
+    function TDistribuicaoNfeEventoFromJson(Source: string): TDistribuicaoNfeEvento;
+    function TDistribuicaoNfeEventoListToJsonValue(Source: TDistribuicaoNfeEventoList): TJSONValue;
+    function TDistribuicaoNfeEventoListToJson(Source: TDistribuicaoNfeEventoList): string;
+    function TDistribuicaoNfeEventoListFromJsonValue(Source: TJSONValue): TDistribuicaoNfeEventoList;
+    function TDistribuicaoNfeEventoListFromJson(Source: string): TDistribuicaoNfeEventoList;
+    function TManifestacaoNfeListagemToJsonValue(Source: TManifestacaoNfeListagem): TJSONValue;
+    function TManifestacaoNfeListagemToJson(Source: TManifestacaoNfeListagem): string;
+    function TManifestacaoNfeListagemFromJsonValue(Source: TJSONValue): TManifestacaoNfeListagem;
+    function TManifestacaoNfeListagemFromJson(Source: string): TManifestacaoNfeListagem;
+    function TDistribuicaoNfePedidoManifestacaoToJsonValue(Source: TDistribuicaoNfePedidoManifestacao): TJSONValue;
+    function TDistribuicaoNfePedidoManifestacaoToJson(Source: TDistribuicaoNfePedidoManifestacao): string;
+    function TDistribuicaoNfePedidoManifestacaoFromJsonValue(Source: TJSONValue): TDistribuicaoNfePedidoManifestacao;
+    function TDistribuicaoNfePedidoManifestacaoFromJson(Source: string): TDistribuicaoNfePedidoManifestacao;
     function TEmpresaEnderecoToJsonValue(Source: TEmpresaEndereco): TJSONValue;
     function TEmpresaEnderecoToJson(Source: TEmpresaEndereco): string;
     function TEmpresaEnderecoFromJsonValue(Source: TJSONValue): TEmpresaEndereco;
@@ -75,6 +119,10 @@ type
     function TEmpresaConfigNfcomToJson(Source: TEmpresaConfigNfcom): string;
     function TEmpresaConfigNfcomFromJsonValue(Source: TJSONValue): TEmpresaConfigNfcom;
     function TEmpresaConfigNfcomFromJson(Source: string): TEmpresaConfigNfcom;
+    function TEmpresaConfigDistribuicaoNfeToJsonValue(Source: TEmpresaConfigDistribuicaoNfe): TJSONValue;
+    function TEmpresaConfigDistribuicaoNfeToJson(Source: TEmpresaConfigDistribuicaoNfe): string;
+    function TEmpresaConfigDistribuicaoNfeFromJsonValue(Source: TJSONValue): TEmpresaConfigDistribuicaoNfe;
+    function TEmpresaConfigDistribuicaoNfeFromJson(Source: string): TEmpresaConfigDistribuicaoNfe;
     function stringListToJsonValue(Source: stringList): TJSONValue;
     function stringListToJson(Source: stringList): string;
     function stringListFromJsonValue(Source: TJSONValue): stringList;
@@ -403,6 +451,10 @@ type
     function TNfcomSefazGSubToJson(Source: TNfcomSefazGSub): string;
     function TNfcomSefazGSubFromJsonValue(Source: TJSONValue): TNfcomSefazGSub;
     function TNfcomSefazGSubFromJson(Source: string): TNfcomSefazGSub;
+    function TNfcomSefazGCofatGNFToJsonValue(Source: TNfcomSefazGCofatGNF): TJSONValue;
+    function TNfcomSefazGCofatGNFToJson(Source: TNfcomSefazGCofatGNF): string;
+    function TNfcomSefazGCofatGNFFromJsonValue(Source: TJSONValue): TNfcomSefazGCofatGNF;
+    function TNfcomSefazGCofatGNFFromJson(Source: string): TNfcomSefazGCofatGNF;
     function TNfcomSefazGCofatToJsonValue(Source: TNfcomSefazGCofat): TJSONValue;
     function TNfcomSefazGCofatToJson(Source: TNfcomSefazGCofat): string;
     function TNfcomSefazGCofatFromJsonValue(Source: TJSONValue): TNfcomSefazGCofat;
@@ -1527,6 +1579,22 @@ type
     function TMdfeInclusaoDfeToJson(Source: TMdfeInclusaoDfe): string;
     function TMdfeInclusaoDfeFromJsonValue(Source: TJSONValue): TMdfeInclusaoDfe;
     function TMdfeInclusaoDfeFromJson(Source: string): TMdfeInclusaoDfe;
+    function TDfeContribuinteEnderecoToJsonValue(Source: TDfeContribuinteEndereco): TJSONValue;
+    function TDfeContribuinteEnderecoToJson(Source: TDfeContribuinteEndereco): string;
+    function TDfeContribuinteEnderecoFromJsonValue(Source: TJSONValue): TDfeContribuinteEndereco;
+    function TDfeContribuinteEnderecoFromJson(Source: string): TDfeContribuinteEndereco;
+    function TDfeContribuinteInfCadToJsonValue(Source: TDfeContribuinteInfCad): TJSONValue;
+    function TDfeContribuinteInfCadToJson(Source: TDfeContribuinteInfCad): string;
+    function TDfeContribuinteInfCadFromJsonValue(Source: TJSONValue): TDfeContribuinteInfCad;
+    function TDfeContribuinteInfCadFromJson(Source: string): TDfeContribuinteInfCad;
+    function TDfeContribuinteInfCadListToJsonValue(Source: TDfeContribuinteInfCadList): TJSONValue;
+    function TDfeContribuinteInfCadListToJson(Source: TDfeContribuinteInfCadList): string;
+    function TDfeContribuinteInfCadListFromJsonValue(Source: TJSONValue): TDfeContribuinteInfCadList;
+    function TDfeContribuinteInfCadListFromJson(Source: string): TDfeContribuinteInfCadList;
+    function TDfeContribuinteInfConsToJsonValue(Source: TDfeContribuinteInfCons): TJSONValue;
+    function TDfeContribuinteInfConsToJson(Source: TDfeContribuinteInfCons): string;
+    function TDfeContribuinteInfConsFromJsonValue(Source: TJSONValue): TDfeContribuinteInfCons;
+    function TDfeContribuinteInfConsFromJson(Source: string): TDfeContribuinteInfCons;
     function TNfeSefazRefNFToJsonValue(Source: TNfeSefazRefNF): TJSONValue;
     function TNfeSefazRefNFToJson(Source: TNfeSefazRefNF): string;
     function TNfeSefazRefNFFromJsonValue(Source: TJSONValue): TNfeSefazRefNF;
@@ -2172,6 +2240,883 @@ type
 implementation
 
 { TJsonConverter }
+
+function TJsonConverter.TDistribuicaoNfeDocumentoToJsonValue(Source: TDistribuicaoNfeDocumento): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'id', Self.stringToJsonValue(Source.id));
+    if Source.created_atHasValue then
+      Json.ObjAddProp(Result, 'created_at', Self.TDateTimeToJsonValue(Source.created_at));
+    if Source.nsuHasValue then
+      Json.ObjAddProp(Result, 'nsu', Self.IntegerToJsonValue(Source.nsu));
+    Json.ObjAddProp(Result, 'schema', Self.stringToJsonValue(Source.schema));
+    if Source.tipo_documentoHasValue then
+      Json.ObjAddProp(Result, 'tipo_documento', Self.stringToJsonValue(Source.tipo_documento));
+    if Source.chave_acessoHasValue then
+      Json.ObjAddProp(Result, 'chave_acesso', Self.stringToJsonValue(Source.chave_acesso));
+    if Source.resumoHasValue then
+      Json.ObjAddProp(Result, 'resumo', Self.BooleanToJsonValue(Source.resumo));
+    if Source.tipo_eventoHasValue then
+      Json.ObjAddProp(Result, 'tipo_evento', Self.stringToJsonValue(Source.tipo_evento));
+    if Source.numero_sequencialHasValue then
+      Json.ObjAddProp(Result, 'numero_sequencial', Self.IntegerToJsonValue(Source.numero_sequencial));
+    if Source.data_eventoHasValue then
+      Json.ObjAddProp(Result, 'data_evento', Self.TDateTimeToJsonValue(Source.data_evento));
+    if Source.data_recebimentoHasValue then
+      Json.ObjAddProp(Result, 'data_recebimento', Self.TDateTimeToJsonValue(Source.data_recebimento));
+    if Source.numero_protocoloHasValue then
+      Json.ObjAddProp(Result, 'numero_protocolo', Self.stringToJsonValue(Source.numero_protocolo));
+    if Source.tipo_nfeHasValue then
+      Json.ObjAddProp(Result, 'tipo_nfe', Self.IntegerToJsonValue(Source.tipo_nfe));
+    if Source.valor_nfeHasValue then
+      Json.ObjAddProp(Result, 'valor_nfe', Self.DoubleToJsonValue(Source.valor_nfe));
+    if Source.digest_valueHasValue then
+      Json.ObjAddProp(Result, 'digest_value', Self.stringToJsonValue(Source.digest_value));
+    if Source.emitente_cpf_cnpjHasValue then
+      Json.ObjAddProp(Result, 'emitente_cpf_cnpj', Self.stringToJsonValue(Source.emitente_cpf_cnpj));
+    if Source.emitente_nome_razao_socialHasValue then
+      Json.ObjAddProp(Result, 'emitente_nome_razao_social', Self.stringToJsonValue(Source.emitente_nome_razao_social));
+    if Source.emitente_inscricao_estadualHasValue then
+      Json.ObjAddProp(Result, 'emitente_inscricao_estadual', Self.stringToJsonValue(Source.emitente_inscricao_estadual));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeDocumentoToJson(Source: TDistribuicaoNfeDocumento): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDistribuicaoNfeDocumentoToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeDocumentoFromJsonValue(Source: TJSONValue): TDistribuicaoNfeDocumento;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDistribuicaoNfeDocumento.Create;
+  try
+    if Json.ObjContains(Source, 'id', JValue) then
+      Result.id := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'created_at', JValue) then
+      Result.created_at := Self.TDateTimeFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'nsu', JValue) then
+      Result.nsu := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'schema', JValue) then
+      Result.schema := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'tipo_documento', JValue) then
+      Result.tipo_documento := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'chave_acesso', JValue) then
+      Result.chave_acesso := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'resumo', JValue) then
+      Result.resumo := Self.BooleanFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'tipo_evento', JValue) then
+      Result.tipo_evento := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'numero_sequencial', JValue) then
+      Result.numero_sequencial := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'data_evento', JValue) then
+      Result.data_evento := Self.TDateTimeFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'data_recebimento', JValue) then
+      Result.data_recebimento := Self.TDateTimeFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'numero_protocolo', JValue) then
+      Result.numero_protocolo := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'tipo_nfe', JValue) then
+      Result.tipo_nfe := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'valor_nfe', JValue) then
+      Result.valor_nfe := Self.DoubleFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'digest_value', JValue) then
+      Result.digest_value := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'emitente_cpf_cnpj', JValue) then
+      Result.emitente_cpf_cnpj := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'emitente_nome_razao_social', JValue) then
+      Result.emitente_nome_razao_social := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'emitente_inscricao_estadual', JValue) then
+      Result.emitente_inscricao_estadual := Self.stringFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeDocumentoFromJson(Source: string): TDistribuicaoNfeDocumento;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDistribuicaoNfeDocumentoFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeDocumentoListToJsonValue(Source: TDistribuicaoNfeDocumentoList): TJSONValue;
+var
+  Index: Integer;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateArray;
+  try
+    for Index := 0 to Source.Count - 1 do
+      Json.ArrayAdd(Result, Self.TDistribuicaoNfeDocumentoToJsonValue(Source[Index]));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeDocumentoListToJson(Source: TDistribuicaoNfeDocumentoList): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDistribuicaoNfeDocumentoListToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeDocumentoListFromJsonValue(Source: TJSONValue): TDistribuicaoNfeDocumentoList;
+var
+  Index: Integer;
+begin
+  if not Json.IsArray(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDistribuicaoNfeDocumentoList.Create;
+  try
+    for Index := 0 to Json.ArrayLength(Source) - 1 do
+      Result.Add(Self.TDistribuicaoNfeDocumentoFromJsonValue(Json.ArrayGet(Source, Index)));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeDocumentoListFromJson(Source: string): TDistribuicaoNfeDocumentoList;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDistribuicaoNfeDocumentoListFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeToJsonValue(Source: TDistribuicaoNfe): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'id', Self.stringToJsonValue(Source.id));
+    if Source.created_atHasValue then
+      Json.ObjAddProp(Result, 'created_at', Self.TDateTimeToJsonValue(Source.created_at));
+    Json.ObjAddProp(Result, 'status', Self.stringToJsonValue(Source.status));
+    Json.ObjAddProp(Result, 'ambiente', Self.stringToJsonValue(Source.ambiente));
+    if Source.uf_autorHasValue then
+      Json.ObjAddProp(Result, 'uf_autor', Self.stringToJsonValue(Source.uf_autor));
+    Json.ObjAddProp(Result, 'tipo_consulta', Self.stringToJsonValue(Source.tipo_consulta));
+    if Source.dist_nsuHasValue then
+      Json.ObjAddProp(Result, 'dist_nsu', Self.IntegerToJsonValue(Source.dist_nsu));
+    if Source.cons_nsuHasValue then
+      Json.ObjAddProp(Result, 'cons_nsu', Self.IntegerToJsonValue(Source.cons_nsu));
+    if Source.cons_chaveHasValue then
+      Json.ObjAddProp(Result, 'cons_chave', Self.stringToJsonValue(Source.cons_chave));
+    Json.ObjAddProp(Result, 'codigo_status', Self.IntegerToJsonValue(Source.codigo_status));
+    if Source.motivo_statusHasValue then
+      Json.ObjAddProp(Result, 'motivo_status', Self.stringToJsonValue(Source.motivo_status));
+    Json.ObjAddProp(Result, 'data_hora_resposta', Self.TDateTimeToJsonValue(Source.data_hora_resposta));
+    Json.ObjAddProp(Result, 'ultimo_nsu', Self.IntegerToJsonValue(Source.ultimo_nsu));
+    Json.ObjAddProp(Result, 'max_nsu', Self.IntegerToJsonValue(Source.max_nsu));
+    if Assigned(Source.documentos) then
+      Json.ObjAddProp(Result, 'documentos', Self.TDistribuicaoNfeDocumentoListToJsonValue(Source.documentos));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeToJson(Source: TDistribuicaoNfe): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDistribuicaoNfeToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeFromJsonValue(Source: TJSONValue): TDistribuicaoNfe;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDistribuicaoNfe.Create;
+  try
+    if Json.ObjContains(Source, 'id', JValue) then
+      Result.id := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'created_at', JValue) then
+      Result.created_at := Self.TDateTimeFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'status', JValue) then
+      Result.status := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'ambiente', JValue) then
+      Result.ambiente := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'uf_autor', JValue) then
+      Result.uf_autor := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'tipo_consulta', JValue) then
+      Result.tipo_consulta := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'dist_nsu', JValue) then
+      Result.dist_nsu := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cons_nsu', JValue) then
+      Result.cons_nsu := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cons_chave', JValue) then
+      Result.cons_chave := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'codigo_status', JValue) then
+      Result.codigo_status := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'motivo_status', JValue) then
+      Result.motivo_status := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'data_hora_resposta', JValue) then
+      Result.data_hora_resposta := Self.TDateTimeFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'ultimo_nsu', JValue) then
+      Result.ultimo_nsu := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'max_nsu', JValue) then
+      Result.max_nsu := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'documentos', JValue) then
+      Result.documentos := Self.TDistribuicaoNfeDocumentoListFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeFromJson(Source: string): TDistribuicaoNfe;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDistribuicaoNfeFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeListToJsonValue(Source: TDistribuicaoNfeList): TJSONValue;
+var
+  Index: Integer;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateArray;
+  try
+    for Index := 0 to Source.Count - 1 do
+      Json.ArrayAdd(Result, Self.TDistribuicaoNfeToJsonValue(Source[Index]));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeListToJson(Source: TDistribuicaoNfeList): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDistribuicaoNfeListToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeListFromJsonValue(Source: TJSONValue): TDistribuicaoNfeList;
+var
+  Index: Integer;
+begin
+  if not Json.IsArray(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDistribuicaoNfeList.Create;
+  try
+    for Index := 0 to Json.ArrayLength(Source) - 1 do
+      Result.Add(Self.TDistribuicaoNfeFromJsonValue(Json.ArrayGet(Source, Index)));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeListFromJson(Source: string): TDistribuicaoNfeList;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDistribuicaoNfeListFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeListagemToJsonValue(Source: TDistribuicaoNfeListagem): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    if Source._countHasValue then
+      Json.ObjAddProp(Result, '@count', Self.IntegerToJsonValue(Source._count));
+    if Assigned(Source.data) then
+      Json.ObjAddProp(Result, 'data', Self.TDistribuicaoNfeListToJsonValue(Source.data));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeListagemToJson(Source: TDistribuicaoNfeListagem): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDistribuicaoNfeListagemToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeListagemFromJsonValue(Source: TJSONValue): TDistribuicaoNfeListagem;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDistribuicaoNfeListagem.Create;
+  try
+    if Json.ObjContains(Source, '@count', JValue) then
+      Result._count := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'data', JValue) then
+      Result.data := Self.TDistribuicaoNfeListFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeListagemFromJson(Source: string): TDistribuicaoNfeListagem;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDistribuicaoNfeListagemFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfePedidoToJsonValue(Source: TDistribuicaoNfePedido): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'cpf_cnpj', Self.stringToJsonValue(Source.cpf_cnpj));
+    Json.ObjAddProp(Result, 'ambiente', Self.stringToJsonValue(Source.ambiente));
+    if Source.uf_autorHasValue then
+      Json.ObjAddProp(Result, 'uf_autor', Self.stringToJsonValue(Source.uf_autor));
+    Json.ObjAddProp(Result, 'tipo_consulta', Self.stringToJsonValue(Source.tipo_consulta));
+    if Source.dist_nsuHasValue then
+      Json.ObjAddProp(Result, 'dist_nsu', Self.IntegerToJsonValue(Source.dist_nsu));
+    if Source.cons_nsuHasValue then
+      Json.ObjAddProp(Result, 'cons_nsu', Self.IntegerToJsonValue(Source.cons_nsu));
+    if Source.cons_chaveHasValue then
+      Json.ObjAddProp(Result, 'cons_chave', Self.stringToJsonValue(Source.cons_chave));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfePedidoToJson(Source: TDistribuicaoNfePedido): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDistribuicaoNfePedidoToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfePedidoFromJsonValue(Source: TJSONValue): TDistribuicaoNfePedido;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDistribuicaoNfePedido.Create;
+  try
+    if Json.ObjContains(Source, 'cpf_cnpj', JValue) then
+      Result.cpf_cnpj := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'ambiente', JValue) then
+      Result.ambiente := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'uf_autor', JValue) then
+      Result.uf_autor := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'tipo_consulta', JValue) then
+      Result.tipo_consulta := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'dist_nsu', JValue) then
+      Result.dist_nsu := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cons_nsu', JValue) then
+      Result.cons_nsu := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cons_chave', JValue) then
+      Result.cons_chave := Self.stringFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfePedidoFromJson(Source: string): TDistribuicaoNfePedido;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDistribuicaoNfePedidoFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeDocumentoListagemToJsonValue(Source: TDistribuicaoNfeDocumentoListagem): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    if Source._countHasValue then
+      Json.ObjAddProp(Result, '@count', Self.IntegerToJsonValue(Source._count));
+    if Assigned(Source.data) then
+      Json.ObjAddProp(Result, 'data', Self.TDistribuicaoNfeDocumentoListToJsonValue(Source.data));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeDocumentoListagemToJson(Source: TDistribuicaoNfeDocumentoListagem): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDistribuicaoNfeDocumentoListagemToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeDocumentoListagemFromJsonValue(Source: TJSONValue): TDistribuicaoNfeDocumentoListagem;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDistribuicaoNfeDocumentoListagem.Create;
+  try
+    if Json.ObjContains(Source, '@count', JValue) then
+      Result._count := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'data', JValue) then
+      Result.data := Self.TDistribuicaoNfeDocumentoListFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeDocumentoListagemFromJson(Source: string): TDistribuicaoNfeDocumentoListagem;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDistribuicaoNfeDocumentoListagemFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeEventoToJsonValue(Source: TDistribuicaoNfeEvento): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    if Source.idHasValue then
+      Json.ObjAddProp(Result, 'id', Self.stringToJsonValue(Source.id));
+    if Source.created_atHasValue then
+      Json.ObjAddProp(Result, 'created_at', Self.TDateTimeToJsonValue(Source.created_at));
+    if Source.ambienteHasValue then
+      Json.ObjAddProp(Result, 'ambiente', Self.stringToJsonValue(Source.ambiente));
+    if Source.statusHasValue then
+      Json.ObjAddProp(Result, 'status', Self.stringToJsonValue(Source.status));
+    if Source.cpf_cnpj_autorHasValue then
+      Json.ObjAddProp(Result, 'cpf_cnpj_autor', Self.stringToJsonValue(Source.cpf_cnpj_autor));
+    if Source.chave_acessoHasValue then
+      Json.ObjAddProp(Result, 'chave_acesso', Self.stringToJsonValue(Source.chave_acesso));
+    if Source.tipo_eventoHasValue then
+      Json.ObjAddProp(Result, 'tipo_evento', Self.stringToJsonValue(Source.tipo_evento));
+    if Source.data_eventoHasValue then
+      Json.ObjAddProp(Result, 'data_evento', Self.TDateTimeToJsonValue(Source.data_evento));
+    if Source.numero_sequencialHasValue then
+      Json.ObjAddProp(Result, 'numero_sequencial', Self.IntegerToJsonValue(Source.numero_sequencial));
+    if Source.justificativaHasValue then
+      Json.ObjAddProp(Result, 'justificativa', Self.stringToJsonValue(Source.justificativa));
+    if Source.data_registroHasValue then
+      Json.ObjAddProp(Result, 'data_registro', Self.TDateTimeToJsonValue(Source.data_registro));
+    if Source.codigo_statusHasValue then
+      Json.ObjAddProp(Result, 'codigo_status', Self.IntegerToJsonValue(Source.codigo_status));
+    if Source.motivo_statusHasValue then
+      Json.ObjAddProp(Result, 'motivo_status', Self.stringToJsonValue(Source.motivo_status));
+    if Source.numero_protocoloHasValue then
+      Json.ObjAddProp(Result, 'numero_protocolo', Self.stringToJsonValue(Source.numero_protocolo));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeEventoToJson(Source: TDistribuicaoNfeEvento): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDistribuicaoNfeEventoToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeEventoFromJsonValue(Source: TJSONValue): TDistribuicaoNfeEvento;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDistribuicaoNfeEvento.Create;
+  try
+    if Json.ObjContains(Source, 'id', JValue) then
+      Result.id := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'created_at', JValue) then
+      Result.created_at := Self.TDateTimeFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'ambiente', JValue) then
+      Result.ambiente := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'status', JValue) then
+      Result.status := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cpf_cnpj_autor', JValue) then
+      Result.cpf_cnpj_autor := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'chave_acesso', JValue) then
+      Result.chave_acesso := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'tipo_evento', JValue) then
+      Result.tipo_evento := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'data_evento', JValue) then
+      Result.data_evento := Self.TDateTimeFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'numero_sequencial', JValue) then
+      Result.numero_sequencial := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'justificativa', JValue) then
+      Result.justificativa := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'data_registro', JValue) then
+      Result.data_registro := Self.TDateTimeFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'codigo_status', JValue) then
+      Result.codigo_status := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'motivo_status', JValue) then
+      Result.motivo_status := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'numero_protocolo', JValue) then
+      Result.numero_protocolo := Self.stringFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeEventoFromJson(Source: string): TDistribuicaoNfeEvento;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDistribuicaoNfeEventoFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeEventoListToJsonValue(Source: TDistribuicaoNfeEventoList): TJSONValue;
+var
+  Index: Integer;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateArray;
+  try
+    for Index := 0 to Source.Count - 1 do
+      Json.ArrayAdd(Result, Self.TDistribuicaoNfeEventoToJsonValue(Source[Index]));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeEventoListToJson(Source: TDistribuicaoNfeEventoList): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDistribuicaoNfeEventoListToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeEventoListFromJsonValue(Source: TJSONValue): TDistribuicaoNfeEventoList;
+var
+  Index: Integer;
+begin
+  if not Json.IsArray(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDistribuicaoNfeEventoList.Create;
+  try
+    for Index := 0 to Json.ArrayLength(Source) - 1 do
+      Result.Add(Self.TDistribuicaoNfeEventoFromJsonValue(Json.ArrayGet(Source, Index)));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfeEventoListFromJson(Source: string): TDistribuicaoNfeEventoList;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDistribuicaoNfeEventoListFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TManifestacaoNfeListagemToJsonValue(Source: TManifestacaoNfeListagem): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    if Source._countHasValue then
+      Json.ObjAddProp(Result, '@count', Self.IntegerToJsonValue(Source._count));
+    if Assigned(Source.data) then
+      Json.ObjAddProp(Result, 'data', Self.TDistribuicaoNfeEventoListToJsonValue(Source.data));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TManifestacaoNfeListagemToJson(Source: TManifestacaoNfeListagem): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TManifestacaoNfeListagemToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TManifestacaoNfeListagemFromJsonValue(Source: TJSONValue): TManifestacaoNfeListagem;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TManifestacaoNfeListagem.Create;
+  try
+    if Json.ObjContains(Source, '@count', JValue) then
+      Result._count := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'data', JValue) then
+      Result.data := Self.TDistribuicaoNfeEventoListFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TManifestacaoNfeListagemFromJson(Source: string): TManifestacaoNfeListagem;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TManifestacaoNfeListagemFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfePedidoManifestacaoToJsonValue(Source: TDistribuicaoNfePedidoManifestacao): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'cpf_cnpj', Self.stringToJsonValue(Source.cpf_cnpj));
+    Json.ObjAddProp(Result, 'ambiente', Self.stringToJsonValue(Source.ambiente));
+    Json.ObjAddProp(Result, 'chave_acesso', Self.stringToJsonValue(Source.chave_acesso));
+    Json.ObjAddProp(Result, 'tipo_evento', Self.stringToJsonValue(Source.tipo_evento));
+    if Source.justificativaHasValue then
+      Json.ObjAddProp(Result, 'justificativa', Self.stringToJsonValue(Source.justificativa));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfePedidoManifestacaoToJson(Source: TDistribuicaoNfePedidoManifestacao): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDistribuicaoNfePedidoManifestacaoToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfePedidoManifestacaoFromJsonValue(Source: TJSONValue): TDistribuicaoNfePedidoManifestacao;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDistribuicaoNfePedidoManifestacao.Create;
+  try
+    if Json.ObjContains(Source, 'cpf_cnpj', JValue) then
+      Result.cpf_cnpj := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'ambiente', JValue) then
+      Result.ambiente := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'chave_acesso', JValue) then
+      Result.chave_acesso := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'tipo_evento', JValue) then
+      Result.tipo_evento := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'justificativa', JValue) then
+      Result.justificativa := Self.stringFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDistribuicaoNfePedidoManifestacaoFromJson(Source: string): TDistribuicaoNfePedidoManifestacao;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDistribuicaoNfePedidoManifestacaoFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
 
 function TJsonConverter.TEmpresaEnderecoToJsonValue(Source: TEmpresaEndereco): TJSONValue;
 begin
@@ -3277,6 +4222,65 @@ begin
   JValue := JsonToJsonValue(Source);
   try
     Result := TEmpresaConfigNfcomFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TEmpresaConfigDistribuicaoNfeToJsonValue(Source: TEmpresaConfigDistribuicaoNfe): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'ambiente', Self.stringToJsonValue(Source.ambiente));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TEmpresaConfigDistribuicaoNfeToJson(Source: TEmpresaConfigDistribuicaoNfe): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TEmpresaConfigDistribuicaoNfeToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TEmpresaConfigDistribuicaoNfeFromJsonValue(Source: TJSONValue): TEmpresaConfigDistribuicaoNfe;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TEmpresaConfigDistribuicaoNfe.Create;
+  try
+    if Json.ObjContains(Source, 'ambiente', JValue) then
+      Result.ambiente := Self.stringFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TEmpresaConfigDistribuicaoNfeFromJson(Source: string): TEmpresaConfigDistribuicaoNfe;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TEmpresaConfigDistribuicaoNfeFromJsonValue(JValue);
   finally
     JValue.Free;
   end;
@@ -9493,6 +10497,81 @@ begin
   end;
 end;
 
+function TJsonConverter.TNfcomSefazGCofatGNFToJsonValue(Source: TNfcomSefazGCofatGNF): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'CNPJ', Self.stringToJsonValue(Source.CNPJ));
+    Json.ObjAddProp(Result, 'mod', Self.IntegerToJsonValue(Source.&mod));
+    Json.ObjAddProp(Result, 'serie', Self.stringToJsonValue(Source.serie));
+    Json.ObjAddProp(Result, 'nNF', Self.IntegerToJsonValue(Source.nNF));
+    Json.ObjAddProp(Result, 'CompetEmis', Self.stringToJsonValue(Source.CompetEmis));
+    if Source.hash115HasValue then
+      Json.ObjAddProp(Result, 'hash115', Self.stringToJsonValue(Source.hash115));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfcomSefazGCofatGNFToJson(Source: TNfcomSefazGCofatGNF): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TNfcomSefazGCofatGNFToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TNfcomSefazGCofatGNFFromJsonValue(Source: TJSONValue): TNfcomSefazGCofatGNF;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TNfcomSefazGCofatGNF.Create;
+  try
+    if Json.ObjContains(Source, 'CNPJ', JValue) then
+      Result.CNPJ := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'mod', JValue) then
+      Result.&mod := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'serie', JValue) then
+      Result.serie := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'nNF', JValue) then
+      Result.nNF := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'CompetEmis', JValue) then
+      Result.CompetEmis := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'hash115', JValue) then
+      Result.hash115 := Self.stringFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TNfcomSefazGCofatGNFFromJson(Source: string): TNfcomSefazGCofatGNF;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TNfcomSefazGCofatGNFFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
 function TJsonConverter.TNfcomSefazGCofatToJsonValue(Source: TNfcomSefazGCofat): TJSONValue;
 begin
   if not Assigned(Source) then
@@ -9502,7 +10581,10 @@ begin
   end;
   Result := Json.CreateObject;
   try
-    Json.ObjAddProp(Result, 'chNFComLocal', Self.stringToJsonValue(Source.chNFComLocal));
+    if Source.chNFComLocalHasValue then
+      Json.ObjAddProp(Result, 'chNFComLocal', Self.stringToJsonValue(Source.chNFComLocal));
+    if Assigned(Source.gNF) then
+      Json.ObjAddProp(Result, 'gNF', Self.TNfcomSefazGCofatGNFToJsonValue(Source.gNF));
   except
     Result.Free;
     raise;
@@ -9534,6 +10616,8 @@ begin
   try
     if Json.ObjContains(Source, 'chNFComLocal', JValue) then
       Result.chNFComLocal := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'gNF', JValue) then
+      Result.gNF := Self.TNfcomSefazGCofatGNFFromJsonValue(JValue);
   except
     Result.Free;
     raise;
@@ -11004,6 +12088,8 @@ begin
       Json.ObjAddProp(Result, 'chNFComAnt', Self.stringToJsonValue(Source.chNFComAnt));
     if Source.nItemAntHasValue then
       Json.ObjAddProp(Result, 'nItemAnt', Self.stringToJsonValue(Source.nItemAnt));
+    if Source.indNFComAntPapelFatCentralHasValue then
+      Json.ObjAddProp(Result, 'indNFComAntPapelFatCentral', Self.IntegerToJsonValue(Source.indNFComAntPapelFatCentral));
     Json.ObjAddProp(Result, 'prod', Self.TNfcomSefazProdToJsonValue(Source.prod));
     Json.ObjAddProp(Result, 'imposto', Self.TNfcomSefazImpostoToJsonValue(Source.imposto));
     if Assigned(Source.gProcRef) then
@@ -11047,6 +12133,8 @@ begin
       Result.chNFComAnt := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'nItemAnt', JValue) then
       Result.nItemAnt := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'indNFComAntPapelFatCentral', JValue) then
+      Result.indNFComAntPapelFatCentral := Self.IntegerFromJsonValue(JValue);
     if Json.ObjContains(Source, 'prod', JValue) then
       Result.prod := Self.TNfcomSefazProdFromJsonValue(JValue);
     if Json.ObjContains(Source, 'imposto', JValue) then
@@ -29455,6 +30543,367 @@ begin
   JValue := JsonToJsonValue(Source);
   try
     Result := TMdfeInclusaoDfeFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteEnderecoToJsonValue(Source: TDfeContribuinteEndereco): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'logradouro', Self.stringToJsonValue(Source.logradouro));
+    Json.ObjAddProp(Result, 'numero', Self.stringToJsonValue(Source.numero));
+    if Source.complementoHasValue then
+      Json.ObjAddProp(Result, 'complemento', Self.stringToJsonValue(Source.complemento));
+    Json.ObjAddProp(Result, 'bairro', Self.stringToJsonValue(Source.bairro));
+    Json.ObjAddProp(Result, 'codigo_municipio', Self.stringToJsonValue(Source.codigo_municipio));
+    Json.ObjAddProp(Result, 'nome_municipio', Self.stringToJsonValue(Source.nome_municipio));
+    Json.ObjAddProp(Result, 'uf', Self.stringToJsonValue(Source.uf));
+    if Source.cepHasValue then
+      Json.ObjAddProp(Result, 'cep', Self.stringToJsonValue(Source.cep));
+    if Source.codigo_paisHasValue then
+      Json.ObjAddProp(Result, 'codigo_pais', Self.stringToJsonValue(Source.codigo_pais));
+    if Source.paisHasValue then
+      Json.ObjAddProp(Result, 'pais', Self.stringToJsonValue(Source.pais));
+    if Source.foneHasValue then
+      Json.ObjAddProp(Result, 'fone', Self.stringToJsonValue(Source.fone));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteEnderecoToJson(Source: TDfeContribuinteEndereco): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDfeContribuinteEnderecoToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteEnderecoFromJsonValue(Source: TJSONValue): TDfeContribuinteEndereco;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDfeContribuinteEndereco.Create;
+  try
+    if Json.ObjContains(Source, 'logradouro', JValue) then
+      Result.logradouro := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'numero', JValue) then
+      Result.numero := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'complemento', JValue) then
+      Result.complemento := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'bairro', JValue) then
+      Result.bairro := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'codigo_municipio', JValue) then
+      Result.codigo_municipio := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'nome_municipio', JValue) then
+      Result.nome_municipio := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'uf', JValue) then
+      Result.uf := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cep', JValue) then
+      Result.cep := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'codigo_pais', JValue) then
+      Result.codigo_pais := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'pais', JValue) then
+      Result.pais := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'fone', JValue) then
+      Result.fone := Self.stringFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteEnderecoFromJson(Source: string): TDfeContribuinteEndereco;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDfeContribuinteEnderecoFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteInfCadToJsonValue(Source: TDfeContribuinteInfCad): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'ie', Self.stringToJsonValue(Source.ie));
+    if Source.cnpjHasValue then
+      Json.ObjAddProp(Result, 'cnpj', Self.stringToJsonValue(Source.cnpj));
+    if Source.cpfHasValue then
+      Json.ObjAddProp(Result, 'cpf', Self.stringToJsonValue(Source.cpf));
+    Json.ObjAddProp(Result, 'uf', Self.stringToJsonValue(Source.uf));
+    Json.ObjAddProp(Result, 'situacao_cadastral', Self.IntegerToJsonValue(Source.situacao_cadastral));
+    Json.ObjAddProp(Result, 'indicador_nfe', Self.IntegerToJsonValue(Source.indicador_nfe));
+    Json.ObjAddProp(Result, 'indicador_cte', Self.IntegerToJsonValue(Source.indicador_cte));
+    Json.ObjAddProp(Result, 'nome_razao_social', Self.stringToJsonValue(Source.nome_razao_social));
+    if Source.nome_fantasiaHasValue then
+      Json.ObjAddProp(Result, 'nome_fantasia', Self.stringToJsonValue(Source.nome_fantasia));
+    if Source.regime_apuracao_icmsHasValue then
+      Json.ObjAddProp(Result, 'regime_apuracao_icms', Self.stringToJsonValue(Source.regime_apuracao_icms));
+    if Source.cnaeHasValue then
+      Json.ObjAddProp(Result, 'cnae', Self.stringToJsonValue(Source.cnae));
+    if Source.data_inicio_atividadeHasValue then
+      Json.ObjAddProp(Result, 'data_inicio_atividade', Self.TDateToJsonValue(Source.data_inicio_atividade));
+    if Source.data_situacao_cadastralHasValue then
+      Json.ObjAddProp(Result, 'data_situacao_cadastral', Self.TDateToJsonValue(Source.data_situacao_cadastral));
+    if Source.data_fim_atividadeHasValue then
+      Json.ObjAddProp(Result, 'data_fim_atividade', Self.TDateToJsonValue(Source.data_fim_atividade));
+    if Source.ie_unicaHasValue then
+      Json.ObjAddProp(Result, 'ie_unica', Self.stringToJsonValue(Source.ie_unica));
+    if Source.ie_atualHasValue then
+      Json.ObjAddProp(Result, 'ie_atual', Self.stringToJsonValue(Source.ie_atual));
+    if Assigned(Source.endereco) then
+      Json.ObjAddProp(Result, 'endereco', Self.TDfeContribuinteEnderecoToJsonValue(Source.endereco));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteInfCadToJson(Source: TDfeContribuinteInfCad): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDfeContribuinteInfCadToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteInfCadFromJsonValue(Source: TJSONValue): TDfeContribuinteInfCad;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDfeContribuinteInfCad.Create;
+  try
+    if Json.ObjContains(Source, 'ie', JValue) then
+      Result.ie := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cnpj', JValue) then
+      Result.cnpj := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cpf', JValue) then
+      Result.cpf := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'uf', JValue) then
+      Result.uf := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'situacao_cadastral', JValue) then
+      Result.situacao_cadastral := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'indicador_nfe', JValue) then
+      Result.indicador_nfe := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'indicador_cte', JValue) then
+      Result.indicador_cte := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'nome_razao_social', JValue) then
+      Result.nome_razao_social := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'nome_fantasia', JValue) then
+      Result.nome_fantasia := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'regime_apuracao_icms', JValue) then
+      Result.regime_apuracao_icms := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cnae', JValue) then
+      Result.cnae := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'data_inicio_atividade', JValue) then
+      Result.data_inicio_atividade := Self.TDateFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'data_situacao_cadastral', JValue) then
+      Result.data_situacao_cadastral := Self.TDateFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'data_fim_atividade', JValue) then
+      Result.data_fim_atividade := Self.TDateFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'ie_unica', JValue) then
+      Result.ie_unica := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'ie_atual', JValue) then
+      Result.ie_atual := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'endereco', JValue) then
+      Result.endereco := Self.TDfeContribuinteEnderecoFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteInfCadFromJson(Source: string): TDfeContribuinteInfCad;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDfeContribuinteInfCadFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteInfCadListToJsonValue(Source: TDfeContribuinteInfCadList): TJSONValue;
+var
+  Index: Integer;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateArray;
+  try
+    for Index := 0 to Source.Count - 1 do
+      Json.ArrayAdd(Result, Self.TDfeContribuinteInfCadToJsonValue(Source[Index]));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteInfCadListToJson(Source: TDfeContribuinteInfCadList): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDfeContribuinteInfCadListToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteInfCadListFromJsonValue(Source: TJSONValue): TDfeContribuinteInfCadList;
+var
+  Index: Integer;
+begin
+  if not Json.IsArray(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDfeContribuinteInfCadList.Create;
+  try
+    for Index := 0 to Json.ArrayLength(Source) - 1 do
+      Result.Add(Self.TDfeContribuinteInfCadFromJsonValue(Json.ArrayGet(Source, Index)));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteInfCadListFromJson(Source: string): TDfeContribuinteInfCadList;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDfeContribuinteInfCadListFromJsonValue(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteInfConsToJsonValue(Source: TDfeContribuinteInfCons): TJSONValue;
+begin
+  if not Assigned(Source) then
+  begin
+    Result := Json.CreateNull;
+    Exit;
+  end;
+  Result := Json.CreateObject;
+  try
+    Json.ObjAddProp(Result, 'codigo_status', Self.IntegerToJsonValue(Source.codigo_status));
+    Json.ObjAddProp(Result, 'motivo_status', Self.stringToJsonValue(Source.motivo_status));
+    Json.ObjAddProp(Result, 'uf', Self.stringToJsonValue(Source.uf));
+    if Source.ieHasValue then
+      Json.ObjAddProp(Result, 'ie', Self.stringToJsonValue(Source.ie));
+    if Source.cnpjHasValue then
+      Json.ObjAddProp(Result, 'cnpj', Self.stringToJsonValue(Source.cnpj));
+    if Source.cpfHasValue then
+      Json.ObjAddProp(Result, 'cpf', Self.stringToJsonValue(Source.cpf));
+    Json.ObjAddProp(Result, 'data_consulta', Self.TDateTimeToJsonValue(Source.data_consulta));
+    Json.ObjAddProp(Result, 'uf_atendimento', Self.IntegerToJsonValue(Source.uf_atendimento));
+    if Assigned(Source.informacoes_cadastrais) then
+      Json.ObjAddProp(Result, 'informacoes_cadastrais', Self.TDfeContribuinteInfCadListToJsonValue(Source.informacoes_cadastrais));
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteInfConsToJson(Source: TDfeContribuinteInfCons): string;
+var
+  JValue: TJSONValue;
+begin
+  JValue := TDfeContribuinteInfConsToJsonValue(Source);
+  try
+    Result := JsonValueToJson(JValue);
+  finally
+    JValue.Free;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteInfConsFromJsonValue(Source: TJSONValue): TDfeContribuinteInfCons;
+var
+  JValue: TJSONValue;
+begin
+  if not Json.IsObject(Source) then
+  begin
+    Result := nil;
+    Exit;
+  end;
+  Result := TDfeContribuinteInfCons.Create;
+  try
+    if Json.ObjContains(Source, 'codigo_status', JValue) then
+      Result.codigo_status := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'motivo_status', JValue) then
+      Result.motivo_status := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'uf', JValue) then
+      Result.uf := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'ie', JValue) then
+      Result.ie := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cnpj', JValue) then
+      Result.cnpj := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cpf', JValue) then
+      Result.cpf := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'data_consulta', JValue) then
+      Result.data_consulta := Self.TDateTimeFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'uf_atendimento', JValue) then
+      Result.uf_atendimento := Self.IntegerFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'informacoes_cadastrais', JValue) then
+      Result.informacoes_cadastrais := Self.TDfeContribuinteInfCadListFromJsonValue(JValue);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TJsonConverter.TDfeContribuinteInfConsFromJson(Source: string): TDfeContribuinteInfCons;
+var
+  JValue: TJSONValue;
+begin
+  JValue := JsonToJsonValue(Source);
+  try
+    Result := TDfeContribuinteInfConsFromJsonValue(JValue);
   finally
     JValue.Free;
   end;

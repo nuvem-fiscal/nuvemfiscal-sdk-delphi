@@ -15,6 +15,7 @@ type
   TCnpjService = class;
   TContaService = class;
   TCteService = class;
+  TDistribuiçãoNFEService = class;
   TEmpresaService = class;
   TMdfeService = class;
   TNfceService = class;
@@ -473,6 +474,283 @@ type
   end;
   
   /// <summary>
+  /// O processo de distribuição de DFe envolve a disponibilização dos
+  /// documentos fiscais eletrônicos para os envolvidos na transação (emitentes,
+  /// destinatários e terceiros autorizados). Ele permite que os destinatários
+  /// recebam as NF-e emitidas contra o seu CNPJ diretamente do Ambiente
+  /// Nacional, facilitando o controle e a gestão dos documentos recebidos.
+  /// </summary>
+  IDistribuiçãoNFEService = interface(IInvokable)
+    ['{6A2EEB90-3DBF-4B82-989C-DC6B8496C940}']
+    /// <summary>
+    /// Listar distribuições
+    /// </summary>
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtrar pelo CPF ou CNPJ da pessoa ou empresa interessada.
+    /// 
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Ambiente">
+    /// Identificação do Ambiente.
+    /// 
+    /// Valores aceitos: homologacao, producao
+    /// </param>
+    /// <remarks>
+    /// Retorna a lista de distribuições de NF-e de acordo com os critérios de busca utilizados. As distribuições são retornadas ordenadas pela data da criação, com as mais recentes aparecendo primeiro.
+    /// </remarks>
+    function ListarDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string): TDistribuicaoNfeListagem;
+    /// <summary>
+    /// Distribuir documentos
+    /// </summary>
+    /// <remarks>
+    /// Gera um pedido de distribuição de Documentos Fiscais Eletrônicos (DF-e)
+    /// para um determinado CNPJ. Este endpoint permite que o destinatário
+    /// obtenha os documentos fiscais emitidos contra o seu CNPJ utilizando
+    /// três formas de consulta: *dist-nsu*, *cons-nsu* e *cons-chave*.
+    /// 
+    /// **Comportamento Assíncrono**
+    /// 
+    /// No retorno, existe a propriedade `status` no JSON que poderá assumir um
+    /// dos seguintes valores: *processando*, *concluido* ou *erro*. Caso o status
+    /// seja retornado com o valor *processando*, significa que a solicitação está
+    /// sendo realizada de forma assíncrona pela API. Nesse caso, o usuário deverá
+    /// adotar um fluxo que consiste em requisitar periodicamente o endpoint de
+    /// consulta de pedido de distribuição até que a API retorne o pedido com um
+    /// status indicando o fim do processamento (concluido ou erro).
+    /// </remarks>
+    function GerarDistribuicaoNfe(Body: TDistribuicaoNfePedido): TDistribuicaoNfe;
+    /// <summary>
+    /// Listar documentos
+    /// </summary>
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtrar pelo CPF ou CNPJ da pessoa ou empresa interessada.
+    /// 
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Ambiente">
+    /// Identificação do Ambiente.
+    /// 
+    /// Valores aceitos: homologacao, producao
+    /// </param>
+    /// <param name="TipoDocumento">
+    /// Filtrar pelo tipo do documento de interesse da pessoa ou empresa.
+    /// 
+    /// Valores aceitos: `nota`, `evento`
+    /// </param>
+    /// <param name="FormaDistribuicao">
+    /// Filtrar por documentos que foram distribuídos em sua forma resumida ou completa.
+    /// 
+    /// Valores aceitos: `resumida`, `completa`
+    /// </param>
+    /// <param name="ChaveAcesso">
+    /// Filtrar pela chave de acesso da NF-e.
+    /// </param>
+    /// <remarks>
+    /// Retorna a lista de documentos fiscais eletrônicos de interesse da pessoa ou empresa de acordo com os critérios de busca utilizados. Os documentos são retornadas ordenados pela data da criação, com os mais recentes aparecendo primeiro.
+    /// </remarks>
+    function ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
+    /// <summary>
+    /// Consultar documento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do documento gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter as informações resumidas ou documento fiscal de interesse da pessoa ou empresa interessada.
+    /// </remarks>
+    function ConsultarDocumentoDistribuicaoNfe(Id: string): TDistribuicaoNfeDocumento;
+    /// <summary>
+    /// Baixar XML do documento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do documento gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o XML das informações resumidas ou documento fiscal de interesse da pessoa ou empresa interessada.
+    /// </remarks>
+    function BaixarXmlDocumentoDistribuicaoNfe(Id: string): TBytes;
+    /// <summary>
+    /// Listar Manifestações
+    /// </summary>
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtrar pelo CPF ou CNPJ do autor do evento.
+    /// 
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Ambiente">
+    /// Identificação do Ambiente.
+    /// 
+    /// Valores aceitos: homologacao, producao
+    /// </param>
+    /// <remarks>
+    /// Retorna a lista de manifestações de NF-e de acordo com os critérios de busca utilizados. As manifestações são retornadas ordenadas pela data da criação, com as mais recentes aparecendo primeiro.
+    /// </remarks>
+    function ListarManifestacaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string): TManifestacaoNfeListagem;
+    /// <summary>
+    /// Manifestar nota
+    /// </summary>
+    /// <param name="Body">
+    /// Contém os dados do pedido para manifestação do destinatário.
+    /// </param>
+    /// <remarks>
+    /// O processo de manifestação do destinatário permite que os destinatários
+    /// de Notas Fiscais Eletrônicas (NF-e) registrem formalmente sua posição em
+    /// relação às operações descritas nesses documentos fiscais. Ele envolve
+    /// eventos que indicam se a operação foi confirmada, desconhecida ou
+    /// não realizada.
+    /// 
+    /// Os seguintes tipos de manifestação são suportados pela NF-e:
+    /// * **Confirmação da Operação (210200)**: Manifestação do destinatário confirmando que a operação descrita na NF-e ocorreu exatamente como informado na NF-e. Esse evento libera a possibilidade de download da NF-e pelo destinatário e impede que a empresa emitente cancele a NF-e após a confirmação.
+    /// * **Ciência da Operação (210210)**: Declara que o destinatário tem ciência da existência da NF-e, mas ainda não possui elementos suficientes para manifestar-se conclusivamente. Este é um evento opcional que pode ser usado pelo destinatário para indicar que está ciente da NF-e enquanto coleta mais informações. Esse evento libera a possibilidade de download da NF-e pelo destinatário.
+    /// * **Desconhecimento da Operação (210220)**: Manifestação do destinatário declarando que a operação descrita da NF-e não foi por ele solicitada.
+    /// * **Operação não Realizada (210240)**: Manifestação do destinatário reconhecendo sua participação na operação descrita na NF-e, mas declarando que a operação não ocorreu ou não se efetivou como informado nesta NF-e.
+    /// </remarks>
+    function ManifestarNfe(Body: TDistribuicaoNfePedidoManifestacao): TDistribuicaoNfeEvento;
+    /// <summary>
+    /// Consultar manifestação
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da manifestação gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Consulta os detalhes de uma manifestação de NF-e já existente. Forneça o ID único obtido de uma requisição de manifestação ou de listagem de manifestações e a Nuvem Fiscal irá retornar as informações da manifestação correspondente.
+    /// </remarks>
+    function ConsultarManifestacaoNfe(Id: string): TDistribuicaoNfeEvento;
+    /// <summary>
+    /// Consultar distribuição
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da distribuição de NF-e gerada pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarDistribuicaoNfe(Id: string): TDistribuicaoNfe;
+  end;
+  
+  TDistribuiçãoNFEService = class(TRestService, IDistribuiçãoNFEService)
+  public
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtrar pelo CPF ou CNPJ da pessoa ou empresa interessada.
+    /// 
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Ambiente">
+    /// Identificação do Ambiente.
+    /// 
+    /// Valores aceitos: homologacao, producao
+    /// </param>
+    function ListarDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string): TDistribuicaoNfeListagem;
+    function GerarDistribuicaoNfe(Body: TDistribuicaoNfePedido): TDistribuicaoNfe;
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtrar pelo CPF ou CNPJ da pessoa ou empresa interessada.
+    /// 
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Ambiente">
+    /// Identificação do Ambiente.
+    /// 
+    /// Valores aceitos: homologacao, producao
+    /// </param>
+    /// <param name="TipoDocumento">
+    /// Filtrar pelo tipo do documento de interesse da pessoa ou empresa.
+    /// 
+    /// Valores aceitos: `nota`, `evento`
+    /// </param>
+    /// <param name="FormaDistribuicao">
+    /// Filtrar por documentos que foram distribuídos em sua forma resumida ou completa.
+    /// 
+    /// Valores aceitos: `resumida`, `completa`
+    /// </param>
+    /// <param name="ChaveAcesso">
+    /// Filtrar pela chave de acesso da NF-e.
+    /// </param>
+    function ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
+    /// <param name="Id">
+    /// ID único do documento gerado pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarDocumentoDistribuicaoNfe(Id: string): TDistribuicaoNfeDocumento;
+    /// <param name="Id">
+    /// ID único do documento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlDocumentoDistribuicaoNfe(Id: string): TBytes;
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtrar pelo CPF ou CNPJ do autor do evento.
+    /// 
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Ambiente">
+    /// Identificação do Ambiente.
+    /// 
+    /// Valores aceitos: homologacao, producao
+    /// </param>
+    function ListarManifestacaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string): TManifestacaoNfeListagem;
+    /// <param name="Body">
+    /// Contém os dados do pedido para manifestação do destinatário.
+    /// </param>
+    function ManifestarNfe(Body: TDistribuicaoNfePedidoManifestacao): TDistribuicaoNfeEvento;
+    /// <param name="Id">
+    /// ID único da manifestação gerado pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarManifestacaoNfe(Id: string): TDistribuicaoNfeEvento;
+    /// <param name="Id">
+    /// ID único da distribuição de NF-e gerada pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarDistribuicaoNfe(Id: string): TDistribuicaoNfe;
+  end;
+  
+  /// <summary>
   /// Cadastre e administre todas as empresas vinculadas à sua conta.
   /// </summary>
   IEmpresaService = interface(IInvokable)
@@ -577,6 +855,22 @@ type
     /// Utilize o valor sem máscara.
     /// </param>
     function AlterarConfigCte(Body: TEmpresaConfigCte; CpfCnpj: string): TEmpresaConfigCte;
+    /// <summary>
+    /// Consultar configuração de Distribuição de NF-e
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function ConsultarConfigDistribuicaoNfe(CpfCnpj: string): TEmpresaConfigDistribuicaoNfe;
+    /// <summary>
+    /// Alterar configuração de Distribuição de NF-e
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function AlterarConfigDistribuicaoNfe(Body: TEmpresaConfigDistribuicaoNfe; CpfCnpj: string): TEmpresaConfigDistribuicaoNfe;
     /// <summary>
     /// Baixar logotipo
     /// </summary>
@@ -752,6 +1046,16 @@ type
     /// Utilize o valor sem máscara.
     /// </param>
     function AlterarConfigCte(Body: TEmpresaConfigCte; CpfCnpj: string): TEmpresaConfigCte;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function ConsultarConfigDistribuicaoNfe(CpfCnpj: string): TEmpresaConfigDistribuicaoNfe;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function AlterarConfigDistribuicaoNfe(Body: TEmpresaConfigDistribuicaoNfe; CpfCnpj: string): TEmpresaConfigDistribuicaoNfe;
     /// <param name="CpfCnpj">
     /// CPF ou CNPJ da empresa.
     /// Utilize o valor sem máscara.
@@ -2247,6 +2551,36 @@ type
     /// </summary>
     function EmitirNfe(Body: TNfePedidoEmissao): TDfe;
     /// <summary>
+    /// Consultar contribuinte
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// 
+    /// *Utilize o valor sem máscara*.
+    /// </param>
+    /// <param name="Uf">
+    /// Sigla da UF consultada.
+    /// 
+    ///  Utilize `SU` para SUFRAMA.
+    /// 
+    /// *Caso não seja informada, será utilizada a UF da empresa.*
+    /// </param>
+    /// <param name="Argumento">
+    /// Argumento de pesquisa.
+    /// 
+    /// Valores válidos:
+    /// * `CNPJ`
+    /// * `CPF`
+    /// * `IE`
+    /// </param>
+    /// <param name="Documento">
+    /// Documento a ser consultado (CNPJ, CPF ou Inscrição Estadual).
+    /// </param>
+    /// <remarks>
+    /// Consulta o Cadastro Centralizado de Contribuintes (CCC) do ICMS da unidade federada.
+    /// </remarks>
+    function ConsultarContribuinteNfe(CpfCnpj: string; Uf: string; Argumento: string; Documento: string): TDfeContribuinteInfCons;
+    /// <summary>
     /// Listar eventos
     /// </summary>
     /// <param name="Top">
@@ -2617,6 +2951,30 @@ type
     /// </param>
     function ListarNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string; Serie: string): TDfeListagem;
     function EmitirNfe(Body: TNfePedidoEmissao): TDfe;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// 
+    /// *Utilize o valor sem máscara*.
+    /// </param>
+    /// <param name="Uf">
+    /// Sigla da UF consultada.
+    /// 
+    ///  Utilize `SU` para SUFRAMA.
+    /// 
+    /// *Caso não seja informada, será utilizada a UF da empresa.*
+    /// </param>
+    /// <param name="Argumento">
+    /// Argumento de pesquisa.
+    /// 
+    /// Valores válidos:
+    /// * `CNPJ`
+    /// * `CPF`
+    /// * `IE`
+    /// </param>
+    /// <param name="Documento">
+    /// Documento a ser consultado (CNPJ, CPF ou Inscrição Estadual).
+    /// </param>
+    function ConsultarContribuinteNfe(CpfCnpj: string; Uf: string; Argumento: string; Documento: string): TDfeContribuinteInfCons;
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
     /// </param>
@@ -3146,6 +3504,14 @@ type
     /// </summary>
     function Cte: ICteService;
     /// <summary>
+    /// O processo de distribuição de DFe envolve a disponibilização dos
+    /// documentos fiscais eletrônicos para os envolvidos na transação (emitentes,
+    /// destinatários e terceiros autorizados). Ele permite que os destinatários
+    /// recebam as NF-e emitidas contra o seu CNPJ diretamente do Ambiente
+    /// Nacional, facilitando o controle e a gestão dos documentos recebidos.
+    /// </summary>
+    function DistribuiçãoNFE: IDistribuiçãoNFEService;
+    /// <summary>
     /// Cadastre e administre todas as empresas vinculadas à sua conta.
     /// </summary>
     function Empresa: IEmpresaService;
@@ -3177,6 +3543,7 @@ type
     function Cnpj: ICnpjService;
     function Conta: IContaService;
     function Cte: ICteService;
+    function DistribuiçãoNFE: IDistribuiçãoNFEService;
     function Empresa: IEmpresaService;
     function Mdfe: IMdfeService;
     function Nfce: INfceService;
@@ -3541,6 +3908,141 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
+{ TDistribuiçãoNFEService }
+
+function TDistribuiçãoNFEService.ListarDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string): TDistribuicaoNfeListagem;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/distribuicao/nfe', 'GET');
+  Request.AddQueryParam('$top', IntToStr(Top));
+  Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
+  Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('ambiente', Ambiente);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDistribuicaoNfeListagemFromJson(Response.ContentAsString);
+end;
+
+function TDistribuiçãoNFEService.GerarDistribuicaoNfe(Body: TDistribuicaoNfePedido): TDistribuicaoNfe;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/distribuicao/nfe', 'POST');
+  Request.AddBody(Converter.TDistribuicaoNfePedidoToJson(Body));
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDistribuicaoNfeFromJson(Response.ContentAsString);
+end;
+
+function TDistribuiçãoNFEService.ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/distribuicao/nfe/documentos', 'GET');
+  Request.AddQueryParam('$top', IntToStr(Top));
+  Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
+  Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('ambiente', Ambiente);
+  Request.AddQueryParam('tipo_documento', TipoDocumento);
+  Request.AddQueryParam('forma_distribuicao', FormaDistribuicao);
+  Request.AddQueryParam('chave_acesso', ChaveAcesso);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDistribuicaoNfeDocumentoListagemFromJson(Response.ContentAsString);
+end;
+
+function TDistribuiçãoNFEService.ConsultarDocumentoDistribuicaoNfe(Id: string): TDistribuicaoNfeDocumento;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/distribuicao/nfe/documentos/{id}', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDistribuicaoNfeDocumentoFromJson(Response.ContentAsString);
+end;
+
+function TDistribuiçãoNFEService.BaixarXmlDocumentoDistribuicaoNfe(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/distribuicao/nfe/documentos/{id}/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TDistribuiçãoNFEService.ListarManifestacaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string): TManifestacaoNfeListagem;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/distribuicao/nfe/manifestacoes', 'GET');
+  Request.AddQueryParam('$top', IntToStr(Top));
+  Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
+  Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('ambiente', Ambiente);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TManifestacaoNfeListagemFromJson(Response.ContentAsString);
+end;
+
+function TDistribuiçãoNFEService.ManifestarNfe(Body: TDistribuicaoNfePedidoManifestacao): TDistribuicaoNfeEvento;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/distribuicao/nfe/manifestacoes', 'POST');
+  Request.AddBody(Converter.TDistribuicaoNfePedidoManifestacaoToJson(Body));
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDistribuicaoNfeEventoFromJson(Response.ContentAsString);
+end;
+
+function TDistribuiçãoNFEService.ConsultarManifestacaoNfe(Id: string): TDistribuicaoNfeEvento;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/distribuicao/nfe/manifestacoes/{id}', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDistribuicaoNfeEventoFromJson(Response.ContentAsString);
+end;
+
+function TDistribuiçãoNFEService.ConsultarDistribuicaoNfe(Id: string): TDistribuicaoNfe;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/distribuicao/nfe/{id}', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDistribuicaoNfeFromJson(Response.ContentAsString);
+end;
+
 { TEmpresaService }
 
 function TEmpresaService.ListarEmpresas(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string): TEmpresaListagem;
@@ -3677,6 +4179,34 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Converter.TEmpresaConfigCteFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.ConsultarConfigDistribuicaoNfe(CpfCnpj: string): TEmpresaConfigDistribuicaoNfe;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/distnfe', 'GET');
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigDistribuicaoNfeFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.AlterarConfigDistribuicaoNfe(Body: TEmpresaConfigDistribuicaoNfe; CpfCnpj: string): TEmpresaConfigDistribuicaoNfe;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/distnfe', 'PUT');
+  Request.AddBody(Converter.TEmpresaConfigDistribuicaoNfeToJson(Body));
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigDistribuicaoNfeFromJson(Response.ContentAsString);
 end;
 
 function TEmpresaService.BaixarLogotipoEmpresa(CpfCnpj: string): TBytes;
@@ -4763,6 +5293,22 @@ begin
   Result := Converter.TDfeFromJson(Response.ContentAsString);
 end;
 
+function TNfeService.ConsultarContribuinteNfe(CpfCnpj: string; Uf: string; Argumento: string; Documento: string): TDfeContribuinteInfCons;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfe/cadastro-contribuinte', 'GET');
+  Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('uf', Uf);
+  Request.AddQueryParam('argumento', Argumento);
+  Request.AddQueryParam('documento', Documento);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeContribuinteInfConsFromJson(Response.ContentAsString);
+end;
+
 function TNfeService.ListarEventosNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; DfeId: string): TDfeEventoListagem;
 var
   Request: IRestRequest;
@@ -5408,6 +5954,11 @@ end;
 function TNuvemFiscalClient.Cte: ICteService;
 begin
   Result := TCteService.Create(Config);
+end;
+
+function TNuvemFiscalClient.DistribuiçãoNFE: IDistribuiçãoNFEService;
+begin
+  Result := TDistribuiçãoNFEService.Create(Config);
 end;
 
 function TNuvemFiscalClient.Empresa: IEmpresaService;
