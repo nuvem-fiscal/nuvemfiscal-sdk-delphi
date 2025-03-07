@@ -95,7 +95,6 @@ procedure TfmEmitirNfse.EmitirNfse;
 var
   PedidoEmissao: TNfseDpsPedidoEmissao;
   InfDPS: TInfDPS;
-  Servico: TRpsDadosServico;
   Nfse: TNfse;
 begin
   PedidoEmissao := TNfseDpsPedidoEmissao.Create;

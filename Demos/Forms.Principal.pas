@@ -321,7 +321,7 @@ procedure TfmMain.btConsultarStatusSefazClick(Sender: TObject);
 var
   Status: TDfeSefazStatus;
 begin
-  Status := Client.Nfce.ConsultarStatusSefazNfce(edNfceCnpj.Text);
+  Status := Client.Nfce.ConsultarStatusSefazNfce(edNfceCnpj.Text, '');
   try
     ShowMessage(Format(
       'Autorizador: %s' + sLineBreak +
@@ -351,23 +351,20 @@ end;
 
 procedure TfmMain.btDownloadPdfNfceClick(Sender: TObject);
 var
-  Nfce: TDfe;
   Pdf: TBytes;
 begin
   if NfceSelecionada = '' then Exit;
 
-  Pdf := Client.Nfce.BaixarPdfNfce(NfceSelecionada, False,
+  Pdf := Client.Nfce.BaixarPdfNfce(NfceSelecionada, False, False,
     Format('Impresso em %s||Nuvem Fiscal', [DateTimeToStr(Now)]),
-    False, False);
+    False, False, 80, '2');
   TFile.WriteAllBytes('danfce.pdf', Pdf);
   ShellExecute(Application.Handle, 'open', PChar('danfce.pdf'), nil, nil, SW_SHOW);
 end;
 
 procedure TfmMain.btDownloadXmlNfceClick(Sender: TObject);
 var
-  Nfce: TDfe;
   Xml: TBytes;
-  XmlString: string;
 begin
   if NfceSelecionada = '' then Exit;
 

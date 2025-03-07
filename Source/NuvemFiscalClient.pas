@@ -16,6 +16,7 @@ type
   TContaService = class;
   TCteService = class;
   TDistribuiçãoNFEService = class;
+  TEmailService = class;
   TEmpresaService = class;
   TMdfeService = class;
   TNfceService = class;
@@ -39,6 +40,11 @@ type
     /// <param name="Cep">
     /// CEP sem máscara.
     /// </param>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#cep-consultas">cep-consultas</a>
+    /// - Consumo: 1 unidade requisição.
+    /// </remarks>
     function ConsultarCep(Cep: string): TCepEndereco;
   end;
   
@@ -79,6 +85,10 @@ type
     /// <remarks>
     /// Retorna uma lista de estabelecimentos de acordo com os critérios de busca utilizados.
     /// Somente serão retornados estabelecimentos com situação cadastral "Ativa".
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#cnpj-listagem">cnpj-listagem</a>
+    /// - Consumo: 1 unidade por estabelecimento listado ou requisição.
     /// </remarks>
     function ListarCnpj(Top: Integer; Skip: Integer; Inlinecount: Boolean; CnaePrincipal: string; Municipio: string; NaturezaJuridica: string): TCnpjListagem;
     /// <summary>
@@ -87,6 +97,11 @@ type
     /// <param name="Cnpj">
     /// CNPJ sem máscara.
     /// </param>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#cnpj-consultas">cnpj-consultas</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function ConsultarCnpj(Cnpj: string): TCnpjEmpresa;
   end;
   
@@ -187,6 +202,11 @@ type
     /// <summary>
     /// Emitir CT-e
     /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function EmitirCte(Body: TCtePedidoEmissao): TDfe;
     /// <summary>
     /// Consultar evento
@@ -252,6 +272,11 @@ type
     /// <param name="Id">
     /// ID único do CT-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function CancelarCte(Body: TCtePedidoCancelamento; Id: string): TDfeCancelamento;
     /// <summary>
     /// Baixar PDF do cancelamento
@@ -282,6 +307,10 @@ type
     /// </param>
     /// <remarks>
     /// É possível enviar até 20 correções diferentes, sendo que será válido sempre a última correção enviada.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
     /// </remarks>
     function CriarCartaCorrecaoCte(Body: TCtePedidoCartaCorrecao; Id: string): TCteCartaCorrecao;
     /// <summary>
@@ -321,6 +350,10 @@ type
     /// * Sincronizar um CT-e que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizado na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
     /// * Sincronizar um CT-e que se encontra com o status `autorizado`na Nuvem Fiscal, mas está cancelado na SEFAZ.
     /// * Sincronizar todos os eventos de Cancelamento e Carta de Correção de um CT-e que porventura não tenham sido feitos a partir da Nuvem Fiscal.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por evento sincronizado ou requisição.
     /// </remarks>
     function SincronizarCte(Id: string): TDfeSincronizacao;
     /// <summary>
@@ -512,20 +545,34 @@ type
     /// Distribuir documentos
     /// </summary>
     /// <remarks>
-    /// Gera um pedido de distribuição de Documentos Fiscais Eletrônicos (DF-e)
-    /// para um determinado CNPJ. Este endpoint permite que o destinatário
-    /// obtenha os documentos fiscais emitidos contra o seu CNPJ utilizando
-    /// três formas de consulta: *dist-nsu*, *cons-nsu* e *cons-chave*.
+    /// Este endpoint permite que o destinatário obtenha Documentos Fiscais
+    /// Eletrônicos (DF-e) emitidos contra o seu CNPJ ou CPF ou que seja de
+    /// seu interesse. A distribuição pode ser feita de três formas:
+    /// *dist-nsu*, *cons-nsu* e *cons-chave*.
     /// 
-    /// **Comportamento Assíncrono**
+    /// **Formas de Consulta**:
+    /// - *dist-nsu*: Consulta pelo último NSU recebido.
+    /// - *cons-nsu*: Consulta por um NSU específico.
+    /// - *cons-chave*: Consulta pela chave de acesso da NF-e.
     /// 
-    /// No retorno, existe a propriedade `status` no JSON que poderá assumir um
-    /// dos seguintes valores: *processando*, *concluido* ou *erro*. Caso o status
-    /// seja retornado com o valor *processando*, significa que a solicitação está
+    /// **Retorno da Solicitação**
+    /// 
+    /// A resposta da solicitação inclui a propriedade *status* no JSON, que
+    /// pode ter os seguintes valores:
+    /// - *processando*: A solicitação está em andamento.
+    /// - *concluido*: A solicitação foi processada com sucesso.
+    /// - *erro*: Ocorreu um erro no processamento da solicitação.
+    /// 
+    /// Se o status retornado for *processando*, significa que a solicitação está
     /// sendo realizada de forma assíncrona pela API. Nesse caso, o usuário deverá
-    /// adotar um fluxo que consiste em requisitar periodicamente o endpoint de
-    /// consulta de pedido de distribuição até que a API retorne o pedido com um
-    /// status indicando o fim do processamento (concluido ou erro).
+    /// adotar um fluxo que consiste em requisitar periodicamente o endpoint
+    /// <a href="#tag/Distribuicao-NF-e/operation/ConsultarDistribuicaoNfe">consultar distribuição</a> até que
+    /// a API retorne o pedido com um status indicando o fim do
+    /// processamento (concluido ou erro).
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por documento distribuído (retornado) ou requisição.
     /// </remarks>
     function GerarDistribuicaoNfe(Body: TDistribuicaoNfePedido): TDistribuicaoNfe;
     /// <summary>
@@ -550,6 +597,9 @@ type
     /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
+    /// <param name="DistNsu">
+    /// Filtrar por documentos a partir do NSU informado.
+    /// </param>
     /// <param name="TipoDocumento">
     /// Filtrar pelo tipo do documento de interesse da pessoa ou empresa.
     /// 
@@ -566,7 +616,7 @@ type
     /// <remarks>
     /// Retorna a lista de documentos fiscais eletrônicos de interesse da pessoa ou empresa de acordo com os critérios de busca utilizados. Os documentos são retornadas ordenados pela data da criação, com os mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
+    function ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; DistNsu: Integer; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
     /// <summary>
     /// Consultar documento
     /// </summary>
@@ -577,6 +627,19 @@ type
     /// Utilize esse endpoint para obter as informações resumidas ou documento fiscal de interesse da pessoa ou empresa interessada.
     /// </remarks>
     function ConsultarDocumentoDistribuicaoNfe(Id: string): TDistribuicaoNfeDocumento;
+    /// <summary>
+    /// Baixar PDF do documento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do documento gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o PDF do documento.
+    /// 
+    /// Schemas suportados:
+    /// * procNFe_v4.00.xsd
+    /// </remarks>
+    function BaixarPdfDocumentoDistribuicaoNfe(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do documento
     /// </summary>
@@ -631,6 +694,10 @@ type
     /// * **Ciência da Operação (210210)**: Declara que o destinatário tem ciência da existência da NF-e, mas ainda não possui elementos suficientes para manifestar-se conclusivamente. Este é um evento opcional que pode ser usado pelo destinatário para indicar que está ciente da NF-e enquanto coleta mais informações. Esse evento libera a possibilidade de download da NF-e pelo destinatário.
     /// * **Desconhecimento da Operação (210220)**: Manifestação do destinatário declarando que a operação descrita da NF-e não foi por ele solicitada.
     /// * **Operação não Realizada (210240)**: Manifestação do destinatário reconhecendo sua participação na operação descrita na NF-e, mas declarando que a operação não ocorreu ou não se efetivou como informado nesta NF-e.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
     /// </remarks>
     function ManifestarNfe(Body: TDistribuicaoNfePedidoManifestacao): TDistribuicaoNfeEvento;
     /// <summary>
@@ -643,6 +710,66 @@ type
     /// Consulta os detalhes de uma manifestação de NF-e já existente. Forneça o ID único obtido de uma requisição de manifestação ou de listagem de manifestações e a Nuvem Fiscal irá retornar as informações da manifestação correspondente.
     /// </remarks>
     function ConsultarManifestacaoNfe(Id: string): TDistribuicaoNfeEvento;
+    /// <summary>
+    /// Listar notas sem manifestação
+    /// </summary>
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtrar pelo CPF ou CNPJ da pessoa ou empresa interessada.
+    /// 
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Ambiente">
+    /// Identificação do Ambiente.
+    /// 
+    /// Valores aceitos: homologacao, producao
+    /// </param>
+    /// <param name="Conclusiva">
+    /// Indica se serão consideradas apenas as manifestações conclusivas.
+    /// 
+    /// Valores:
+    /// * `false`: serão retornadas notas que não possuírem qualquer tipo de
+    ///   manifestação.
+    /// 
+    /// * `true`: apenas as notas que não possuírem manifestação conclusiva
+    ///   serão retornadas. Ou seja, notas que tenham sido manifestadas apenas
+    ///   com Ciência da Operação (210210) continuarão sendo retornadas por
+    ///   esse endpoint até que recebam uma manifestação conclusiva.
+    /// </param>
+    /// <remarks>
+    /// No processo de distribuição de DF-e, as notas fiscais eletrônicas (NF-e)
+    /// são inicialmente disponibilizadas de forma resumida. Para obter o XML
+    /// completo, o destinatário deve manifestar a ciência da operação e,
+    /// posteriormente, uma manifestação conclusiva dentro de um prazo legal.
+    /// 
+    /// Para facilitar essa gestão e o cumprimento dos prazos legais de manifestação,
+    /// a API da Nuvem Fiscal permite listar as notas que ainda não
+    /// possuem manifestação, ajudando os usuários a identificar rapidamente as
+    /// notas que necessitam de ação.
+    /// 
+    /// O usuário pode optar por listar apenas as notas que não possuem manifestação
+    /// conclusiva ou que não possuem qualquer tipo de manifestação. Essa flexibilidade
+    /// permite um controle mais preciso e adequado às necessidades operacionais
+    /// de cada empresa.
+    /// 
+    /// Os documentos são retornados ordenados decrescentemente pela data de
+    /// distribuição, permitindo uma visualização clara e organizada das notas
+    /// mais recentes.
+    /// 
+    /// **Cenários de uso:**
+    /// * Identificar rapidamente as notas que ainda precisam de manifestação para obter o XML completo.
+    /// * Listar todas as notas fiscais eletrônicas que foram registradas com ciência da operação, mas ainda não possuem uma manifestação conclusiva (confirmação da operação, desconhecimento da operação ou operação não realizada).
+    /// * Listar todas as notas fiscais eletrônicas que não possuem nenhum tipo de manifestação registrada (nem ciência da operação, nem manifestação conclusiva).
+    /// </remarks>
+    function ListarNfeSemManifestacao(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; Conclusiva: Boolean): TDistribuicaoNfeNotaListagem;
     /// <summary>
     /// Consultar distribuição
     /// </summary>
@@ -694,6 +821,9 @@ type
     /// 
     /// Valores aceitos: homologacao, producao
     /// </param>
+    /// <param name="DistNsu">
+    /// Filtrar por documentos a partir do NSU informado.
+    /// </param>
     /// <param name="TipoDocumento">
     /// Filtrar pelo tipo do documento de interesse da pessoa ou empresa.
     /// 
@@ -707,11 +837,15 @@ type
     /// <param name="ChaveAcesso">
     /// Filtrar pela chave de acesso da NF-e.
     /// </param>
-    function ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
+    function ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; DistNsu: Integer; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
     /// <param name="Id">
     /// ID único do documento gerado pela Nuvem Fiscal.
     /// </param>
     function ConsultarDocumentoDistribuicaoNfe(Id: string): TDistribuicaoNfeDocumento;
+    /// <param name="Id">
+    /// ID único do documento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfDocumentoDistribuicaoNfe(Id: string): TBytes;
     /// <param name="Id">
     /// ID único do documento gerado pela Nuvem Fiscal.
     /// </param>
@@ -744,10 +878,136 @@ type
     /// ID único da manifestação gerado pela Nuvem Fiscal.
     /// </param>
     function ConsultarManifestacaoNfe(Id: string): TDistribuicaoNfeEvento;
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtrar pelo CPF ou CNPJ da pessoa ou empresa interessada.
+    /// 
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Ambiente">
+    /// Identificação do Ambiente.
+    /// 
+    /// Valores aceitos: homologacao, producao
+    /// </param>
+    /// <param name="Conclusiva">
+    /// Indica se serão consideradas apenas as manifestações conclusivas.
+    /// 
+    /// Valores:
+    /// * `false`: serão retornadas notas que não possuírem qualquer tipo de
+    ///   manifestação.
+    /// 
+    /// * `true`: apenas as notas que não possuírem manifestação conclusiva
+    ///   serão retornadas. Ou seja, notas que tenham sido manifestadas apenas
+    ///   com Ciência da Operação (210210) continuarão sendo retornadas por
+    ///   esse endpoint até que recebam uma manifestação conclusiva.
+    /// </param>
+    function ListarNfeSemManifestacao(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; Conclusiva: Boolean): TDistribuicaoNfeNotaListagem;
     /// <param name="Id">
     /// ID único da distribuição de NF-e gerada pela Nuvem Fiscal.
     /// </param>
     function ConsultarDistribuicaoNfe(Id: string): TDistribuicaoNfe;
+  end;
+  
+  IEmailService = interface(IInvokable)
+    ['{C640CABB-ADB7-4CF1-8603-5F8AA206CD98}']
+    /// <summary>
+    /// Listar e-mails
+    /// </summary>
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtra pelo CPF ou CNPJ da empresa.
+    /// 
+    /// *Utilize o valor sem máscara*.
+    /// </param>
+    /// <param name="Undelivered">
+    /// Filtra apenas emails com problemas de entrega.
+    /// </param>
+    /// <param name="Email">
+    /// Filtra pelo endereço de e-mail do destinatário para qual o email foi enviado.
+    /// </param>
+    /// <remarks>
+    /// Retorna a lista dos emails associadas à sua conta. Os e-emails são
+    /// retornados ordenados pela data da criação, com os mais recentes
+    /// aparecendo primeiro.
+    /// </remarks>
+    function ListarEmails(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Undelivered: Boolean; Email: string): TEmailListagem;
+    /// <summary>
+    /// Consultar e-mail
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do e-mail.
+    /// 
+    /// Esse parâmetro é obtido após o envio do email por qualquer endpoint da
+    /// API da Nuvem Fiscal que realize disparos de email.
+    /// 
+    /// Exemplos:
+    /// * <a href="#tag/Nfe/operation/EnviarEmailNfe">Envio de XML e PDF de NF-e</a>.
+    /// * <a href="#tag/Nfce/operation/EnviarEmailNfce">Envio de XML e PDF de NFC-e</a>.
+    /// </param>
+    /// <remarks>
+    /// Obtém informações detalhadas sobre o envio de um email. Este endpoint
+    /// permite rastrear todos os eventos relacionados ao email, como envio,
+    /// entrega, falhas e outros eventos relevantes.
+    /// 
+    /// Com este endpoint, é possível ter uma visão completa do ciclo de vida
+    /// de um email enviado, permitindo que os usuários acompanhem e analisem
+    /// o status e o histórico de eventos do email. Isso é particularmente
+    /// útil para identificar problemas de entrega e entender o comportamento
+    /// do email ao longo do tempo.
+    /// </remarks>
+    function ConsultarEmail(Id: string): TEmail;
+  end;
+  
+  TEmailService = class(TRestService, IEmailService)
+  public
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtra pelo CPF ou CNPJ da empresa.
+    /// 
+    /// *Utilize o valor sem máscara*.
+    /// </param>
+    /// <param name="Undelivered">
+    /// Filtra apenas emails com problemas de entrega.
+    /// </param>
+    /// <param name="Email">
+    /// Filtra pelo endereço de e-mail do destinatário para qual o email foi enviado.
+    /// </param>
+    function ListarEmails(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Undelivered: Boolean; Email: string): TEmailListagem;
+    /// <param name="Id">
+    /// ID único do e-mail.
+    /// 
+    /// Esse parâmetro é obtido após o envio do email por qualquer endpoint da
+    /// API da Nuvem Fiscal que realize disparos de email.
+    /// 
+    /// Exemplos:
+    /// * <a href="#tag/Nfe/operation/EnviarEmailNfe">Envio de XML e PDF de NF-e</a>.
+    /// * <a href="#tag/Nfce/operation/EnviarEmailNfce">Envio de XML e PDF de NFC-e</a>.
+    /// </param>
+    function ConsultarEmail(Id: string): TEmail;
   end;
   
   /// <summary>
@@ -1166,6 +1426,11 @@ type
     /// <summary>
     /// Emitir MDF-e
     /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function EmitirMdfe(Body: TMdfePedidoEmissao): TDfe;
     /// <summary>
     /// Consultar evento do MDF-e
@@ -1216,6 +1481,11 @@ type
     /// <summary>
     /// Emitir lote de MDF-e
     /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por MDF-e.
+    /// </remarks>
     function EmitirLoteMdfe(Body: TMdfePedidoEmissaoLote): TDfeLote;
     /// <summary>
     /// Consultar lote de MDF-e
@@ -1281,6 +1551,11 @@ type
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function CancelarMdfe(Body: TMdfePedidoCancelamento; Id: string): TDfeCancelamento;
     /// <summary>
     /// Baixar PDF do cancelamento
@@ -1309,6 +1584,11 @@ type
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function EncerrarMdfe(Body: TMdfePedidoEncerramento; Id: string): TMdfeEncerramento;
     /// <summary>
     /// Baixar PDF do encerramento
@@ -1330,6 +1610,11 @@ type
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function IncluirCondutorMdfe(Body: TMdfePedidoInclusaoCondutor; Id: string): TMdfeInclusaoCondutor;
     /// <summary>
     /// Incluir um DF-e em um MDF-e autorizado
@@ -1337,6 +1622,11 @@ type
     /// <param name="Id">
     /// ID único do MDF-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function IncluirDfeMdfe(Body: TMdfePedidoInclusaoDfe; Id: string): TMdfeInclusaoDfe;
     /// <summary>
     /// Baixar PDF do DAMDFE
@@ -1361,6 +1651,10 @@ type
     /// * Sincronizar um manifesto que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizado na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
     /// * Sincronizar um manifesto que se encontra com o status `autorizado`na Nuvem Fiscal, mas está cancelado ou encerrado na SEFAZ.
     /// * Sincronizar todos os eventos de Cancelamento, Encerramento, Inclusão de condutor e Inclusão de DF-e de um manifesto que porventura não tenham sido feitos a partir da Nuvem Fiscal.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por evento sincronizado ou requisição.
     /// </remarks>
     function SincronizarMdfe(Id: string): TDfeSincronizacao;
     /// <summary>
@@ -1596,6 +1890,11 @@ type
     /// <summary>
     /// Emitir NFC-e
     /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function EmitirNfce(Body: TNfePedidoEmissao): TDfe;
     /// <summary>
     /// Listar eventos
@@ -1640,6 +1939,11 @@ type
     /// <summary>
     /// Inutilizar uma sequência de numeração de NFC-e
     /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function InutilizarNumeracaoNfce(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <summary>
     /// Consultar a inutilização de sequência de numeração
@@ -1690,6 +1994,11 @@ type
     /// <summary>
     /// Emitir lote de NFC-e
     /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por NFC-e.
+    /// </remarks>
     function EmitirLoteNfce(Body: TNfePedidoEmissaoLote): TDfeLote;
     /// <summary>
     /// Consultar lote de NFC-e
@@ -1772,6 +2081,10 @@ type
     /// Os dados de entrada são os mesmos do endpoint de emissão de NFC-e (`POST /nfce`).
     /// 
     /// **Atenção**: O DANFE gerado por este endpoint é apenas para fins de visualização e não possui valor fiscal. Para a emissão de uma NF-e com valor fiscal, utilize o processo de emissão padrão descrito na documentação.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
     /// </remarks>
     function BaixarPreviaPdfNfce(Body: TNfePedidoEmissao; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer; Margem: string): TBytes;
     /// <summary>
@@ -1783,6 +2096,10 @@ type
     /// Os dados de entrada são os mesmos do endpoint de emissão de NFC-e (`POST /nfce`).
     /// 
     /// **Atenção**: O XML gerado por este endpoint é apenas para fins de visualização e não possui valor fiscal. Para a emissão de uma NF-e com valor fiscal, utilize o processo de emissão padrão descrito na documentação.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
     /// </remarks>
     function BaixarPreviaXmlNfce(Body: TNfePedidoEmissao): TBytes;
     /// <summary>
@@ -1828,6 +2145,11 @@ type
     /// <param name="Id">
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function CancelarNfce(Body: TNfePedidoCancelamento; Id: string): TDfeCancelamento;
     /// <summary>
     /// Baixar PDF do cancelamento
@@ -1843,6 +2165,20 @@ type
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlCancelamentoNfce(Id: string): TBytes;
+    /// <summary>
+    /// Enviar e-mail
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Envia o XML e PDF da nota via email.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
+    function EnviarEmailNfce(Body: TDfePedidoEnvioEmail; Id: string): TEmailStatusResponse;
     /// <summary>
     /// Comandos ESC/POS para impressão do DANFCE
     /// </summary>
@@ -1964,6 +2300,10 @@ type
     /// * Sincronizar uma nota que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizada na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
     /// * Sincronizar uma nota que se encontra com o status `autorizado`na Nuvem Fiscal, mas está cancelada na SEFAZ.
     /// * Sincronizar todos os eventos de Cancelamento, Carta de Correção e EPEC de uma nota que porventura não tenham sido feitos a partir da Nuvem Fiscal.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por evento sincronizado ou requisição.
     /// </remarks>
     function SincronizarNfce(Id: string): TDfeSincronizacao;
     /// <summary>
@@ -2192,6 +2532,10 @@ type
     /// <param name="Id">
     /// ID único da NFC-e gerado pela Nuvem Fiscal.
     /// </param>
+    function EnviarEmailNfce(Body: TDfePedidoEnvioEmail; Id: string): TEmailStatusResponse;
+    /// <param name="Id">
+    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// </param>
     /// <param name="Modelo">
     /// Modelo da impressora:
     /// * `0` - Texto
@@ -2347,6 +2691,11 @@ type
     /// <summary>
     /// Emitir NFCom
     /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function EmitirNfcom(Body: TNfcomPedidoEmissao): TDfe;
     /// <summary>
     /// Consulta do Status do Serviço na SEFAZ Autorizadora
@@ -2391,6 +2740,11 @@ type
     /// <param name="Id">
     /// ID único da NFCom gerada pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function CancelarNfcom(Body: TNfcomPedidoCancelamento; Id: string): TDfeCancelamento;
     /// <summary>
     /// Baixar XML do cancelamento
@@ -2399,6 +2753,16 @@ type
     /// ID único da NFCom gerada pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlCancelamentoNfcom(Id: string): TBytes;
+    /// <summary>
+    /// Baixar PDF do DANFE-COM
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NFCom gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    function BaixarPdfNfcom(Id: string; Logotipo: Boolean): TBytes;
     /// <summary>
     /// Baixar XML da NFCom processada
     /// </summary>
@@ -2493,6 +2857,13 @@ type
     /// </param>
     function BaixarXmlCancelamentoNfcom(Id: string): TBytes;
     /// <param name="Id">
+    /// ID único da NFCom gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    function BaixarPdfNfcom(Id: string; Logotipo: Boolean): TBytes;
+    /// <param name="Id">
     /// ID único da NFCom gerada pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlNfcom(Id: string): TBytes;
@@ -2549,6 +2920,32 @@ type
     /// <summary>
     /// Emitir NF-e
     /// </summary>
+    /// <remarks>
+    /// Este endpoint permite a emissão de Notas Fiscais Eletrônicas (NF-e).
+    /// A solicitação deve ser feita enviando os dados necessários para a
+    /// emissão de uma NF-e. 
+    /// 
+    /// A estrutura do JSON utilizado na solicitação segue a hierarquia e
+    /// nomenclatura de campos definidos no <a href="https://www.nfe.fazenda.gov.br/portal/principal.aspx" target="_blank">
+    /// Manual de Orientação ao Contribuinte (MOC)</a>.
+    /// Esta conformidade visa facilitar a integração de novos usuários que já
+    /// possuem familiaridade com o padrão, além de permitir a resolução de
+    /// dúvidas diretamente no MOC, com um profissional de contabilidade
+    /// habilitado ou em outras fontes confiáveis que tratam do mesmo assunto.
+    /// 
+    /// **Comportamento Assíncrono**
+    /// 
+    /// A resposta desse endpoint inclui a propriedade *status* no JSON.
+    /// Caso o valor retornado seja *pendente*, significa que a solicitação está
+    /// sendo realizada de forma assíncrona pela API. Nesse caso, o usuário deverá
+    /// adotar um fluxo que consiste em requisitar periodicamente o endpoint
+    /// <a href="#tag/Nfe/operation/ConsultarNfe">Consultar NF-e</a> até que
+    /// seja retornado um status indicando o fim da emissão.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function EmitirNfe(Body: TNfePedidoEmissao): TDfe;
     /// <summary>
     /// Consultar contribuinte
@@ -2578,6 +2975,10 @@ type
     /// </param>
     /// <remarks>
     /// Consulta o Cadastro Centralizado de Contribuintes (CCC) do ICMS da unidade federada.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
     /// </remarks>
     function ConsultarContribuinteNfe(CpfCnpj: string; Uf: string; Argumento: string; Documento: string): TDfeContribuinteInfCons;
     /// <summary>
@@ -2623,6 +3024,11 @@ type
     /// <summary>
     /// Inutilizar uma sequência de numeração de NF-e
     /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function InutilizarNumeracaoNfe(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <summary>
     /// Consultar a inutilização de sequência de numeração
@@ -2673,6 +3079,11 @@ type
     /// <summary>
     /// Emitir lote de NF-e
     /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por NF-e.
+    /// </remarks>
     function EmitirLoteNfe(Body: TNfePedidoEmissaoLote): TDfeLote;
     /// <summary>
     /// Consultar lote de NF-e
@@ -2726,6 +3137,10 @@ type
     /// Os dados de entrada são os mesmos do endpoint de emissão de NF-e (`POST /nfe`).
     /// 
     /// **Atenção**: O DANFE gerado por este endpoint é apenas para fins de visualização e não possui valor fiscal. Para a emissão de uma NF-e com valor fiscal, utilize o processo de emissão padrão descrito na documentação.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
     /// </remarks>
     function BaixarPreviaPdfNfe(Body: TNfePedidoEmissao; Logotipo: Boolean; NomeFantasia: Boolean; Formato: string; MensagemRodape: string; Canhoto: Boolean): TBytes;
     /// <summary>
@@ -2737,6 +3152,10 @@ type
     /// Os dados de entrada são os mesmos do endpoint de emissão de NF-e (`POST /nfe`).
     /// 
     /// **Atenção**: O XML gerado por este endpoint é apenas para fins de visualização e não possui valor fiscal. Para a emissão de uma NF-e com valor fiscal, utilize o processo de emissão padrão descrito na documentação.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
     /// </remarks>
     function BaixarPreviaXmlNfe(Body: TNfePedidoEmissao): TBytes;
     /// <summary>
@@ -2782,6 +3201,11 @@ type
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function CancelarNfe(Body: TNfePedidoCancelamento; Id: string): TDfeCancelamento;
     /// <summary>
     /// Baixar PDF do cancelamento
@@ -2815,6 +3239,10 @@ type
     /// </param>
     /// <remarks>
     /// É possível enviar até 20 correções diferentes, sendo que será válido sempre a última correção enviada.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
     /// </remarks>
     function CriarCartaCorrecaoNfe(Body: TNfePedidoCartaCorrecao; Id: string): TDfeCartaCorrecao;
     /// <summary>
@@ -2831,6 +3259,20 @@ type
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlCartaCorrecaoNfe(Id: string): TBytes;
+    /// <summary>
+    /// Enviar e-mail
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Envia o XML e PDF da nota via email.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
+    function EnviarEmailNfe(Body: TDfePedidoEnvioEmail; Id: string): TEmailStatusResponse;
     /// <summary>
     /// Baixar PDF do DANFE
     /// </summary>
@@ -2884,6 +3326,10 @@ type
     /// * Sincronizar uma nota que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizada na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
     /// * Sincronizar uma nota que se encontra com o status `autorizado`na Nuvem Fiscal, mas está cancelada na SEFAZ.
     /// * Sincronizar todos os eventos de Cancelamento, Carta de Correção e EPEC de uma nota que porventura não tenham sido feitos a partir da Nuvem Fiscal.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por evento sincronizado ou requisição.
     /// </remarks>
     function SincronizarNfe(Id: string): TDfeSincronizacao;
     /// <summary>
@@ -3126,6 +3572,10 @@ type
     /// <param name="Id">
     /// ID único da NF-e gerado pela Nuvem Fiscal.
     /// </param>
+    function EnviarEmailNfe(Body: TDfePedidoEnvioEmail; Id: string): TEmailStatusResponse;
+    /// <param name="Id">
+    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// </param>
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
     /// </param>
@@ -3221,6 +3671,11 @@ type
     /// <summary>
     /// Emitir NFS-e
     /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function EmitirNfse(Body: TNfsePedidoEmissao): TNfse;
     /// <summary>
     /// Cidades atendidas
@@ -3242,10 +3697,20 @@ type
     /// <summary>
     /// Emitir NFS-e
     /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function EmitirNfseDps(Body: TNfseDpsPedidoEmissao): TNfse;
     /// <summary>
     /// Emitir lote de NFS-e
     /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por NFS-e.
+    /// </remarks>
     function EmitirLoteNfseDps(Body: TNfseLoteDpsPedidoEmissao): TRpsLote;
     /// <summary>
     /// Listar lotes de NFS-e
@@ -3275,6 +3740,11 @@ type
     /// <summary>
     /// Emitir lote de NFS-e
     /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por NFS-e.
+    /// </remarks>
     function EmitirLoteNfse(Body: TRpsPedidoEmissaoLote): TRpsLote;
     /// <summary>
     /// Consultar lote de NFS-e
@@ -3316,6 +3786,11 @@ type
     /// <param name="Id">
     /// ID único da NFS-e gerado pela Nuvem Fiscal.
     /// </param>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
     function CancelarNfse(Body: TNfsePedidoCancelamento; Id: string): TNfseCancelamento;
     /// <summary>
     /// Baixar PDF do DANFSE
@@ -3356,6 +3831,10 @@ type
     /// * Sincronizar uma nota que se encontra com o status `processando` na Nuvem Fiscal, mas está autorizada na prefeitura;
     /// * Sincronizar uma nota que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizada na prefeitura (útil em casos de erros de transmissão, como instabilidades e timeouts);
     /// * Sincronizar uma nota que se encontra com o status `autorizada`na Nuvem Fiscal, mas está cancelada na prefeitura.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por evento sincronizado ou requisição.
     /// </remarks>
     function SincronizarNfse(Body: TNfsePedidoSincronizacao; Id: string): TNfseSincronizacao;
     /// <summary>
@@ -3511,6 +3990,7 @@ type
     /// Nacional, facilitando o controle e a gestão dos documentos recebidos.
     /// </summary>
     function DistribuiçãoNFE: IDistribuiçãoNFEService;
+    function Email: IEmailService;
     /// <summary>
     /// Cadastre e administre todas as empresas vinculadas à sua conta.
     /// </summary>
@@ -3544,6 +4024,7 @@ type
     function Conta: IContaService;
     function Cte: ICteService;
     function DistribuiçãoNFE: IDistribuiçãoNFEService;
+    function Email: IEmailService;
     function Empresa: IEmpresaService;
     function Mdfe: IMdfeService;
     function Nfce: INfceService;
@@ -3941,7 +4422,7 @@ begin
   Result := Converter.TDistribuicaoNfeFromJson(Response.ContentAsString);
 end;
 
-function TDistribuiçãoNFEService.ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
+function TDistribuiçãoNFEService.ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; DistNsu: Integer; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -3952,6 +4433,7 @@ begin
   Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
   Request.AddQueryParam('ambiente', Ambiente);
+  Request.AddQueryParam('dist_nsu', IntToStr(DistNsu));
   Request.AddQueryParam('tipo_documento', TipoDocumento);
   Request.AddQueryParam('forma_distribuicao', FormaDistribuicao);
   Request.AddQueryParam('chave_acesso', ChaveAcesso);
@@ -3972,6 +4454,18 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Converter.TDistribuicaoNfeDocumentoFromJson(Response.ContentAsString);
+end;
+
+function TDistribuiçãoNFEService.BaixarPdfDocumentoDistribuicaoNfe(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/distribuicao/nfe/documentos/{id}/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
 end;
 
 function TDistribuiçãoNFEService.BaixarXmlDocumentoDistribuicaoNfe(Id: string): TBytes;
@@ -4030,6 +4524,24 @@ begin
   Result := Converter.TDistribuicaoNfeEventoFromJson(Response.ContentAsString);
 end;
 
+function TDistribuiçãoNFEService.ListarNfeSemManifestacao(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; Conclusiva: Boolean): TDistribuicaoNfeNotaListagem;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/distribuicao/nfe/notas-sem-manifestacao', 'GET');
+  Request.AddQueryParam('$top', IntToStr(Top));
+  Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
+  Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('ambiente', Ambiente);
+  Request.AddQueryParam('conclusiva', BoolToParam(Conclusiva));
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDistribuicaoNfeNotaListagemFromJson(Response.ContentAsString);
+end;
+
 function TDistribuiçãoNFEService.ConsultarDistribuicaoNfe(Id: string): TDistribuicaoNfe;
 var
   Request: IRestRequest;
@@ -4041,6 +4553,39 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Converter.TDistribuicaoNfeFromJson(Response.ContentAsString);
+end;
+
+{ TEmailService }
+
+function TEmailService.ListarEmails(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Undelivered: Boolean; Email: string): TEmailListagem;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/emails', 'GET');
+  Request.AddQueryParam('$top', IntToStr(Top));
+  Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
+  Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('undelivered', BoolToParam(Undelivered));
+  Request.AddQueryParam('email', Email);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmailListagemFromJson(Response.ContentAsString);
+end;
+
+function TEmailService.ConsultarEmail(Id: string): TEmail;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/emails/{id}', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmailFromJson(Response.ContentAsString);
 end;
 
 { TEmpresaService }
@@ -5035,6 +5580,21 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
+function TNfceService.EnviarEmailNfce(Body: TDfePedidoEnvioEmail; Id: string): TEmailStatusResponse;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfce/{id}/email', 'POST');
+  Request.AddBody(Converter.TDfePedidoEnvioEmailToJson(Body));
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmailStatusResponseFromJson(Response.ContentAsString);
+end;
+
 function TNfceService.BaixarEscPosNfce(Id: string; Modelo: Integer; Colunas: Integer; QrcodeLateral: Boolean): TBytes;
 var
   Request: IRestRequest;
@@ -5216,6 +5776,19 @@ var
 begin
   Request := CreateRequest('/nfcom/{id}/cancelamento/xml', 'GET');
   Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TNfcomService.BaixarPdfNfcom(Id: string; Logotipo: Boolean): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfcom/{id}/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddQueryParam('logotipo', BoolToParam(Logotipo));
   Response := Request.Execute;
   CheckError(Response);
   Result := Response.ContentAsBytes;
@@ -5620,6 +6193,21 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
+function TNfeService.EnviarEmailNfe(Body: TDfePedidoEnvioEmail; Id: string): TEmailStatusResponse;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/nfe/{id}/email', 'POST');
+  Request.AddBody(Converter.TDfePedidoEnvioEmailToJson(Body));
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmailStatusResponseFromJson(Response.ContentAsString);
+end;
+
 function TNfeService.BaixarPdfNfe(Id: string; Logotipo: Boolean; NomeFantasia: Boolean; Formato: string; MensagemRodape: string; Canhoto: Boolean): TBytes;
 var
   Request: IRestRequest;
@@ -5959,6 +6547,11 @@ end;
 function TNuvemFiscalClient.DistribuiçãoNFE: IDistribuiçãoNFEService;
 begin
   Result := TDistribuiçãoNFEService.Create(Config);
+end;
+
+function TNuvemFiscalClient.Email: IEmailService;
+begin
+  Result := TEmailService.Create(Config);
 end;
 
 function TNuvemFiscalClient.Empresa: IEmpresaService;
