@@ -15,6 +15,7 @@ type
   TCnpjService = class;
   TContaService = class;
   TCteService = class;
+  TDceService = class;
   TDistribuiçãoNFEService = class;
   TEmailService = class;
   TEmpresaService = class;
@@ -504,6 +505,229 @@ type
     /// ID único da CT-e gerado pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlCteProtocolo(Id: string): TBytes;
+  end;
+  
+  /// <summary>
+  /// Declaração de Conteúdo Eletrônica.
+  /// </summary>
+  IDceService = interface(IInvokable)
+    ['{BA2B8A6C-AE92-40C4-966E-9141B2876E52}']
+    /// <summary>
+    /// Listar DC-e
+    /// </summary>
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Referencia">
+    /// Seu identificador único para o documento.
+    /// </param>
+    /// <param name="Ambiente">
+    /// Identificação do Ambiente.
+    /// 
+    /// Valores aceitos: homologacao, producao
+    /// </param>
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
+    /// <param name="Serie">
+    /// Série do DF-e.
+    /// </param>
+    /// <remarks>
+    /// Retorna a lista de DC-e de acordo com os critérios de busca utilizados. As DC-e são retornadas ordenadas pela data da criação, com as mais recentes aparecendo primeiro.
+    /// </remarks>
+    function ListarDce(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string; Serie: string): TDfeListagem;
+    /// <summary>
+    /// Emitir DC-e
+    /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
+    function EmitirDce(Body: TDcePedidoEmissao): TDfe;
+    /// <summary>
+    /// Consulta do Status do Serviço na SEFAZ Autorizadora
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF/CNPJ do emitente.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Autorizador">
+    /// Ambiente Autorizador.
+    /// 
+    /// Autorizadores disponíveis: `AN`.
+    /// 
+    /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
+    /// </param>
+    /// <remarks>
+    /// Consulta do status do serviço prestado pelo Portal da Secretaria de Fazenda Estadual.
+    /// 
+    /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ.
+    /// </remarks>
+    function ConsultarStatusSefazDce(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
+    /// <summary>
+    /// Consultar DC-e
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Consulta os detalhes de uma DC-e já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de DC-e e a Nuvem Fiscal irá retornar as informações da DC-e correspondente.
+    /// </remarks>
+    function ConsultarDce(Id: string): TDfe;
+    /// <summary>
+    /// Consultar o cancelamento da DC-e
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarCancelamentoDce(Id: string): TDfeCancelamento;
+    /// <summary>
+    /// Cancelar uma DC-e autorizada
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
+    function CancelarDce(Body: TDcePedidoCancelamento; Id: string): TDfeCancelamento;
+    /// <summary>
+    /// Baixar XML do cancelamento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCancelamentoDce(Id: string): TBytes;
+    /// <summary>
+    /// Baixar PDF do DACE
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da DC-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfDce(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML da DC-e processada
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o XML da DC-e enviada para a SEFAZ, complementado com a informação do protocolo de autorização de uso (TAG raiz `dceProc`).
+    /// 
+    /// O XML só estará disponível nesse endpoint caso a DC-e tenha sido autorizada pela SEFAZ. Para obter o XML nos demais casos, utilize o endpoint `GET /dce/{id}/xml/declaracao`.
+    /// </remarks>
+    function BaixarXmlDce(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML da DC-e
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o XML da DC-e enviada para a SEFAZ.
+    /// 
+    /// O XML estará disponível nesse endpoint mesmo em casos que a declaração tenha sido rejeitada.
+    /// </remarks>
+    function BaixarXmlDceDeclaracao(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML do Protocolo da SEFAZ
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlDceProtocolo(Id: string): TBytes;
+  end;
+  
+  TDceService = class(TRestService, IDceService)
+  public
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Referencia">
+    /// Seu identificador único para o documento.
+    /// </param>
+    /// <param name="Ambiente">
+    /// Identificação do Ambiente.
+    /// 
+    /// Valores aceitos: homologacao, producao
+    /// </param>
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
+    /// <param name="Serie">
+    /// Série do DF-e.
+    /// </param>
+    function ListarDce(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string; Serie: string): TDfeListagem;
+    function EmitirDce(Body: TDcePedidoEmissao): TDfe;
+    /// <param name="CpfCnpj">
+    /// CPF/CNPJ do emitente.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Autorizador">
+    /// Ambiente Autorizador.
+    /// 
+    /// Autorizadores disponíveis: `AN`.
+    /// 
+    /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
+    /// </param>
+    function ConsultarStatusSefazDce(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
+    /// <param name="Id">
+    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarDce(Id: string): TDfe;
+    /// <param name="Id">
+    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarCancelamentoDce(Id: string): TDfeCancelamento;
+    /// <param name="Id">
+    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// </param>
+    function CancelarDce(Body: TDcePedidoCancelamento; Id: string): TDfeCancelamento;
+    /// <param name="Id">
+    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCancelamentoDce(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da DC-e gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfDce(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlDce(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlDceDeclaracao(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlDceProtocolo(Id: string): TBytes;
   end;
   
   /// <summary>
@@ -1116,6 +1340,22 @@ type
     /// </param>
     function AlterarConfigCte(Body: TEmpresaConfigCte; CpfCnpj: string): TEmpresaConfigCte;
     /// <summary>
+    /// Consultar configuração de DC-e
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function ConsultarConfigDce(CpfCnpj: string): TEmpresaConfigDce;
+    /// <summary>
+    /// Alterar configuração de DC-e
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function AlterarConfigDce(Body: TEmpresaConfigDce; CpfCnpj: string): TEmpresaConfigDce;
+    /// <summary>
     /// Consultar configuração de Distribuição de NF-e
     /// </summary>
     /// <param name="CpfCnpj">
@@ -1306,6 +1546,16 @@ type
     /// Utilize o valor sem máscara.
     /// </param>
     function AlterarConfigCte(Body: TEmpresaConfigCte; CpfCnpj: string): TEmpresaConfigCte;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function ConsultarConfigDce(CpfCnpj: string): TEmpresaConfigDce;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function AlterarConfigDce(Body: TEmpresaConfigDce; CpfCnpj: string): TEmpresaConfigDce;
     /// <param name="CpfCnpj">
     /// CPF ou CNPJ da empresa.
     /// Utilize o valor sem máscara.
@@ -3983,6 +4233,10 @@ type
     /// </summary>
     function Cte: ICteService;
     /// <summary>
+    /// Declaração de Conteúdo Eletrônica.
+    /// </summary>
+    function Dce: IDceService;
+    /// <summary>
     /// O processo de distribuição de DFe envolve a disponibilização dos
     /// documentos fiscais eletrônicos para os envolvidos na transação (emitentes,
     /// destinatários e terceiros autorizados). Ele permite que os destinatários
@@ -4023,6 +4277,7 @@ type
     function Cnpj: ICnpjService;
     function Conta: IContaService;
     function Cte: ICteService;
+    function Dce: IDceService;
     function DistribuiçãoNFE: IDistribuiçãoNFEService;
     function Email: IEmailService;
     function Empresa: IEmpresaService;
@@ -4389,6 +4644,157 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
+{ TDceService }
+
+function TDceService.ListarDce(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string; Serie: string): TDfeListagem;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/dce', 'GET');
+  Request.AddQueryParam('$top', IntToStr(Top));
+  Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
+  Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('referencia', Referencia);
+  Request.AddQueryParam('ambiente', Ambiente);
+  Request.AddQueryParam('chave', Chave);
+  Request.AddQueryParam('serie', Serie);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeListagemFromJson(Response.ContentAsString);
+end;
+
+function TDceService.EmitirDce(Body: TDcePedidoEmissao): TDfe;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/dce', 'POST');
+  Request.AddBody(Converter.TDcePedidoEmissaoToJson(Body));
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeFromJson(Response.ContentAsString);
+end;
+
+function TDceService.ConsultarStatusSefazDce(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/dce/sefaz/status', 'GET');
+  Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('autorizador', Autorizador);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeSefazStatusFromJson(Response.ContentAsString);
+end;
+
+function TDceService.ConsultarDce(Id: string): TDfe;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/dce/{id}', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeFromJson(Response.ContentAsString);
+end;
+
+function TDceService.ConsultarCancelamentoDce(Id: string): TDfeCancelamento;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/dce/{id}/cancelamento', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeCancelamentoFromJson(Response.ContentAsString);
+end;
+
+function TDceService.CancelarDce(Body: TDcePedidoCancelamento; Id: string): TDfeCancelamento;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/dce/{id}/cancelamento', 'POST');
+  Request.AddBody(Converter.TDcePedidoCancelamentoToJson(Body));
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeCancelamentoFromJson(Response.ContentAsString);
+end;
+
+function TDceService.BaixarXmlCancelamentoDce(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/dce/{id}/cancelamento/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TDceService.BaixarPdfDce(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/dce/{id}/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TDceService.BaixarXmlDce(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/dce/{id}/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TDceService.BaixarXmlDceDeclaracao(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/dce/{id}/xml/declaracao', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TDceService.BaixarXmlDceProtocolo(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/dce/{id}/xml/protocolo', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
 { TDistribuiçãoNFEService }
 
 function TDistribuiçãoNFEService.ListarDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string): TDistribuicaoNfeListagem;
@@ -4724,6 +5130,34 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Converter.TEmpresaConfigCteFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.ConsultarConfigDce(CpfCnpj: string): TEmpresaConfigDce;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/dce', 'GET');
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigDceFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.AlterarConfigDce(Body: TEmpresaConfigDce; CpfCnpj: string): TEmpresaConfigDce;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/dce', 'PUT');
+  Request.AddBody(Converter.TEmpresaConfigDceToJson(Body));
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigDceFromJson(Response.ContentAsString);
 end;
 
 function TEmpresaService.ConsultarConfigDistribuicaoNfe(CpfCnpj: string): TEmpresaConfigDistribuicaoNfe;
@@ -6542,6 +6976,11 @@ end;
 function TNuvemFiscalClient.Cte: ICteService;
 begin
   Result := TCteService.Create(Config);
+end;
+
+function TNuvemFiscalClient.Dce: IDceService;
+begin
+  Result := TDceService.Create(Config);
 end;
 
 function TNuvemFiscalClient.DistribuiçãoNFE: IDistribuiçãoNFEService;
