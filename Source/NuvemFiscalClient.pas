@@ -16,6 +16,7 @@ type
   TContaService = class;
   TCteService = class;
   TDceService = class;
+  TDebugService = class;
   TDistribuiçãoNFEService = class;
   TEmailService = class;
   TEmpresaService = class;
@@ -511,7 +512,7 @@ type
   /// Declaração de Conteúdo Eletrônica.
   /// </summary>
   IDceService = interface(IInvokable)
-    ['{BA2B8A6C-AE92-40C4-966E-9141B2876E52}']
+    ['{E1395CFE-99CF-409B-AE10-0B2281CFB0C1}']
     /// <summary>
     /// Listar DC-e
     /// </summary>
@@ -731,6 +732,110 @@ type
   end;
   
   /// <summary>
+  /// Endpoints auxiliares voltados à análise técnica e depuração de documentos fiscais.
+  /// Permitem rastrear o processamento de DF-es na Nuvem Fiscal, incluindo o conteúdo
+  /// original recebido e as requisições realizadas aos serviços autorizadores (SEFAZ, prefeituras, etc).
+  /// </summary>
+  IDebugService = interface(IInvokable)
+    ['{999D0BF6-830E-4842-91D0-9261DD1F5471}']
+    /// <summary>
+    /// Corpo da requisição HTTP
+    /// </summary>
+    /// <param name="Id">
+    /// ID da requisição HTTP.
+    /// </param>
+    /// <remarks>
+    /// Este endpoint retorna apenas o corpo da requisição HTTP enviada ao autorizador,
+    /// preservando o conteúdo exatamente como foi armazenado pela Nuvem Fiscal.
+    /// 
+    /// **Informações retornadas**:
+    /// - Envelope SOAP da requisição, possivelmente compactado.
+    /// 
+    /// **Cenários de uso**:
+    /// - Verificação do XML ou SOAP efetivamente enviado.
+    /// - Encaminhamento ao suporte da SEFAZ ou prefeitura para análise.
+    /// - Diagnóstico técnico do conteúdo de envio.
+    /// </remarks>
+    function DebugHttpRequestContent(Id: string): TBytes;
+    /// <summary>
+    /// Corpo da resposta HTTP
+    /// </summary>
+    /// <param name="Id">
+    /// ID da requisição HTTP.
+    /// </param>
+    /// <remarks>
+    /// Este endpoint retorna apenas o corpo da resposta HTTP recebida do autorizador,
+    /// permitindo análise técnica da mensagem retornada pela SEFAZ ou prefeitura.
+    /// 
+    /// **Informações retornadas**:
+    /// - Envelope SOAP da resposta, ou mensagem de erro (ex: HTML, XML), no formato original.
+    /// 
+    /// **Cenários de uso**:
+    /// - Inspeção da resposta real retornada pelo autorizador.
+    /// - Encaminhamento do conteúdo ao suporte técnico.
+    /// - Diagnóstico de rejeições, falhas de processamento ou erros de infraestrutura.
+    /// </remarks>
+    function DebugHttpResponseContent(Id: string): TBytes;
+    /// <summary>
+    /// Debug de DF-e
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do documento fiscal gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Este endpoint retorna informações detalhadas de debug sobre o processamento de um documento fiscal eletrônico (DFe),
+    /// como NF-e, NFC-e, MDF-e, CT-e, NFS-e, dentre outros. Ele permite inspecionar o conteúdo original enviado à Nuvem Fiscal e analisar
+    /// todas as interações realizadas com os serviços autorizadores (SEFAZ ou prefeituras) durante o fluxo de emissão.
+    /// 
+    /// **Informações retornadas**:
+    /// - JSON original recebido no momento da criação do documento.
+    /// - Histórico das etapas de envio e consulta.
+    /// - Status e mensagens retornadas pelo autorizador.
+    /// 
+    /// **Cenários de uso**:
+    /// - Diagnóstico de falhas no processamento do documento.
+    /// - Verificação da resposta da SEFAZ ou prefeitura.
+    /// - Apoio ao suporte técnico e análise de integração.
+    /// </remarks>
+    function DebugDfe(Id: string): TDfeDebug;
+    /// <summary>
+    /// Payload original recebido
+    /// </summary>
+    /// <param name="Id">
+    /// ID do documento fiscal gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Este endpoint retorna o conteúdo original recebido pela Nuvem Fiscal no momento da criação do documento fiscal.
+    /// 
+    /// **Cenários de uso**:
+    /// - Inspeção detalhada dos dados enviados à API.
+    /// - Verificação de divergências entre o payload fornecido e o processado.
+    /// - Encaminhamento do conteúdo original ao suporte da Nuvem Fiscal.
+    /// </remarks>
+    function DebugDfeOriginalPayload(Id: string): TBytes;
+  end;
+  
+  TDebugService = class(TRestService, IDebugService)
+  public
+    /// <param name="Id">
+    /// ID da requisição HTTP.
+    /// </param>
+    function DebugHttpRequestContent(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID da requisição HTTP.
+    /// </param>
+    function DebugHttpResponseContent(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único do documento fiscal gerado pela Nuvem Fiscal.
+    /// </param>
+    function DebugDfe(Id: string): TDfeDebug;
+    /// <param name="Id">
+    /// ID do documento fiscal gerado pela Nuvem Fiscal.
+    /// </param>
+    function DebugDfeOriginalPayload(Id: string): TBytes;
+  end;
+  
+  /// <summary>
   /// O processo de distribuição de DFe envolve a disponibilização dos
   /// documentos fiscais eletrônicos para os envolvidos na transação (emitentes,
   /// destinatários e terceiros autorizados). Ele permite que os destinatários
@@ -840,7 +945,7 @@ type
     /// <remarks>
     /// Retorna a lista de documentos fiscais eletrônicos de interesse da pessoa ou empresa de acordo com os critérios de busca utilizados. Os documentos são retornadas ordenados pela data da criação, com os mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; DistNsu: Integer; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
+    function ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; DistNsu: Int64; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
     /// <summary>
     /// Consultar documento
     /// </summary>
@@ -1061,7 +1166,7 @@ type
     /// <param name="ChaveAcesso">
     /// Filtrar pela chave de acesso da NF-e.
     /// </param>
-    function ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; DistNsu: Integer; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
+    function ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; DistNsu: Int64; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
     /// <param name="Id">
     /// ID único do documento gerado pela Nuvem Fiscal.
     /// </param>
@@ -4237,6 +4342,12 @@ type
     /// </summary>
     function Dce: IDceService;
     /// <summary>
+    /// Endpoints auxiliares voltados à análise técnica e depuração de documentos fiscais.
+    /// Permitem rastrear o processamento de DF-es na Nuvem Fiscal, incluindo o conteúdo
+    /// original recebido e as requisições realizadas aos serviços autorizadores (SEFAZ, prefeituras, etc).
+    /// </summary>
+    function Debug: IDebugService;
+    /// <summary>
     /// O processo de distribuição de DFe envolve a disponibilização dos
     /// documentos fiscais eletrônicos para os envolvidos na transação (emitentes,
     /// destinatários e terceiros autorizados). Ele permite que os destinatários
@@ -4278,6 +4389,7 @@ type
     function Conta: IContaService;
     function Cte: ICteService;
     function Dce: IDceService;
+    function Debug: IDebugService;
     function DistribuiçãoNFE: IDistribuiçãoNFEService;
     function Email: IEmailService;
     function Empresa: IEmpresaService;
@@ -4795,6 +4907,57 @@ begin
   Result := Response.ContentAsBytes;
 end;
 
+{ TDebugService }
+
+function TDebugService.DebugHttpRequestContent(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/debug/http-requests/{id}/request-content', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TDebugService.DebugHttpResponseContent(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/debug/http-requests/{id}/response-content', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TDebugService.DebugDfe(Id: string): TDfeDebug;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/debug/{id}', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeDebugFromJson(Response.ContentAsString);
+end;
+
+function TDebugService.DebugDfeOriginalPayload(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/debug/{id}/original-payload', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
 { TDistribuiçãoNFEService }
 
 function TDistribuiçãoNFEService.ListarDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string): TDistribuicaoNfeListagem;
@@ -4828,7 +4991,7 @@ begin
   Result := Converter.TDistribuicaoNfeFromJson(Response.ContentAsString);
 end;
 
-function TDistribuiçãoNFEService.ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; DistNsu: Integer; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
+function TDistribuiçãoNFEService.ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; DistNsu: Int64; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -6981,6 +7144,11 @@ end;
 function TNuvemFiscalClient.Dce: IDceService;
 begin
   Result := TDceService.Create(Config);
+end;
+
+function TNuvemFiscalClient.Debug: IDebugService;
+begin
+  Result := TDebugService.Create(Config);
 end;
 
 function TNuvemFiscalClient.DistribuiçãoNFE: IDistribuiçãoNFEService;

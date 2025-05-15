@@ -9,6 +9,24 @@ uses
   SysUtils;
 
 type
+  TEmpresaEndereco = class;
+  TEmpresa = class;
+  TEmpresaList = class;
+  TEmpresaListagem = class;
+  TEmpresaPedidoCadastroCertificado = class;
+  TEmpresaCertificado = class;
+  TEmpresaConfigNfe = class;
+  TEmpresaConfigNfceSefaz = class;
+  TEmpresaConfigNfce = class;
+  TEmpresaConfigNfseRegTrib = class;
+  TEmpresaConfigRps = class;
+  TEmpresaConfigPrefeitura = class;
+  TEmpresaConfigNfse = class;
+  TEmpresaConfigMdfe = class;
+  TEmpresaConfigCte = class;
+  TEmpresaConfigNfcom = class;
+  TEmpresaConfigDce = class;
+  TEmpresaConfigDistribuicaoNfe = class;
   stringList = class;
   TNfseCidadesAtendidas = class;
   TNfseCidadeMetadados = class;
@@ -29,13 +47,13 @@ type
   TNfseCancelamento = class;
   TRpsIdentificacao = class;
   TRpsDados = class;
-  TEmpresaEndereco = class;
   TRpsDadosPrestador = class;
   TRps = class;
   TNfse = class;
   TNfseList = class;
   TRpsLote = class;
   TSubstituicao = class;
+  TRegTrib = class;
   TInfoPrestador = class;
   TEnderNac = class;
   TEnderExt = class;
@@ -83,23 +101,10 @@ type
   TNfsePedidoCancelamento = class;
   TNfsePedidoSincronizacao = class;
   TNfseSincronizacao = class;
-  TEmpresa = class;
-  TEmpresaList = class;
-  TEmpresaListagem = class;
-  TEmpresaPedidoCadastroCertificado = class;
-  TEmpresaCertificado = class;
-  TEmpresaConfigNfe = class;
-  TEmpresaConfigNfceSefaz = class;
-  TEmpresaConfigNfce = class;
-  TEmpresaConfigNfseRegTrib = class;
-  TEmpresaConfigRps = class;
-  TEmpresaConfigPrefeitura = class;
-  TEmpresaConfigNfse = class;
-  TEmpresaConfigMdfe = class;
-  TEmpresaConfigCte = class;
-  TEmpresaConfigNfcom = class;
-  TEmpresaConfigDce = class;
-  TEmpresaConfigDistribuicaoNfe = class;
+  THttpRequestDebug = class;
+  TDfeRequisicaoDebug = class;
+  TDfeRequisicaoDebugList = class;
+  TDfeDebug = class;
   TDfeSefazStatus = class;
   TDceSefazIde = class;
   TDceSefazEndeEmi = class;
@@ -614,6 +619,571 @@ type
   TCnpjEmpresaList = class;
   TCnpjListagem = class;
   TCepEndereco = class;
+  
+  /// <summary>
+  /// Endereço da empresa.
+  /// </summary>
+  TEmpresaEndereco = class
+  private
+    Flogradouro: string;
+    Fnumero: string;
+    Fcomplemento: string;
+    FcomplementoHasValue: Boolean;
+    Fbairro: string;
+    Fcodigo_municipio: string;
+    Fcidade: string;
+    FcidadeHasValue: Boolean;
+    Fuf: string;
+    Fcodigo_pais: string;
+    Fcodigo_paisHasValue: Boolean;
+    Fpais: string;
+    FpaisHasValue: Boolean;
+    Fcep: string;
+    procedure Setcomplemento(const Value: string);
+    procedure Setcidade(const Value: string);
+    procedure Setcodigo_pais(const Value: string);
+    procedure Setpais(const Value: string);
+  public
+    /// <summary>
+    /// Logradouro.
+    /// </summary>
+    property logradouro: string read Flogradouro write Flogradouro;
+    /// <summary>
+    /// Número.
+    /// </summary>
+    property numero: string read Fnumero write Fnumero;
+    /// <summary>
+    /// Complemento.
+    /// </summary>
+    property complemento: string read Fcomplemento write Setcomplemento;
+    property complementoHasValue: Boolean read FcomplementoHasValue write FcomplementoHasValue;
+    /// <summary>
+    /// Bairro.
+    /// </summary>
+    property bairro: string read Fbairro write Fbairro;
+    /// <summary>
+    /// Código IBGE do município.
+    /// </summary>
+    property codigo_municipio: string read Fcodigo_municipio write Fcodigo_municipio;
+    /// <summary>
+    /// Cidade.
+    /// </summary>
+    property cidade: string read Fcidade write Setcidade;
+    property cidadeHasValue: Boolean read FcidadeHasValue write FcidadeHasValue;
+    /// <summary>
+    /// Sigla do estado.
+    /// </summary>
+    property uf: string read Fuf write Fuf;
+    /// <summary>
+    /// Código do país.
+    /// </summary>
+    property codigo_pais: string read Fcodigo_pais write Setcodigo_pais;
+    property codigo_paisHasValue: Boolean read Fcodigo_paisHasValue write Fcodigo_paisHasValue;
+    /// <summary>
+    /// Nome do país.
+    /// </summary>
+    property pais: string read Fpais write Setpais;
+    property paisHasValue: Boolean read FpaisHasValue write FpaisHasValue;
+    /// <summary>
+    /// CEP.
+    /// 
+    /// *Utilize o valor sem máscara*.
+    /// </summary>
+    property cep: string read Fcep write Fcep;
+  end;
+  
+  TEmpresa = class
+  private
+    Fcpf_cnpj: string;
+    Fcreated_at: TDateTime;
+    Fcreated_atHasValue: Boolean;
+    Fupdated_at: TDateTime;
+    Fupdated_atHasValue: Boolean;
+    Finscricao_estadual: string;
+    Finscricao_estadualHasValue: Boolean;
+    Finscricao_municipal: string;
+    Finscricao_municipalHasValue: Boolean;
+    Fnome_razao_social: string;
+    Fnome_fantasia: string;
+    Fnome_fantasiaHasValue: Boolean;
+    Ffone: string;
+    FfoneHasValue: Boolean;
+    Femail: string;
+    Fendereco: TEmpresaEndereco;
+    procedure Setcreated_at(const Value: TDateTime);
+    procedure Setupdated_at(const Value: TDateTime);
+    procedure Setinscricao_estadual(const Value: string);
+    procedure Setinscricao_municipal(const Value: string);
+    procedure Setnome_fantasia(const Value: string);
+    procedure Setfone(const Value: string);
+    procedure Setendereco(const Value: TEmpresaEndereco);
+  public
+    constructor Create;
+    destructor Destroy; override;
+    /// <summary>
+    /// CPF ou CNPJ da empresa.
+    /// 
+    /// *Utilize o valor sem máscara*.
+    /// </summary>
+    property cpf_cnpj: string read Fcpf_cnpj write Fcpf_cnpj;
+    /// <summary>
+    /// Data/hora em que o objeto foi criado na Nuvem Fiscal. Representado no formato <a href="https://en.wikipedia.org/wiki/ISO_8601" target="blank">`ISO 8601`</a>.
+    /// 
+    /// *A Nuvem Fiscal gerencia esse campo automaticamente. Caso algum valor seja enviado, ele será ignorado*.
+    /// </summary>
+    property created_at: TDateTime read Fcreated_at write Setcreated_at;
+    property created_atHasValue: Boolean read Fcreated_atHasValue write Fcreated_atHasValue;
+    /// <summary>
+    /// Data e hora que o objeto foi alterado pela última vez na Nuvem Fiscal. Representado no formato <a href="https://en.wikipedia.org/wiki/ISO_8601" target="blank">`ISO 8601`</a>.
+    /// 
+    /// *A Nuvem Fiscal gerencia esse campo automaticamente. Caso algum valor seja enviado, ele será ignorado*.
+    /// </summary>
+    property updated_at: TDateTime read Fupdated_at write Setupdated_at;
+    property updated_atHasValue: Boolean read Fupdated_atHasValue write Fupdated_atHasValue;
+    /// <summary>
+    /// Inscrição estadual da empresa.
+    /// </summary>
+    property inscricao_estadual: string read Finscricao_estadual write Setinscricao_estadual;
+    property inscricao_estadualHasValue: Boolean read Finscricao_estadualHasValue write Finscricao_estadualHasValue;
+    /// <summary>
+    /// Inscrição municipal da empresa.
+    /// </summary>
+    property inscricao_municipal: string read Finscricao_municipal write Setinscricao_municipal;
+    property inscricao_municipalHasValue: Boolean read Finscricao_municipalHasValue write Finscricao_municipalHasValue;
+    /// <summary>
+    /// Razão social da empresa.
+    /// </summary>
+    property nome_razao_social: string read Fnome_razao_social write Fnome_razao_social;
+    /// <summary>
+    /// Nome fantasia da empresa.
+    /// </summary>
+    property nome_fantasia: string read Fnome_fantasia write Setnome_fantasia;
+    property nome_fantasiaHasValue: Boolean read Fnome_fantasiaHasValue write Fnome_fantasiaHasValue;
+    /// <summary>
+    /// Telefone da empresa.
+    /// </summary>
+    property fone: string read Ffone write Setfone;
+    property foneHasValue: Boolean read FfoneHasValue write FfoneHasValue;
+    /// <summary>
+    /// Email da empresa.
+    /// </summary>
+    property email: string read Femail write Femail;
+    property endereco: TEmpresaEndereco read Fendereco write Setendereco;
+  end;
+  
+  TEmpresaList = class(TObjectList<TEmpresa>)
+  end;
+  
+  TEmpresaListagem = class
+  private
+    F_count: Integer;
+    F_countHasValue: Boolean;
+    Fdata: TEmpresaList;
+    procedure Set_count(const Value: Integer);
+    procedure Setdata(const Value: TEmpresaList);
+  public
+    destructor Destroy; override;
+    property _count: Integer read F_count write Set_count;
+    property _countHasValue: Boolean read F_countHasValue write F_countHasValue;
+    property data: TEmpresaList read Fdata write Setdata;
+  end;
+  
+  TEmpresaPedidoCadastroCertificado = class
+  private
+    Fcertificado: TBytes;
+    Fpassword: string;
+  public
+    /// <summary>
+    /// Binário do certificado digital (.pfx ou .p12) codificado em base64.
+    /// </summary>
+    property certificado: TBytes read Fcertificado write Fcertificado;
+    /// <summary>
+    /// Senha do certificado.
+    /// </summary>
+    property password: string read Fpassword write Fpassword;
+  end;
+  
+  TEmpresaCertificado = class
+  private
+    Fserial_number: string;
+    Fserial_numberHasValue: Boolean;
+    Fissuer_name: string;
+    Fissuer_nameHasValue: Boolean;
+    Fnot_valid_before: TDateTime;
+    Fnot_valid_beforeHasValue: Boolean;
+    Fnot_valid_after: TDateTime;
+    Fnot_valid_afterHasValue: Boolean;
+    Fthumbprint: string;
+    FthumbprintHasValue: Boolean;
+    Fsubject_name: string;
+    Fsubject_nameHasValue: Boolean;
+    Fcpf_cnpj: string;
+    Fcpf_cnpjHasValue: Boolean;
+    Fnome_razao_social: string;
+    Fnome_razao_socialHasValue: Boolean;
+    procedure Setserial_number(const Value: string);
+    procedure Setissuer_name(const Value: string);
+    procedure Setnot_valid_before(const Value: TDateTime);
+    procedure Setnot_valid_after(const Value: TDateTime);
+    procedure Setthumbprint(const Value: string);
+    procedure Setsubject_name(const Value: string);
+    procedure Setcpf_cnpj(const Value: string);
+    procedure Setnome_razao_social(const Value: string);
+  public
+    property serial_number: string read Fserial_number write Setserial_number;
+    property serial_numberHasValue: Boolean read Fserial_numberHasValue write Fserial_numberHasValue;
+    property issuer_name: string read Fissuer_name write Setissuer_name;
+    property issuer_nameHasValue: Boolean read Fissuer_nameHasValue write Fissuer_nameHasValue;
+    property not_valid_before: TDateTime read Fnot_valid_before write Setnot_valid_before;
+    property not_valid_beforeHasValue: Boolean read Fnot_valid_beforeHasValue write Fnot_valid_beforeHasValue;
+    property not_valid_after: TDateTime read Fnot_valid_after write Setnot_valid_after;
+    property not_valid_afterHasValue: Boolean read Fnot_valid_afterHasValue write Fnot_valid_afterHasValue;
+    property thumbprint: string read Fthumbprint write Setthumbprint;
+    property thumbprintHasValue: Boolean read FthumbprintHasValue write FthumbprintHasValue;
+    property subject_name: string read Fsubject_name write Setsubject_name;
+    property subject_nameHasValue: Boolean read Fsubject_nameHasValue write Fsubject_nameHasValue;
+    property cpf_cnpj: string read Fcpf_cnpj write Setcpf_cnpj;
+    property cpf_cnpjHasValue: Boolean read Fcpf_cnpjHasValue write Fcpf_cnpjHasValue;
+    property nome_razao_social: string read Fnome_razao_social write Setnome_razao_social;
+    property nome_razao_socialHasValue: Boolean read Fnome_razao_socialHasValue write Fnome_razao_socialHasValue;
+  end;
+  
+  TEmpresaConfigNfe = class
+  private
+    FCRT: Integer;
+    FCRTHasValue: Boolean;
+    Fambiente: string;
+    procedure SetCRT(const Value: Integer);
+  public
+    /// <summary>
+    /// Código de Regime Tributário.
+    /// Este campo será preenchido com:
+    /// * 1 – Simples Nacional;
+    /// * 2 – Simples Nacional – excesso de sublimite de receita bruta;
+    /// * 3 – Regime Normal;
+    /// * 4 - Simples Nacional - Microempreendedor individual (MEI).
+    /// </summary>
+    property CRT: Integer read FCRT write SetCRT;
+    property CRTHasValue: Boolean read FCRTHasValue write FCRTHasValue;
+    /// <summary>
+    /// Indica se a empresa irá emitir em produção ou homologação.
+    /// </summary>
+    property ambiente: string read Fambiente write Fambiente;
+  end;
+  
+  TEmpresaConfigNfceSefaz = class
+  private
+    Fid_csc: Integer;
+    Fcsc: string;
+  public
+    /// <summary>
+    /// Número de identificação do CSC.
+    /// </summary>
+    property id_csc: Integer read Fid_csc write Fid_csc;
+    /// <summary>
+    /// Código do CSC.
+    /// </summary>
+    property csc: string read Fcsc write Fcsc;
+  end;
+  
+  TEmpresaConfigNfce = class
+  private
+    FCRT: Integer;
+    FCRTHasValue: Boolean;
+    Fsefaz: TEmpresaConfigNfceSefaz;
+    Fambiente: string;
+    procedure SetCRT(const Value: Integer);
+    procedure Setsefaz(const Value: TEmpresaConfigNfceSefaz);
+  public
+    constructor Create;
+    destructor Destroy; override;
+    /// <summary>
+    /// Código de Regime Tributário.
+    /// Este campo será preenchido com:
+    /// * 1 – Simples Nacional;
+    /// * 2 – Simples Nacional – excesso de sublimite de receita bruta;
+    /// * 3 – Regime Normal;
+    /// * 4 - Simples Nacional - Microempreendedor individual (MEI).
+    /// </summary>
+    property CRT: Integer read FCRT write SetCRT;
+    property CRTHasValue: Boolean read FCRTHasValue write FCRTHasValue;
+    property sefaz: TEmpresaConfigNfceSefaz read Fsefaz write Setsefaz;
+    /// <summary>
+    /// Indica se a empresa irá emitir em produção ou homologação.
+    /// </summary>
+    property ambiente: string read Fambiente write Fambiente;
+  end;
+  
+  /// <summary>
+  /// Grupo de informações relativas aos regimes de tributação do prestador de serviços.
+  /// </summary>
+  TEmpresaConfigNfseRegTrib = class
+  private
+    FopSimpNac: Integer;
+    FopSimpNacHasValue: Boolean;
+    FregApTribSN: Integer;
+    FregApTribSNHasValue: Boolean;
+    FregEspTrib: Integer;
+    FregEspTribHasValue: Boolean;
+    procedure SetopSimpNac(const Value: Integer);
+    procedure SetregApTribSN(const Value: Integer);
+    procedure SetregEspTrib(const Value: Integer);
+  public
+    /// <summary>
+    /// Situação perante o Simples Nacional:
+    /// * 1 - Não Optante;
+    /// * 2 - Optante - Microempreendedor Individual (MEI);
+    /// * 3 - Optante - Microempresa ou Empresa de Pequeno Porte (ME/EPP).
+    /// </summary>
+    property opSimpNac: Integer read FopSimpNac write SetopSimpNac;
+    property opSimpNacHasValue: Boolean read FopSimpNacHasValue write FopSimpNacHasValue;
+    /// <summary>
+    /// Opção para que o contribuinte optante pelo Simples Nacional ME/EPP (opSimpNac = 3) possa indicar, ao emitir o documento fiscal, em qual regime de apuração os tributos federais e municipal estão inseridos, caso tenha ultrapassado algum sublimite ou limite definido para o Simples Nacional.
+    /// * 1 – Regime de apuração dos tributos federais e municipal pelo SN;
+    /// * 2 – Regime de apuração dos tributos federais pelo SN e ISSQN  por fora do SN conforme respectiva legislação municipal do tributo;
+    /// * 3 – Regime de apuração dos tributos federais e municipal por fora do SN conforme respectivas legilações federal e municipal de cada tributo.
+    /// </summary>
+    property regApTribSN: Integer read FregApTribSN write SetregApTribSN;
+    property regApTribSNHasValue: Boolean read FregApTribSNHasValue write FregApTribSNHasValue;
+    /// <summary>
+    /// Regime Especial de Tributação (Padrão Nacional):
+    /// * 0 - Nenhum;
+    /// * 1 - Ato Cooperado (Cooperativa);
+    /// * 2 - Estimativa;
+    /// * 3 - Microempresa Municipal;
+    /// * 4 - Notário ou Registrador;
+    /// * 5 - Profissional Autônomo;
+    /// * 6 - Sociedade de Profissionais.
+    /// 
+    /// **Comportamento:**
+    ///  - Quando o envio for feito para o Ambiente Nacional, o valor é utilizado
+    ///    exatamente como se apresenta, sem qualquer transformação ou mapeamento.
+    ///  - Quando o envio for feito diretamente para a prefeitura, o valor será
+    ///    convertido internamente pela Nuvem Fiscal para o código correspondente
+    ///    esperado pela prefeitura, **se essa conversão for possível**.
+    /// 
+    ///  **Observação:** Em algumas prefeituras, existem códigos específicos que não têm
+    ///  correspondência direta no padrão nacional. Para lidar com esses casos, utilize
+    ///  o campo `prest.regTrib.regEspTrib` diretamente no endpoint de emissão de NFS-e.
+    /// </summary>
+    property regEspTrib: Integer read FregEspTrib write SetregEspTrib;
+    property regEspTribHasValue: Boolean read FregEspTribHasValue write FregEspTribHasValue;
+  end;
+  
+  /// <summary>
+  /// Configuração de numeração de lote, série e RPS.
+  /// </summary>
+  TEmpresaConfigRps = class
+  private
+    Flote: Int64;
+    Fserie: string;
+    Fnumero: Int64;
+  public
+    /// <summary>
+    /// Número do Lote de RPS.
+    /// Informe o próximo número do lote RPS a ser utilizado. Após isso, a Nuvem
+    /// Fiscal gerenciará esse campo (a cada novo envio de lote o número é
+    /// incrementado em + 1). Portanto, basta informá-lo no cadastro da empresa
+    /// uma única vez.
+    /// </summary>
+    property lote: Int64 read Flote write Flote;
+    /// <summary>
+    /// Série do RPS.
+    /// A série dos RPS varia de acordo com cada prefeitura, podendo ser
+    /// número (1, 2 ou 3, por exemplo) ou letras (A, S, NFS, por exemplo).
+    /// Portanto, consulte-a com o município da empresa antes de iniciar a
+    /// emissão das notas.
+    /// </summary>
+    property serie: string read Fserie write Fserie;
+    /// <summary>
+    /// Número do RPS.
+    /// Informe o próximo número de RPS a ser utilizado. Após isso, a Nuvem
+    /// Fiscal gerenciará esse campo (a cada novo envio de RPS o número é
+    /// incrementado em + 1). Portanto, basta informá-lo no cadastro da empresa
+    /// uma única vez.
+    /// </summary>
+    property numero: Int64 read Fnumero write Fnumero;
+  end;
+  
+  /// <summary>
+  /// Dados adicionais para comunicação com a prefeitura. Essa validação é
+  /// dinâmica, de acordo com a necessidade de cada município.
+  /// </summary>
+  TEmpresaConfigPrefeitura = class
+  private
+    Flogin: string;
+    FloginHasValue: Boolean;
+    Fsenha: string;
+    FsenhaHasValue: Boolean;
+    Ftoken: string;
+    FtokenHasValue: Boolean;
+    procedure Setlogin(const Value: string);
+    procedure Setsenha(const Value: string);
+    procedure Settoken(const Value: string);
+  public
+    /// <summary>
+    /// Login de autenticação com a prefeitura, caso não utilize certificado digital.
+    /// </summary>
+    property login: string read Flogin write Setlogin;
+    property loginHasValue: Boolean read FloginHasValue write FloginHasValue;
+    /// <summary>
+    /// Senha de autenticação com a prefeitura, caso não utilize certificado digital.
+    /// </summary>
+    property senha: string read Fsenha write Setsenha;
+    property senhaHasValue: Boolean read FsenhaHasValue write FsenhaHasValue;
+    /// <summary>
+    /// Token de autenticação com a prefeitura, caso não utilize certificado digital.
+    /// </summary>
+    property token: string read Ftoken write Settoken;
+    property tokenHasValue: Boolean read FtokenHasValue write FtokenHasValue;
+  end;
+  
+  TEmpresaConfigNfse = class
+  private
+    FregTrib: TEmpresaConfigNfseRegTrib;
+    Frps: TEmpresaConfigRps;
+    Fprefeitura: TEmpresaConfigPrefeitura;
+    Fincentivo_fiscal: Boolean;
+    Fincentivo_fiscalHasValue: Boolean;
+    Fambiente: string;
+    procedure SetregTrib(const Value: TEmpresaConfigNfseRegTrib);
+    procedure Setrps(const Value: TEmpresaConfigRps);
+    procedure Setprefeitura(const Value: TEmpresaConfigPrefeitura);
+    procedure Setincentivo_fiscal(const Value: Boolean);
+  public
+    constructor Create;
+    destructor Destroy; override;
+    property regTrib: TEmpresaConfigNfseRegTrib read FregTrib write SetregTrib;
+    property rps: TEmpresaConfigRps read Frps write Setrps;
+    property prefeitura: TEmpresaConfigPrefeitura read Fprefeitura write Setprefeitura;
+    /// <summary>
+    /// Indicador se a empresa possui algum tipo de incentivo fiscal.
+    /// </summary>
+    property incentivo_fiscal: Boolean read Fincentivo_fiscal write Setincentivo_fiscal;
+    property incentivo_fiscalHasValue: Boolean read Fincentivo_fiscalHasValue write Fincentivo_fiscalHasValue;
+    /// <summary>
+    /// Indica se a empresa irá emitir em produção ou homologação.
+    /// </summary>
+    property ambiente: string read Fambiente write Fambiente;
+  end;
+  
+  TEmpresaConfigMdfe = class
+  private
+    Fambiente: string;
+  public
+    /// <summary>
+    /// Indica se a empresa irá emitir em produção ou homologação.
+    /// </summary>
+    property ambiente: string read Fambiente write Fambiente;
+  end;
+  
+  TEmpresaConfigCte = class
+  private
+    FCRT: Integer;
+    FCRTHasValue: Boolean;
+    Fambiente: string;
+    procedure SetCRT(const Value: Integer);
+  public
+    /// <summary>
+    /// Código de Regime Tributário.
+    /// Este campo será preenchido com:
+    /// * 1 – Simples Nacional;
+    /// * 2 – Simples Nacional – excesso de sublimite de receita bruta;
+    /// * 3 – Regime Normal;
+    /// * 4 - Simples Nacional - Microempreendedor Individual (MEI).
+    /// </summary>
+    property CRT: Integer read FCRT write SetCRT;
+    property CRTHasValue: Boolean read FCRTHasValue write FCRTHasValue;
+    /// <summary>
+    /// Indica se a empresa irá emitir em produção ou homologação.
+    /// </summary>
+    property ambiente: string read Fambiente write Fambiente;
+  end;
+  
+  TEmpresaConfigNfcom = class
+  private
+    FCRT: Integer;
+    FCRTHasValue: Boolean;
+    Fambiente: string;
+    procedure SetCRT(const Value: Integer);
+  public
+    /// <summary>
+    /// Código de Regime Tributário.
+    /// Este campo será preenchido com:
+    /// * 1 – Simples Nacional;
+    /// * 2 – Simples Nacional – excesso de sublimite de receita bruta;
+    /// * 3 – Regime Normal.
+    /// </summary>
+    property CRT: Integer read FCRT write SetCRT;
+    property CRTHasValue: Boolean read FCRTHasValue write FCRTHasValue;
+    /// <summary>
+    /// Indica se a empresa irá emitir em produção ou homologação.
+    /// </summary>
+    property ambiente: string read Fambiente write Fambiente;
+  end;
+  
+  TEmpresaConfigDce = class
+  private
+    Fambiente: string;
+  public
+    /// <summary>
+    /// Indica se a empresa irá emitir em produção ou homologação.
+    /// </summary>
+    property ambiente: string read Fambiente write Fambiente;
+  end;
+  
+  TEmpresaConfigDistribuicaoNfe = class
+  private
+    Fdistribuicao_automatica: Boolean;
+    Fdistribuicao_automaticaHasValue: Boolean;
+    Fdistribuicao_intervalo_horas: Integer;
+    Fdistribuicao_intervalo_horasHasValue: Boolean;
+    Fciencia_automatica: Boolean;
+    Fciencia_automaticaHasValue: Boolean;
+    Fambiente: string;
+    procedure Setdistribuicao_automatica(const Value: Boolean);
+    procedure Setdistribuicao_intervalo_horas(const Value: Integer);
+    procedure Setciencia_automatica(const Value: Boolean);
+  public
+    /// <summary>
+    /// Indica se a distribuição automática está habilitada.
+    /// 
+    /// Quando ativada, a API da Nuvem Fiscal realizará automaticamente pedidos de
+    /// distribuição de notas fiscais eletrônicas (NF-e) utilizando o último NSU.
+    /// 
+    /// A frequência dessas distribuições é controlada pelo campo `distribuicao_intervalo_horas`,
+    /// cujo valor padrão é 24 horas (uma vez ao dia).
+    /// </summary>
+    property distribuicao_automatica: Boolean read Fdistribuicao_automatica write Setdistribuicao_automatica;
+    property distribuicao_automaticaHasValue: Boolean read Fdistribuicao_automaticaHasValue write Fdistribuicao_automaticaHasValue;
+    /// <summary>
+    /// Define o intervalo mínimo, em horas, entre distribuições automáticas de documentos.
+    /// 
+    /// Esse valor determina com que frequência a API da Nuvem Fiscal executará novas
+    /// requisições automáticas de distribuição de notas fiscais eletrônicas (NF-e).
+    /// 
+    /// Deve ser um valor entre 1 e 24. Por exemplo, se configurado como 4, uma nova
+    /// tentativa de distribuição só será feita se pelo menos 4 horas tiverem se passado
+    /// desde a última requisição.
+    /// 
+    /// Esse campo só é relevante quando `distribuicao_automatica` estiver habilitado.
+    /// </summary>
+    property distribuicao_intervalo_horas: Integer read Fdistribuicao_intervalo_horas write Setdistribuicao_intervalo_horas;
+    property distribuicao_intervalo_horasHasValue: Boolean read Fdistribuicao_intervalo_horasHasValue write Fdistribuicao_intervalo_horasHasValue;
+    /// <summary>
+    /// Indica se a manifestação de Ciência da Operação (210210) deve ser feita
+    /// automaticamente pela API.
+    /// 
+    /// Caso habilitada, a manifestação de ciência será realizada para notas
+    /// recebidas por qualquer forma de consulta ou modo de distribuição (manual ou automático).
+    /// </summary>
+    property ciencia_automatica: Boolean read Fciencia_automatica write Setciencia_automatica;
+    property ciencia_automaticaHasValue: Boolean read Fciencia_automaticaHasValue write Fciencia_automaticaHasValue;
+    /// <summary>
+    /// Indica se a empresa irá emitir em produção ou homologação.
+    /// </summary>
+    property ambiente: string read Fambiente write Fambiente;
+  end;
   
   stringList = class(TList<string>)
   end;
@@ -1336,78 +1906,6 @@ type
     property data_emissaoHasValue: Boolean read Fdata_emissaoHasValue write Fdata_emissaoHasValue;
   end;
   
-  /// <summary>
-  /// Endereço da empresa.
-  /// </summary>
-  TEmpresaEndereco = class
-  private
-    Flogradouro: string;
-    Fnumero: string;
-    Fcomplemento: string;
-    FcomplementoHasValue: Boolean;
-    Fbairro: string;
-    Fcodigo_municipio: string;
-    Fcidade: string;
-    FcidadeHasValue: Boolean;
-    Fuf: string;
-    Fcodigo_pais: string;
-    Fcodigo_paisHasValue: Boolean;
-    Fpais: string;
-    FpaisHasValue: Boolean;
-    Fcep: string;
-    procedure Setcomplemento(const Value: string);
-    procedure Setcidade(const Value: string);
-    procedure Setcodigo_pais(const Value: string);
-    procedure Setpais(const Value: string);
-  public
-    /// <summary>
-    /// Logradouro.
-    /// </summary>
-    property logradouro: string read Flogradouro write Flogradouro;
-    /// <summary>
-    /// Número.
-    /// </summary>
-    property numero: string read Fnumero write Fnumero;
-    /// <summary>
-    /// Complemento.
-    /// </summary>
-    property complemento: string read Fcomplemento write Setcomplemento;
-    property complementoHasValue: Boolean read FcomplementoHasValue write FcomplementoHasValue;
-    /// <summary>
-    /// Bairro.
-    /// </summary>
-    property bairro: string read Fbairro write Fbairro;
-    /// <summary>
-    /// Código IBGE do município.
-    /// </summary>
-    property codigo_municipio: string read Fcodigo_municipio write Fcodigo_municipio;
-    /// <summary>
-    /// Cidade.
-    /// </summary>
-    property cidade: string read Fcidade write Setcidade;
-    property cidadeHasValue: Boolean read FcidadeHasValue write FcidadeHasValue;
-    /// <summary>
-    /// Sigla do estado.
-    /// </summary>
-    property uf: string read Fuf write Fuf;
-    /// <summary>
-    /// Código do país.
-    /// </summary>
-    property codigo_pais: string read Fcodigo_pais write Setcodigo_pais;
-    property codigo_paisHasValue: Boolean read Fcodigo_paisHasValue write Fcodigo_paisHasValue;
-    /// <summary>
-    /// Nome do país.
-    /// </summary>
-    property pais: string read Fpais write Setpais;
-    property paisHasValue: Boolean read FpaisHasValue write FpaisHasValue;
-    /// <summary>
-    /// CEP.
-    /// 
-    /// *Utilize o valor sem máscara*.
-    /// </summary>
-    property cep: string read Fcep write Fcep;
-  end;
-  
   TRpsDadosPrestador = class
   private
     Fcpf_cnpj: string;
@@ -1671,6 +2169,43 @@ type
   end;
   
   /// <summary>
+  /// Grupo de informações relativas aos regimes de tributação do prestador de serviços.
+  /// </summary>
+  TRegTrib = class
+  private
+    FregEspTrib: Integer;
+    FregEspTribHasValue: Boolean;
+    procedure SetregEspTrib(const Value: Integer);
+  public
+    /// <summary>
+    /// Regime Especial de Tributação da Prefeitura.
+    /// 
+    /// Campo opcional utilizado no momento da emissão da NFS-e para informar
+    /// diretamente o código de regime especial de tributação esperado pela
+    /// prefeitura.
+    /// 
+    /// **Comportamento:**
+    /// - Ao preencher este campo, o valor será inserido diretamente no XML
+    ///   da NFS-e, sem qualquer conversão pela Nuvem Fiscal.
+    /// - Esse campo sobrescreve o valor configurado previamente nas
+    ///   configurações de NFS-e da empresa.
+    /// - É especialmente útil quando a prefeitura utiliza códigos próprios que
+    ///   não existem no padrão nacional (como valores diferentes dos listados
+    ///   de 0 a 6).
+    /// 
+    /// **Cenários de uso:**
+    /// - Quando a prefeitura exige um código que não pode ser representado
+    ///   pelos valores do padrão nacional.
+    /// - Quando houver necessidade de enviar o código exato esperado pela
+    ///   prefeitura, sem depender da lógica de conversão automática da Nuvem Fiscal.
+    /// 
+    /// **Atenção**: Para emissões pelo Sistema Nacional NFS-e, esse campo é ignorado.
+    /// </summary>
+    property regEspTrib: Integer read FregEspTrib write SetregEspTrib;
+    property regEspTribHasValue: Boolean read FregEspTribHasValue write FregEspTribHasValue;
+  end;
+  
+  /// <summary>
   /// Grupo de informações do DPS relativas ao Prestador de Serviços.
   /// </summary>
   TInfoPrestador = class
@@ -1679,9 +2214,12 @@ type
     FCNPJHasValue: Boolean;
     FCPF: string;
     FCPFHasValue: Boolean;
+    FregTrib: TRegTrib;
     procedure SetCNPJ(const Value: string);
     procedure SetCPF(const Value: string);
+    procedure SetregTrib(const Value: TRegTrib);
   public
+    destructor Destroy; override;
     /// <summary>
     /// Número do CNPJ.
     /// Obrigatório caso o emitente seja pessoa jurídica.
@@ -1694,6 +2232,7 @@ type
     /// </summary>
     property CPF: string read FCPF write SetCPF;
     property CPFHasValue: Boolean read FCPFHasValue write FCPFHasValue;
+    property regTrib: TRegTrib read FregTrib write SetregTrib;
   end;
   
   /// <summary>
@@ -1757,6 +2296,8 @@ type
     FendExt: TEnderExt;
     FxLgr: string;
     FxLgrHasValue: Boolean;
+    FtpLgr: string;
+    FtpLgrHasValue: Boolean;
     Fnro: string;
     FnroHasValue: Boolean;
     FxCpl: string;
@@ -1766,6 +2307,7 @@ type
     procedure SetendNac(const Value: TEnderNac);
     procedure SetendExt(const Value: TEnderExt);
     procedure SetxLgr(const Value: string);
+    procedure SettpLgr(const Value: string);
     procedure Setnro(const Value: string);
     procedure SetxCpl(const Value: string);
     procedure SetxBairro(const Value: string);
@@ -1778,6 +2320,13 @@ type
     /// </summary>
     property xLgr: string read FxLgr write SetxLgr;
     property xLgrHasValue: Boolean read FxLgrHasValue write FxLgrHasValue;
+    /// <summary>
+    /// Tipo do Logradouro.
+    /// 
+    /// **Atenção**: Para emissões pelo Sistema Nacional NFS-e, esse campo é ignorado.
+    /// </summary>
+    property tpLgr: string read FtpLgr write SettpLgr;
+    property tpLgrHasValue: Boolean read FtpLgrHasValue write FtpLgrHasValue;
     /// <summary>
     /// Número do imóvel.
     /// </summary>
@@ -2246,12 +2795,15 @@ type
     FCEPHasValue: Boolean;
     FendExt: TEnderExtSimples;
     FxLgr: string;
+    FtpLgr: string;
+    FtpLgrHasValue: Boolean;
     Fnro: string;
     FxCpl: string;
     FxCplHasValue: Boolean;
     FxBairro: string;
     procedure SetCEP(const Value: string);
     procedure SetendExt(const Value: TEnderExtSimples);
+    procedure SettpLgr(const Value: string);
     procedure SetxCpl(const Value: string);
   public
     destructor Destroy; override;
@@ -2265,6 +2817,13 @@ type
     /// Tipo e nome do logradouro da localização do imóvel.
     /// </summary>
     property xLgr: string read FxLgr write FxLgr;
+    /// <summary>
+    /// Tipo do Logradouro.
+    /// 
+    /// **Atenção**: Para emissões pelo Sistema Nacional NFS-e, esse campo é ignorado.
+    /// </summary>
+    property tpLgr: string read FtpLgr write SettpLgr;
+    property tpLgrHasValue: Boolean read FtpLgrHasValue write FtpLgrHasValue;
     /// <summary>
     /// Número do imóvel.
     /// </summary>
@@ -2542,7 +3101,7 @@ type
   TDocOutNFSe = class
   private
     FcMunNFSeMun: string;
-    FnNFSeMun: Integer;
+    FnNFSeMun: Int64;
     FcVerifNFSeMun: string;
   public
     /// <summary>
@@ -2552,7 +3111,7 @@ type
     /// <summary>
     /// Número da nota eletrônica municipal.
     /// </summary>
-    property nNFSeMun: Integer read FnNFSeMun write FnNFSeMun;
+    property nNFSeMun: Int64 read FnNFSeMun write FnNFSeMun;
     /// <summary>
     /// Código de Verificação da nota eletrônica municipal.
     /// </summary>
@@ -2565,7 +3124,7 @@ type
   TDocNFNFS = class
   private
     FnNFS: Integer;
-    FmodNFS: Integer;
+    FmodNFS: Int64;
     FserieNFS: string;
   public
     /// <summary>
@@ -2575,7 +3134,7 @@ type
     /// <summary>
     /// Modelo da Nota Fiscal NF ou NFS.
     /// </summary>
-    property modNFS: Integer read FmodNFS write FmodNFS;
+    property modNFS: Int64 read FmodNFS write FmodNFS;
     /// <summary>
     /// Série Nota Fiscal NF ou NFS.
     /// </summary>
@@ -3449,466 +4008,181 @@ type
     property mensagens: TNfseMensagemRetornoList read Fmensagens write Setmensagens;
   end;
   
-  TEmpresa = class
+  /// <summary>
+  /// Detalhes técnicos da requisição HTTP realizada ao autorizador.
+  /// </summary>
+  THttpRequestDebug = class
   private
-    Fcpf_cnpj: string;
+    Fid: string;
+    FidHasValue: Boolean;
+    Fmethod: string;
+    FmethodHasValue: Boolean;
+    Furi: string;
+    FuriHasValue: Boolean;
+    Fheaders: string;
+    FheadersHasValue: Boolean;
+    Fresponse_status_code: Integer;
+    Fresponse_status_codeHasValue: Boolean;
+    Fresponse_status_reason: string;
+    Fresponse_status_reasonHasValue: Boolean;
+    Fresponse_headers: string;
+    Fresponse_headersHasValue: Boolean;
+    Fresponse_time: Integer;
+    Fresponse_timeHasValue: Boolean;
+    procedure Setid(const Value: string);
+    procedure Setmethod(const Value: string);
+    procedure Seturi(const Value: string);
+    procedure Setheaders(const Value: string);
+    procedure Setresponse_status_code(const Value: Integer);
+    procedure Setresponse_status_reason(const Value: string);
+    procedure Setresponse_headers(const Value: string);
+    procedure Setresponse_time(const Value: Integer);
+  public
+    /// <summary>
+    /// Identificador interno da requisição HTTP.
+    /// 
+    /// Esse identificador pode ser utilizado no endpoint
+    /// <a href="#tag/Debug/operation/DebugHttpRequestContent">Corpo da Requisição HTTP</a> ou <a href="#tag/Debug/operation/DebugHttpResponseContent">Corpo da Resposta HTTP</a>
+    /// para obter o conteúdo enviado ou recebido na comunicação com o autorizador.
+    /// </summary>
+    property id: string read Fid write Setid;
+    property idHasValue: Boolean read FidHasValue write FidHasValue;
+    /// <summary>
+    /// Método HTTP utilizado (ex: 'POST').
+    /// </summary>
+    property method: string read Fmethod write Setmethod;
+    property methodHasValue: Boolean read FmethodHasValue write FmethodHasValue;
+    /// <summary>
+    /// URI do serviço externo (SEFAZ, prefeitura, etc.).
+    /// </summary>
+    property uri: string read Furi write Seturi;
+    property uriHasValue: Boolean read FuriHasValue write FuriHasValue;
+    /// <summary>
+    /// Cabeçalhos HTTP enviados na requisição, no formato bruto.
+    /// </summary>
+    property headers: string read Fheaders write Setheaders;
+    property headersHasValue: Boolean read FheadersHasValue write FheadersHasValue;
+    /// <summary>
+    /// Código de status HTTP retornado (ex: 200, 403).
+    /// </summary>
+    property response_status_code: Integer read Fresponse_status_code write Setresponse_status_code;
+    property response_status_codeHasValue: Boolean read Fresponse_status_codeHasValue write Fresponse_status_codeHasValue;
+    /// <summary>
+    /// Motivo ou descrição do status HTTP retornado.
+    /// </summary>
+    property response_status_reason: string read Fresponse_status_reason write Setresponse_status_reason;
+    property response_status_reasonHasValue: Boolean read Fresponse_status_reasonHasValue write Fresponse_status_reasonHasValue;
+    /// <summary>
+    /// Cabeçalhos retornados na resposta, no formato bruto.
+    /// </summary>
+    property response_headers: string read Fresponse_headers write Setresponse_headers;
+    property response_headersHasValue: Boolean read Fresponse_headersHasValue write Fresponse_headersHasValue;
+    /// <summary>
+    /// Tempo de resposta do serviço externo, em milissegundos.
+    /// </summary>
+    property response_time: Integer read Fresponse_time write Setresponse_time;
+    property response_timeHasValue: Boolean read Fresponse_timeHasValue write Fresponse_timeHasValue;
+  end;
+  
+  TDfeRequisicaoDebug = class
+  private
     Fcreated_at: TDateTime;
     Fcreated_atHasValue: Boolean;
-    Fupdated_at: TDateTime;
-    Fupdated_atHasValue: Boolean;
-    Finscricao_estadual: string;
-    Finscricao_estadualHasValue: Boolean;
-    Finscricao_municipal: string;
-    Finscricao_municipalHasValue: Boolean;
-    Fnome_razao_social: string;
-    Fnome_fantasia: string;
-    Fnome_fantasiaHasValue: Boolean;
-    Ffone: string;
-    FfoneHasValue: Boolean;
-    Femail: string;
-    Fendereco: TEmpresaEndereco;
+    Ftipo: string;
+    FtipoHasValue: Boolean;
+    Flote_id: string;
+    Flote_idHasValue: Boolean;
+    Fcodigo_status: Integer;
+    Fcodigo_statusHasValue: Boolean;
+    Fmotivo_status: string;
+    Fmotivo_statusHasValue: Boolean;
+    Fhttp_request: THttpRequestDebug;
     procedure Setcreated_at(const Value: TDateTime);
-    procedure Setupdated_at(const Value: TDateTime);
-    procedure Setinscricao_estadual(const Value: string);
-    procedure Setinscricao_municipal(const Value: string);
-    procedure Setnome_fantasia(const Value: string);
-    procedure Setfone(const Value: string);
-    procedure Setendereco(const Value: TEmpresaEndereco);
+    procedure Settipo(const Value: string);
+    procedure Setlote_id(const Value: string);
+    procedure Setcodigo_status(const Value: Integer);
+    procedure Setmotivo_status(const Value: string);
+    procedure Sethttp_request(const Value: THttpRequestDebug);
   public
-    constructor Create;
     destructor Destroy; override;
     /// <summary>
-    /// CPF ou CNPJ da empresa.
+    /// Data e hora da criação da requisição, representada no formato UTC (Tempo Universal Coordenado).
+    /// O valor é retornado no padrão ISO 8601, incluindo o deslocamento de fuso horário 'Z' no final.
     /// 
-    /// *Utilize o valor sem máscara*.
-    /// </summary>
-    property cpf_cnpj: string read Fcpf_cnpj write Fcpf_cnpj;
-    /// <summary>
-    /// Data/hora em que o objeto foi criado na Nuvem Fiscal. Representado no formato <a href="https://en.wikipedia.org/wiki/ISO_8601" target="blank">`ISO 8601`</a>.
-    /// 
-    /// *A Nuvem Fiscal gerencia esse campo automaticamente. Caso algum valor seja enviado, ele será ignorado*.
+    /// Exemplo: "2025-04-15T14:16:47.775Z"
     /// </summary>
     property created_at: TDateTime read Fcreated_at write Setcreated_at;
     property created_atHasValue: Boolean read Fcreated_atHasValue write Fcreated_atHasValue;
     /// <summary>
-    /// Data e hora que o objeto foi alterado pela última vez na Nuvem Fiscal. Representado no formato <a href="https://en.wikipedia.org/wiki/ISO_8601" target="blank">`ISO 8601`</a>.
+    /// Tipo da operação realizada na requisição para o autorizador.
+    /// Pode assumir um dos seguintes valores:
+    /// - 'envio_lote'      : envio do lote de documentos fiscais para autorização;
+    /// - 'consulta_lote'   : consulta do processamento do lote;
+    /// - 'cons_sit_dfe'    : consulta de situação individual de um DFe.
     /// 
-    /// *A Nuvem Fiscal gerencia esse campo automaticamente. Caso algum valor seja enviado, ele será ignorado*.
+    /// Esse campo indica a natureza da interação com a SEFAZ ou prefeitura,
+    /// e é útil para fins de rastreamento e diagnóstico do fluxo.
     /// </summary>
-    property updated_at: TDateTime read Fupdated_at write Setupdated_at;
-    property updated_atHasValue: Boolean read Fupdated_atHasValue write Fupdated_atHasValue;
+    property tipo: string read Ftipo write Settipo;
+    property tipoHasValue: Boolean read FtipoHasValue write FtipoHasValue;
     /// <summary>
-    /// Inscrição estadual da empresa.
+    /// Identificador do lote vinculado à requisição.
     /// </summary>
-    property inscricao_estadual: string read Finscricao_estadual write Setinscricao_estadual;
-    property inscricao_estadualHasValue: Boolean read Finscricao_estadualHasValue write Finscricao_estadualHasValue;
+    property lote_id: string read Flote_id write Setlote_id;
+    property lote_idHasValue: Boolean read Flote_idHasValue write Flote_idHasValue;
     /// <summary>
-    /// Inscrição municipal da empresa.
+    /// Código de status retornado pela SEFAZ/prefeitura.
     /// </summary>
-    property inscricao_municipal: string read Finscricao_municipal write Setinscricao_municipal;
-    property inscricao_municipalHasValue: Boolean read Finscricao_municipalHasValue write Finscricao_municipalHasValue;
+    property codigo_status: Integer read Fcodigo_status write Setcodigo_status;
+    property codigo_statusHasValue: Boolean read Fcodigo_statusHasValue write Fcodigo_statusHasValue;
     /// <summary>
-    /// Razão social da empresa.
+    /// Motivo associado ao status retornado.
     /// </summary>
-    property nome_razao_social: string read Fnome_razao_social write Fnome_razao_social;
-    /// <summary>
-    /// Nome fantasia da empresa.
-    /// </summary>
-    property nome_fantasia: string read Fnome_fantasia write Setnome_fantasia;
-    property nome_fantasiaHasValue: Boolean read Fnome_fantasiaHasValue write Fnome_fantasiaHasValue;
-    /// <summary>
-    /// Telefone da empresa.
-    /// </summary>
-    property fone: string read Ffone write Setfone;
-    property foneHasValue: Boolean read FfoneHasValue write FfoneHasValue;
-    /// <summary>
-    /// Email da empresa.
-    /// </summary>
-    property email: string read Femail write Femail;
-    property endereco: TEmpresaEndereco read Fendereco write Setendereco;
+    property motivo_status: string read Fmotivo_status write Setmotivo_status;
+    property motivo_statusHasValue: Boolean read Fmotivo_statusHasValue write Fmotivo_statusHasValue;
+    property http_request: THttpRequestDebug read Fhttp_request write Sethttp_request;
   end;
   
-  TEmpresaList = class(TObjectList<TEmpresa>)
+  TDfeRequisicaoDebugList = class(TObjectList<TDfeRequisicaoDebug>)
   end;
   
-  TEmpresaListagem = class
+  TDfeDebug = class
   private
-    F_count: Integer;
-    F_countHasValue: Boolean;
-    Fdata: TEmpresaList;
-    procedure Set_count(const Value: Integer);
-    procedure Setdata(const Value: TEmpresaList);
+    Fid: string;
+    FidHasValue: Boolean;
+    Ftipo: string;
+    FtipoHasValue: Boolean;
+    Fcreated_at: TDateTime;
+    Fcreated_atHasValue: Boolean;
+    Frequisicoes: TDfeRequisicaoDebugList;
+    procedure Setid(const Value: string);
+    procedure Settipo(const Value: string);
+    procedure Setcreated_at(const Value: TDateTime);
+    procedure Setrequisicoes(const Value: TDfeRequisicaoDebugList);
   public
     destructor Destroy; override;
-    property _count: Integer read F_count write Set_count;
-    property _countHasValue: Boolean read F_countHasValue write F_countHasValue;
-    property data: TEmpresaList read Fdata write Setdata;
-  end;
-  
-  TEmpresaPedidoCadastroCertificado = class
-  private
-    Fcertificado: TBytes;
-    Fpassword: string;
-  public
     /// <summary>
-    /// Binário do certificado digital (.pfx ou .p12) codificado em base64.
+    /// Identificador do documento fiscal.
     /// </summary>
-    property certificado: TBytes read Fcertificado write Fcertificado;
+    property id: string read Fid write Setid;
+    property idHasValue: Boolean read FidHasValue write FidHasValue;
     /// <summary>
-    /// Senha do certificado.
+    /// Tipo do documento: nfe, nfce, mdfe, nfse, etc.
     /// </summary>
-    property password: string read Fpassword write Fpassword;
-  end;
-  
-  TEmpresaCertificado = class
-  private
-    Fserial_number: string;
-    Fserial_numberHasValue: Boolean;
-    Fissuer_name: string;
-    Fissuer_nameHasValue: Boolean;
-    Fnot_valid_before: TDateTime;
-    Fnot_valid_beforeHasValue: Boolean;
-    Fnot_valid_after: TDateTime;
-    Fnot_valid_afterHasValue: Boolean;
-    Fthumbprint: string;
-    FthumbprintHasValue: Boolean;
-    Fsubject_name: string;
-    Fsubject_nameHasValue: Boolean;
-    Fcpf_cnpj: string;
-    Fcpf_cnpjHasValue: Boolean;
-    Fnome_razao_social: string;
-    Fnome_razao_socialHasValue: Boolean;
-    procedure Setserial_number(const Value: string);
-    procedure Setissuer_name(const Value: string);
-    procedure Setnot_valid_before(const Value: TDateTime);
-    procedure Setnot_valid_after(const Value: TDateTime);
-    procedure Setthumbprint(const Value: string);
-    procedure Setsubject_name(const Value: string);
-    procedure Setcpf_cnpj(const Value: string);
-    procedure Setnome_razao_social(const Value: string);
-  public
-    property serial_number: string read Fserial_number write Setserial_number;
-    property serial_numberHasValue: Boolean read Fserial_numberHasValue write Fserial_numberHasValue;
-    property issuer_name: string read Fissuer_name write Setissuer_name;
-    property issuer_nameHasValue: Boolean read Fissuer_nameHasValue write Fissuer_nameHasValue;
-    property not_valid_before: TDateTime read Fnot_valid_before write Setnot_valid_before;
-    property not_valid_beforeHasValue: Boolean read Fnot_valid_beforeHasValue write Fnot_valid_beforeHasValue;
-    property not_valid_after: TDateTime read Fnot_valid_after write Setnot_valid_after;
-    property not_valid_afterHasValue: Boolean read Fnot_valid_afterHasValue write Fnot_valid_afterHasValue;
-    property thumbprint: string read Fthumbprint write Setthumbprint;
-    property thumbprintHasValue: Boolean read FthumbprintHasValue write FthumbprintHasValue;
-    property subject_name: string read Fsubject_name write Setsubject_name;
-    property subject_nameHasValue: Boolean read Fsubject_nameHasValue write Fsubject_nameHasValue;
-    property cpf_cnpj: string read Fcpf_cnpj write Setcpf_cnpj;
-    property cpf_cnpjHasValue: Boolean read Fcpf_cnpjHasValue write Fcpf_cnpjHasValue;
-    property nome_razao_social: string read Fnome_razao_social write Setnome_razao_social;
-    property nome_razao_socialHasValue: Boolean read Fnome_razao_socialHasValue write Fnome_razao_socialHasValue;
-  end;
-  
-  TEmpresaConfigNfe = class
-  private
-    FCRT: Integer;
-    FCRTHasValue: Boolean;
-    Fambiente: string;
-    procedure SetCRT(const Value: Integer);
-  public
+    property tipo: string read Ftipo write Settipo;
+    property tipoHasValue: Boolean read FtipoHasValue write FtipoHasValue;
     /// <summary>
-    /// Código de Regime Tributário.
-    /// Este campo será preenchido com:
-    /// * 1 – Simples Nacional;
-    /// * 2 – Simples Nacional – excesso de sublimite de receita bruta;
-    /// * 3 – Regime Normal;
-    /// * 4 - Simples Nacional - Microempreendedor individual (MEI).
-    /// </summary>
-    property CRT: Integer read FCRT write SetCRT;
-    property CRTHasValue: Boolean read FCRTHasValue write FCRTHasValue;
-    /// <summary>
-    /// Indica se a empresa irá emitir em produção ou homologação.
-    /// </summary>
-    property ambiente: string read Fambiente write Fambiente;
-  end;
-  
-  TEmpresaConfigNfceSefaz = class
-  private
-    Fid_csc: Integer;
-    Fcsc: string;
-  public
-    /// <summary>
-    /// Número de identificação do CSC.
-    /// </summary>
-    property id_csc: Integer read Fid_csc write Fid_csc;
-    /// <summary>
-    /// Código do CSC.
-    /// </summary>
-    property csc: string read Fcsc write Fcsc;
-  end;
-  
-  TEmpresaConfigNfce = class
-  private
-    FCRT: Integer;
-    FCRTHasValue: Boolean;
-    Fsefaz: TEmpresaConfigNfceSefaz;
-    Fambiente: string;
-    procedure SetCRT(const Value: Integer);
-    procedure Setsefaz(const Value: TEmpresaConfigNfceSefaz);
-  public
-    constructor Create;
-    destructor Destroy; override;
-    /// <summary>
-    /// Código de Regime Tributário.
-    /// Este campo será preenchido com:
-    /// * 1 – Simples Nacional;
-    /// * 2 – Simples Nacional – excesso de sublimite de receita bruta;
-    /// * 3 – Regime Normal;
-    /// * 4 - Simples Nacional - Microempreendedor individual (MEI).
-    /// </summary>
-    property CRT: Integer read FCRT write SetCRT;
-    property CRTHasValue: Boolean read FCRTHasValue write FCRTHasValue;
-    property sefaz: TEmpresaConfigNfceSefaz read Fsefaz write Setsefaz;
-    /// <summary>
-    /// Indica se a empresa irá emitir em produção ou homologação.
-    /// </summary>
-    property ambiente: string read Fambiente write Fambiente;
-  end;
-  
-  /// <summary>
-  /// Grupo de informações relativas aos regimes de tributação do prestador de serviços.
-  /// </summary>
-  TEmpresaConfigNfseRegTrib = class
-  private
-    FopSimpNac: Integer;
-    FopSimpNacHasValue: Boolean;
-    FregApTribSN: Integer;
-    FregApTribSNHasValue: Boolean;
-    FregEspTrib: Integer;
-    FregEspTribHasValue: Boolean;
-    procedure SetopSimpNac(const Value: Integer);
-    procedure SetregApTribSN(const Value: Integer);
-    procedure SetregEspTrib(const Value: Integer);
-  public
-    /// <summary>
-    /// Situação perante o Simples Nacional:
-    /// * 1 - Não Optante;
-    /// * 2 - Optante - Microempreendedor Individual (MEI);
-    /// * 3 - Optante - Microempresa ou Empresa de Pequeno Porte (ME/EPP).
-    /// </summary>
-    property opSimpNac: Integer read FopSimpNac write SetopSimpNac;
-    property opSimpNacHasValue: Boolean read FopSimpNacHasValue write FopSimpNacHasValue;
-    /// <summary>
-    /// Opção para que o contribuinte optante pelo Simples Nacional ME/EPP (opSimpNac = 3) possa indicar, ao emitir o documento fiscal, em qual regime de apuração os tributos federais e municipal estão inseridos, caso tenha ultrapassado algum sublimite ou limite definido para o Simples Nacional.
-    /// * 1 – Regime de apuração dos tributos federais e municipal pelo SN;
-    /// * 2 – Regime de apuração dos tributos federais pelo SN e ISSQN  por fora do SN conforme respectiva legislação municipal do tributo;
-    /// * 3 – Regime de apuração dos tributos federais e municipal por fora do SN conforme respectivas legilações federal e municipal de cada tributo.
-    /// </summary>
-    property regApTribSN: Integer read FregApTribSN write SetregApTribSN;
-    property regApTribSNHasValue: Boolean read FregApTribSNHasValue write FregApTribSNHasValue;
-    /// <summary>
-    /// Tipos de Regimes Especiais de Tributação:
-    /// * 0 - Nenhum;
-    /// * 1 - Ato Cooperado (Cooperativa);
-    /// * 2 - Estimativa;
-    /// * 3 - Microempresa Municipal;
-    /// * 4 - Notário ou Registrador;
-    /// * 5 - Profissional Autônomo;
-    /// * 6 - Sociedade de Profissionais.
-    /// </summary>
-    property regEspTrib: Integer read FregEspTrib write SetregEspTrib;
-    property regEspTribHasValue: Boolean read FregEspTribHasValue write FregEspTribHasValue;
-  end;
-  
-  /// <summary>
-  /// Configuração de numeração de lote, série e RPS.
-  /// </summary>
-  TEmpresaConfigRps = class
-  private
-    Flote: Integer;
-    Fserie: string;
-    Fnumero: Integer;
-  public
-    /// <summary>
-    /// Número do Lote de RPS.
-    /// Informe o próximo número do lote RPS a ser utilizado. Após isso, a Nuvem
-    /// Fiscal gerenciará esse campo (a cada novo envio de lote o número é
-    /// incrementado em + 1). Portanto, basta informá-lo no cadastro da empresa
-    /// uma única vez.
-    /// </summary>
-    property lote: Integer read Flote write Flote;
-    /// <summary>
-    /// Série do RPS.
-    /// A série dos RPS varia de acordo com cada prefeitura, podendo ser
-    /// número (1, 2 ou 3, por exemplo) ou letras (A, S, NFS, por exemplo).
-    /// Portanto, consulte-a com o município da empresa antes de iniciar a
-    /// emissão das notas.
-    /// </summary>
-    property serie: string read Fserie write Fserie;
-    /// <summary>
-    /// Número do RPS.
-    /// Informe o próximo número de RPS a ser utilizado. Após isso, a Nuvem
-    /// Fiscal gerenciará esse campo (a cada novo envio de RPS o número é
-    /// incrementado em + 1). Portanto, basta informá-lo no cadastro da empresa
-    /// uma única vez.
-    /// </summary>
-    property numero: Integer read Fnumero write Fnumero;
-  end;
-  
-  /// <summary>
-  /// Dados adicionais para comunicação com a prefeitura. Essa validação é
-  /// dinâmica, de acordo com a necessidade de cada município.
-  /// </summary>
-  TEmpresaConfigPrefeitura = class
-  private
-    Flogin: string;
-    FloginHasValue: Boolean;
-    Fsenha: string;
-    FsenhaHasValue: Boolean;
-    Ftoken: string;
-    FtokenHasValue: Boolean;
-    procedure Setlogin(const Value: string);
-    procedure Setsenha(const Value: string);
-    procedure Settoken(const Value: string);
-  public
-    /// <summary>
-    /// Login de autenticação com a prefeitura, caso não utilize certificado digital.
-    /// </summary>
-    property login: string read Flogin write Setlogin;
-    property loginHasValue: Boolean read FloginHasValue write FloginHasValue;
-    /// <summary>
-    /// Senha de autenticação com a prefeitura, caso não utilize certificado digital.
-    /// </summary>
-    property senha: string read Fsenha write Setsenha;
-    property senhaHasValue: Boolean read FsenhaHasValue write FsenhaHasValue;
-    /// <summary>
-    /// Token de autenticação com a prefeitura, caso não utilize certificado digital.
-    /// </summary>
-    property token: string read Ftoken write Settoken;
-    property tokenHasValue: Boolean read FtokenHasValue write FtokenHasValue;
-  end;
-  
-  TEmpresaConfigNfse = class
-  private
-    FregTrib: TEmpresaConfigNfseRegTrib;
-    Frps: TEmpresaConfigRps;
-    Fprefeitura: TEmpresaConfigPrefeitura;
-    Fincentivo_fiscal: Boolean;
-    Fincentivo_fiscalHasValue: Boolean;
-    Fambiente: string;
-    procedure SetregTrib(const Value: TEmpresaConfigNfseRegTrib);
-    procedure Setrps(const Value: TEmpresaConfigRps);
-    procedure Setprefeitura(const Value: TEmpresaConfigPrefeitura);
-    procedure Setincentivo_fiscal(const Value: Boolean);
-  public
-    constructor Create;
-    destructor Destroy; override;
-    property regTrib: TEmpresaConfigNfseRegTrib read FregTrib write SetregTrib;
-    property rps: TEmpresaConfigRps read Frps write Setrps;
-    property prefeitura: TEmpresaConfigPrefeitura read Fprefeitura write Setprefeitura;
-    /// <summary>
-    /// Indicador se a empresa possui algum tipo de incentivo fiscal.
-    /// </summary>
-    property incentivo_fiscal: Boolean read Fincentivo_fiscal write Setincentivo_fiscal;
-    property incentivo_fiscalHasValue: Boolean read Fincentivo_fiscalHasValue write Fincentivo_fiscalHasValue;
-    /// <summary>
-    /// Indica se a empresa irá emitir em produção ou homologação.
-    /// </summary>
-    property ambiente: string read Fambiente write Fambiente;
-  end;
-  
-  TEmpresaConfigMdfe = class
-  private
-    Fambiente: string;
-  public
-    /// <summary>
-    /// Indica se a empresa irá emitir em produção ou homologação.
-    /// </summary>
-    property ambiente: string read Fambiente write Fambiente;
-  end;
-  
-  TEmpresaConfigCte = class
-  private
-    FCRT: Integer;
-    FCRTHasValue: Boolean;
-    Fambiente: string;
-    procedure SetCRT(const Value: Integer);
-  public
-    /// <summary>
-    /// Código de Regime Tributário.
-    /// Este campo será preenchido com:
-    /// * 1 – Simples Nacional;
-    /// * 2 – Simples Nacional – excesso de sublimite de receita bruta;
-    /// * 3 – Regime Normal;
-    /// * 4 - Simples Nacional - Microempreendedor Individual (MEI).
-    /// </summary>
-    property CRT: Integer read FCRT write SetCRT;
-    property CRTHasValue: Boolean read FCRTHasValue write FCRTHasValue;
-    /// <summary>
-    /// Indica se a empresa irá emitir em produção ou homologação.
-    /// </summary>
-    property ambiente: string read Fambiente write Fambiente;
-  end;
-  
-  TEmpresaConfigNfcom = class
-  private
-    FCRT: Integer;
-    FCRTHasValue: Boolean;
-    Fambiente: string;
-    procedure SetCRT(const Value: Integer);
-  public
-    /// <summary>
-    /// Código de Regime Tributário.
-    /// Este campo será preenchido com:
-    /// * 1 – Simples Nacional;
-    /// * 2 – Simples Nacional – excesso de sublimite de receita bruta;
-    /// * 3 – Regime Normal.
-    /// </summary>
-    property CRT: Integer read FCRT write SetCRT;
-    property CRTHasValue: Boolean read FCRTHasValue write FCRTHasValue;
-    /// <summary>
-    /// Indica se a empresa irá emitir em produção ou homologação.
-    /// </summary>
-    property ambiente: string read Fambiente write Fambiente;
-  end;
-  
-  TEmpresaConfigDce = class
-  private
-    Fambiente: string;
-  public
-    /// <summary>
-    /// Indica se a empresa irá emitir em produção ou homologação.
-    /// </summary>
-    property ambiente: string read Fambiente write Fambiente;
-  end;
-  
-  TEmpresaConfigDistribuicaoNfe = class
-  private
-    Fdistribuicao_automatica: Boolean;
-    Fdistribuicao_automaticaHasValue: Boolean;
-    Fciencia_automatica: Boolean;
-    Fciencia_automaticaHasValue: Boolean;
-    Fambiente: string;
-    procedure Setdistribuicao_automatica(const Value: Boolean);
-    procedure Setciencia_automatica(const Value: Boolean);
-  public
-    /// <summary>
-    /// Indica se a distribuição automática está habilitada.
+    /// Data e hora da criação do documento, representada no formato UTC (Tempo Universal Coordenado).
+    /// O valor é retornado no padrão ISO 8601, incluindo o deslocamento de fuso horário 'Z' no final.
     /// 
-    /// Nesse modo, a API da Nuvem Fiscal irá realizar pedidos de distribuição
-    /// pelo último NSU de forma automática a cada 1 hora.
+    /// Exemplo: "2025-04-15T14:16:47.775Z"
     /// </summary>
-    property distribuicao_automatica: Boolean read Fdistribuicao_automatica write Setdistribuicao_automatica;
-    property distribuicao_automaticaHasValue: Boolean read Fdistribuicao_automaticaHasValue write Fdistribuicao_automaticaHasValue;
+    property created_at: TDateTime read Fcreated_at write Setcreated_at;
+    property created_atHasValue: Boolean read Fcreated_atHasValue write Fcreated_atHasValue;
     /// <summary>
-    /// Indica se a manifestação de Ciência da Operação (210210) deve ser feita
-    /// automaticamente pela API.
-    /// 
-    /// Caso habilitada, a manifestação de ciência será realizada para notas
-    /// recebidas por qualquer forma de consulta ou modo de distribuição (manual ou automático).
+    /// Lista de requisições feitas ao autorizador durante o processamento.
     /// </summary>
-    property ciencia_automatica: Boolean read Fciencia_automatica write Setciencia_automatica;
-    property ciencia_automaticaHasValue: Boolean read Fciencia_automaticaHasValue write Fciencia_automaticaHasValue;
-    /// <summary>
-    /// Indica se a empresa irá emitir em produção ou homologação.
-    /// </summary>
-    property ambiente: string read Fambiente write Fambiente;
+    property requisicoes: TDfeRequisicaoDebugList read Frequisicoes write Setrequisicoes;
   end;
   
   TDfeSefazStatus = class
@@ -5364,7 +5638,7 @@ type
     Fid: string;
     Fcreated_at: TDateTime;
     Fcreated_atHasValue: Boolean;
-    Fnsu: Integer;
+    Fnsu: Int64;
     FnsuHasValue: Boolean;
     Fschema: string;
     Ftipo_documento: string;
@@ -5396,7 +5670,7 @@ type
     Femitente_inscricao_estadual: string;
     Femitente_inscricao_estadualHasValue: Boolean;
     procedure Setcreated_at(const Value: TDateTime);
-    procedure Setnsu(const Value: Integer);
+    procedure Setnsu(const Value: Int64);
     procedure Settipo_documento(const Value: string);
     procedure Setchave_acesso(const Value: string);
     procedure Setresumo(const Value: Boolean);
@@ -5424,7 +5698,7 @@ type
     /// <summary>
     /// NSU do documento fiscal.
     /// </summary>
-    property nsu: Integer read Fnsu write Setnsu;
+    property nsu: Int64 read Fnsu write Setnsu;
     property nsuHasValue: Boolean read FnsuHasValue write FnsuHasValue;
     /// <summary>
     /// Identificação do Schema XML que será utilizado para validar o XML existente no conteúdo da tag docZip. Vai identificar o tipo do documento e sua versão. Exemplos: resNFe_v1.00.xsd, procNFe_v3.10.xsd, resEvento_1.00.xsd, procEventoNFe_v1.00.xsd.
@@ -5515,9 +5789,9 @@ type
     Fuf_autor: string;
     Fuf_autorHasValue: Boolean;
     Ftipo_consulta: string;
-    Fdist_nsu: Integer;
+    Fdist_nsu: Int64;
     Fdist_nsuHasValue: Boolean;
-    Fcons_nsu: Integer;
+    Fcons_nsu: Int64;
     Fcons_nsuHasValue: Boolean;
     Fcons_chave: string;
     Fcons_chaveHasValue: Boolean;
@@ -5525,13 +5799,13 @@ type
     Fmotivo_status: string;
     Fmotivo_statusHasValue: Boolean;
     Fdata_hora_resposta: TDateTime;
-    Fultimo_nsu: Integer;
-    Fmax_nsu: Integer;
+    Fultimo_nsu: Int64;
+    Fmax_nsu: Int64;
     Fdocumentos: TDistribuicaoNfeDocumentoList;
     procedure Setcreated_at(const Value: TDateTime);
     procedure Setuf_autor(const Value: string);
-    procedure Setdist_nsu(const Value: Integer);
-    procedure Setcons_nsu(const Value: Integer);
+    procedure Setdist_nsu(const Value: Int64);
+    procedure Setcons_nsu(const Value: Int64);
     procedure Setcons_chave(const Value: string);
     procedure Setmotivo_status(const Value: string);
     procedure Setdocumentos(const Value: TDistribuicaoNfeDocumentoList);
@@ -5565,14 +5839,14 @@ type
     /// 
     /// *Obrigatório quando `tipo_consulta` for `distNSU`.*
     /// </summary>
-    property dist_nsu: Integer read Fdist_nsu write Setdist_nsu;
+    property dist_nsu: Int64 read Fdist_nsu write Setdist_nsu;
     property dist_nsuHasValue: Boolean read Fdist_nsuHasValue write Fdist_nsuHasValue;
     /// <summary>
     /// Consulta DF-e vinculado ao NSU informado.
     /// 
     /// *Obrigatório quando `tipo_consulta` for `consNSU`.*
     /// </summary>
-    property cons_nsu: Integer read Fcons_nsu write Setcons_nsu;
+    property cons_nsu: Int64 read Fcons_nsu write Setcons_nsu;
     property cons_nsuHasValue: Boolean read Fcons_nsuHasValue write Fcons_nsuHasValue;
     /// <summary>
     /// Consulta de NF-e por chave de acesso informada.
@@ -5597,11 +5871,11 @@ type
     /// <summary>
     /// Último NSU pesquisado no Ambiente Nacional. Se for o caso, o solicitante pode continuar a consulta a partir deste NSU para obter novos resultados.
     /// </summary>
-    property ultimo_nsu: Integer read Fultimo_nsu write Fultimo_nsu;
+    property ultimo_nsu: Int64 read Fultimo_nsu write Fultimo_nsu;
     /// <summary>
     /// Maior NSU existente no Ambiente Nacional para o CNPJ/CPF informado.
     /// </summary>
-    property max_nsu: Integer read Fmax_nsu write Fmax_nsu;
+    property max_nsu: Int64 read Fmax_nsu write Fmax_nsu;
     /// <summary>
     /// Conjunto de informações resumidas e documentos fiscais eletrônicos de interesse da pessoa ou empresa.
     /// </summary>
@@ -5632,17 +5906,17 @@ type
     Fuf_autor: string;
     Fuf_autorHasValue: Boolean;
     Ftipo_consulta: string;
-    Fdist_nsu: Integer;
+    Fdist_nsu: Int64;
     Fdist_nsuHasValue: Boolean;
-    Fcons_nsu: Integer;
+    Fcons_nsu: Int64;
     Fcons_nsuHasValue: Boolean;
     Fcons_chave: string;
     Fcons_chaveHasValue: Boolean;
     Fignorar_tempo_espera: Boolean;
     Fignorar_tempo_esperaHasValue: Boolean;
     procedure Setuf_autor(const Value: string);
-    procedure Setdist_nsu(const Value: Integer);
-    procedure Setcons_nsu(const Value: Integer);
+    procedure Setdist_nsu(const Value: Int64);
+    procedure Setcons_nsu(const Value: Int64);
     procedure Setcons_chave(const Value: string);
     procedure Setignorar_tempo_espera(const Value: Boolean);
   public
@@ -5675,14 +5949,14 @@ type
     /// 
     /// *Obrigatório quando "tipo_consulta" for "dist-nsu".*
     /// </summary>
-    property dist_nsu: Integer read Fdist_nsu write Setdist_nsu;
+    property dist_nsu: Int64 read Fdist_nsu write Setdist_nsu;
     property dist_nsuHasValue: Boolean read Fdist_nsuHasValue write Fdist_nsuHasValue;
     /// <summary>
     /// Consulta DF-e vinculado ao NSU informado.
     /// 
     /// *Obrigatório quando "tipo_consulta" for "cons-nsu".*
     /// </summary>
-    property cons_nsu: Integer read Fcons_nsu write Setcons_nsu;
+    property cons_nsu: Int64 read Fcons_nsu write Setcons_nsu;
     property cons_nsuHasValue: Boolean read Fcons_nsuHasValue write Fcons_nsuHasValue;
     /// <summary>
     /// Consulta de NF-e por chave de acesso informada.
@@ -5730,6 +6004,8 @@ type
     Fnumero_protocoloHasValue: Boolean;
     Ftipo_nfe: Integer;
     Ftipo_nfeHasValue: Boolean;
+    Fdata_emissao: TDateTime;
+    Fdata_emissaoHasValue: Boolean;
     Fvalor_nfe: Double;
     Fvalor_nfeHasValue: Boolean;
     Fdigest_value: string;
@@ -5743,6 +6019,7 @@ type
     procedure Setchave_acesso(const Value: string);
     procedure Setnumero_protocolo(const Value: string);
     procedure Settipo_nfe(const Value: Integer);
+    procedure Setdata_emissao(const Value: TDateTime);
     procedure Setvalor_nfe(const Value: Double);
     procedure Setdigest_value(const Value: string);
     procedure Setemitente_cpf_cnpj(const Value: string);
@@ -5764,6 +6041,11 @@ type
     /// </summary>
     property tipo_nfe: Integer read Ftipo_nfe write Settipo_nfe;
     property tipo_nfeHasValue: Boolean read Ftipo_nfeHasValue write Ftipo_nfeHasValue;
+    /// <summary>
+    /// Data e hora da emissão do documento fiscal.
+    /// </summary>
+    property data_emissao: TDateTime read Fdata_emissao write Setdata_emissao;
+    property data_emissaoHasValue: Boolean read Fdata_emissaoHasValue write Fdata_emissaoHasValue;
     /// <summary>
     /// Valor total da NF-e.
     /// </summary>
@@ -19839,14 +20121,14 @@ type
     FCNPJProdHasValue: Boolean;
     FcSelo: string;
     FcSeloHasValue: Boolean;
-    FqSelo: Integer;
+    FqSelo: Int64;
     FqSeloHasValue: Boolean;
     FcEnq: string;
     FIPITrib: TNfeSefazIPITrib;
     FIPINT: TNfeSefazIPINT;
     procedure SetCNPJProd(const Value: string);
     procedure SetcSelo(const Value: string);
-    procedure SetqSelo(const Value: Integer);
+    procedure SetqSelo(const Value: Int64);
     procedure SetIPITrib(const Value: TNfeSefazIPITrib);
     procedure SetIPINT(const Value: TNfeSefazIPINT);
   public
@@ -19864,7 +20146,7 @@ type
     /// <summary>
     /// Quantidade de selo de controle do IPI.
     /// </summary>
-    property qSelo: Integer read FqSelo write SetqSelo;
+    property qSelo: Int64 read FqSelo write SetqSelo;
     property qSeloHasValue: Boolean read FqSeloHasValue write FqSeloHasValue;
     /// <summary>
     /// Código de Enquadramento Legal do IPI (tabela a ser criada pela RFB).
@@ -21244,7 +21526,7 @@ type
   /// </summary>
   TNfeSefazVol = class
   private
-    FqVol: Integer;
+    FqVol: Int64;
     FqVolHasValue: Boolean;
     Fesp: string;
     FespHasValue: Boolean;
@@ -21257,7 +21539,7 @@ type
     FpesoB: Double;
     FpesoBHasValue: Boolean;
     Flacres: TNfeSefazLacresList;
-    procedure SetqVol(const Value: Integer);
+    procedure SetqVol(const Value: Int64);
     procedure Setesp(const Value: string);
     procedure Setmarca(const Value: string);
     procedure SetnVol(const Value: string);
@@ -21269,7 +21551,7 @@ type
     /// <summary>
     /// Quantidade de volumes transportados.
     /// </summary>
-    property qVol: Integer read FqVol write SetqVol;
+    property qVol: Int64 read FqVol write SetqVol;
     property qVolHasValue: Boolean read FqVolHasValue write FqVolHasValue;
     /// <summary>
     /// Espécie dos volumes transportados.
@@ -23337,6 +23619,326 @@ type
   
 implementation
 
+{ TEmpresaEndereco }
+
+procedure TEmpresaEndereco.Setcomplemento(const Value: string);
+begin
+  Fcomplemento := Value;
+  FcomplementoHasValue := True;
+end;
+
+procedure TEmpresaEndereco.Setcidade(const Value: string);
+begin
+  Fcidade := Value;
+  FcidadeHasValue := True;
+end;
+
+procedure TEmpresaEndereco.Setcodigo_pais(const Value: string);
+begin
+  Fcodigo_pais := Value;
+  Fcodigo_paisHasValue := True;
+end;
+
+procedure TEmpresaEndereco.Setpais(const Value: string);
+begin
+  Fpais := Value;
+  FpaisHasValue := True;
+end;
+
+{ TEmpresa }
+
+constructor TEmpresa.Create;
+begin
+  inherited;
+  Fendereco := TEmpresaEndereco.Create;
+end;
+
+destructor TEmpresa.Destroy;
+begin
+  Fendereco.Free;
+  inherited;
+end;
+
+procedure TEmpresa.Setcreated_at(const Value: TDateTime);
+begin
+  Fcreated_at := Value;
+  Fcreated_atHasValue := True;
+end;
+
+procedure TEmpresa.Setupdated_at(const Value: TDateTime);
+begin
+  Fupdated_at := Value;
+  Fupdated_atHasValue := True;
+end;
+
+procedure TEmpresa.Setinscricao_estadual(const Value: string);
+begin
+  Finscricao_estadual := Value;
+  Finscricao_estadualHasValue := True;
+end;
+
+procedure TEmpresa.Setinscricao_municipal(const Value: string);
+begin
+  Finscricao_municipal := Value;
+  Finscricao_municipalHasValue := True;
+end;
+
+procedure TEmpresa.Setnome_fantasia(const Value: string);
+begin
+  Fnome_fantasia := Value;
+  Fnome_fantasiaHasValue := True;
+end;
+
+procedure TEmpresa.Setfone(const Value: string);
+begin
+  Ffone := Value;
+  FfoneHasValue := True;
+end;
+
+procedure TEmpresa.Setendereco(const Value: TEmpresaEndereco);
+begin
+  if Value <> Fendereco then
+  begin
+    Fendereco.Free;
+    Fendereco := Value;
+  end;
+end;
+
+{ TEmpresaListagem }
+
+destructor TEmpresaListagem.Destroy;
+begin
+  Fdata.Free;
+  inherited;
+end;
+
+procedure TEmpresaListagem.Set_count(const Value: Integer);
+begin
+  F_count := Value;
+  F_countHasValue := True;
+end;
+
+procedure TEmpresaListagem.Setdata(const Value: TEmpresaList);
+begin
+  if Value <> Fdata then
+  begin
+    Fdata.Free;
+    Fdata := Value;
+  end;
+end;
+
+{ TEmpresaCertificado }
+
+procedure TEmpresaCertificado.Setserial_number(const Value: string);
+begin
+  Fserial_number := Value;
+  Fserial_numberHasValue := True;
+end;
+
+procedure TEmpresaCertificado.Setissuer_name(const Value: string);
+begin
+  Fissuer_name := Value;
+  Fissuer_nameHasValue := True;
+end;
+
+procedure TEmpresaCertificado.Setnot_valid_before(const Value: TDateTime);
+begin
+  Fnot_valid_before := Value;
+  Fnot_valid_beforeHasValue := True;
+end;
+
+procedure TEmpresaCertificado.Setnot_valid_after(const Value: TDateTime);
+begin
+  Fnot_valid_after := Value;
+  Fnot_valid_afterHasValue := True;
+end;
+
+procedure TEmpresaCertificado.Setthumbprint(const Value: string);
+begin
+  Fthumbprint := Value;
+  FthumbprintHasValue := True;
+end;
+
+procedure TEmpresaCertificado.Setsubject_name(const Value: string);
+begin
+  Fsubject_name := Value;
+  Fsubject_nameHasValue := True;
+end;
+
+procedure TEmpresaCertificado.Setcpf_cnpj(const Value: string);
+begin
+  Fcpf_cnpj := Value;
+  Fcpf_cnpjHasValue := True;
+end;
+
+procedure TEmpresaCertificado.Setnome_razao_social(const Value: string);
+begin
+  Fnome_razao_social := Value;
+  Fnome_razao_socialHasValue := True;
+end;
+
+{ TEmpresaConfigNfe }
+
+procedure TEmpresaConfigNfe.SetCRT(const Value: Integer);
+begin
+  FCRT := Value;
+  FCRTHasValue := True;
+end;
+
+{ TEmpresaConfigNfce }
+
+constructor TEmpresaConfigNfce.Create;
+begin
+  inherited;
+  Fsefaz := TEmpresaConfigNfceSefaz.Create;
+end;
+
+destructor TEmpresaConfigNfce.Destroy;
+begin
+  Fsefaz.Free;
+  inherited;
+end;
+
+procedure TEmpresaConfigNfce.SetCRT(const Value: Integer);
+begin
+  FCRT := Value;
+  FCRTHasValue := True;
+end;
+
+procedure TEmpresaConfigNfce.Setsefaz(const Value: TEmpresaConfigNfceSefaz);
+begin
+  if Value <> Fsefaz then
+  begin
+    Fsefaz.Free;
+    Fsefaz := Value;
+  end;
+end;
+
+{ TEmpresaConfigNfseRegTrib }
+
+procedure TEmpresaConfigNfseRegTrib.SetopSimpNac(const Value: Integer);
+begin
+  FopSimpNac := Value;
+  FopSimpNacHasValue := True;
+end;
+
+procedure TEmpresaConfigNfseRegTrib.SetregApTribSN(const Value: Integer);
+begin
+  FregApTribSN := Value;
+  FregApTribSNHasValue := True;
+end;
+
+procedure TEmpresaConfigNfseRegTrib.SetregEspTrib(const Value: Integer);
+begin
+  FregEspTrib := Value;
+  FregEspTribHasValue := True;
+end;
+
+{ TEmpresaConfigPrefeitura }
+
+procedure TEmpresaConfigPrefeitura.Setlogin(const Value: string);
+begin
+  Flogin := Value;
+  FloginHasValue := True;
+end;
+
+procedure TEmpresaConfigPrefeitura.Setsenha(const Value: string);
+begin
+  Fsenha := Value;
+  FsenhaHasValue := True;
+end;
+
+procedure TEmpresaConfigPrefeitura.Settoken(const Value: string);
+begin
+  Ftoken := Value;
+  FtokenHasValue := True;
+end;
+
+{ TEmpresaConfigNfse }
+
+constructor TEmpresaConfigNfse.Create;
+begin
+  inherited;
+  Frps := TEmpresaConfigRps.Create;
+end;
+
+destructor TEmpresaConfigNfse.Destroy;
+begin
+  Fprefeitura.Free;
+  Frps.Free;
+  FregTrib.Free;
+  inherited;
+end;
+
+procedure TEmpresaConfigNfse.SetregTrib(const Value: TEmpresaConfigNfseRegTrib);
+begin
+  if Value <> FregTrib then
+  begin
+    FregTrib.Free;
+    FregTrib := Value;
+  end;
+end;
+
+procedure TEmpresaConfigNfse.Setrps(const Value: TEmpresaConfigRps);
+begin
+  if Value <> Frps then
+  begin
+    Frps.Free;
+    Frps := Value;
+  end;
+end;
+
+procedure TEmpresaConfigNfse.Setprefeitura(const Value: TEmpresaConfigPrefeitura);
+begin
+  if Value <> Fprefeitura then
+  begin
+    Fprefeitura.Free;
+    Fprefeitura := Value;
+  end;
+end;
+
+procedure TEmpresaConfigNfse.Setincentivo_fiscal(const Value: Boolean);
+begin
+  Fincentivo_fiscal := Value;
+  Fincentivo_fiscalHasValue := True;
+end;
+
+{ TEmpresaConfigCte }
+
+procedure TEmpresaConfigCte.SetCRT(const Value: Integer);
+begin
+  FCRT := Value;
+  FCRTHasValue := True;
+end;
+
+{ TEmpresaConfigNfcom }
+
+procedure TEmpresaConfigNfcom.SetCRT(const Value: Integer);
+begin
+  FCRT := Value;
+  FCRTHasValue := True;
+end;
+
+{ TEmpresaConfigDistribuicaoNfe }
+
+procedure TEmpresaConfigDistribuicaoNfe.Setdistribuicao_automatica(const Value: Boolean);
+begin
+  Fdistribuicao_automatica := Value;
+  Fdistribuicao_automaticaHasValue := True;
+end;
+
+procedure TEmpresaConfigDistribuicaoNfe.Setdistribuicao_intervalo_horas(const Value: Integer);
+begin
+  Fdistribuicao_intervalo_horas := Value;
+  Fdistribuicao_intervalo_horasHasValue := True;
+end;
+
+procedure TEmpresaConfigDistribuicaoNfe.Setciencia_automatica(const Value: Boolean);
+begin
+  Fciencia_automatica := Value;
+  Fciencia_automaticaHasValue := True;
+end;
+
 { TNfseCidadesAtendidas }
 
 destructor TNfseCidadesAtendidas.Destroy;
@@ -24001,32 +24603,6 @@ begin
   Fdata_emissaoHasValue := True;
 end;
 
-{ TEmpresaEndereco }
-
-procedure TEmpresaEndereco.Setcomplemento(const Value: string);
-begin
-  Fcomplemento := Value;
-  FcomplementoHasValue := True;
-end;
-
-procedure TEmpresaEndereco.Setcidade(const Value: string);
-begin
-  Fcidade := Value;
-  FcidadeHasValue := True;
-end;
-
-procedure TEmpresaEndereco.Setcodigo_pais(const Value: string);
-begin
-  Fcodigo_pais := Value;
-  Fcodigo_paisHasValue := True;
-end;
-
-procedure TEmpresaEndereco.Setpais(const Value: string);
-begin
-  Fpais := Value;
-  FpaisHasValue := True;
-end;
-
 { TRpsDadosPrestador }
 
 destructor TRpsDadosPrestador.Destroy;
@@ -24363,7 +24939,21 @@ begin
   FxMotivoHasValue := True;
 end;
 
+{ TRegTrib }
+
+procedure TRegTrib.SetregEspTrib(const Value: Integer);
+begin
+  FregEspTrib := Value;
+  FregEspTribHasValue := True;
+end;
+
 { TInfoPrestador }
+
+destructor TInfoPrestador.Destroy;
+begin
+  FregTrib.Free;
+  inherited;
+end;
 
 procedure TInfoPrestador.SetCNPJ(const Value: string);
 begin
@@ -24375,6 +24965,15 @@ procedure TInfoPrestador.SetCPF(const Value: string);
 begin
   FCPF := Value;
   FCPFHasValue := True;
+end;
+
+procedure TInfoPrestador.SetregTrib(const Value: TRegTrib);
+begin
+  if Value <> FregTrib then
+  begin
+    FregTrib.Free;
+    FregTrib := Value;
+  end;
 end;
 
 { TEnderNac }
@@ -24422,6 +25021,12 @@ procedure TEndereco.SetxLgr(const Value: string);
 begin
   FxLgr := Value;
   FxLgrHasValue := True;
+end;
+
+procedure TEndereco.SettpLgr(const Value: string);
+begin
+  FtpLgr := Value;
+  FtpLgrHasValue := True;
 end;
 
 procedure TEndereco.Setnro(const Value: string);
@@ -24659,6 +25264,12 @@ begin
     FendExt.Free;
     FendExt := Value;
   end;
+end;
+
+procedure TEnderecoSimples.SettpLgr(const Value: string);
+begin
+  FtpLgr := Value;
+  FtpLgrHasValue := True;
 end;
 
 procedure TEnderecoSimples.SetxCpl(const Value: string);
@@ -25631,292 +26242,136 @@ begin
   end;
 end;
 
-{ TEmpresa }
+{ THttpRequestDebug }
 
-constructor TEmpresa.Create;
+procedure THttpRequestDebug.Setid(const Value: string);
 begin
-  inherited;
-  Fendereco := TEmpresaEndereco.Create;
+  Fid := Value;
+  FidHasValue := True;
 end;
 
-destructor TEmpresa.Destroy;
+procedure THttpRequestDebug.Setmethod(const Value: string);
 begin
-  Fendereco.Free;
+  Fmethod := Value;
+  FmethodHasValue := True;
+end;
+
+procedure THttpRequestDebug.Seturi(const Value: string);
+begin
+  Furi := Value;
+  FuriHasValue := True;
+end;
+
+procedure THttpRequestDebug.Setheaders(const Value: string);
+begin
+  Fheaders := Value;
+  FheadersHasValue := True;
+end;
+
+procedure THttpRequestDebug.Setresponse_status_code(const Value: Integer);
+begin
+  Fresponse_status_code := Value;
+  Fresponse_status_codeHasValue := True;
+end;
+
+procedure THttpRequestDebug.Setresponse_status_reason(const Value: string);
+begin
+  Fresponse_status_reason := Value;
+  Fresponse_status_reasonHasValue := True;
+end;
+
+procedure THttpRequestDebug.Setresponse_headers(const Value: string);
+begin
+  Fresponse_headers := Value;
+  Fresponse_headersHasValue := True;
+end;
+
+procedure THttpRequestDebug.Setresponse_time(const Value: Integer);
+begin
+  Fresponse_time := Value;
+  Fresponse_timeHasValue := True;
+end;
+
+{ TDfeRequisicaoDebug }
+
+destructor TDfeRequisicaoDebug.Destroy;
+begin
+  Fhttp_request.Free;
   inherited;
 end;
 
-procedure TEmpresa.Setcreated_at(const Value: TDateTime);
+procedure TDfeRequisicaoDebug.Setcreated_at(const Value: TDateTime);
 begin
   Fcreated_at := Value;
   Fcreated_atHasValue := True;
 end;
 
-procedure TEmpresa.Setupdated_at(const Value: TDateTime);
+procedure TDfeRequisicaoDebug.Settipo(const Value: string);
 begin
-  Fupdated_at := Value;
-  Fupdated_atHasValue := True;
+  Ftipo := Value;
+  FtipoHasValue := True;
 end;
 
-procedure TEmpresa.Setinscricao_estadual(const Value: string);
+procedure TDfeRequisicaoDebug.Setlote_id(const Value: string);
 begin
-  Finscricao_estadual := Value;
-  Finscricao_estadualHasValue := True;
+  Flote_id := Value;
+  Flote_idHasValue := True;
 end;
 
-procedure TEmpresa.Setinscricao_municipal(const Value: string);
+procedure TDfeRequisicaoDebug.Setcodigo_status(const Value: Integer);
 begin
-  Finscricao_municipal := Value;
-  Finscricao_municipalHasValue := True;
+  Fcodigo_status := Value;
+  Fcodigo_statusHasValue := True;
 end;
 
-procedure TEmpresa.Setnome_fantasia(const Value: string);
+procedure TDfeRequisicaoDebug.Setmotivo_status(const Value: string);
 begin
-  Fnome_fantasia := Value;
-  Fnome_fantasiaHasValue := True;
+  Fmotivo_status := Value;
+  Fmotivo_statusHasValue := True;
 end;
 
-procedure TEmpresa.Setfone(const Value: string);
+procedure TDfeRequisicaoDebug.Sethttp_request(const Value: THttpRequestDebug);
 begin
-  Ffone := Value;
-  FfoneHasValue := True;
-end;
-
-procedure TEmpresa.Setendereco(const Value: TEmpresaEndereco);
-begin
-  if Value <> Fendereco then
+  if Value <> Fhttp_request then
   begin
-    Fendereco.Free;
-    Fendereco := Value;
+    Fhttp_request.Free;
+    Fhttp_request := Value;
   end;
 end;
 
-{ TEmpresaListagem }
+{ TDfeDebug }
 
-destructor TEmpresaListagem.Destroy;
+destructor TDfeDebug.Destroy;
 begin
-  Fdata.Free;
+  Frequisicoes.Free;
   inherited;
 end;
 
-procedure TEmpresaListagem.Set_count(const Value: Integer);
+procedure TDfeDebug.Setid(const Value: string);
 begin
-  F_count := Value;
-  F_countHasValue := True;
+  Fid := Value;
+  FidHasValue := True;
 end;
 
-procedure TEmpresaListagem.Setdata(const Value: TEmpresaList);
+procedure TDfeDebug.Settipo(const Value: string);
 begin
-  if Value <> Fdata then
+  Ftipo := Value;
+  FtipoHasValue := True;
+end;
+
+procedure TDfeDebug.Setcreated_at(const Value: TDateTime);
+begin
+  Fcreated_at := Value;
+  Fcreated_atHasValue := True;
+end;
+
+procedure TDfeDebug.Setrequisicoes(const Value: TDfeRequisicaoDebugList);
+begin
+  if Value <> Frequisicoes then
   begin
-    Fdata.Free;
-    Fdata := Value;
+    Frequisicoes.Free;
+    Frequisicoes := Value;
   end;
-end;
-
-{ TEmpresaCertificado }
-
-procedure TEmpresaCertificado.Setserial_number(const Value: string);
-begin
-  Fserial_number := Value;
-  Fserial_numberHasValue := True;
-end;
-
-procedure TEmpresaCertificado.Setissuer_name(const Value: string);
-begin
-  Fissuer_name := Value;
-  Fissuer_nameHasValue := True;
-end;
-
-procedure TEmpresaCertificado.Setnot_valid_before(const Value: TDateTime);
-begin
-  Fnot_valid_before := Value;
-  Fnot_valid_beforeHasValue := True;
-end;
-
-procedure TEmpresaCertificado.Setnot_valid_after(const Value: TDateTime);
-begin
-  Fnot_valid_after := Value;
-  Fnot_valid_afterHasValue := True;
-end;
-
-procedure TEmpresaCertificado.Setthumbprint(const Value: string);
-begin
-  Fthumbprint := Value;
-  FthumbprintHasValue := True;
-end;
-
-procedure TEmpresaCertificado.Setsubject_name(const Value: string);
-begin
-  Fsubject_name := Value;
-  Fsubject_nameHasValue := True;
-end;
-
-procedure TEmpresaCertificado.Setcpf_cnpj(const Value: string);
-begin
-  Fcpf_cnpj := Value;
-  Fcpf_cnpjHasValue := True;
-end;
-
-procedure TEmpresaCertificado.Setnome_razao_social(const Value: string);
-begin
-  Fnome_razao_social := Value;
-  Fnome_razao_socialHasValue := True;
-end;
-
-{ TEmpresaConfigNfe }
-
-procedure TEmpresaConfigNfe.SetCRT(const Value: Integer);
-begin
-  FCRT := Value;
-  FCRTHasValue := True;
-end;
-
-{ TEmpresaConfigNfce }
-
-constructor TEmpresaConfigNfce.Create;
-begin
-  inherited;
-  Fsefaz := TEmpresaConfigNfceSefaz.Create;
-end;
-
-destructor TEmpresaConfigNfce.Destroy;
-begin
-  Fsefaz.Free;
-  inherited;
-end;
-
-procedure TEmpresaConfigNfce.SetCRT(const Value: Integer);
-begin
-  FCRT := Value;
-  FCRTHasValue := True;
-end;
-
-procedure TEmpresaConfigNfce.Setsefaz(const Value: TEmpresaConfigNfceSefaz);
-begin
-  if Value <> Fsefaz then
-  begin
-    Fsefaz.Free;
-    Fsefaz := Value;
-  end;
-end;
-
-{ TEmpresaConfigNfseRegTrib }
-
-procedure TEmpresaConfigNfseRegTrib.SetopSimpNac(const Value: Integer);
-begin
-  FopSimpNac := Value;
-  FopSimpNacHasValue := True;
-end;
-
-procedure TEmpresaConfigNfseRegTrib.SetregApTribSN(const Value: Integer);
-begin
-  FregApTribSN := Value;
-  FregApTribSNHasValue := True;
-end;
-
-procedure TEmpresaConfigNfseRegTrib.SetregEspTrib(const Value: Integer);
-begin
-  FregEspTrib := Value;
-  FregEspTribHasValue := True;
-end;
-
-{ TEmpresaConfigPrefeitura }
-
-procedure TEmpresaConfigPrefeitura.Setlogin(const Value: string);
-begin
-  Flogin := Value;
-  FloginHasValue := True;
-end;
-
-procedure TEmpresaConfigPrefeitura.Setsenha(const Value: string);
-begin
-  Fsenha := Value;
-  FsenhaHasValue := True;
-end;
-
-procedure TEmpresaConfigPrefeitura.Settoken(const Value: string);
-begin
-  Ftoken := Value;
-  FtokenHasValue := True;
-end;
-
-{ TEmpresaConfigNfse }
-
-constructor TEmpresaConfigNfse.Create;
-begin
-  inherited;
-  Frps := TEmpresaConfigRps.Create;
-end;
-
-destructor TEmpresaConfigNfse.Destroy;
-begin
-  Fprefeitura.Free;
-  Frps.Free;
-  FregTrib.Free;
-  inherited;
-end;
-
-procedure TEmpresaConfigNfse.SetregTrib(const Value: TEmpresaConfigNfseRegTrib);
-begin
-  if Value <> FregTrib then
-  begin
-    FregTrib.Free;
-    FregTrib := Value;
-  end;
-end;
-
-procedure TEmpresaConfigNfse.Setrps(const Value: TEmpresaConfigRps);
-begin
-  if Value <> Frps then
-  begin
-    Frps.Free;
-    Frps := Value;
-  end;
-end;
-
-procedure TEmpresaConfigNfse.Setprefeitura(const Value: TEmpresaConfigPrefeitura);
-begin
-  if Value <> Fprefeitura then
-  begin
-    Fprefeitura.Free;
-    Fprefeitura := Value;
-  end;
-end;
-
-procedure TEmpresaConfigNfse.Setincentivo_fiscal(const Value: Boolean);
-begin
-  Fincentivo_fiscal := Value;
-  Fincentivo_fiscalHasValue := True;
-end;
-
-{ TEmpresaConfigCte }
-
-procedure TEmpresaConfigCte.SetCRT(const Value: Integer);
-begin
-  FCRT := Value;
-  FCRTHasValue := True;
-end;
-
-{ TEmpresaConfigNfcom }
-
-procedure TEmpresaConfigNfcom.SetCRT(const Value: Integer);
-begin
-  FCRT := Value;
-  FCRTHasValue := True;
-end;
-
-{ TEmpresaConfigDistribuicaoNfe }
-
-procedure TEmpresaConfigDistribuicaoNfe.Setdistribuicao_automatica(const Value: Boolean);
-begin
-  Fdistribuicao_automatica := Value;
-  Fdistribuicao_automaticaHasValue := True;
-end;
-
-procedure TEmpresaConfigDistribuicaoNfe.Setciencia_automatica(const Value: Boolean);
-begin
-  Fciencia_automatica := Value;
-  Fciencia_automaticaHasValue := True;
 end;
 
 { TDfeSefazStatus }
@@ -27002,7 +27457,7 @@ begin
   Fcreated_atHasValue := True;
 end;
 
-procedure TDistribuicaoNfeDocumento.Setnsu(const Value: Integer);
+procedure TDistribuicaoNfeDocumento.Setnsu(const Value: Int64);
 begin
   Fnsu := Value;
   FnsuHasValue := True;
@@ -27112,13 +27567,13 @@ begin
   Fuf_autorHasValue := True;
 end;
 
-procedure TDistribuicaoNfe.Setdist_nsu(const Value: Integer);
+procedure TDistribuicaoNfe.Setdist_nsu(const Value: Int64);
 begin
   Fdist_nsu := Value;
   Fdist_nsuHasValue := True;
 end;
 
-procedure TDistribuicaoNfe.Setcons_nsu(const Value: Integer);
+procedure TDistribuicaoNfe.Setcons_nsu(const Value: Int64);
 begin
   Fcons_nsu := Value;
   Fcons_nsuHasValue := True;
@@ -27176,13 +27631,13 @@ begin
   Fuf_autorHasValue := True;
 end;
 
-procedure TDistribuicaoNfePedido.Setdist_nsu(const Value: Integer);
+procedure TDistribuicaoNfePedido.Setdist_nsu(const Value: Int64);
 begin
   Fdist_nsu := Value;
   Fdist_nsuHasValue := True;
 end;
 
-procedure TDistribuicaoNfePedido.Setcons_nsu(const Value: Integer);
+procedure TDistribuicaoNfePedido.Setcons_nsu(const Value: Int64);
 begin
   Fcons_nsu := Value;
   Fcons_nsuHasValue := True;
@@ -27241,6 +27696,12 @@ procedure TDistribuicaoNfeNota.Settipo_nfe(const Value: Integer);
 begin
   Ftipo_nfe := Value;
   Ftipo_nfeHasValue := True;
+end;
+
+procedure TDistribuicaoNfeNota.Setdata_emissao(const Value: TDateTime);
+begin
+  Fdata_emissao := Value;
+  Fdata_emissaoHasValue := True;
 end;
 
 procedure TDistribuicaoNfeNota.Setvalor_nfe(const Value: Double);
@@ -35622,7 +36083,7 @@ begin
   FcSeloHasValue := True;
 end;
 
-procedure TNfeSefazIpi.SetqSelo(const Value: Integer);
+procedure TNfeSefazIpi.SetqSelo(const Value: Int64);
 begin
   FqSelo := Value;
   FqSeloHasValue := True;
@@ -36456,7 +36917,7 @@ begin
   inherited;
 end;
 
-procedure TNfeSefazVol.SetqVol(const Value: Integer);
+procedure TNfeSefazVol.SetqVol(const Value: Int64);
 begin
   FqVol := Value;
   FqVolHasValue := True;
