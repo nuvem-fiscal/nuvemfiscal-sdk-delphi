@@ -15,6 +15,7 @@ type
   TCnpjService = class;
   TContaService = class;
   TCteService = class;
+  TCteOsService = class;
   TDceService = class;
   TDebugService = class;
   TDistribuiçãoNFEService = class;
@@ -252,6 +253,15 @@ type
     /// </remarks>
     function ConsultarStatusSefazCte(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <summary>
+    /// Emitir CT-e Simplificado
+    /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
+    function EmitirCteSimp(Body: TCteSimpPedidoEmissao): TDfe;
+    /// <summary>
     /// Consultar CT-e
     /// </summary>
     /// <param name="Id">
@@ -447,6 +457,7 @@ type
     /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
     /// </param>
     function ConsultarStatusSefazCte(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
+    function EmitirCteSimp(Body: TCteSimpPedidoEmissao): TDfe;
     /// <param name="Id">
     /// ID único do CT-e gerado pela Nuvem Fiscal.
     /// </param>
@@ -506,6 +517,353 @@ type
     /// ID único da CT-e gerado pela Nuvem Fiscal.
     /// </param>
     function BaixarXmlCteProtocolo(Id: string): TBytes;
+  end;
+  
+  /// <summary>
+  /// Conhecimento de Transporte Eletrônico - Outros serviços.
+  /// </summary>
+  ICteOsService = interface(IInvokable)
+    ['{0ECC5575-C3DE-44D0-9C39-B7EF65DBC176}']
+    /// <summary>
+    /// Listar CT-e OS
+    /// </summary>
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Referencia">
+    /// Seu identificador único para o documento.
+    /// </param>
+    /// <param name="Ambiente">
+    /// Identificação do Ambiente.
+    /// 
+    /// Valores aceitos: homologacao, producao
+    /// </param>
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
+    /// <param name="Serie">
+    /// Série do DF-e.
+    /// </param>
+    /// <remarks>
+    /// Retorna a lista de CT-e OS de acordo com os critérios de busca utilizados. Os CT-e OS são retornados ordenados pela data da criação, com os mais recentes aparecendo primeiro.
+    /// </remarks>
+    function ListarCteOs(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string; Serie: string): TDfeListagem;
+    /// <summary>
+    /// Emitir CT-e OS
+    /// </summary>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
+    function EmitirCteOs(Body: TCteOsPedidoEmissao): TDfe;
+    /// <summary>
+    /// Consultar evento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarEventoCteOs(Id: string): TDfeEvento;
+    /// <summary>
+    /// Baixar PDF do evento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfEventoCteOs(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML do evento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlEventoCteOs(Id: string): TBytes;
+    /// <summary>
+    /// Consulta do Status do Serviço na SEFAZ Autorizadora
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF/CNPJ do emitente.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Autorizador">
+    /// Ambiente Autorizador.
+    /// 
+    /// Autorizadores disponíveis: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// 
+    /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
+    /// </param>
+    /// <remarks>
+    /// Consulta do status do serviço prestado pelo Portal da Secretaria de Fazenda Estadual.
+    /// 
+    /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 3.0.0a, item 4.6.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
+    /// </remarks>
+    function ConsultarStatusSefazCteOs(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
+    /// <summary>
+    /// Consultar CT-e OS
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Consulta os detalhes de um CT-e OS já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de CT-e OS e a Nuvem Fiscal irá retornar as informações do CT-e OS correspondente.
+    /// </remarks>
+    function ConsultarCteOs(Id: string): TDfe;
+    /// <summary>
+    /// Consultar o cancelamento do CT-e OS
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarCancelamentoCteOs(Id: string): TDfeCancelamento;
+    /// <summary>
+    /// Cancelar um CT-e OS autorizado
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
+    function CancelarCteOs(Body: TCteOsPedidoCancelamento; Id: string): TDfeCancelamento;
+    /// <summary>
+    /// Baixar PDF do cancelamento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfCancelamentoCteOs(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML do cancelamento
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCancelamentoCteOs(Id: string): TBytes;
+    /// <summary>
+    /// Consultar a solicitação de correção do CT-e OS
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarCartaCorrecaoCteOs(Id: string): TCteOsCartaCorrecao;
+    /// <summary>
+    /// Solicitar correção do CT-e OS
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// É possível enviar até 20 correções diferentes, sendo que será válido sempre a última correção enviada.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por requisição.
+    /// </remarks>
+    function CriarCartaCorrecaoCteOs(Body: TCteOsPedidoCartaCorrecao; Id: string): TCteOsCartaCorrecao;
+    /// <summary>
+    /// Baixar PDF da carta de correção
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfCartaCorrecaoCteOs(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML da carta de correção
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCartaCorrecaoCteOs(Id: string): TBytes;
+    /// <summary>
+    /// Baixar PDF do DACTE
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    function BaixarPdfCteOs(Id: string; Logotipo: Boolean): TBytes;
+    /// <summary>
+    /// Sincroniza dados no CT-e OS a partir da SEFAZ
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Realiza a sincronização dos dados a partir da consulta da situação atual do CT-e OS na Base de Dados do Portal da Secretaria de Fazenda Estadual.
+    /// 
+    /// **Cenários de uso**:
+    /// * Sincronizar um CT-e OS que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizado na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
+    /// * Sincronizar um CT-e OS que se encontra com o status `autorizado`na Nuvem Fiscal, mas está cancelado na SEFAZ.
+    /// * Sincronizar todos os eventos de Cancelamento e Carta de Correção de um CT-e OS que porventura não tenham sido feitos a partir da Nuvem Fiscal.
+    /// 
+    /// **Informações adicionais**:
+    /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
+    /// - Consumo: 1 unidade por evento sincronizado ou requisição.
+    /// </remarks>
+    function SincronizarCteOs(Id: string): TDfeSincronizacao;
+    /// <summary>
+    /// Baixar XML do CT-e OS processado
+    /// </summary>
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o XML do conhecimento enviado para a SEFAZ, complementado com a informação do protocolo de autorização de uso (TAG raiz `cteProc`).
+    /// 
+    /// O XML só estará disponível nesse endpoint caso o conhecimento tenha sido autorizado pela SEFAZ. Para obter o XML nos demais casos, utilize o endpoint `GET /cteos/{id}/xml/conhecimento`.
+    /// </remarks>
+    function BaixarXmlCteOs(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML do CT-e OS
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <remarks>
+    /// Utilize esse endpoint para obter o XML do conhecimento enviado para a SEFAZ.
+    /// 
+    /// O XML estará disponível nesse endpoint mesmo em casos que o conhecimento tenha sido rejeitado.
+    /// </remarks>
+    function BaixarXmlCteOsConhecimento(Id: string): TBytes;
+    /// <summary>
+    /// Baixar XML do Protocolo da SEFAZ
+    /// </summary>
+    /// <param name="Id">
+    /// ID único da CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCteOsProtocolo(Id: string): TBytes;
+  end;
+  
+  TCteOsService = class(TRestService, ICteOsService)
+  public
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="CpfCnpj">
+    /// Filtrar pelo CPF ou CNPJ do emitente.
+    /// 
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Referencia">
+    /// Seu identificador único para o documento.
+    /// </param>
+    /// <param name="Ambiente">
+    /// Identificação do Ambiente.
+    /// 
+    /// Valores aceitos: homologacao, producao
+    /// </param>
+    /// <param name="Chave">
+    /// Chave de acesso do DF-e.
+    /// </param>
+    /// <param name="Serie">
+    /// Série do DF-e.
+    /// </param>
+    function ListarCteOs(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string; Serie: string): TDfeListagem;
+    function EmitirCteOs(Body: TCteOsPedidoEmissao): TDfe;
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarEventoCteOs(Id: string): TDfeEvento;
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfEventoCteOs(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlEventoCteOs(Id: string): TBytes;
+    /// <param name="CpfCnpj">
+    /// CPF/CNPJ do emitente.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    /// <param name="Autorizador">
+    /// Ambiente Autorizador.
+    /// 
+    /// Autorizadores disponíveis: `MT`, `MS`, `MG`, `PR`, `RS`, `SP`, `SVRS`, `SVSP`, `AN`.
+    /// 
+    /// *Caso não seja informado, será utilizado o ambiente autorizador da UF do emitente.*
+    /// </param>
+    function ConsultarStatusSefazCteOs(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarCteOs(Id: string): TDfe;
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarCancelamentoCteOs(Id: string): TDfeCancelamento;
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function CancelarCteOs(Body: TCteOsPedidoCancelamento; Id: string): TDfeCancelamento;
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfCancelamentoCteOs(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCancelamentoCteOs(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function ConsultarCartaCorrecaoCteOs(Id: string): TCteOsCartaCorrecao;
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function CriarCartaCorrecaoCteOs(Body: TCteOsPedidoCartaCorrecao; Id: string): TCteOsCartaCorrecao;
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarPdfCartaCorrecaoCteOs(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCartaCorrecaoCteOs(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    /// <param name="Logotipo">
+    /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
+    /// </param>
+    function BaixarPdfCteOs(Id: string; Logotipo: Boolean): TBytes;
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function SincronizarCteOs(Id: string): TDfeSincronizacao;
+    /// <param name="Id">
+    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCteOs(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCteOsConhecimento(Id: string): TBytes;
+    /// <param name="Id">
+    /// ID único da CT-e OS gerado pela Nuvem Fiscal.
+    /// </param>
+    function BaixarXmlCteOsProtocolo(Id: string): TBytes;
   end;
   
   /// <summary>
@@ -1445,6 +1803,22 @@ type
     /// </param>
     function AlterarConfigCte(Body: TEmpresaConfigCte; CpfCnpj: string): TEmpresaConfigCte;
     /// <summary>
+    /// Consultar configuração de CT-e OS
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function ConsultarConfigCteOs(CpfCnpj: string): TEmpresaConfigCteOs;
+    /// <summary>
+    /// Alterar configuração de CT-e OS
+    /// </summary>
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function AlterarConfigCteOs(Body: TEmpresaConfigCteOs; CpfCnpj: string): TEmpresaConfigCteOs;
+    /// <summary>
     /// Consultar configuração de DC-e
     /// </summary>
     /// <param name="CpfCnpj">
@@ -1651,6 +2025,16 @@ type
     /// Utilize o valor sem máscara.
     /// </param>
     function AlterarConfigCte(Body: TEmpresaConfigCte; CpfCnpj: string): TEmpresaConfigCte;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function ConsultarConfigCteOs(CpfCnpj: string): TEmpresaConfigCteOs;
+    /// <param name="CpfCnpj">
+    /// CPF ou CNPJ da empresa.
+    /// Utilize o valor sem máscara.
+    /// </param>
+    function AlterarConfigCteOs(Body: TEmpresaConfigCteOs; CpfCnpj: string): TEmpresaConfigCteOs;
     /// <param name="CpfCnpj">
     /// CPF ou CNPJ da empresa.
     /// Utilize o valor sem máscara.
@@ -4338,6 +4722,10 @@ type
     /// </summary>
     function Cte: ICteService;
     /// <summary>
+    /// Conhecimento de Transporte Eletrônico - Outros serviços.
+    /// </summary>
+    function CteOs: ICteOsService;
+    /// <summary>
     /// Declaração de Conteúdo Eletrônica.
     /// </summary>
     function Dce: IDceService;
@@ -4388,6 +4776,7 @@ type
     function Cnpj: ICnpjService;
     function Conta: IContaService;
     function Cte: ICteService;
+    function CteOs: ICteOsService;
     function Dce: IDceService;
     function Debug: IDebugService;
     function DistribuiçãoNFE: IDistribuiçãoNFEService;
@@ -4577,6 +4966,20 @@ begin
   Result := Converter.TDfeSefazStatusFromJson(Response.ContentAsString);
 end;
 
+function TCteService.EmitirCteSimp(Body: TCteSimpPedidoEmissao): TDfe;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cte/simp', 'POST');
+  Request.AddBody(Converter.TCteSimpPedidoEmissaoToJson(Body));
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeFromJson(Response.ContentAsString);
+end;
+
 function TCteService.ConsultarCte(Id: string): TDfe;
 var
   Request: IRestRequest;
@@ -4750,6 +5153,272 @@ var
   Response: IRestResponse;
 begin
   Request := CreateRequest('/cte/{id}/xml/protocolo', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+{ TCteOsService }
+
+function TCteOsService.ListarCteOs(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string; Serie: string): TDfeListagem;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos', 'GET');
+  Request.AddQueryParam('$top', IntToStr(Top));
+  Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
+  Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('referencia', Referencia);
+  Request.AddQueryParam('ambiente', Ambiente);
+  Request.AddQueryParam('chave', Chave);
+  Request.AddQueryParam('serie', Serie);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeListagemFromJson(Response.ContentAsString);
+end;
+
+function TCteOsService.EmitirCteOs(Body: TCteOsPedidoEmissao): TDfe;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos', 'POST');
+  Request.AddBody(Converter.TCteOsPedidoEmissaoToJson(Body));
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeFromJson(Response.ContentAsString);
+end;
+
+function TCteOsService.ConsultarEventoCteOs(Id: string): TDfeEvento;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/eventos/{id}', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeEventoFromJson(Response.ContentAsString);
+end;
+
+function TCteOsService.BaixarPdfEventoCteOs(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/eventos/{id}/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TCteOsService.BaixarXmlEventoCteOs(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/eventos/{id}/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TCteOsService.ConsultarStatusSefazCteOs(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/sefaz/status', 'GET');
+  Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('autorizador', Autorizador);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeSefazStatusFromJson(Response.ContentAsString);
+end;
+
+function TCteOsService.ConsultarCteOs(Id: string): TDfe;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/{id}', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeFromJson(Response.ContentAsString);
+end;
+
+function TCteOsService.ConsultarCancelamentoCteOs(Id: string): TDfeCancelamento;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/{id}/cancelamento', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeCancelamentoFromJson(Response.ContentAsString);
+end;
+
+function TCteOsService.CancelarCteOs(Body: TCteOsPedidoCancelamento; Id: string): TDfeCancelamento;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/{id}/cancelamento', 'POST');
+  Request.AddBody(Converter.TCteOsPedidoCancelamentoToJson(Body));
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeCancelamentoFromJson(Response.ContentAsString);
+end;
+
+function TCteOsService.BaixarPdfCancelamentoCteOs(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/{id}/cancelamento/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TCteOsService.BaixarXmlCancelamentoCteOs(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/{id}/cancelamento/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TCteOsService.ConsultarCartaCorrecaoCteOs(Id: string): TCteOsCartaCorrecao;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/{id}/carta-correcao', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TCteOsCartaCorrecaoFromJson(Response.ContentAsString);
+end;
+
+function TCteOsService.CriarCartaCorrecaoCteOs(Body: TCteOsPedidoCartaCorrecao; Id: string): TCteOsCartaCorrecao;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/{id}/carta-correcao', 'POST');
+  Request.AddBody(Converter.TCteOsPedidoCartaCorrecaoToJson(Body));
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TCteOsCartaCorrecaoFromJson(Response.ContentAsString);
+end;
+
+function TCteOsService.BaixarPdfCartaCorrecaoCteOs(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/{id}/carta-correcao/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TCteOsService.BaixarXmlCartaCorrecaoCteOs(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/{id}/carta-correcao/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TCteOsService.BaixarPdfCteOs(Id: string; Logotipo: Boolean): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/{id}/pdf', 'GET');
+  Request.AddUrlParam('id', Id);
+  Request.AddQueryParam('logotipo', BoolToParam(Logotipo));
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TCteOsService.SincronizarCteOs(Id: string): TDfeSincronizacao;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/{id}/sincronizar', 'POST');
+  Request.AddUrlParam('id', Id);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TDfeSincronizacaoFromJson(Response.ContentAsString);
+end;
+
+function TCteOsService.BaixarXmlCteOs(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/{id}/xml', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TCteOsService.BaixarXmlCteOsConhecimento(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/{id}/xml/conhecimento', 'GET');
+  Request.AddUrlParam('id', Id);
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Response.ContentAsBytes;
+end;
+
+function TCteOsService.BaixarXmlCteOsProtocolo(Id: string): TBytes;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/cteos/{id}/xml/protocolo', 'GET');
   Request.AddUrlParam('id', Id);
   Response := Request.Execute;
   CheckError(Response);
@@ -5293,6 +5962,34 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Converter.TEmpresaConfigCteFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.ConsultarConfigCteOs(CpfCnpj: string): TEmpresaConfigCteOs;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/cteos', 'GET');
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigCteOsFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.AlterarConfigCteOs(Body: TEmpresaConfigCteOs; CpfCnpj: string): TEmpresaConfigCteOs;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/{cpf_cnpj}/cteos', 'PUT');
+  Request.AddBody(Converter.TEmpresaConfigCteOsToJson(Body));
+  Request.AddUrlParam('cpf_cnpj', CpfCnpj);
+  Request.AddHeader('Content-Type', 'application/json');
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaConfigCteOsFromJson(Response.ContentAsString);
 end;
 
 function TEmpresaService.ConsultarConfigDce(CpfCnpj: string): TEmpresaConfigDce;
@@ -7139,6 +7836,11 @@ end;
 function TNuvemFiscalClient.Cte: ICteService;
 begin
   Result := TCteService.Create(Config);
+end;
+
+function TNuvemFiscalClient.CteOs: ICteOsService;
+begin
+  Result := TCteOsService.Create(Config);
 end;
 
 function TNuvemFiscalClient.Dce: IDceService;
