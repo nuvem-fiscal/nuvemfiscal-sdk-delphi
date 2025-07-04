@@ -5372,14 +5372,20 @@ type
     FxDescServ: string;
     FcNBS: string;
     FcNBSHasValue: Boolean;
+    FcNatOp: string;
+    FcNatOpHasValue: Boolean;
+    FcSitTrib: string;
+    FcSitTribHasValue: Boolean;
     procedure SetcTribMun(const Value: string);
     procedure SetCNAE(const Value: string);
     procedure SetcNBS(const Value: string);
+    procedure SetcNatOp(const Value: string);
+    procedure SetcSitTrib(const Value: string);
   public
     /// <summary>
     /// Código de tributação nacional do ISSQN.
-    /// - **Ambiente Nacional**: O código deve conter exatamente 6 dígitos numéricos, sendo 2 para Item (LC 116/2003), 2 para Subitem (LC 116/2003) e 2 para Desdobro Nacional. Exemplo: `010701`.
-    /// - **Envio direto para a Prefeitura**: Em muitos municípios, continua sendo exigido apenas o código conforme a LC 116/2003, totalizando 4 dígitos numéricos (2 para Item e 2 para Subitem). Exemplo: `0107`.
+    /// **Ambiente Nacional**: O código deve conter exatamente 6 dígitos numéricos, sendo 2 para Item (LC 116/2003), 2 para Subitem (LC 116/2003) e 2 para Desdobro Nacional. Exemplo: `010701`.
+    /// **Envio direto para a Prefeitura**: Em muitos municípios, continua sendo exigido apenas o código conforme a LC 116/2003, totalizando 4 dígitos numéricos (2 para Item e 2 para Subitem). Exemplo: `0107`.
     /// </summary>
     property cTribNac: string read FcTribNac write FcTribNac;
     /// <summary>
@@ -5403,6 +5409,20 @@ type
     /// </summary>
     property cNBS: string read FcNBS write SetcNBS;
     property cNBSHasValue: Boolean read FcNBSHasValue write FcNBSHasValue;
+    /// <summary>
+    /// Código de natureza da operação.
+    /// 
+    /// **Atenção**: Para emissões pelo Sistema Nacional NFS-e, esse campo é ignorado.
+    /// </summary>
+    property cNatOp: string read FcNatOp write SetcNatOp;
+    property cNatOpHasValue: Boolean read FcNatOpHasValue write FcNatOpHasValue;
+    /// <summary>
+    /// Código de situação tributária.
+    /// 
+    /// **Atenção**: Para emissões pelo Sistema Nacional NFS-e, esse campo é ignorado.
+    /// </summary>
+    property cSitTrib: string read FcSitTrib write SetcSitTrib;
+    property cSitTribHasValue: Boolean read FcSitTribHasValue write FcSitTribHasValue;
   end;
   
   /// <summary>
@@ -31868,6 +31888,18 @@ procedure TCServ.SetcNBS(const Value: string);
 begin
   FcNBS := Value;
   FcNBSHasValue := True;
+end;
+
+procedure TCServ.SetcNatOp(const Value: string);
+begin
+  FcNatOp := Value;
+  FcNatOpHasValue := True;
+end;
+
+procedure TCServ.SetcSitTrib(const Value: string);
+begin
+  FcSitTrib := Value;
+  FcSitTribHasValue := True;
 end;
 
 { TComExterior }

@@ -12036,6 +12036,10 @@ begin
     Json.ObjAddProp(Result, 'xDescServ', Self.stringToJsonValue(Source.xDescServ));
     if Source.cNBSHasValue then
       Json.ObjAddProp(Result, 'cNBS', Self.stringToJsonValue(Source.cNBS));
+    if Source.cNatOpHasValue then
+      Json.ObjAddProp(Result, 'cNatOp', Self.stringToJsonValue(Source.cNatOp));
+    if Source.cSitTribHasValue then
+      Json.ObjAddProp(Result, 'cSitTrib', Self.stringToJsonValue(Source.cSitTrib));
   except
     Result.Free;
     raise;
@@ -12075,6 +12079,10 @@ begin
       Result.xDescServ := Self.stringFromJsonValue(JValue);
     if Json.ObjContains(Source, 'cNBS', JValue) then
       Result.cNBS := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cNatOp', JValue) then
+      Result.cNatOp := Self.stringFromJsonValue(JValue);
+    if Json.ObjContains(Source, 'cSitTrib', JValue) then
+      Result.cSitTrib := Self.stringFromJsonValue(JValue);
   except
     Result.Free;
     raise;
