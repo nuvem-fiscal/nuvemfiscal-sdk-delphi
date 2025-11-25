@@ -215,21 +215,21 @@ type
     /// Consultar evento
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function ConsultarEventoCte(Id: string): TDfeEvento;
     /// <summary>
     /// Baixar PDF do evento
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarPdfEventoCte(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do evento
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarXmlEventoCte(Id: string): TBytes;
     /// <summary>
@@ -249,7 +249,7 @@ type
     /// <remarks>
     /// Consulta do status do serviço prestado pelo Portal da Secretaria de Fazenda Estadual.
     /// 
-    /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 3.0.0a, item 4.6.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
+    /// A API mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 3.0.0a, item 4.6.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
     /// </remarks>
     function ConsultarStatusSefazCte(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <summary>
@@ -265,24 +265,24 @@ type
     /// Consultar CT-e
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     /// <remarks>
-    /// Consulta os detalhes de um CT-e já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de CT-e e a Nuvem Fiscal irá retornar as informações do CT-e correspondente.
+    /// Consulta os detalhes de um CT-e já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de CT-e e a API irá retornar as informações do CT-e correspondente.
     /// </remarks>
     function ConsultarCte(Id: string): TDfe;
     /// <summary>
     /// Consultar o cancelamento do CT-e
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function ConsultarCancelamentoCte(Id: string): TDfeCancelamento;
     /// <summary>
     /// Cancelar um CT-e autorizado
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     /// <remarks>
     /// **Informações adicionais**:
@@ -294,28 +294,28 @@ type
     /// Baixar PDF do cancelamento
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function BaixarPdfCancelamentoCte(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do cancelamento
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function BaixarXmlCancelamentoCte(Id: string): TBytes;
     /// <summary>
     /// Consultar a solicitação de correção do CT-e
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function ConsultarCartaCorrecaoCte(Id: string): TCteCartaCorrecao;
     /// <summary>
     /// Solicitar correção do CT-e
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     /// <remarks>
     /// É possível enviar até 20 correções diferentes, sendo que será válido sempre a última correção enviada.
@@ -329,21 +329,21 @@ type
     /// Baixar PDF da carta de correção
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function BaixarPdfCartaCorrecaoCte(Id: string): TBytes;
     /// <summary>
     /// Baixar XML da carta de correção
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function BaixarXmlCartaCorrecaoCte(Id: string): TBytes;
     /// <summary>
     /// Baixar PDF do DACTE
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
@@ -353,15 +353,15 @@ type
     /// Sincroniza dados no CT-e a partir da SEFAZ
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     /// <remarks>
     /// Realiza a sincronização dos dados a partir da consulta da situação atual da CT-e na Base de Dados do Portal da Secretaria de Fazenda Estadual.
     /// 
     /// **Cenários de uso**:
-    /// * Sincronizar um CT-e que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizado na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
-    /// * Sincronizar um CT-e que se encontra com o status `autorizado`na Nuvem Fiscal, mas está cancelado na SEFAZ.
-    /// * Sincronizar todos os eventos de Cancelamento e Carta de Correção de um CT-e que porventura não tenham sido feitos a partir da Nuvem Fiscal.
+    /// * Sincronizar um CT-e que se encontra com o status `erro` na API, mas está autorizado na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
+    /// * Sincronizar um CT-e que se encontra com o status `autorizado`na API, mas está cancelado na SEFAZ.
+    /// * Sincronizar todos os eventos de Cancelamento e Carta de Correção de um CT-e que porventura não tenham sido feitos a partir da API.
     /// 
     /// **Informações adicionais**:
     /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
@@ -372,7 +372,7 @@ type
     /// Baixar XML do CT-e processado
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o XML do conhecimento enviado para a SEFAZ, complementado com a informação do protocolo de autorização de uso (TAG raiz `cteProc`).
@@ -384,7 +384,7 @@ type
     /// Baixar XML do CT-e
     /// </summary>
     /// <param name="Id">
-    /// ID único da CT-e gerado pela Nuvem Fiscal.
+    /// ID único da CT-e gerado pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o XML do conhecimento enviado para a SEFAZ.
@@ -396,7 +396,7 @@ type
     /// Baixar XML do Protocolo da SEFAZ
     /// </summary>
     /// <param name="Id">
-    /// ID único da CT-e gerado pela Nuvem Fiscal.
+    /// ID único da CT-e gerado pela API.
     /// </param>
     function BaixarXmlCteProtocolo(Id: string): TBytes;
   end;
@@ -434,15 +434,15 @@ type
     function ListarCte(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string; Serie: string): TDfeListagem;
     function EmitirCte(Body: TCtePedidoEmissao): TDfe;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function ConsultarEventoCte(Id: string): TDfeEvento;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarPdfEventoCte(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarXmlEventoCte(Id: string): TBytes;
     /// <param name="CpfCnpj">
@@ -459,62 +459,62 @@ type
     function ConsultarStatusSefazCte(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     function EmitirCteSimp(Body: TCteSimpPedidoEmissao): TDfe;
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function ConsultarCte(Id: string): TDfe;
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function ConsultarCancelamentoCte(Id: string): TDfeCancelamento;
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function CancelarCte(Body: TCtePedidoCancelamento; Id: string): TDfeCancelamento;
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function BaixarPdfCancelamentoCte(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function BaixarXmlCancelamentoCte(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function ConsultarCartaCorrecaoCte(Id: string): TCteCartaCorrecao;
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function CriarCartaCorrecaoCte(Body: TCtePedidoCartaCorrecao; Id: string): TCteCartaCorrecao;
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function BaixarPdfCartaCorrecaoCte(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function BaixarXmlCartaCorrecaoCte(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
     /// </param>
     function BaixarPdfCte(Id: string; Logotipo: Boolean): TBytes;
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function SincronizarCte(Id: string): TDfeSincronizacao;
     /// <param name="Id">
-    /// ID único do CT-e gerado pela Nuvem Fiscal.
+    /// ID único do CT-e gerado pela API.
     /// </param>
     function BaixarXmlCte(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da CT-e gerado pela Nuvem Fiscal.
+    /// ID único da CT-e gerado pela API.
     /// </param>
     function BaixarXmlCteConhecimento(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da CT-e gerado pela Nuvem Fiscal.
+    /// ID único da CT-e gerado pela API.
     /// </param>
     function BaixarXmlCteProtocolo(Id: string): TBytes;
   end;
@@ -572,21 +572,21 @@ type
     /// Consultar evento
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function ConsultarEventoCteOs(Id: string): TDfeEvento;
     /// <summary>
     /// Baixar PDF do evento
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarPdfEventoCteOs(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do evento
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarXmlEventoCteOs(Id: string): TBytes;
     /// <summary>
@@ -606,31 +606,31 @@ type
     /// <remarks>
     /// Consulta do status do serviço prestado pelo Portal da Secretaria de Fazenda Estadual.
     /// 
-    /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 3.0.0a, item 4.6.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
+    /// A API mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 3.0.0a, item 4.6.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
     /// </remarks>
     function ConsultarStatusSefazCteOs(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <summary>
     /// Consultar CT-e OS
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     /// <remarks>
-    /// Consulta os detalhes de um CT-e OS já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de CT-e OS e a Nuvem Fiscal irá retornar as informações do CT-e OS correspondente.
+    /// Consulta os detalhes de um CT-e OS já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de CT-e OS e a API irá retornar as informações do CT-e OS correspondente.
     /// </remarks>
     function ConsultarCteOs(Id: string): TDfe;
     /// <summary>
     /// Consultar o cancelamento do CT-e OS
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function ConsultarCancelamentoCteOs(Id: string): TDfeCancelamento;
     /// <summary>
     /// Cancelar um CT-e OS autorizado
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     /// <remarks>
     /// **Informações adicionais**:
@@ -642,28 +642,28 @@ type
     /// Baixar PDF do cancelamento
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function BaixarPdfCancelamentoCteOs(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do cancelamento
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function BaixarXmlCancelamentoCteOs(Id: string): TBytes;
     /// <summary>
     /// Consultar a solicitação de correção do CT-e OS
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function ConsultarCartaCorrecaoCteOs(Id: string): TCteOsCartaCorrecao;
     /// <summary>
     /// Solicitar correção do CT-e OS
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     /// <remarks>
     /// É possível enviar até 20 correções diferentes, sendo que será válido sempre a última correção enviada.
@@ -677,21 +677,21 @@ type
     /// Baixar PDF da carta de correção
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function BaixarPdfCartaCorrecaoCteOs(Id: string): TBytes;
     /// <summary>
     /// Baixar XML da carta de correção
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function BaixarXmlCartaCorrecaoCteOs(Id: string): TBytes;
     /// <summary>
     /// Baixar PDF do DACTE
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
@@ -701,15 +701,15 @@ type
     /// Sincroniza dados no CT-e OS a partir da SEFAZ
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     /// <remarks>
     /// Realiza a sincronização dos dados a partir da consulta da situação atual do CT-e OS na Base de Dados do Portal da Secretaria de Fazenda Estadual.
     /// 
     /// **Cenários de uso**:
-    /// * Sincronizar um CT-e OS que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizado na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
-    /// * Sincronizar um CT-e OS que se encontra com o status `autorizado`na Nuvem Fiscal, mas está cancelado na SEFAZ.
-    /// * Sincronizar todos os eventos de Cancelamento e Carta de Correção de um CT-e OS que porventura não tenham sido feitos a partir da Nuvem Fiscal.
+    /// * Sincronizar um CT-e OS que se encontra com o status `erro` na API, mas está autorizado na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
+    /// * Sincronizar um CT-e OS que se encontra com o status `autorizado`na API, mas está cancelado na SEFAZ.
+    /// * Sincronizar todos os eventos de Cancelamento e Carta de Correção de um CT-e OS que porventura não tenham sido feitos a partir da API.
     /// 
     /// **Informações adicionais**:
     /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
@@ -720,7 +720,7 @@ type
     /// Baixar XML do CT-e OS processado
     /// </summary>
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o XML do conhecimento enviado para a SEFAZ, complementado com a informação do protocolo de autorização de uso (TAG raiz `cteProc`).
@@ -732,7 +732,7 @@ type
     /// Baixar XML do CT-e OS
     /// </summary>
     /// <param name="Id">
-    /// ID único da CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único da CT-e OS gerado pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o XML do conhecimento enviado para a SEFAZ.
@@ -744,7 +744,7 @@ type
     /// Baixar XML do Protocolo da SEFAZ
     /// </summary>
     /// <param name="Id">
-    /// ID único da CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único da CT-e OS gerado pela API.
     /// </param>
     function BaixarXmlCteOsProtocolo(Id: string): TBytes;
   end;
@@ -782,15 +782,15 @@ type
     function ListarCteOs(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string; Serie: string): TDfeListagem;
     function EmitirCteOs(Body: TCteOsPedidoEmissao): TDfe;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function ConsultarEventoCteOs(Id: string): TDfeEvento;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarPdfEventoCteOs(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarXmlEventoCteOs(Id: string): TBytes;
     /// <param name="CpfCnpj">
@@ -806,62 +806,62 @@ type
     /// </param>
     function ConsultarStatusSefazCteOs(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function ConsultarCteOs(Id: string): TDfe;
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function ConsultarCancelamentoCteOs(Id: string): TDfeCancelamento;
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function CancelarCteOs(Body: TCteOsPedidoCancelamento; Id: string): TDfeCancelamento;
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function BaixarPdfCancelamentoCteOs(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function BaixarXmlCancelamentoCteOs(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function ConsultarCartaCorrecaoCteOs(Id: string): TCteOsCartaCorrecao;
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function CriarCartaCorrecaoCteOs(Body: TCteOsPedidoCartaCorrecao; Id: string): TCteOsCartaCorrecao;
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function BaixarPdfCartaCorrecaoCteOs(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function BaixarXmlCartaCorrecaoCteOs(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
     /// </param>
     function BaixarPdfCteOs(Id: string; Logotipo: Boolean): TBytes;
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function SincronizarCteOs(Id: string): TDfeSincronizacao;
     /// <param name="Id">
-    /// ID único do CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único do CT-e OS gerado pela API.
     /// </param>
     function BaixarXmlCteOs(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único da CT-e OS gerado pela API.
     /// </param>
     function BaixarXmlCteOsConhecimento(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da CT-e OS gerado pela Nuvem Fiscal.
+    /// ID único da CT-e OS gerado pela API.
     /// </param>
     function BaixarXmlCteOsProtocolo(Id: string): TBytes;
   end;
@@ -932,31 +932,31 @@ type
     /// <remarks>
     /// Consulta do status do serviço prestado pelo Portal da Secretaria de Fazenda Estadual.
     /// 
-    /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ.
+    /// A API mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ.
     /// </remarks>
     function ConsultarStatusSefazDce(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <summary>
     /// Consultar DC-e
     /// </summary>
     /// <param name="Id">
-    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// ID único da DC-e gerada pela API.
     /// </param>
     /// <remarks>
-    /// Consulta os detalhes de uma DC-e já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de DC-e e a Nuvem Fiscal irá retornar as informações da DC-e correspondente.
+    /// Consulta os detalhes de uma DC-e já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de DC-e e a API irá retornar as informações da DC-e correspondente.
     /// </remarks>
     function ConsultarDce(Id: string): TDfe;
     /// <summary>
     /// Consultar o cancelamento da DC-e
     /// </summary>
     /// <param name="Id">
-    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// ID único da DC-e gerada pela API.
     /// </param>
     function ConsultarCancelamentoDce(Id: string): TDfeCancelamento;
     /// <summary>
     /// Cancelar uma DC-e autorizada
     /// </summary>
     /// <param name="Id">
-    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// ID único da DC-e gerada pela API.
     /// </param>
     /// <remarks>
     /// **Informações adicionais**:
@@ -968,21 +968,21 @@ type
     /// Baixar XML do cancelamento
     /// </summary>
     /// <param name="Id">
-    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// ID único da DC-e gerada pela API.
     /// </param>
     function BaixarXmlCancelamentoDce(Id: string): TBytes;
     /// <summary>
     /// Baixar PDF do DACE
     /// </summary>
     /// <param name="Id">
-    /// ID único da DC-e gerado pela Nuvem Fiscal.
+    /// ID único da DC-e gerado pela API.
     /// </param>
     function BaixarPdfDce(Id: string): TBytes;
     /// <summary>
     /// Baixar XML da DC-e processada
     /// </summary>
     /// <param name="Id">
-    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// ID único da DC-e gerada pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o XML da DC-e enviada para a SEFAZ, complementado com a informação do protocolo de autorização de uso (TAG raiz `dceProc`).
@@ -994,7 +994,7 @@ type
     /// Baixar XML da DC-e
     /// </summary>
     /// <param name="Id">
-    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// ID único da DC-e gerada pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o XML da DC-e enviada para a SEFAZ.
@@ -1006,7 +1006,7 @@ type
     /// Baixar XML do Protocolo da SEFAZ
     /// </summary>
     /// <param name="Id">
-    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// ID único da DC-e gerada pela API.
     /// </param>
     function BaixarXmlDceProtocolo(Id: string): TBytes;
   end;
@@ -1056,42 +1056,42 @@ type
     /// </param>
     function ConsultarStatusSefazDce(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <param name="Id">
-    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// ID único da DC-e gerada pela API.
     /// </param>
     function ConsultarDce(Id: string): TDfe;
     /// <param name="Id">
-    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// ID único da DC-e gerada pela API.
     /// </param>
     function ConsultarCancelamentoDce(Id: string): TDfeCancelamento;
     /// <param name="Id">
-    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// ID único da DC-e gerada pela API.
     /// </param>
     function CancelarDce(Body: TDcePedidoCancelamento; Id: string): TDfeCancelamento;
     /// <param name="Id">
-    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// ID único da DC-e gerada pela API.
     /// </param>
     function BaixarXmlCancelamentoDce(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da DC-e gerado pela Nuvem Fiscal.
+    /// ID único da DC-e gerado pela API.
     /// </param>
     function BaixarPdfDce(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// ID único da DC-e gerada pela API.
     /// </param>
     function BaixarXmlDce(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// ID único da DC-e gerada pela API.
     /// </param>
     function BaixarXmlDceDeclaracao(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da DC-e gerada pela Nuvem Fiscal.
+    /// ID único da DC-e gerada pela API.
     /// </param>
     function BaixarXmlDceProtocolo(Id: string): TBytes;
   end;
   
   /// <summary>
   /// Endpoints auxiliares voltados à análise técnica e depuração de documentos fiscais.
-  /// Permitem rastrear o processamento de DF-es na Nuvem Fiscal, incluindo o conteúdo
+  /// Permitem rastrear o processamento de DF-es na API, incluindo o conteúdo
   /// original recebido e as requisições realizadas aos serviços autorizadores (SEFAZ, prefeituras, etc).
   /// </summary>
   IDebugService = interface(IInvokable)
@@ -1104,7 +1104,7 @@ type
     /// </param>
     /// <remarks>
     /// Este endpoint retorna apenas o corpo da requisição HTTP enviada ao autorizador,
-    /// preservando o conteúdo exatamente como foi armazenado pela Nuvem Fiscal.
+    /// preservando o conteúdo exatamente como foi armazenado pela API.
     /// 
     /// **Informações retornadas**:
     /// - Envelope SOAP da requisição, possivelmente compactado.
@@ -1138,11 +1138,11 @@ type
     /// Debug de DF-e
     /// </summary>
     /// <param name="Id">
-    /// ID único do documento fiscal gerado pela Nuvem Fiscal.
+    /// ID único do documento fiscal gerado pela API.
     /// </param>
     /// <remarks>
     /// Este endpoint retorna informações detalhadas de debug sobre o processamento de um documento fiscal eletrônico (DFe),
-    /// como NF-e, NFC-e, MDF-e, CT-e, NFS-e, dentre outros. Ele permite inspecionar o conteúdo original enviado à Nuvem Fiscal e analisar
+    /// como NF-e, NFC-e, MDF-e, CT-e, NFS-e, dentre outros. Ele permite inspecionar o conteúdo original enviado à API e analisar
     /// todas as interações realizadas com os serviços autorizadores (SEFAZ ou prefeituras) durante o fluxo de emissão.
     /// 
     /// **Informações retornadas**:
@@ -1160,15 +1160,15 @@ type
     /// Payload original recebido
     /// </summary>
     /// <param name="Id">
-    /// ID do documento fiscal gerado pela Nuvem Fiscal.
+    /// ID do documento fiscal gerado pela API.
     /// </param>
     /// <remarks>
-    /// Este endpoint retorna o conteúdo original recebido pela Nuvem Fiscal no momento da criação do documento fiscal.
+    /// Este endpoint retorna o conteúdo original recebido pela API no momento da criação do documento fiscal.
     /// 
     /// **Cenários de uso**:
     /// - Inspeção detalhada dos dados enviados à API.
     /// - Verificação de divergências entre o payload fornecido e o processado.
-    /// - Encaminhamento do conteúdo original ao suporte da Nuvem Fiscal.
+    /// - Encaminhamento do conteúdo original ao suporte da API.
     /// </remarks>
     function DebugDfeOriginalPayload(Id: string): TBytes;
   end;
@@ -1184,11 +1184,11 @@ type
     /// </param>
     function DebugHttpResponseContent(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do documento fiscal gerado pela Nuvem Fiscal.
+    /// ID único do documento fiscal gerado pela API.
     /// </param>
     function DebugDfe(Id: string): TDfeDebug;
     /// <param name="Id">
-    /// ID do documento fiscal gerado pela Nuvem Fiscal.
+    /// ID do documento fiscal gerado pela API.
     /// </param>
     function DebugDfeOriginalPayload(Id: string): TBytes;
   end;
@@ -1308,7 +1308,7 @@ type
     /// Consultar documento
     /// </summary>
     /// <param name="Id">
-    /// ID único do documento gerado pela Nuvem Fiscal.
+    /// ID único do documento gerado pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter as informações resumidas ou documento fiscal de interesse da pessoa ou empresa interessada.
@@ -1318,7 +1318,7 @@ type
     /// Baixar PDF do documento
     /// </summary>
     /// <param name="Id">
-    /// ID único do documento gerado pela Nuvem Fiscal.
+    /// ID único do documento gerado pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o PDF do documento.
@@ -1331,7 +1331,7 @@ type
     /// Baixar XML do documento
     /// </summary>
     /// <param name="Id">
-    /// ID único do documento gerado pela Nuvem Fiscal.
+    /// ID único do documento gerado pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o XML das informações resumidas ou documento fiscal de interesse da pessoa ou empresa interessada.
@@ -1391,10 +1391,10 @@ type
     /// Consultar manifestação
     /// </summary>
     /// <param name="Id">
-    /// ID único da manifestação gerado pela Nuvem Fiscal.
+    /// ID único da manifestação gerado pela API.
     /// </param>
     /// <remarks>
-    /// Consulta os detalhes de uma manifestação de NF-e já existente. Forneça o ID único obtido de uma requisição de manifestação ou de listagem de manifestações e a Nuvem Fiscal irá retornar as informações da manifestação correspondente.
+    /// Consulta os detalhes de uma manifestação de NF-e já existente. Forneça o ID único obtido de uma requisição de manifestação ou de listagem de manifestações e a API irá retornar as informações da manifestação correspondente.
     /// </remarks>
     function ConsultarManifestacaoNfe(Id: string): TDistribuicaoNfeEvento;
     /// <summary>
@@ -1438,7 +1438,7 @@ type
     /// posteriormente, uma manifestação conclusiva dentro de um prazo legal.
     /// 
     /// Para facilitar essa gestão e o cumprimento dos prazos legais de manifestação,
-    /// a API da Nuvem Fiscal permite listar as notas que ainda não
+    /// a API permite listar as notas que ainda não
     /// possuem manifestação, ajudando os usuários a identificar rapidamente as
     /// notas que necessitam de ação.
     /// 
@@ -1461,7 +1461,7 @@ type
     /// Consultar distribuição
     /// </summary>
     /// <param name="Id">
-    /// ID único da distribuição de NF-e gerada pela Nuvem Fiscal.
+    /// ID único da distribuição de NF-e gerada pela API.
     /// </param>
     function ConsultarDistribuicaoNfe(Id: string): TDistribuicaoNfe;
   end;
@@ -1526,15 +1526,15 @@ type
     /// </param>
     function ListarDocumentoDistribuicaoNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; DistNsu: Int64; TipoDocumento: string; FormaDistribuicao: string; ChaveAcesso: string): TDistribuicaoNfeDocumentoListagem;
     /// <param name="Id">
-    /// ID único do documento gerado pela Nuvem Fiscal.
+    /// ID único do documento gerado pela API.
     /// </param>
     function ConsultarDocumentoDistribuicaoNfe(Id: string): TDistribuicaoNfeDocumento;
     /// <param name="Id">
-    /// ID único do documento gerado pela Nuvem Fiscal.
+    /// ID único do documento gerado pela API.
     /// </param>
     function BaixarPdfDocumentoDistribuicaoNfe(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do documento gerado pela Nuvem Fiscal.
+    /// ID único do documento gerado pela API.
     /// </param>
     function BaixarXmlDocumentoDistribuicaoNfe(Id: string): TBytes;
     /// <param name="Top">
@@ -1562,7 +1562,7 @@ type
     /// </param>
     function ManifestarNfe(Body: TDistribuicaoNfePedidoManifestacao): TDistribuicaoNfeEvento;
     /// <param name="Id">
-    /// ID único da manifestação gerado pela Nuvem Fiscal.
+    /// ID único da manifestação gerado pela API.
     /// </param>
     function ConsultarManifestacaoNfe(Id: string): TDistribuicaoNfeEvento;
     /// <param name="Top">
@@ -1598,7 +1598,7 @@ type
     /// </param>
     function ListarNfeSemManifestacao(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Ambiente: string; Conclusiva: Boolean): TDistribuicaoNfeNotaListagem;
     /// <param name="Id">
-    /// ID único da distribuição de NF-e gerada pela Nuvem Fiscal.
+    /// ID único da distribuição de NF-e gerada pela API.
     /// </param>
     function ConsultarDistribuicaoNfe(Id: string): TDistribuicaoNfe;
   end;
@@ -1641,7 +1641,7 @@ type
     /// ID único do e-mail.
     /// 
     /// Esse parâmetro é obtido após o envio do email por qualquer endpoint da
-    /// API da Nuvem Fiscal que realize disparos de email.
+    /// API que realize disparos de email.
     /// 
     /// Exemplos:
     /// * <a href="#tag/Nfe/operation/EnviarEmailNfe">Envio de XML e PDF de NF-e</a>.
@@ -1688,7 +1688,7 @@ type
     /// ID único do e-mail.
     /// 
     /// Esse parâmetro é obtido após o envio do email por qualquer endpoint da
-    /// API da Nuvem Fiscal que realize disparos de email.
+    /// API que realize disparos de email.
     /// 
     /// Exemplos:
     /// * <a href="#tag/Nfe/operation/EnviarEmailNfe">Envio de XML e PDF de NF-e</a>.
@@ -1730,6 +1730,37 @@ type
     /// Cadastre uma nova empresa (emitente ou prestador) à sua conta.
     /// </remarks>
     function CriarEmpresa(Body: TEmpresa): TEmpresa;
+    /// <summary>
+    /// Listar certificados
+    /// </summary>
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="ExpiresIn">
+    /// Filtrar certificados que expiram dentro de X dias.
+    /// 
+    /// Informe um número inteiro correspondente à quantidade de dias até o vencimento.
+    /// Exemplos:
+    ///  - expires_in=30 -&gt; certificados que vencem nos próximos 30 dias.
+    ///  - expires_in=7  -&gt; certificados que vencem nos próximos 7 dias.
+    /// </param>
+    /// <param name="IncludeExpired">
+    /// Indicar se os certificados já vencidos devem ser incluídos no resultado.
+    /// 
+    /// Valores aceitos:
+    ///  - `true`: incluir certificados vencidos.
+    ///  - `false`: exibir apenas certificados válidos.
+    /// </param>
+    /// <remarks>
+    /// Retorna a lista dos certificados associadas à sua conta. Os certificados são retornados ordenados pela data da criação, com as mais recentes aparecendo primeiro.
+    /// </remarks>
+    function ListarCertificados(Top: Integer; Skip: Integer; Inlinecount: Boolean; ExpiresIn: Integer; IncludeExpired: Boolean): TEmpresaCertificadoListagem;
     /// <summary>
     /// Consultar empresa
     /// </summary>
@@ -1985,6 +2016,31 @@ type
     /// </param>
     function ListarEmpresas(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string): TEmpresaListagem;
     function CriarEmpresa(Body: TEmpresa): TEmpresa;
+    /// <param name="Top">
+    /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
+    /// </param>
+    /// <param name="Skip">
+    /// Quantidade de objetos que serão ignorados antes da lista começar a ser retornada.
+    /// </param>
+    /// <param name="Inlinecount">
+    /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
+    /// </param>
+    /// <param name="ExpiresIn">
+    /// Filtrar certificados que expiram dentro de X dias.
+    /// 
+    /// Informe um número inteiro correspondente à quantidade de dias até o vencimento.
+    /// Exemplos:
+    ///  - expires_in=30 -&gt; certificados que vencem nos próximos 30 dias.
+    ///  - expires_in=7  -&gt; certificados que vencem nos próximos 7 dias.
+    /// </param>
+    /// <param name="IncludeExpired">
+    /// Indicar se os certificados já vencidos devem ser incluídos no resultado.
+    /// 
+    /// Valores aceitos:
+    ///  - `true`: incluir certificados vencidos.
+    ///  - `false`: exibir apenas certificados válidos.
+    /// </param>
+    function ListarCertificados(Top: Integer; Skip: Integer; Inlinecount: Boolean; ExpiresIn: Integer; IncludeExpired: Boolean): TEmpresaCertificadoListagem;
     /// <param name="CpfCnpj">
     /// CPF ou CNPJ da empresa.
     /// Utilize o valor sem máscara.
@@ -2175,21 +2231,21 @@ type
     /// Consultar evento do MDF-e
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function ConsultarEventoMdfe(Id: string): TDfeEvento;
     /// <summary>
     /// Baixar PDF do evento
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarPdfEventoMdfe(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do evento
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarXmlEventoMdfe(Id: string): TBytes;
     /// <summary>
@@ -2230,10 +2286,10 @@ type
     /// Consultar lote de MDF-e
     /// </summary>
     /// <param name="Id">
-    /// ID único do lote gerado pela Nuvem Fiscal.
+    /// ID único do lote gerado pela API.
     /// </param>
     /// <remarks>
-    /// Consulta os detalhes de um lote já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de lotes e a Nuvem Fiscal irá retornar as informações do lote correspondente.
+    /// Consulta os detalhes de um lote já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de lotes e a API irá retornar as informações do lote correspondente.
     /// </remarks>
     function ConsultarLoteMdfe(Id: string): TDfeLote;
     /// <summary>
@@ -2261,24 +2317,24 @@ type
     /// <remarks>
     /// Consulta do status do serviço prestado pelo Portal da Secretaria de Fazenda Estadual.
     /// 
-    /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 3.0.0a, item 4.6.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
+    /// A API mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 3.0.0a, item 4.6.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
     /// </remarks>
     function ConsultarStatusSefazMdfe(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <summary>
     /// Consultar manifesto
     /// </summary>
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     /// <remarks>
-    /// Consulta os detalhes de um manifesto já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de manifestos e a Nuvem Fiscal irá retornar as informações do manifesto correspondente.
+    /// Consulta os detalhes de um manifesto já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de manifestos e a API irá retornar as informações do manifesto correspondente.
     /// </remarks>
     function ConsultarMdfe(Id: string): TDfe;
     /// <summary>
     /// Consultar o cancelamento do MDF-e
     /// </summary>
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function ConsultarCancelamentoMdfe(Id: string): TDfeCancelamento;
     /// <summary>
@@ -2288,7 +2344,7 @@ type
     /// Dados do cancelamento.
     /// </param>
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     /// <remarks>
     /// **Informações adicionais**:
@@ -2300,28 +2356,28 @@ type
     /// Baixar PDF do cancelamento
     /// </summary>
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function BaixarPdfCancelamentoMdfe(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do cancelamento
     /// </summary>
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function BaixarXmlCancelamentoMdfe(Id: string): TBytes;
     /// <summary>
     /// Consultar encerramento do MDF-e
     /// </summary>
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function ConsultarEncerramentoMdfe(Id: string): TMdfeEncerramento;
     /// <summary>
     /// Encerrar um MDF-e autorizado
     /// </summary>
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     /// <remarks>
     /// **Informações adicionais**:
@@ -2333,21 +2389,21 @@ type
     /// Baixar PDF do encerramento
     /// </summary>
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function BaixarPdfEncerramentoMdfe(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do encerramento
     /// </summary>
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function BaixarXmlEncerramentoMdfe(Id: string): TBytes;
     /// <summary>
     /// Incluir um condutor em um MDF-e autorizado
     /// </summary>
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     /// <remarks>
     /// **Informações adicionais**:
@@ -2359,7 +2415,7 @@ type
     /// Incluir um DF-e em um MDF-e autorizado
     /// </summary>
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     /// <remarks>
     /// **Informações adicionais**:
@@ -2371,7 +2427,7 @@ type
     /// Baixar PDF do DAMDFE
     /// </summary>
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
@@ -2381,15 +2437,15 @@ type
     /// Sincroniza dados no MDF-e a partir da SEFAZ
     /// </summary>
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     /// <remarks>
     /// Realiza a sincronização dos dados a partir da consulta da situação atual da MDF-e na Base de Dados do Portal da Secretaria de Fazenda Estadual.
     /// 
     /// **Cenários de uso**:
-    /// * Sincronizar um manifesto que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizado na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
-    /// * Sincronizar um manifesto que se encontra com o status `autorizado`na Nuvem Fiscal, mas está cancelado ou encerrado na SEFAZ.
-    /// * Sincronizar todos os eventos de Cancelamento, Encerramento, Inclusão de condutor e Inclusão de DF-e de um manifesto que porventura não tenham sido feitos a partir da Nuvem Fiscal.
+    /// * Sincronizar um manifesto que se encontra com o status `erro` na API, mas está autorizado na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
+    /// * Sincronizar um manifesto que se encontra com o status `autorizado`na API, mas está cancelado ou encerrado na SEFAZ.
+    /// * Sincronizar todos os eventos de Cancelamento, Encerramento, Inclusão de condutor e Inclusão de DF-e de um manifesto que porventura não tenham sido feitos a partir da API.
     /// 
     /// **Informações adicionais**:
     /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
@@ -2400,7 +2456,7 @@ type
     /// Baixar XML do MDF-e processado
     /// </summary>
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o XML do manifesto enviado para a SEFAZ, complementado com a informação do protocolo de autorização ou denegação de uso (TAG raiz `mdfeProc`).
@@ -2412,7 +2468,7 @@ type
     /// Baixar XML do MDF-e
     /// </summary>
     /// <param name="Id">
-    /// ID único da MDF-e gerado pela Nuvem Fiscal.
+    /// ID único da MDF-e gerado pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o XML do manifesto enviado para a SEFAZ.
@@ -2424,7 +2480,7 @@ type
     /// Baixar XML do Protocolo da SEFAZ
     /// </summary>
     /// <param name="Id">
-    /// ID único da MDF-e gerado pela Nuvem Fiscal.
+    /// ID único da MDF-e gerado pela API.
     /// </param>
     function BaixarXmlMdfeProtocolo(Id: string): TBytes;
   end;
@@ -2462,15 +2518,15 @@ type
     function ListarMdfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string; Chave: string; Serie: string): TDfeListagem;
     function EmitirMdfe(Body: TMdfePedidoEmissao): TDfe;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function ConsultarEventoMdfe(Id: string): TDfeEvento;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarPdfEventoMdfe(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarXmlEventoMdfe(Id: string): TBytes;
     /// <param name="Top">
@@ -2494,7 +2550,7 @@ type
     function ListarLotesMdfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
     function EmitirLoteMdfe(Body: TMdfePedidoEmissaoLote): TDfeLote;
     /// <param name="Id">
-    /// ID único do lote gerado pela Nuvem Fiscal.
+    /// ID único do lote gerado pela API.
     /// </param>
     function ConsultarLoteMdfe(Id: string): TDfeLote;
     /// <param name="CpfCnpj">
@@ -2515,73 +2571,73 @@ type
     /// </param>
     function ConsultarStatusSefazMdfe(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function ConsultarMdfe(Id: string): TDfe;
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function ConsultarCancelamentoMdfe(Id: string): TDfeCancelamento;
     /// <param name="Body">
     /// Dados do cancelamento.
     /// </param>
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function CancelarMdfe(Body: TMdfePedidoCancelamento; Id: string): TDfeCancelamento;
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function BaixarPdfCancelamentoMdfe(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function BaixarXmlCancelamentoMdfe(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function ConsultarEncerramentoMdfe(Id: string): TMdfeEncerramento;
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function EncerrarMdfe(Body: TMdfePedidoEncerramento; Id: string): TMdfeEncerramento;
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function BaixarPdfEncerramentoMdfe(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function BaixarXmlEncerramentoMdfe(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function IncluirCondutorMdfe(Body: TMdfePedidoInclusaoCondutor; Id: string): TMdfeInclusaoCondutor;
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function IncluirDfeMdfe(Body: TMdfePedidoInclusaoDfe; Id: string): TMdfeInclusaoDfe;
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
     /// </param>
     function BaixarPdfMdfe(Id: string; Logotipo: Boolean): TBytes;
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function SincronizarMdfe(Id: string): TDfeSincronizacao;
     /// <param name="Id">
-    /// ID único do MDF-e gerado pela Nuvem Fiscal.
+    /// ID único do MDF-e gerado pela API.
     /// </param>
     function BaixarXmlMdfe(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da MDF-e gerado pela Nuvem Fiscal.
+    /// ID único da MDF-e gerado pela API.
     /// </param>
     function BaixarXmlMdfeManifesto(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da MDF-e gerado pela Nuvem Fiscal.
+    /// ID único da MDF-e gerado pela API.
     /// </param>
     function BaixarXmlMdfeProtocolo(Id: string): TBytes;
   end;
@@ -2648,7 +2704,7 @@ type
     /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="DfeId">
-    /// ID único gerado pela Nuvem Fiscal para o documento fiscal.
+    /// ID único gerado pela API para o documento fiscal.
     /// </param>
     /// <remarks>
     /// Retorna a lista de eventos vinculados a um documento fiscal de acordo com os critérios de busca utilizados. Os eventos são retornados ordenados pela data da criação, com as mais recentes aparecendo primeiro.
@@ -2658,21 +2714,21 @@ type
     /// Consultar evento
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function ConsultarEventoNfce(Id: string): TDfeEvento;
     /// <summary>
     /// Baixar PDF do evento
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarPdfEventoNfce(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do evento
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarXmlEventoNfce(Id: string): TBytes;
     /// <summary>
@@ -2688,21 +2744,21 @@ type
     /// Consultar a inutilização de sequência de numeração
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function ConsultarInutilizacaoNfce(Id: string): TDfeInutilizacao;
     /// <summary>
     /// Baixar PDF da inutilização
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarPdfInutilizacaoNfce(Id: string): TBytes;
     /// <summary>
     /// Baixar XML da inutilização
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarXmlInutilizacaoNfce(Id: string): TBytes;
     /// <summary>
@@ -2743,10 +2799,10 @@ type
     /// Consultar lote de NFC-e
     /// </summary>
     /// <param name="Id">
-    /// ID único do lote gerado pela Nuvem Fiscal.
+    /// ID único do lote gerado pela API.
     /// </param>
     /// <remarks>
-    /// Consulta os detalhes de um lote já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de lotes e a Nuvem Fiscal irá retornar as informações do lote correspondente.
+    /// Consulta os detalhes de um lote já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de lotes e a API irá retornar as informações do lote correspondente.
     /// </remarks>
     function ConsultarLoteNfce(Id: string): TDfeLote;
     /// <summary>
@@ -2858,31 +2914,31 @@ type
     /// <remarks>
     /// Consulta do status do serviço prestado pelo Portal da Secretaria de Fazenda Estadual.
     /// 
-    /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 7.0, item 5.5.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
+    /// A API mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 7.0, item 5.5.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
     /// </remarks>
     function ConsultarStatusSefazNfce(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <summary>
     /// Consultar NFC-e
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     /// <remarks>
-    /// Consulta os detalhes de uma NFC-e já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de notas e a Nuvem Fiscal irá retornar as informações da nota correspondente.
+    /// Consulta os detalhes de uma NFC-e já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de notas e a API irá retornar as informações da nota correspondente.
     /// </remarks>
     function ConsultarNfce(Id: string): TDfe;
     /// <summary>
     /// Consultar o cancelamento da NFC-e
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     function ConsultarCancelamentoNfce(Id: string): TDfeCancelamento;
     /// <summary>
     /// Cancelar uma NFC-e autorizada
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     /// <remarks>
     /// **Informações adicionais**:
@@ -2894,21 +2950,21 @@ type
     /// Baixar PDF do cancelamento
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     function BaixarPdfCancelamentoNfce(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do cancelamento
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     function BaixarXmlCancelamentoNfce(Id: string): TBytes;
     /// <summary>
     /// Enviar e-mail
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     /// <remarks>
     /// Envia o XML e PDF da nota via email.
@@ -2922,7 +2978,7 @@ type
     /// Comandos ESC/POS para impressão do DANFCE
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     /// <param name="Modelo">
     /// Modelo da impressora:
@@ -2961,7 +3017,7 @@ type
     /// Baixar PDF do DANFCE
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
@@ -3030,15 +3086,15 @@ type
     /// Sincroniza dados na NFC-e a partir da SEFAZ
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     /// <remarks>
     /// Realiza a sincronização dos dados a partir da consulta da situação atual da NFC-e na Base de Dados do Portal da Secretaria de Fazenda Estadual.
     /// 
     /// **Cenários de uso**:
-    /// * Sincronizar uma nota que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizada na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
-    /// * Sincronizar uma nota que se encontra com o status `autorizado`na Nuvem Fiscal, mas está cancelada na SEFAZ.
-    /// * Sincronizar todos os eventos de Cancelamento, Carta de Correção e EPEC de uma nota que porventura não tenham sido feitos a partir da Nuvem Fiscal.
+    /// * Sincronizar uma nota que se encontra com o status `erro` na API, mas está autorizada na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
+    /// * Sincronizar uma nota que se encontra com o status `autorizado`na API, mas está cancelada na SEFAZ.
+    /// * Sincronizar todos os eventos de Cancelamento, Carta de Correção e EPEC de uma nota que porventura não tenham sido feitos a partir da API.
     /// 
     /// **Informações adicionais**:
     /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
@@ -3049,7 +3105,7 @@ type
     /// Baixar XML da NFC-e processada
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o XML da nota enviado para a SEFAZ, complementado com a informação do protocolo de autorização ou denegação de uso (TAG raiz `nfeProc`).
@@ -3061,7 +3117,7 @@ type
     /// Baixar XML da NFC-e
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o XML da nota enviado para a SEFAZ.
@@ -3073,7 +3129,7 @@ type
     /// Baixar XML do Protocolo da SEFAZ
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     function BaixarXmlNfceProtocolo(Id: string): TBytes;
   end;
@@ -3120,32 +3176,32 @@ type
     /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="DfeId">
-    /// ID único gerado pela Nuvem Fiscal para o documento fiscal.
+    /// ID único gerado pela API para o documento fiscal.
     /// </param>
     function ListarEventosNfce(Top: Integer; Skip: Integer; Inlinecount: Boolean; DfeId: string): TDfeEventoListagem;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function ConsultarEventoNfce(Id: string): TDfeEvento;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarPdfEventoNfce(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarXmlEventoNfce(Id: string): TBytes;
     function InutilizarNumeracaoNfce(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function ConsultarInutilizacaoNfce(Id: string): TDfeInutilizacao;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarPdfInutilizacaoNfce(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarXmlInutilizacaoNfce(Id: string): TBytes;
     /// <param name="Top">
@@ -3169,7 +3225,7 @@ type
     function ListarLotesNfce(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
     function EmitirLoteNfce(Body: TNfePedidoEmissaoLote): TDfeLote;
     /// <param name="Id">
-    /// ID único do lote gerado pela Nuvem Fiscal.
+    /// ID único do lote gerado pela API.
     /// </param>
     function ConsultarLoteNfce(Id: string): TDfeLote;
     /// <param name="Logotipo">
@@ -3249,31 +3305,31 @@ type
     /// </param>
     function ConsultarStatusSefazNfce(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     function ConsultarNfce(Id: string): TDfe;
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     function ConsultarCancelamentoNfce(Id: string): TDfeCancelamento;
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     function CancelarNfce(Body: TNfePedidoCancelamento; Id: string): TDfeCancelamento;
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     function BaixarPdfCancelamentoNfce(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     function BaixarXmlCancelamentoNfce(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     function EnviarEmailNfce(Body: TDfePedidoEnvioEmail; Id: string): TEmailStatusResponse;
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     /// <param name="Modelo">
     /// Modelo da impressora:
@@ -3304,7 +3360,7 @@ type
     /// </param>
     function BaixarEscPosNfce(Id: string; Modelo: Integer; Colunas: Integer; QrcodeLateral: Boolean): TBytes;
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
@@ -3370,19 +3426,19 @@ type
     /// </param>
     function BaixarPdfNfce(Id: string; Logotipo: Boolean; NomeFantasia: Boolean; MensagemRodape: string; Resumido: Boolean; QrcodeLateral: Boolean; Largura: Integer; Margem: string): TBytes;
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     function SincronizarNfce(Id: string): TDfeSincronizacao;
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     function BaixarXmlNfce(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     function BaixarXmlNfceNota(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da NFC-e gerado pela Nuvem Fiscal.
+    /// ID único da NFC-e gerado pela API.
     /// </param>
     function BaixarXmlNfceProtocolo(Id: string): TBytes;
   end;
@@ -3453,31 +3509,31 @@ type
     /// <remarks>
     /// Consulta do status do serviço prestado pelo Portal da Secretaria de Fazenda Estadual.
     /// 
-    /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ.
+    /// A API mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ.
     /// </remarks>
     function ConsultarStatusSefazNfcom(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <summary>
     /// Consultar NFCom
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// ID único da NFCom gerada pela API.
     /// </param>
     /// <remarks>
-    /// Consulta os detalhes de uma NFCom já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de NFCom e a Nuvem Fiscal irá retornar as informações da NFCom correspondente.
+    /// Consulta os detalhes de uma NFCom já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de NFCom e a API irá retornar as informações da NFCom correspondente.
     /// </remarks>
     function ConsultarNfcom(Id: string): TDfe;
     /// <summary>
     /// Consultar o cancelamento da NFCom
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// ID único da NFCom gerada pela API.
     /// </param>
     function ConsultarCancelamentoNfcom(Id: string): TDfeCancelamento;
     /// <summary>
     /// Cancelar uma NFCom autorizada
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// ID único da NFCom gerada pela API.
     /// </param>
     /// <remarks>
     /// **Informações adicionais**:
@@ -3489,14 +3545,14 @@ type
     /// Baixar XML do cancelamento
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// ID único da NFCom gerada pela API.
     /// </param>
     function BaixarXmlCancelamentoNfcom(Id: string): TBytes;
     /// <summary>
     /// Baixar PDF do DANFE-COM
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFCom gerado pela Nuvem Fiscal.
+    /// ID único da NFCom gerado pela API.
     /// </param>
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
@@ -3506,7 +3562,7 @@ type
     /// Baixar XML da NFCom processada
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// ID único da NFCom gerada pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o XML da nota enviada para a SEFAZ, complementado com a informação do protocolo de autorização de uso (TAG raiz `nfcomProc`).
@@ -3518,7 +3574,7 @@ type
     /// Baixar XML da NFCom
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// ID único da NFCom gerada pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o XML da nota enviada para a SEFAZ.
@@ -3530,7 +3586,7 @@ type
     /// Baixar XML do Protocolo da SEFAZ
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// ID único da NFCom gerada pela API.
     /// </param>
     function BaixarXmlNfcomProtocolo(Id: string): TBytes;
   end;
@@ -3580,38 +3636,38 @@ type
     /// </param>
     function ConsultarStatusSefazNfcom(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <param name="Id">
-    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// ID único da NFCom gerada pela API.
     /// </param>
     function ConsultarNfcom(Id: string): TDfe;
     /// <param name="Id">
-    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// ID único da NFCom gerada pela API.
     /// </param>
     function ConsultarCancelamentoNfcom(Id: string): TDfeCancelamento;
     /// <param name="Id">
-    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// ID único da NFCom gerada pela API.
     /// </param>
     function CancelarNfcom(Body: TNfcomPedidoCancelamento; Id: string): TDfeCancelamento;
     /// <param name="Id">
-    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// ID único da NFCom gerada pela API.
     /// </param>
     function BaixarXmlCancelamentoNfcom(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da NFCom gerado pela Nuvem Fiscal.
+    /// ID único da NFCom gerado pela API.
     /// </param>
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
     /// </param>
     function BaixarPdfNfcom(Id: string; Logotipo: Boolean): TBytes;
     /// <param name="Id">
-    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// ID único da NFCom gerada pela API.
     /// </param>
     function BaixarXmlNfcom(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// ID único da NFCom gerada pela API.
     /// </param>
     function BaixarXmlNfcomNota(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da NFCom gerada pela Nuvem Fiscal.
+    /// ID único da NFCom gerada pela API.
     /// </param>
     function BaixarXmlNfcomProtocolo(Id: string): TBytes;
   end;
@@ -3733,7 +3789,7 @@ type
     /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="DfeId">
-    /// ID único gerado pela Nuvem Fiscal para o documento fiscal.
+    /// ID único gerado pela API para o documento fiscal.
     /// </param>
     /// <remarks>
     /// Retorna a lista de eventos vinculados a um documento fiscal de acordo com os critérios de busca utilizados. Os eventos são retornados ordenados pela data da criação, com as mais recentes aparecendo primeiro.
@@ -3743,21 +3799,21 @@ type
     /// Consultar evento
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function ConsultarEventoNfe(Id: string): TDfeEvento;
     /// <summary>
     /// Baixar PDF do evento
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarPdfEventoNfe(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do evento
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarXmlEventoNfe(Id: string): TBytes;
     /// <summary>
@@ -3773,21 +3829,21 @@ type
     /// Consultar a inutilização de sequência de numeração
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function ConsultarInutilizacaoNfe(Id: string): TDfeInutilizacao;
     /// <summary>
     /// Baixar PDF da inutilização
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarPdfInutilizacaoNfe(Id: string): TBytes;
     /// <summary>
     /// Baixar XML da inutilização
     /// </summary>
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarXmlInutilizacaoNfe(Id: string): TBytes;
     /// <summary>
@@ -3828,10 +3884,10 @@ type
     /// Consultar lote de NF-e
     /// </summary>
     /// <param name="Id">
-    /// ID único do lote gerado pela Nuvem Fiscal.
+    /// ID único do lote gerado pela API.
     /// </param>
     /// <remarks>
-    /// Consulta os detalhes de um lote já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de lotes e a Nuvem Fiscal irá retornar as informações do lote correspondente.
+    /// Consulta os detalhes de um lote já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de lotes e a API irá retornar as informações do lote correspondente.
     /// </remarks>
     function ConsultarLoteNfe(Id: string): TDfeLote;
     /// <summary>
@@ -3914,31 +3970,31 @@ type
     /// <remarks>
     /// Consulta do status do serviço prestado pelo Portal da Secretaria de Fazenda Estadual.
     /// 
-    /// A Nuvem Fiscal mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 7.0, item 5.5.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
+    /// A API mantém a última consulta em cache por 5 minutos, evitando sobrecarregar desnecessariamente os servidores da SEFAZ (conforme orientação do MOC - versão 7.0, item 5.5.3). Dessa forma, você poderá chamar esse endpoint quantas vezes quiser, sem preocupar-se em ter o seu CNPJ bloqueado por consumo indevido (Rejeição 656).
     /// </remarks>
     function ConsultarStatusSefazNfe(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <summary>
     /// Consultar NF-e
     /// </summary>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     /// <remarks>
-    /// Consulta os detalhes de uma NF-e já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de notas e a Nuvem Fiscal irá retornar as informações da nota correspondente.
+    /// Consulta os detalhes de uma NF-e já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de notas e a API irá retornar as informações da nota correspondente.
     /// </remarks>
     function ConsultarNfe(Id: string): TDfe;
     /// <summary>
     /// Consultar o cancelamento da NF-e
     /// </summary>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function ConsultarCancelamentoNfe(Id: string): TDfeCancelamento;
     /// <summary>
     /// Cancelar uma NF-e autorizada
     /// </summary>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     /// <remarks>
     /// **Informações adicionais**:
@@ -3950,21 +4006,21 @@ type
     /// Baixar PDF do cancelamento
     /// </summary>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function BaixarPdfCancelamentoNfe(Id: string): TBytes;
     /// <summary>
     /// Baixar XML do cancelamento
     /// </summary>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function BaixarXmlCancelamentoNfe(Id: string): TBytes;
     /// <summary>
     /// Consultar a solicitação de correção da NF-e
     /// </summary>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function ConsultarCartaCorrecaoNfe(Id: string): TDfeCartaCorrecao;
     /// <summary>
@@ -3974,7 +4030,7 @@ type
     /// Contém os dados do pedido para carta de correção.
     /// </param>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     /// <remarks>
     /// É possível enviar até 20 correções diferentes, sendo que será válido sempre a última correção enviada.
@@ -3988,21 +4044,21 @@ type
     /// Baixar PDF da carta de correção
     /// </summary>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function BaixarPdfCartaCorrecaoNfe(Id: string): TBytes;
     /// <summary>
     /// Baixar XML da carta de correção
     /// </summary>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function BaixarXmlCartaCorrecaoNfe(Id: string): TBytes;
     /// <summary>
     /// Enviar e-mail
     /// </summary>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     /// <remarks>
     /// Envia o XML e PDF da nota via email.
@@ -4016,7 +4072,7 @@ type
     /// Baixar PDF do DANFE
     /// </summary>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
@@ -4056,15 +4112,15 @@ type
     /// Sincroniza dados na NF-e a partir da SEFAZ
     /// </summary>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     /// <remarks>
     /// Realiza a sincronização dos dados a partir da consulta da situação atual da NF-e na Base de Dados do Portal da Secretaria de Fazenda Estadual.
     /// 
     /// **Cenários de uso**:
-    /// * Sincronizar uma nota que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizada na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
-    /// * Sincronizar uma nota que se encontra com o status `autorizado`na Nuvem Fiscal, mas está cancelada na SEFAZ.
-    /// * Sincronizar todos os eventos de Cancelamento, Carta de Correção e EPEC de uma nota que porventura não tenham sido feitos a partir da Nuvem Fiscal.
+    /// * Sincronizar uma nota que se encontra com o status `erro` na API, mas está autorizada na SEFAZ (útil em casos de erros de transmissão com a SEFAZ, como instabilidades e timeouts).
+    /// * Sincronizar uma nota que se encontra com o status `autorizado`na API, mas está cancelada na SEFAZ.
+    /// * Sincronizar todos os eventos de Cancelamento, Carta de Correção e EPEC de uma nota que porventura não tenham sido feitos a partir da API.
     /// 
     /// **Informações adicionais**:
     /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
@@ -4075,7 +4131,7 @@ type
     /// Baixar XML da NF-e processada
     /// </summary>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o XML da nota enviado para a SEFAZ, complementado com a informação do protocolo de autorização ou denegação de uso (TAG raiz `nfeProc`).
@@ -4087,7 +4143,7 @@ type
     /// Baixar XML da NF-e
     /// </summary>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     /// <remarks>
     /// Utilize esse endpoint para obter o XML da nota enviado para a SEFAZ.
@@ -4099,7 +4155,7 @@ type
     /// Baixar XML do Protocolo da SEFAZ
     /// </summary>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function BaixarXmlNfeProtocolo(Id: string): TBytes;
   end;
@@ -4170,32 +4226,32 @@ type
     /// Inclui no JSON de resposta, na propriedade `@count`, o número total de registros que o filtro retornaria, independente dos filtros de paginação.
     /// </param>
     /// <param name="DfeId">
-    /// ID único gerado pela Nuvem Fiscal para o documento fiscal.
+    /// ID único gerado pela API para o documento fiscal.
     /// </param>
     function ListarEventosNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; DfeId: string): TDfeEventoListagem;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function ConsultarEventoNfe(Id: string): TDfeEvento;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarPdfEventoNfe(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarXmlEventoNfe(Id: string): TBytes;
     function InutilizarNumeracaoNfe(Body: TDfePedidoInutilizacao): TDfeInutilizacao;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function ConsultarInutilizacaoNfe(Id: string): TDfeInutilizacao;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarPdfInutilizacaoNfe(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único do evento gerado pela Nuvem Fiscal.
+    /// ID único do evento gerado pela API.
     /// </param>
     function BaixarXmlInutilizacaoNfe(Id: string): TBytes;
     /// <param name="Top">
@@ -4219,7 +4275,7 @@ type
     function ListarLotesNfe(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TDfeLoteListagem;
     function EmitirLoteNfe(Body: TNfePedidoEmissaoLote): TDfeLote;
     /// <param name="Id">
-    /// ID único do lote gerado pela Nuvem Fiscal.
+    /// ID único do lote gerado pela API.
     /// </param>
     function ConsultarLoteNfe(Id: string): TDfeLote;
     /// <param name="Logotipo">
@@ -4270,50 +4326,50 @@ type
     /// </param>
     function ConsultarStatusSefazNfe(CpfCnpj: string; Autorizador: string): TDfeSefazStatus;
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function ConsultarNfe(Id: string): TDfe;
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function ConsultarCancelamentoNfe(Id: string): TDfeCancelamento;
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function CancelarNfe(Body: TNfePedidoCancelamento; Id: string): TDfeCancelamento;
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function BaixarPdfCancelamentoNfe(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function BaixarXmlCancelamentoNfe(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function ConsultarCartaCorrecaoNfe(Id: string): TDfeCartaCorrecao;
     /// <param name="Body">
     /// Contém os dados do pedido para carta de correção.
     /// </param>
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function CriarCartaCorrecaoNfe(Body: TNfePedidoCartaCorrecao; Id: string): TDfeCartaCorrecao;
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function BaixarPdfCartaCorrecaoNfe(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function BaixarXmlCartaCorrecaoNfe(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function EnviarEmailNfe(Body: TDfePedidoEnvioEmail; Id: string): TEmailStatusResponse;
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
@@ -4350,19 +4406,19 @@ type
     /// </param>
     function BaixarPdfNfe(Id: string; Logotipo: Boolean; NomeFantasia: Boolean; Formato: string; MensagemRodape: string; Canhoto: Boolean): TBytes;
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function SincronizarNfe(Id: string): TDfeSincronizacao;
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function BaixarXmlNfe(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function BaixarXmlNfeNota(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da NF-e gerado pela Nuvem Fiscal.
+    /// ID único da NF-e gerado pela API.
     /// </param>
     function BaixarXmlNfeProtocolo(Id: string): TBytes;
   end;
@@ -4420,7 +4476,7 @@ type
     /// Cidades atendidas
     /// </summary>
     /// <remarks>
-    /// Fornece uma relação completa de todos os municípios atendidos pela Nuvem Fiscal.
+    /// Fornece uma relação completa de todos os municípios atendidos pela API.
     /// </remarks>
     function CidadesAtendidas: TNfseCidadesAtendidas;
     /// <summary>
@@ -4489,41 +4545,41 @@ type
     /// Consultar lote de NFS-e
     /// </summary>
     /// <param name="Id">
-    /// ID único do lote gerado pela Nuvem Fiscal.
+    /// ID único do lote gerado pela API.
     /// </param>
     /// <remarks>
-    /// Consulta os detalhes de um lote já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de lotes e a Nuvem Fiscal irá retornar as informações do lote correspondente.
+    /// Consulta os detalhes de um lote já existente. Forneça o ID único obtido de uma requisição de emissão ou de listagem de lotes e a API irá retornar as informações do lote correspondente.
     /// </remarks>
     function ConsultarLoteNfse(Id: string): TRpsLote;
     /// <summary>
     /// Baixar XML do evento de cancelamento
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     function BaixarXmlCancelamentoNfse(Id: string): TBytes;
     /// <summary>
     /// Consultar NFS-e
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     /// <remarks>
-    /// Consulta os detalhes de uma NFS-e já existente. Forneça o ID único obtido de uma requisição de criação ou de listagem de notas e a Nuvem Fiscal irá retornar as informações da nota correspondente.
+    /// Consulta os detalhes de uma NFS-e já existente. Forneça o ID único obtido de uma requisição de criação ou de listagem de notas e a API irá retornar as informações da nota correspondente.
     /// </remarks>
     function ConsultarNfse(Id: string): TNfse;
     /// <summary>
     /// Consultar o cancelamento da NFS-e
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     function ConsultarCancelamentoNfse(Id: string): TNfseCancelamento;
     /// <summary>
     /// Cancelar uma NFS-e autorizada
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     /// <remarks>
     /// **Informações adicionais**:
@@ -4535,7 +4591,7 @@ type
     /// Baixar PDF do DANFSE
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
@@ -4561,15 +4617,15 @@ type
     /// Sincroniza dados na NFS-e a partir da Prefeitura
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     /// <remarks>
     /// Realiza a sincronização dos dados a partir da consulta da situação atual da NFS-e na prefeitura.
     /// 
     /// **Cenários de uso**:
-    /// * Sincronizar uma nota que se encontra com o status `processando` na Nuvem Fiscal, mas está autorizada na prefeitura;
-    /// * Sincronizar uma nota que se encontra com o status `erro` na Nuvem Fiscal, mas está autorizada na prefeitura (útil em casos de erros de transmissão, como instabilidades e timeouts);
-    /// * Sincronizar uma nota que se encontra com o status `autorizada`na Nuvem Fiscal, mas está cancelada na prefeitura.
+    /// * Sincronizar uma nota que se encontra com o status `processando` na API, mas está autorizada na prefeitura;
+    /// * Sincronizar uma nota que se encontra com o status `erro` na API, mas está autorizada na prefeitura (útil em casos de erros de transmissão, como instabilidades e timeouts);
+    /// * Sincronizar uma nota que se encontra com o status `autorizada`na API, mas está cancelada na prefeitura.
     /// 
     /// **Informações adicionais**:
     /// - Cota: <a href="/docs/limites#dfe-eventos">dfe-eventos</a>
@@ -4580,14 +4636,14 @@ type
     /// Baixar XML da NFS-e processada
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     function BaixarXmlNfse(Id: string): TBytes;
     /// <summary>
     /// Baixar XML da DPS
     /// </summary>
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     function BaixarXmlDps(Id: string): TBytes;
   end;
@@ -4652,27 +4708,27 @@ type
     function ListarLotesNfse(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; Referencia: string; Ambiente: string): TRpsLoteListagem;
     function EmitirLoteNfse(Body: TRpsPedidoEmissaoLote): TRpsLote;
     /// <param name="Id">
-    /// ID único do lote gerado pela Nuvem Fiscal.
+    /// ID único do lote gerado pela API.
     /// </param>
     function ConsultarLoteNfse(Id: string): TRpsLote;
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     function BaixarXmlCancelamentoNfse(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     function ConsultarNfse(Id: string): TNfse;
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     function ConsultarCancelamentoNfse(Id: string): TNfseCancelamento;
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     function CancelarNfse(Body: TNfsePedidoCancelamento; Id: string): TNfseCancelamento;
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     /// <param name="Logotipo">
     /// Imprime o documento com logotipo, desde que esteja cadastrado na empresa.
@@ -4695,15 +4751,15 @@ type
     /// </param>
     function BaixarPdfNfse(Id: string; Logotipo: Boolean; MensagemRodape: string): TBytes;
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     function SincronizarNfse(Body: TNfsePedidoSincronizacao; Id: string): TNfseSincronizacao;
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     function BaixarXmlNfse(Id: string): TBytes;
     /// <param name="Id">
-    /// ID único da NFS-e gerado pela Nuvem Fiscal.
+    /// ID único da NFS-e gerado pela API.
     /// </param>
     function BaixarXmlDps(Id: string): TBytes;
   end;
@@ -4731,7 +4787,7 @@ type
     function Dce: IDceService;
     /// <summary>
     /// Endpoints auxiliares voltados à análise técnica e depuração de documentos fiscais.
-    /// Permitem rastrear o processamento de DF-es na Nuvem Fiscal, incluindo o conteúdo
+    /// Permitem rastrear o processamento de DF-es na API, incluindo o conteúdo
     /// original recebido e as requisições realizadas aos serviços autorizadores (SEFAZ, prefeituras, etc).
     /// </summary>
     function Debug: IDebugService;
@@ -5856,6 +5912,23 @@ begin
   Response := Request.Execute;
   CheckError(Response);
   Result := Converter.TEmpresaFromJson(Response.ContentAsString);
+end;
+
+function TEmpresaService.ListarCertificados(Top: Integer; Skip: Integer; Inlinecount: Boolean; ExpiresIn: Integer; IncludeExpired: Boolean): TEmpresaCertificadoListagem;
+var
+  Request: IRestRequest;
+  Response: IRestResponse;
+begin
+  Request := CreateRequest('/empresas/certificados', 'GET');
+  Request.AddQueryParam('$top', IntToStr(Top));
+  Request.AddQueryParam('$skip', IntToStr(Skip));
+  Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
+  Request.AddQueryParam('expires_in', IntToStr(ExpiresIn));
+  Request.AddQueryParam('include_expired', BoolToParam(IncludeExpired));
+  Request.AddHeader('Accept', 'application/json');
+  Response := Request.Execute;
+  CheckError(Response);
+  Result := Converter.TEmpresaCertificadoListagemFromJson(Response.ContentAsString);
 end;
 
 function TEmpresaService.ConsultarEmpresa(CpfCnpj: string): TEmpresa;
