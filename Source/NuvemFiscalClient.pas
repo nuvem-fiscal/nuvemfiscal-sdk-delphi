@@ -1719,10 +1719,20 @@ type
     /// 
     /// *Utilize o valor sem máscara*.
     /// </param>
+    /// <param name="NomeRazaoSocial">
+    /// Filtrar pelo nome ou razão social da empresa.
+    /// 
+    /// Esse filtro realiza uma correspondência pelo início do texto,
+    /// retornando apenas empresas cujo nome ou razão social começam com
+    /// o valor informado.
+    /// 
+    /// *Caso o filtro pelo CPF ou CNPJ também seja informado na requisição,
+    /// este filtro é ignorado*.
+    /// </param>
     /// <remarks>
     /// Retorna a lista das empresas associadas à sua conta. As empresas são retornadas ordenadas pela data da criação, com as mais recentes aparecendo primeiro.
     /// </remarks>
-    function ListarEmpresas(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string): TEmpresaListagem;
+    function ListarEmpresas(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; NomeRazaoSocial: string): TEmpresaListagem;
     /// <summary>
     /// Cadastrar empresa
     /// </summary>
@@ -2014,7 +2024,17 @@ type
     /// 
     /// *Utilize o valor sem máscara*.
     /// </param>
-    function ListarEmpresas(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string): TEmpresaListagem;
+    /// <param name="NomeRazaoSocial">
+    /// Filtrar pelo nome ou razão social da empresa.
+    /// 
+    /// Esse filtro realiza uma correspondência pelo início do texto,
+    /// retornando apenas empresas cujo nome ou razão social começam com
+    /// o valor informado.
+    /// 
+    /// *Caso o filtro pelo CPF ou CNPJ também seja informado na requisição,
+    /// este filtro é ignorado*.
+    /// </param>
+    function ListarEmpresas(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; NomeRazaoSocial: string): TEmpresaListagem;
     function CriarEmpresa(Body: TEmpresa): TEmpresa;
     /// <param name="Top">
     /// Limite no número de objetos a serem retornados pela API, entre 1 e 100.
@@ -5884,7 +5904,7 @@ end;
 
 { TEmpresaService }
 
-function TEmpresaService.ListarEmpresas(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string): TEmpresaListagem;
+function TEmpresaService.ListarEmpresas(Top: Integer; Skip: Integer; Inlinecount: Boolean; CpfCnpj: string; NomeRazaoSocial: string): TEmpresaListagem;
 var
   Request: IRestRequest;
   Response: IRestResponse;
@@ -5894,6 +5914,7 @@ begin
   Request.AddQueryParam('$skip', IntToStr(Skip));
   Request.AddQueryParam('$inlinecount', BoolToParam(Inlinecount));
   Request.AddQueryParam('cpf_cnpj', CpfCnpj);
+  Request.AddQueryParam('nome_razao_social', NomeRazaoSocial);
   Request.AddHeader('Accept', 'application/json');
   Response := Request.Execute;
   CheckError(Response);
